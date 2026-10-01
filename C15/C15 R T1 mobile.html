@@ -1,0 +1,2259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IELTS Reading — C15 R T1</title>
+<meta name="build" content="lu-rd-s">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --font-heading: 'Plus Jakarta Sans', Arial, Helvetica, sans-serif;
+    --font-body: 'Inter', Arial, Helvetica, sans-serif;
+    --navy: #1f2a44;
+    --navy-dark: #141b2e;
+    --brand: #15934E;
+    --brand-dark: #119446;
+    --brand-tint: #ECF6F1;
+    --heading: #119446;
+    --accent: #15934E;
+    --accent-dark: #119446;
+    --bg: #ffffff;
+    --panel: #f7f8fa;
+    --border: #dfe3ea;
+    --text: #1a1f2b;
+    --muted: #667085;
+    --danger: #c0392b;
+    --danger-bg: #fdecea;
+    --success: #15934E;
+    --success-bg: #ECF6F1;
+    --answered: #15934E;
+    --input-bg: #ffffff;
+    --radius-sm: 6px;
+    --radius: 10px;
+    --radius-lg: 16px;
+    --radius-pill: 999px;
+    --shadow-card: 0 8px 28px rgba(36, 49, 42, 0.07);
+    --shadow-pop: 0 10px 28px rgba(20, 27, 46, 0.16);
+  }
+
+  * { box-sizing: border-box; }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --navy: #26314f;
+      --navy-dark: #171d30;
+      --brand: #34D399;
+      --brand-dark: #10B981;
+      --brand-tint: #113124;
+      --heading: #6EE7B7;
+      --accent: #34D399;
+      --accent-dark: #10B981;
+      --bg: #1c1f26;
+      --panel: #131519;
+      --border: #33383f;
+      --text: #e6e8eb;
+      --muted: #9aa1ac;
+      --danger: #ef5350;
+      --danger-bg: #3a1f20;
+      --success: #34D399;
+      --success-bg: #113124;
+      --answered: #34D399;
+      --input-bg: #22252c;
+      --shadow-card: 0 8px 28px rgba(0, 0, 0, 0.35);
+      --shadow-pop: 0 10px 30px rgba(0, 0, 0, 0.45);
+    }
+  }
+  :root[data-theme="dark"] {
+    --navy: #26314f;
+    --navy-dark: #171d30;
+    --brand: #34D399;
+    --brand-dark: #10B981;
+    --brand-tint: #113124;
+    --heading: #6EE7B7;
+    --accent: #34D399;
+    --accent-dark: #10B981;
+    --bg: #1c1f26;
+    --panel: #131519;
+    --border: #33383f;
+    --text: #e6e8eb;
+    --muted: #9aa1ac;
+    --danger: #ef5350;
+    --danger-bg: #3a1f20;
+    --success: #34D399;
+    --success-bg: #113124;
+    --answered: #34D399;
+    --input-bg: #22252c;
+    --shadow-card: 0 8px 28px rgba(0, 0, 0, 0.35);
+    --shadow-pop: 0 10px 30px rgba(0, 0, 0, 0.45);
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: var(--panel);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  button { font-family: inherit; cursor: pointer; }
+
+  input:focus, select:focus, button:focus, [tabindex]:focus {
+    outline: 3px solid #93c5fd;
+    outline-offset: 1px;
+  }
+
+  input[type="radio"], input[type="checkbox"] { accent-color: var(--accent); }
+
+  /* ---------- START SCREEN ---------- */
+  #start-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .start-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    max-width: 540px;
+    width: 100%;
+    padding: 40px 36px;
+  }
+
+  .start-card h1 { font-size: 22px; margin: 0 0 6px 0; color: var(--heading); font-family: var(--font-heading); }
+  .start-card .subtitle { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+
+  .start-card p.instructions {
+    font-size: 14px;
+    color: var(--text);
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 14px 16px;
+    margin-bottom: 24px;
+  }
+
+  .field label { display: block; font-size: 13px; font-weight: bold; margin-bottom: 6px; }
+
+  .field input[type="text"] {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 15px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    margin-bottom: 6px;
+    background: var(--input-bg);
+    color: var(--text);
+  }
+
+  .field-error { color: var(--danger); font-size: 13px; min-height: 18px; margin-bottom: 12px; }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 11px 22px;
+    font-size: 15px;
+    border-radius: 4px;
+    margin-top: 8px;
+  }
+  .btn-primary:hover { background: var(--accent-dark); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--accent-dark);
+    border: 1px solid var(--border);
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+    margin-top: 8px;
+  }
+  .btn-secondary:hover { background: var(--panel); }
+
+  .btn-text {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 13px;
+    text-decoration: underline;
+    padding: 6px 0;
+    margin-top: 8px;
+  }
+  .btn-text:hover { color: var(--text); }
+
+  .btn-primary:disabled, .btn-secondary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .hidden { display: none !important; }
+
+  .entry-section-title {
+    font-size: 13px;
+    font-weight: bold;
+    margin: 18px 0 8px 0;
+    color: var(--text);
+  }
+
+  .notice-box {
+    font-size: 13px;
+    color: var(--text);
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 12px 14px;
+    margin-bottom: 14px;
+  }
+  .notice-box ul { margin: 0; padding-left: 18px; }
+  .notice-box li { margin-bottom: 4px; }
+  .notice-box.warning {
+    background: var(--danger-bg);
+    border-color: var(--danger);
+    color: var(--danger);
+    font-weight: bold;
+  }
+
+  .confirm-name-box {
+    background: var(--brand-tint);
+    border: 1px solid var(--brand);
+    border-radius: 4px;
+    padding: 14px 16px;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--heading);
+    text-align: center;
+    margin: 14px 0 16px 0;
+  }
+
+  .checkbox-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 14px;
+    margin-bottom: 16px;
+    cursor: pointer;
+  }
+  .checkbox-row input[type="checkbox"] { margin-top: 3px; }
+
+  .entry-actions-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+
+  .entry-status-message {
+    font-size: 14px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 12px 14px;
+    margin-bottom: 16px;
+  }
+  .entry-status-message.warn {
+    background: var(--danger-bg);
+    border-color: var(--danger);
+    color: var(--danger);
+  }
+
+  .attempt-list { margin: 12px 0; }
+  .attempt-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    flex-wrap: wrap;
+  }
+  .attempt-item .attempt-meta { color: var(--text); }
+  .attempt-item .attempt-meta .attempt-score { font-weight: bold; color: var(--heading); }
+
+  .review-banner {
+    display: none;
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--danger);
+    background: var(--danger-bg);
+    border-radius: 3px;
+    padding: 2px 8px;
+    margin-top: 4px;
+  }
+
+  /* ---------- TEST SCREEN ---------- */
+  #test-screen { display: none; height: 100vh; flex-direction: column; }
+
+  .test-header {
+    background: var(--navy);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    flex-shrink: 0;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .test-header .title-block .test-title { font-size: 15px; font-weight: bold; font-family: var(--font-heading); }
+  .test-header .title-block .student-name { font-size: 12px; color: #c7d0e0; }
+
+  .timer-block, .score-summary-block {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--navy-dark);
+    padding: 6px 14px;
+    border-radius: 4px;
+  }
+
+  .timer-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: #a9b4c7; }
+
+  .timer-value {
+    font-size: 18px;
+    font-weight: bold;
+    font-variant-numeric: tabular-nums;
+    min-width: 58px;
+    text-align: center;
+  }
+  .timer-value.warning { color: #ff8a80; }
+
+  .score-summary-block { font-size: 13.5px; font-weight: bold; display: none; flex-wrap: wrap; }
+  .score-summary-block .score-value { color: #8fd6a8; }
+
+  .submit-header-btn {
+    background: #fff;
+    color: var(--navy);
+    border: none;
+    padding: 9px 18px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 4px;
+  }
+  .submit-header-btn:hover { background: #e3e7ee; }
+
+  .test-body { flex: 1; display: grid; grid-template-columns: 1.25fr 1fr; overflow: hidden; }
+
+  .passage-pane, .questions-pane { overflow-y: auto; height: 100%; padding: 28px 32px; }
+
+  .passage-pane { background: var(--bg); border-right: 1px solid var(--border); }
+  .passage-pane h2 { font-size: 20px; color: var(--heading); margin-top: 0; font-family: var(--font-heading); }
+  .passage-pane p {
+    margin: 0 0 17px 0;
+    max-width: 74ch;
+    font-size: 17.5px;
+    line-height: 1.75;
+    text-align: justify;
+    text-justify: inter-word;
+  }
+  .passage-pane p.tip { font-size: 12.5px; color: var(--muted); margin-top: 24px; text-align: left; }
+
+  .para-label {
+    display: inline-block;
+    background: var(--brand);
+    color: #fff;
+    font-weight: bold;
+    font-size: 12px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+
+  .passage-tabs {
+    position: sticky;
+    top: -28px;
+    margin: -28px -32px 18px -32px;
+    padding: 12px 32px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    z-index: 6;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .passage-tab {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 7px 14px;
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--text);
+    white-space: nowrap;
+  }
+  .passage-tab:hover { border-color: var(--accent); }
+  .passage-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  .passage-block { display: none; }
+  .passage-block.active { display: block; }
+
+  mark.highlight { background: #fff1a8; color: #1a1f2b; padding: 0 1px; cursor: pointer; }
+
+  .questions-pane { background: var(--panel); }
+
+  .question-group { display: none; }
+  .question-group.active { display: block; }
+
+  .footer-nav {
+    flex-shrink: 0;
+    display: flex;
+    gap: 12px;
+    padding: 10px 20px;
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    overflow-x: auto;
+  }
+
+  .footer-nav-part {
+    flex: 1 1 0;
+    min-width: 250px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 10px;
+  }
+  .footer-nav-part-label { font-size: 11px; font-weight: bold; color: var(--brand-dark); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; }
+  .footer-nav-part .nav-grid-wrap { max-height: 78px; overflow-y: auto; }
+
+  .nav-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+
+  .nav-btn { background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 5px 0; font-size: 12.5px; color: var(--text); }
+  .nav-btn:hover { border-color: var(--accent); background: var(--brand-tint); }
+  .nav-btn.answered { background: var(--answered); border-color: var(--answered); color: #fff; }
+  .nav-btn.correct { background: var(--success); border-color: var(--success); color: #fff; }
+  .nav-btn.incorrect { background: var(--danger); border-color: var(--danger); color: #fff; }
+  .nav-btn.flash { box-shadow: 0 0 0 3px #93c5fd; }
+
+  .q-section-title { font-size: 15px; font-weight: bold; color: var(--heading); margin: 24px 0 4px 0; font-family: var(--font-heading); }
+  .q-section-sub { font-size: 14px; color: var(--muted); margin-bottom: 16px; }
+
+  .q-block {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--border);
+    border-radius: 4px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    scroll-margin-top: 220px;
+  }
+  .q-block.correct { border-left-color: var(--success); }
+  .q-block.wrong { border-left-color: var(--danger); }
+
+  .q-block .q-number { font-weight: bold; margin-right: 6px; color: var(--brand-dark); }
+  .emph { color: var(--brand-dark); }
+  .q-block .q-text { font-size: 15px; }
+
+  /* visual overrides */
+  .tfn-options { display: flex; gap: 18px; margin-top: 10px; flex-wrap: wrap; }
+  .tfn-options label { font-size: 14px; display: flex; align-items: center; gap: 6px; }
+
+  .tfn-options label.opt-correct input[type="radio"] { accent-color: var(--success); }
+  .tfn-options label.opt-correct .opt-text { color: var(--success); font-weight: bold; }
+  .tfn-options label.opt-wrong input[type="radio"] { accent-color: var(--danger); }
+  .tfn-options label.opt-wrong .opt-text { color: var(--danger); font-weight: bold; }
+
+  /* visual overrides */
+  .ynng-options, .mcq-options, .checkbox-options { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+  .ynng-options label, .mcq-options label, .checkbox-options label { font-size: 14px; display: flex; align-items: flex-start; gap: 8px; cursor: pointer; }
+  .ynng-options label.opt-correct input, .mcq-options label.opt-correct input, .checkbox-options label.opt-correct input { accent-color: var(--success); }
+  .ynng-options label.opt-correct .opt-text, .mcq-options label.opt-correct .opt-text, .checkbox-options label.opt-correct .opt-text { color: var(--success); font-weight: bold; }
+  .ynng-options label.opt-wrong input, .mcq-options label.opt-wrong input, .checkbox-options label.opt-wrong input { accent-color: var(--danger); }
+  .ynng-options label.opt-wrong .opt-text, .mcq-options label.opt-wrong .opt-text, .checkbox-options label.opt-wrong .opt-text { color: var(--danger); font-weight: bold; text-decoration: line-through; }
+  .choose-two-hint { font-size: 12.5px; color: var(--muted); margin-top: 8px; }
+
+  .wordbank-box { background: var(--panel); border: 1px solid var(--border); border-radius: 4px; padding: 12px 14px; margin: 4px 0 16px 0; font-size: 13.5px; }
+  .wordbank-box .wb-title { font-weight: bold; margin-bottom: 8px; color: var(--heading); }
+  .wb-tiles { display: flex; flex-wrap: wrap; gap: 8px; }
+  .wb-tile {
+    background: var(--bg);
+    border: 1.5px solid var(--text);
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 13.5px;
+    font-weight: bold;
+    color: var(--text);
+    cursor: grab;
+    user-select: none;
+    transition: opacity .15s ease, box-shadow .15s ease;
+  }
+  .wb-tile:active { cursor: grabbing; }
+  .wb-tile.dragging { opacity: 0.4; }
+  .wb-tile.picked { background: var(--text); color: var(--bg); box-shadow: 0 0 0 3px var(--border); }
+  .wb-tile.used { opacity: 0.35; border-style: dashed; cursor: not-allowed; }
+  .wb-tile.locked { cursor: default; }
+
+  .drop-zone {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    min-width: 120px;
+    min-height: 28px;
+    padding: 3px 8px;
+    margin: 0 2px;
+    border: 1.5px dashed var(--border);
+    border-radius: 4px;
+    background: var(--panel);
+    vertical-align: middle;
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--text);
+  }
+  .drop-zone.drag-over { border-color: var(--text); background: var(--panel); }
+  .drop-zone.filled { border-style: solid; border-color: var(--text); background: var(--bg); cursor: default; }
+  .drop-zone:not(.filled) { cursor: pointer; }
+  .drop-zone-remove {
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 15px;
+    line-height: 1;
+    padding: 0 2px;
+    font-weight: bold;
+  }
+  .drop-zone-remove:hover { color: var(--danger); }
+  .drop-zone.correct { border-color: var(--success); background: var(--success-bg); }
+  .drop-zone.wrong { border-color: var(--danger); background: var(--danger-bg); color: var(--danger); text-decoration: line-through; }
+
+  /* ---- Matching Information: radio grid ---- */
+  .matching-grid-wrap { overflow-x: auto; margin-bottom: 16px; }
+  table.matching-grid {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--bg);
+    font-size: 14px;
+    border-top: 1px solid var(--text);
+  }
+  table.matching-grid th {
+    font-weight: bold;
+    font-size: 14px;
+    color: var(--text);
+    text-align: center;
+    padding: 8px 6px;
+    border-bottom: 2px solid var(--text);
+    border-left: 1px solid var(--text);
+  }
+  table.matching-grid th:first-child { border-bottom: none; border-left: none; }
+  table.matching-grid th:nth-child(2) { border-left: 2px solid var(--text); }
+  table.matching-grid td.mg-question {
+    padding: 14px 14px 14px 4px;
+    text-align: left;
+    vertical-align: middle;
+    line-height: 1.5;
+    border-top: 1px solid var(--text);
+  }
+  table.matching-grid td.mg-question .q-number { display: inline-block; min-width: 22px; font-weight: bold; color: var(--brand-dark); }
+  table.matching-grid td.mg-cell {
+    text-align: center;
+    vertical-align: middle;
+    border-top: 1px solid var(--text);
+    border-left: 1px solid var(--text);
+    padding: 10px 4px;
+  }
+  table.matching-grid td.mg-cell:first-of-type { border-left: 2px solid var(--text); }
+  table.matching-grid tbody tr:last-child td { border-bottom: 1px solid var(--text); }
+  input.matching-input[type="radio"] { width: 18px; height: 18px; accent-color: var(--brand); cursor: pointer; }
+  table.matching-grid tr.correct td.mg-question { background: var(--success-bg); }
+  table.matching-grid tr.wrong td.mg-question { background: var(--danger-bg); }
+  table.matching-grid td.mg-cell.correct-cell { background: var(--success-bg); }
+  table.matching-grid td.mg-cell.wrong-cell { background: var(--danger-bg); }
+  table.matching-grid td.mg-cell.correct-cell input,
+  table.matching-grid td.mg-cell.wrong-cell input { accent-color: var(--success); }
+  table.matching-grid td.mg-cell.wrong-cell input { accent-color: var(--danger); }
+
+  .summary-block {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+    font-size: 15px;
+    line-height: 1.85;
+  }
+  .summary-block strong, table.fill-table td strong { color: var(--brand-dark); }
+
+  input.blank-input {
+    padding: 5px 7px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    font-size: 14.5px;
+    background: var(--input-bg);
+    color: var(--text);
+    width: 140px;
+  }
+  input.blank-input.wrong { color: var(--danger); text-decoration: line-through; border-color: var(--danger); }
+  input.blank-input.correct { border-color: var(--success); }
+
+  table.fill-table { width: 100%; border-collapse: collapse; background: var(--bg); font-size: 14.5px; }
+  table.fill-table th, table.fill-table td { border: 1px solid var(--border); padding: 11px 10px; text-align: left; vertical-align: top; }
+  table.fill-table th { background: var(--panel); font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--muted); font-weight: bold; }
+  table.fill-table td:first-child { font-weight: bold; }
+  table.fill-table tr.correct td { background: var(--success-bg); }
+  table.fill-table tr.wrong td { background: var(--danger-bg); }
+
+  table.fill-table input[type="text"] { width: 140px; padding: 5px 7px; border: 1px solid var(--border); border-radius: 3px; font-size: 14.5px; background: var(--input-bg); color: var(--text); }
+  table.fill-table tr.wrong input[type="text"] { color: var(--danger); text-decoration: line-through; border-color: var(--danger); }
+  input:disabled, select:disabled { cursor: not-allowed; }
+
+  .fill-feedback { display: block; margin-top: 6px; font-size: 13px; font-weight: bold; color: var(--success); }
+
+  @media (max-width: 900px) {
+    .test-body { grid-template-columns: 1fr; overflow: auto; height: auto; }
+    #test-screen { height: auto; min-height: 100vh; }
+    .passage-pane, .questions-pane { overflow-y: visible; height: auto; }
+    .passage-pane { border-right: none; border-bottom: 1px solid var(--border); }
+    .passage-tabs { position: static; margin: 0 -20px 16px -20px; padding: 12px 20px; }
+    .footer-nav { flex-direction: column; }
+    .footer-nav-part { min-width: 0; }
+  }
+
+  /* visual overrides */
+
+  .start-card { border-radius: var(--radius-lg); box-shadow: var(--shadow-card); }
+  .start-card p.instructions,
+  .notice-box,
+  .entry-status-message,
+  .attempt-item { border-radius: var(--radius); }
+  .confirm-name-box { border-radius: var(--radius); }
+  .review-banner { border-radius: var(--radius-pill); padding: 3px 10px; }
+
+  .field input[type="text"] { border-radius: var(--radius-sm); }
+
+  .btn-primary, .btn-secondary { border-radius: var(--radius); }
+  .btn-primary:hover { box-shadow: 0 2px 10px rgba(21, 147, 78, 0.25); }
+
+  .test-header { padding: 12px 24px; }
+  .timer-block, .score-summary-block { border-radius: var(--radius); }
+  .submit-header-btn { border-radius: var(--radius); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12); }
+  .submit-header-btn:hover { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16); }
+
+  .passage-tab { border-radius: var(--radius-pill); padding: 7px 16px; }
+  .passage-tab.active { box-shadow: 0 2px 8px rgba(21, 147, 78, 0.25); }
+
+  mark.highlight {
+    background: #ffe563;
+    color: #202020;
+    border-radius: 4px;
+    transition: filter .12s ease;
+  }
+  mark.highlight:hover { filter: brightness(0.94); }
+
+  .q-block { border-radius: var(--radius); transition: box-shadow .15s ease, border-color .15s ease; }
+  .q-block:focus-within { box-shadow: 0 0 0 3px var(--brand-tint); }
+
+  /* Answer options as bordered "choice cards" (visual only — same inputs, same names/values) */
+  .tfn-options label {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
+    padding: 7px 16px 7px 10px;
+    transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .tfn-options label:hover { border-color: var(--accent); }
+  .tfn-options label:has(input:checked) {
+    border-color: var(--accent);
+    background: var(--brand-tint);
+    box-shadow: 0 0 0 1px var(--accent);
+  }
+
+  .ynng-options label, .mcq-options label, .checkbox-options label {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px 13px;
+    transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .ynng-options label:hover, .mcq-options label:hover, .checkbox-options label:hover { border-color: var(--accent); }
+  .ynng-options label:has(input:checked),
+  .mcq-options label:has(input:checked),
+  .checkbox-options label:has(input:checked) {
+    border-color: var(--accent);
+    background: var(--brand-tint);
+    box-shadow: 0 0 0 1px var(--accent);
+  }
+  /* Post-submission correct/wrong feedback (existing feature) gets a matching boxed treatment */
+  .tfn-options label.opt-correct,
+  .ynng-options label.opt-correct, .mcq-options label.opt-correct, .checkbox-options label.opt-correct {
+    border-color: var(--success);
+    background: var(--success-bg);
+    box-shadow: none;
+  }
+  .tfn-options label.opt-wrong,
+  .ynng-options label.opt-wrong, .mcq-options label.opt-wrong, .checkbox-options label.opt-wrong {
+    border-color: var(--danger);
+    background: var(--danger-bg);
+    box-shadow: none;
+  }
+
+  .wordbank-box { border-radius: var(--radius); }
+  .wb-tile { border-radius: var(--radius-pill); }
+  .drop-zone { border-radius: var(--radius-sm); }
+
+  /* visual overrides */
+  .q-block .q-number,
+  table.matching-grid td.mg-question .q-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 6px;
+    margin-right: 8px;
+    background: var(--text);
+    color: var(--bg);
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 700;
+    vertical-align: middle;
+  }
+
+  /* visual overrides */
+  .matching-grid-wrap { border: 1px solid var(--border); border-radius: var(--radius); overflow: auto; }
+  table.matching-grid,
+  table.matching-grid th,
+  table.matching-grid td.mg-question,
+  table.matching-grid td.mg-cell { border-color: var(--border); }
+  table.matching-grid thead th { background: var(--panel); }
+
+  div:has(> table.fill-table) { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  table.fill-table th, table.fill-table td { border-color: var(--border); padding: 12px 14px; }
+  input.blank-input, table.fill-table input[type="text"] { border-radius: var(--radius-sm); }
+
+  .summary-block { border-radius: var(--radius); }
+
+  .footer-nav-part { border-radius: var(--radius); box-shadow: var(--shadow-card); }
+  .nav-btn { border-radius: var(--radius-sm); }
+</style>
+</head>
+<body>
+
+<!-- ============ STEP 1: START SCREEN (nhập họ tên / xác nhận / chọn hành động) ============ -->
+<div id="start-screen">
+  <div class="start-card">
+    <h1>C15 R T1</h1>
+    <div class="subtitle">IELTS Reading Test</div>
+
+    <!-- Bước A: nhập họ tên -->
+    <div id="entry-step-name">
+      <p class="instructions">
+        Bài Reading gồm 3 bài đọc (Part 1–3) và 40 câu hỏi. Bạn sẽ có 60 phút cho toàn bộ 3 bài
+        đọc — đồng hồ không reset khi bạn chuyển giữa các Part. Bài làm sẽ tự động nộp khi hết
+        giờ, hoặc bạn có thể chủ động nộp bài sớm hơn bằng nút Nộp bài.
+      </p>
+
+      <div class="entry-section-title">Lưu ý trước khi làm bài</div>
+      <div class="notice-box">
+        <ul>
+          <li>Bài Reading có thời gian làm bài <strong>60 phút</strong>.</li>
+          <li>Mỗi bài chỉ được <strong>làm và nộp một lần</strong>.</li>
+          <li>Hãy kiểm tra kỹ <strong>họ tên và dấu tiếng Việt</strong> trước khi bắt đầu.</li>
+          <li>Nếu bạn đã làm bài trước đó và muốn xem lại, hãy nhập <strong>đúng họ tên đã sử dụng khi làm bài</strong> rồi chọn <strong>"Xem lại bài đã làm"</strong>.</li>
+        </ul>
+      </div>
+
+      <div class="entry-section-title">Lưu ý về trình duyệt</div>
+      <div class="notice-box">
+        <ul>
+          <li>Vui lòng sử dụng <strong>một trình duyệt duy nhất</strong> trong suốt quá trình làm bài và xem lại bài: Chrome, Safari hoặc Cốc Cốc.</li>
+          <li>Nếu muốn xem lại bài sau khi đóng tab, hãy mở lại bằng <strong>đúng trình duyệt và đúng thiết bị</strong> đã sử dụng khi làm bài.</li>
+          <li><strong>Không sử dụng tab ẩn danh</strong> hoặc chế độ duyệt web riêng tư.</li>
+          <li>Không xóa dữ liệu trình duyệt trước khi xem lại bài.</li>
+        </ul>
+      </div>
+      <div class="notice-box warning">⚠️ Để có thể xem lại bài sau này, hãy sử dụng đúng một trình duyệt và không sử dụng chế độ ẩn danh.</div>
+
+      <div class="field">
+        <label for="student-name">Họ và tên</label>
+        <input type="text" id="student-name" placeholder="Nhập đầy đủ họ và tên có dấu tiếng Việt" autocomplete="off">
+        <div class="field-error" id="name-error"></div>
+      </div>
+      <button class="btn-primary" id="name-continue-btn">Tiếp tục</button>
+    </div>
+
+    <!-- Bước B: xác nhận họ tên -->
+    <div id="entry-step-confirm" class="hidden">
+      <p class="instructions">Bạn chắc chắn đã điền đúng họ tên và đầy đủ dấu tiếng Việt chưa?</p>
+      <div class="confirm-name-box" id="confirm-name-box"></div>
+      <label class="checkbox-row">
+        <input type="checkbox" id="confirm-checkbox">
+        <span>Tôi đã kiểm tra và xác nhận họ tên của mình.</span>
+      </label>
+      <div class="entry-actions-row">
+        <button class="btn-secondary" id="confirm-back-btn">Quay lại</button>
+        <button class="btn-primary" id="confirm-continue-btn" disabled>Tiếp tục</button>
+      </div>
+    </div>
+
+    <!-- Bước C: chọn hành động -->
+    <div id="entry-step-actions" class="hidden">
+      <div class="entry-status-message hidden" id="entry-status-message"></div>
+
+      <div class="entry-actions-row">
+        <button class="btn-primary" id="start-btn">Bắt đầu làm bài</button>
+        <button class="btn-secondary" id="review-btn">Xem lại bài đã làm</button>
+      </div>
+
+      <div id="review-result-area"></div>
+
+      <button class="btn-text" id="actions-back-btn">Quay lại</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ STEP 2/4: TEST + REVIEW SCREEN ============ -->
+<div id="test-screen">
+  <div class="test-header">
+    <div class="title-block">
+      <div class="test-title">IELTS Reading — C15 R T1</div>
+      <div class="student-name" id="header-student-name"></div>
+      <div class="review-banner" id="review-banner">Chế độ xem lại — không thể nộp lại bài</div>
+    </div>
+    <div class="timer-block" id="timer-block">
+      <span class="timer-label">Thời gian còn lại</span>
+      <span class="timer-value" id="timer-value">60:00</span>
+    </div>
+    <div class="score-summary-block" id="score-summary-block">
+      <span>Điểm: <span class="score-value" id="header-score"></span></span>
+      <span>&nbsp;·&nbsp;Thời gian làm bài: <span id="header-time-used"></span></span>
+    </div>
+    <button class="submit-header-btn" id="submit-btn">Nộp bài</button>
+  </div>
+
+  <div class="test-body">
+    <!-- PASSAGE -->
+    <div class="passage-pane" id="passage">
+      <div class="passage-tabs" id="passage-tabs">
+        <button type="button" class="passage-tab active" data-passage="1">Part 1</button>
+        <button type="button" class="passage-tab" data-passage="2">Part 2</button>
+        <button type="button" class="passage-tab" data-passage="3">Part 3</button>
+      </div>
+
+      <div class="passage-block active" id="passage-block-1" data-passage="1">
+        <h2>Reading Passage: Nutmeg – a valuable spice</h2>
+        <p>The nutmeg tree, <em>Myristica fragrans</em>, is a large evergreen tree native to Southeast Asia. Until the late 18th century, it only grew in one place in the world: a small group of islands in the Banda Sea, part of the Moluccas – or Spice Islands – in northeastern Indonesia. The tree is thickly branched with dense foliage of tough, dark green oval leaves, and produces small, yellow, bell-shaped flowers and pale yellow pear-shaped fruits. The fruit is encased in a flesh husk. When the fruit is ripe, this husk splits into two halves along a ridge running the length of the fruit. Inside is a purple-brown shiny seed, 2-3 cm long by about 2 cm across, surrounded by a lacy red or crimson covering called an ‘aril’. These are the sources of the two spices nutmeg and mace, the former being produced from the dried seed and the latter from the aril.</p>
+        <p>Nutmeg was a highly prized and costly ingredient in European cuisine in the Middle Ages, and was used as a flavouring, medicinal, and preservative agent. Throughout this period, the Arabs were the exclusive importers of the spice to Europe. They sold nutmeg for high prices to merchants based in Venice, but they never revealed the exact location of the source of this extremely valuable commodity. The Arab-Venetian dominance of the trade finally ended in 1512, when the Portuguese reached the Banda Islands and began exploiting its precious resources.</p>
+        <p>Always in danger of competition from neighbouring Spain, the Portuguese began subcontracting their spice distribution to Dutch traders. Profits began to flow into the Netherlands, and the Dutch commercial fleet swiftly grew into one of the largest in the world. The Dutch quietly gained control of most of the shipping and trading of spices in Northern Europe. Then, in 1580, Portugal fell under Spanish rule, and by the end of the 16th century the Dutch found themselves locked out of the market. As prices for pepper, nutmeg, and other spices soared across Europe, they decided to fight back.</p>
+        <p>In 1602, Dutch merchants founded the VOC, a trading corporation better known as the Dutch East India Company. By 1617, the VOC was the richest commercial operation in the world. The company had 50,000 employees worldwide, with a private army of 30,000 men and a fleet of 200 ships. At the same time, thousands of people across Europe were dying of the plague, a highly contagious and deadly disease. Doctors were desperate for a way to stop the spread of this disease, and they decided nutmeg held the cure. Everybody wanted nutmeg, and many were willing to spare no expense to have it. Nutmeg bought for a few pennies in Indonesia could be sold for 68,000 times its original cost on the streets of London. The only problem was the short supply. And that’s where the Dutch found their opportunity.</p>
+        <p>The Banda Islands were ruled by local sultans who insisted on maintaining a neutral trading policy towards foreign powers. This allowed them to avoid the presence of Portuguese or Spanish troops on their soil, but it also left them unprotected from other invaders. In 1621, the Dutch arrived and took over. Once securely in control of the Bandas, the Dutch went to work protecting their new investment. They concentrated all nutmeg production into a few easily guarded areas, uprooting and destroying any trees outside the plantation zones. Anyone caught growing a nutmeg seedling or carrying seeds without the proper authority was severely punished. In addition, all exported nutmeg was covered with lime to make sure there was no chance a fertile seed which could be grown elsewhere would leave the islands. There was only one obstacle to Dutch domination. One of the Banda Islands, a sliver of land called Run, only 3 km long by less than 1 km wide, was under the control of the British. After decades of fighting for control of this tiny island, the Dutch and British arrived at a compromise settlement, the Treaty of Breda, in 1667. Intent on securing their hold over every nutmeg-producing island, the Dutch offered a trade: if the British would give them the island of Run, they would in turn give Britain a distant and much less valuable island in North America. The British agreed. That other island was Manhattan, which is how New Amsterdam became New York. The Dutch now had a monopoly over the nutmeg trade which would last for another century.</p>
+        <p>Then, in 1770, a Frenchman named Pierre Poivre successfully smuggled nutmeg plants to safety in Mauritius, an island off the coast of Africa. Some of these were later exported to the Caribbean where they thrived, especially on the island of Grenada. Next, in 1778, a volcanic eruption in the Banda region caused a tsunami that wiped out half the nutmeg groves. Finally, in 1809, the British returned to Indonesia and seized the Banda Islands by force. They returned the islands to the Dutch in 1817, but not before transplanting hundreds of nutmeg seedlings to plantations in several locations across southern Asia. The Dutch nutmeg monopoly was over.</p>
+        <p>Today, nutmeg is grown in Indonesia, the Caribbean, India, Malaysia, Papua New Guinea and Sri Lanka, and world nutmeg production is estimated to average between 10,000 and 12,000 tonnes per year.</p>
+        <p class="tip">Tip: select any text on this page (passage or questions) to highlight it — the text stays selected afterwards so you can copy it too. Click a highlight to remove it.</p>
+      </div>
+
+      <div class="passage-block" id="passage-block-2" data-passage="2">
+        <h2>Reading Passage: Driverless cars</h2>
+        <p><span class="para-label">A</span>The automotive sector is well used to adapting to automation in manufacturing. The implementation of robotic car manufacture from the 1970s onwards led to significant cost savings and improvements in the reliability and flexibility of vehicle mass production. A new challenge to vehicle production is now on the horizon and, again, it comes from automation. However, this time it is not to do with the manufacturing process, but with the vehicles themselves. Research projects on vehicle automation are not new. Vehicles with limited self-driving capabilities have been around for more than 50 years, resulting in significant contributions towards driver assistance systems. But since Google announced in 2010 that it had been trialling self-driving cars on the streets of California, progress in this field has quickly gathered pace.</p>
+        <p><span class="para-label">B</span>There are many reasons why technology is advancing so fast. One frequently cited motive is safety; indeed, research at the UK’s Transport Research Laboratory has demonstrated that more than 90 percent of road collisions involve human error as a contributory factor, and it is the primary cause in the vast majority. Automation may help to reduce the incidence of this. Another aim is to free the time people spend driving for other purposes. If the vehicle can do some or all of the driving, it may be possible to be productive, to socialise or simply to relax while automation systems have responsibility for safe control of the vehicle. If the vehicle can do the driving, those who are challenged by existing mobility models – such as older or disabled travellers – may be able to enjoy significantly greater travel autonomy.</p>
+        <p><span class="para-label">C</span>Beyond these direct benefits, we can consider the wider implications for transport and society, and how manufacturing processes might need to respond as a result. At present, the average car spends more than 90 percent of its life parked. Automation means that initiatives for car-sharing become much more viable, particularly in urban areas with significant travel demand. If a significant proportion of the population choose to use shared automated vehicles, mobility demand can be met by far fewer vehicles.</p>
+        <p><span class="para-label">D</span>The Massachusetts Institute of Technology investigated automated mobility in Singapore, finding that fewer than 30 percent of the vehicles currently used would be required if fully automated car sharing could be implemented. If this is the case, it might mean that we need to manufacture far fewer vehicles to meet demand. However, the number of trips being taken would probably increase, partly because empty vehicles would have to be moved from one customer to the next. Modelling work by the University of Michigan Transportation Research Institute suggests automated vehicles might reduce vehicle ownership by 43 percent, but that vehicles’ average annual mileage double as a result. As a consequence, each vehicle would be used more intensively, and might need replacing sooner. This faster rate of turnover may mean that vehicle production will not necessarily decrease.</p>
+        <p><span class="para-label">E</span>Automation may prompt other changes in vehicle manufacture. If we move to a model where consumers are tending not to own a single vehicle but to purchase access to a range of vehicle through a mobility provider, drivers will have the freedom to select one that best suits their needs for a particular journey, rather than making a compromise across all their requirements. Since, for most of the time, most of the seats in most cars are unoccupied, this may boost production of a smaller, more efficient range of vehicles that suit the needs of individuals. Specialised vehicles may then be available for exceptional journeys, such as going on a family camping trip or helping a son or daughter move to university.</p>
+        <p><span class="para-label">F</span>There are a number of hurdles to overcome in delivering automated vehicles to our roads. These include the technical difficulties in ensuring that the vehicle works reliably in the infinite range of traffic, weather and road situations it might encounter; the regulatory challenges in understanding how liability and enforcement might change when drivers are no longer essential for vehicle operation; and the societal changes that may be required for communities to trust and accept automated vehicles as being a valuable part of the mobility landscape.</p>
+        <p><span class="para-label">G</span>It’s clear that there are many challenges that need to be addressed but, through robust and targeted research, these can most probably be conquered within the next 10 years. Mobility will change in such potentially significant ways and in association with so many other technological developments, such as telepresence and virtual reality, that it is hard to make concrete predictions about the future. However, one thing is certain: change is coming, and the need to be flexible in response to this will be vital for those involved in manufacturing the vehicles that will deliver future mobility.</p>
+        <p class="tip">Tip: select any text on this page (passage or questions) to highlight it — the text stays selected afterwards so you can copy it too. Click a highlight to remove it.</p>
+      </div>
+
+      <div class="passage-block" id="passage-block-3" data-passage="3">
+        <h2>Reading Passage: What is exploration?</h2>
+        <p>We are all explorers. Our desire to discover, and then share that new-found knowledge, is part of what makes us human – indeed, this has played an important part in our success as a species. Long before the first caveman slumped down beside the fire and grunted news that there were plenty of wildebeest over yonder, our ancestors had learnt the value of sending out scouts to investigate the unknown. This questing nature of ours undoubtedly helped our species spread around the globe, just as it nowadays no doubt helps the last nomadic Penan maintain their existence in the depleted forests of Borneo, and a visitor negotiate the subways of New York.</p>
+        <p>Over the years, we’ve come to think of explorers as a peculiar breed – different from the rest of us, different from those of us who are merely ‘well travelled’, even; and perhaps there is a type of person more suited to seeking out the new, a type of caveman more inclined to risk venturing out. That, however, doesn’t take away from the fact that we all have this enquiring instinct, even today; and that in all sorts of professions – whether artist, marine biologist or astronomer – borders of the unknown are being tested each day.</p>
+        <p>Thomas Hardy set some of his novels in Egdon Heath, a fictional area of uncultivated land, and used the landscape to suggest the desires and fears of his characters. He is delving into matters we all recognise because they are common to humanity. This is surely an act of exploration, and into a world as remote as the author chooses. Explorer and travel writer Peter Fleming talks of the moment when the explorer returns to the existence he has left behind with his loved ones. The traveller ‘who has for weeks or months seen himself only as a puny and irrelevant alien crawling laboriously over a country in which he has no roots and no background, suddenly encounters his other self, a relatively solid figure, with a place in the minds of certain people’.</p>
+        <p>In this book about the exploration of the earth’s surface, I have confined myself to those whose travels were real and who also aimed at more than personal discovery. But that still left me with another problem: the word ‘explorer’ has become associated with a past era. We think back to a golden age, as if exploration peaked somehow in the 19th century – as if the process of discovery is now on the decline, though the truth is that we have named only one and a half million of this planet’s species, and there may be more than 10 million – and that’s not including bacteria. We have studied only 5 per cent of the species we know. We have scarcely mapped the ocean floors, and know even less about ourselves; we fully understand the workings of only 10 per cent of our brains.</p>
+        <p>Here is how some of today’s ‘explorers’ define the word. Ran Fiennes, dubbed the ‘greatest living explorer’, said, ‘An explorer is someone who has done something that no human has done before – and also done something scientifically useful.’ Chris Bonington, a leading mountaineer, felt exploration was to be found in the act of physically touching the unknown: ‘You have to have gone somewhere new.’ Then Robin Hanbury-Tenison, a campaigner on behalf of remote so-called ‘tribal’ peoples, said, ‘A traveller simply records information about some far-off world, and reports back; but an explorer changes the world.’ Wilfred Thesiger, who crossed Arabia’s Empty Quarter in 1946, and belongs to an era of unmechanised travel now lost to the rest of us, told me, ‘If I’d gone across by camel when I could have gone by car, it would have been a stunt.’ To him, exploration meant bringing back information from a remote place regardless of any great self-discovery.</p>
+        <p>Each definition is slightly different – and tends to reflect the field of endeavour of each pioneer. It was the same whoever I asked: the prominent historian would say exploration was a thing of the past, the cutting-edge scientist would say it was of the present. And so on. They each set their own particular criteria; the common factor in their approach being that they all had, unlike many of us who simply enjoy travel or discovering new things, both a very definite objective from the outset and also a desire to record their findings.</p>
+        <p>I’d best declare my own bias. As a writer, I’m interested in the exploration of ideas. I’ve done a great many expeditions and each one was unique. I’ve lived for months alone with isolated groups of people all around the world, even two ‘uncontacted tribes’. But none of these things is of the slightest interest to anyone unless, through my books, I’ve found a new slant, explored a new idea. Why? Because the world has moved on. The time has long passed for the great continental voyages – another walk to the poles, another crossing of the Empty Quarter. We know how the land surface of our planet lies; exploration of it is now down to the details – the habits of microbes, say, or the grazing behaviour of buffalo. Aside from the deep sea and deep underground, it’s the era of specialists. However, this is to disregard the role the human mind has in conveying remote places; and this is what interests me: how a fresh interpretation, even of a well-travelled route, can give its readers new insights.</p>
+        <p class="tip">Tip: select any text on this page (passage or questions) to highlight it — the text stays selected afterwards so you can copy it too. Click a highlight to remove it.</p>
+      </div>
+    </div>
+
+    <!-- QUESTIONS -->
+    <div class="questions-pane">
+      <!-- ===== PASSAGE 1 QUESTIONS (unchanged from Demo 01) ===== -->
+      <div class="question-group active" id="question-group-1" data-passage="1">
+        <div id="questions-content">
+          <div class="q-section-title">Questions 1–4</div>
+          <div class="q-section-sub">Complete the notes below. Choose ONE WORD ONLY from the passage for each answer.</div>
+
+          <div class="summary-block">
+            <strong>The nutmeg tree and fruit</strong><br><br>
+            &bull; the leaves of the tree are <span id="qwrap-1"><strong>1.</strong> <input type="text" class="blank-input" id="q1" data-qnum="1"></span> in shape<br>
+            &bull; the <span id="qwrap-2"><strong>2.</strong> <input type="text" class="blank-input" id="q2" data-qnum="2"></span> surrounds the fruit and breaks open when the fruit is ripe<br>
+            &bull; the <span id="qwrap-3"><strong>3.</strong> <input type="text" class="blank-input" id="q3" data-qnum="3"></span> is used to produce the spice nutmeg<br>
+            &bull; the covering known as the aril is used to produce <span id="qwrap-4"><strong>4.</strong> <input type="text" class="blank-input" id="q4" data-qnum="4"></span><br>
+            &bull; the tree has yellow flowers and fruit
+          </div>
+
+          <div class="q-section-title">Questions 5–7</div>
+          <div class="q-section-sub">Do the following statements agree with the information given in Reading Passage 1? Choose TRUE, FALSE, or NOT GIVEN.</div>
+
+          <div class="q-block" id="qwrap-5">
+            <div class="q-text"><span class="q-number">5.</span>In the Middle Ages, most Europeans knew where nutmeg was grown.</div>
+            <div class="tfn-options" data-qnum="5"></div>
+          </div>
+          <div class="q-block" id="qwrap-6">
+            <div class="q-text"><span class="q-number">6.</span>The VOC was the world’s first major trading company.</div>
+            <div class="tfn-options" data-qnum="6"></div>
+          </div>
+          <div class="q-block" id="qwrap-7">
+            <div class="q-text"><span class="q-number">7.</span>Following the Treaty of Breda, the Dutch had control of all the islands where nutmeg grew.</div>
+            <div class="tfn-options" data-qnum="7"></div>
+          </div>
+
+          <div class="q-section-title">Questions 8–13</div>
+          <div class="q-section-sub">Complete the table below. Choose ONE WORD ONLY from the passage for each answer.</div>
+
+          <div style="overflow-x: auto;">
+          <table class="fill-table">
+            <thead>
+              <tr><th>Period</th><th>Event</th></tr>
+            </thead>
+            <tbody>
+              <tr id="qwrap-8"><td>Middle Ages</td><td>Nutmeg was brought to Europe by the <strong>8.</strong> <input type="text" id="q8" data-qnum="8"></td></tr>
+              <tr><td>16th century</td><td>European nations took control of the nutmeg trade</td></tr>
+              <tr id="qwrap-9"><td>17th century</td><td>Demand for nutmeg grew, as it was believed to be effective against the disease known as the <strong>9.</strong> <input type="text" id="q9" data-qnum="9"></td></tr>
+              <tr><td>The Dutch</td><td>took control of the Banda Islands</td></tr>
+              <tr><td>The Dutch</td><td>restricted nutmeg production to a few areas</td></tr>
+              <tr id="qwrap-10"><td>The Dutch</td><td>put <strong>10.</strong> <input type="text" id="q10" data-qnum="10"> on nutmeg to avoid it being cultivated outside the islands</td></tr>
+              <tr id="qwrap-11"><td>The Dutch</td><td>finally obtained the island of <strong>11.</strong> <input type="text" id="q11" data-qnum="11"> from the British</td></tr>
+              <tr id="qwrap-12"><td>Late 18th century</td><td>1770 – nutmeg plants were secretly taken to <strong>12.</strong> <input type="text" id="q12" data-qnum="12"></td></tr>
+              <tr id="qwrap-13"><td>Late 18th century</td><td>1778 – half the Banda Islands’ nutmeg plantations were destroyed by a <strong>13.</strong> <input type="text" id="q13" data-qnum="13"></td></tr>
+            </tbody>
+          </table>
+          </div>
+
+          <div style="height: 30px;"></div>
+        </div>
+      </div>
+
+      <!-- ===== PASSAGE 2 QUESTIONS ===== -->
+      <div class="question-group" id="question-group-2" data-passage="2">
+        <div class="q-section-title">Questions 14–18</div>
+        <div class="q-section-sub">Reading Passage 2 has seven paragraphs, A-G. Which section contains the following information?</div>
+
+        <div class="matching-grid-wrap">
+        <table class="matching-grid">
+          <thead>
+            <tr><th class="mg-blank"></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>G</th></tr>
+          </thead>
+          <tbody>
+            <tr id="qwrap-14" data-qnum="14">
+              <td class="mg-question"><span class="q-number">14</span>reference to the amount of time when a car is not in use</td>
+              <td class="mg-cell"><input type="radio" name="q14" value="A" class="matching-input choice-input" data-qnum="14"></td>
+              <td class="mg-cell"><input type="radio" name="q14" value="B" class="matching-input choice-input" data-qnum="14"></td>
+              <td class="mg-cell"><input type="radio" name="q14" value="C" class="matching-input choice-input" data-qnum="14"></td>
+              <td class="mg-cell"><input type="radio" name="q14" value="D" class="matching-input choice-input" data-qnum="14"></td>
+              <td class="mg-cell"><input type="radio" name="q14" value="E" class="matching-input choice-input" data-qnum="14"></td>
+              <td class="mg-cell"><input type="radio" name="q14" value="F" class="matching-input choice-input" data-qnum="14"></td>
+              <td class="mg-cell"><input type="radio" name="q14" value="G" class="matching-input choice-input" data-qnum="14"></td>
+            </tr>
+            <tr id="qwrap-15" data-qnum="15">
+              <td class="mg-question"><span class="q-number">15</span>mention of several advantages of driverless vehicles for individual road-users</td>
+              <td class="mg-cell"><input type="radio" name="q15" value="A" class="matching-input choice-input" data-qnum="15"></td>
+              <td class="mg-cell"><input type="radio" name="q15" value="B" class="matching-input choice-input" data-qnum="15"></td>
+              <td class="mg-cell"><input type="radio" name="q15" value="C" class="matching-input choice-input" data-qnum="15"></td>
+              <td class="mg-cell"><input type="radio" name="q15" value="D" class="matching-input choice-input" data-qnum="15"></td>
+              <td class="mg-cell"><input type="radio" name="q15" value="E" class="matching-input choice-input" data-qnum="15"></td>
+              <td class="mg-cell"><input type="radio" name="q15" value="F" class="matching-input choice-input" data-qnum="15"></td>
+              <td class="mg-cell"><input type="radio" name="q15" value="G" class="matching-input choice-input" data-qnum="15"></td>
+            </tr>
+            <tr id="qwrap-16" data-qnum="16">
+              <td class="mg-question"><span class="q-number">16</span>reference to the opportunity of choosing the most appropriate vehicle for each trip</td>
+              <td class="mg-cell"><input type="radio" name="q16" value="A" class="matching-input choice-input" data-qnum="16"></td>
+              <td class="mg-cell"><input type="radio" name="q16" value="B" class="matching-input choice-input" data-qnum="16"></td>
+              <td class="mg-cell"><input type="radio" name="q16" value="C" class="matching-input choice-input" data-qnum="16"></td>
+              <td class="mg-cell"><input type="radio" name="q16" value="D" class="matching-input choice-input" data-qnum="16"></td>
+              <td class="mg-cell"><input type="radio" name="q16" value="E" class="matching-input choice-input" data-qnum="16"></td>
+              <td class="mg-cell"><input type="radio" name="q16" value="F" class="matching-input choice-input" data-qnum="16"></td>
+              <td class="mg-cell"><input type="radio" name="q16" value="G" class="matching-input choice-input" data-qnum="16"></td>
+            </tr>
+            <tr id="qwrap-17" data-qnum="17">
+              <td class="mg-question"><span class="q-number">17</span>an estimate of how long it will take to overcome a number of problems</td>
+              <td class="mg-cell"><input type="radio" name="q17" value="A" class="matching-input choice-input" data-qnum="17"></td>
+              <td class="mg-cell"><input type="radio" name="q17" value="B" class="matching-input choice-input" data-qnum="17"></td>
+              <td class="mg-cell"><input type="radio" name="q17" value="C" class="matching-input choice-input" data-qnum="17"></td>
+              <td class="mg-cell"><input type="radio" name="q17" value="D" class="matching-input choice-input" data-qnum="17"></td>
+              <td class="mg-cell"><input type="radio" name="q17" value="E" class="matching-input choice-input" data-qnum="17"></td>
+              <td class="mg-cell"><input type="radio" name="q17" value="F" class="matching-input choice-input" data-qnum="17"></td>
+              <td class="mg-cell"><input type="radio" name="q17" value="G" class="matching-input choice-input" data-qnum="17"></td>
+            </tr>
+            <tr id="qwrap-18" data-qnum="18">
+              <td class="mg-question"><span class="q-number">18</span>a suggestion that the use of driverless cars may have no effect on the number of vehicles manufactured</td>
+              <td class="mg-cell"><input type="radio" name="q18" value="A" class="matching-input choice-input" data-qnum="18"></td>
+              <td class="mg-cell"><input type="radio" name="q18" value="B" class="matching-input choice-input" data-qnum="18"></td>
+              <td class="mg-cell"><input type="radio" name="q18" value="C" class="matching-input choice-input" data-qnum="18"></td>
+              <td class="mg-cell"><input type="radio" name="q18" value="D" class="matching-input choice-input" data-qnum="18"></td>
+              <td class="mg-cell"><input type="radio" name="q18" value="E" class="matching-input choice-input" data-qnum="18"></td>
+              <td class="mg-cell"><input type="radio" name="q18" value="F" class="matching-input choice-input" data-qnum="18"></td>
+              <td class="mg-cell"><input type="radio" name="q18" value="G" class="matching-input choice-input" data-qnum="18"></td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="q-section-title">Questions 19–22</div>
+        <div class="q-section-sub">Complete the summary below. Choose NO MORE THAN TWO WORDS from the passage for each answer.</div>
+
+        <div class="summary-block">
+          <strong>The impact of driverless cars</strong><br><br>
+          Figures from the Transport Research Laboratory indicate that most motor accidents are partly due to <span id="qwrap-19"><strong>19.</strong> <input type="text" class="blank-input" id="q19" data-qnum="19"></span>, so the introduction of driverless vehicles will result in greater safety. In addition to the direct benefits of automation, it may bring other advantages. For example, schemes for <span id="qwrap-20"><strong>20.</strong> <input type="text" class="blank-input" id="q20" data-qnum="20"></span> will be more workable, especially in towns and cities, resulting in fewer cars on the road.
+          <br><br>
+          According to the University of Michigan Transportation Research Institute, there could be a 43 percent drop in <span id="qwrap-21"><strong>21.</strong> <input type="text" class="blank-input" id="q21" data-qnum="21"></span> of cars. However, this would mean that the yearly <span id="qwrap-22"><strong>22.</strong> <input type="text" class="blank-input" id="q22" data-qnum="22"></span> of each car would, on average, be twice as high as it currently is. This would lead to a higher turnover of vehicles, and therefore no reduction in automotive manufacturing.
+        </div>
+
+        <div class="q-section-title">Questions 23 and 24</div>
+        <div class="q-section-sub">Choose TWO letters, A&ndash;E.</div>
+
+        <div class="q-block" id="qwrap-23-24">
+          <div class="q-text"><span class="q-number">23&ndash;24.</span>Which <strong class="emph">TWO</strong> benefits of automated vehicles does the writer mention?</div>
+          <div class="checkbox-options" id="choose-two-group-1">
+            <label><input type="checkbox" value="A" class="choose-two-input"><span class="opt-text">A. Car travellers could enjoy considerable cost savings.</span></label>
+            <label><input type="checkbox" value="B" class="choose-two-input"><span class="opt-text">B. It would be easier to find parking spaces in urban areas.</span></label>
+            <label><input type="checkbox" value="C" class="choose-two-input"><span class="opt-text">C. Travellers could spend journeys doing something other than driving.</span></label>
+            <label><input type="checkbox" value="D" class="choose-two-input"><span class="opt-text">D. People who find driving physically difficult could travel independently.</span></label>
+            <label><input type="checkbox" value="E" class="choose-two-input"><span class="opt-text">E. A reduction in the number of cars would mean a reduction in pollution.</span></label>
+          </div>
+          <div class="choose-two-hint">Select two options. Each correct option earns 1 mark (Q23–Q24: 2 marks in total).</div>
+        </div>
+
+        <div class="q-section-title">Questions 25 and 26</div>
+        <div class="q-section-sub">Choose TWO letters, A&ndash;E.</div>
+
+        <div class="q-block" id="qwrap-25-26">
+          <div class="q-text"><span class="q-number">25&ndash;26.</span>Which <strong class="emph">TWO</strong> challenges to automated vehicle development does the writer mention?</div>
+          <div class="checkbox-options" id="choose-two-group-2">
+            <label><input type="checkbox" value="A" class="choose-two-input"><span class="opt-text">A. making sure the general public has confidence in automated vehicles</span></label>
+            <label><input type="checkbox" value="B" class="choose-two-input"><span class="opt-text">B. managing the pace of transition from conventional to automated vehicles</span></label>
+            <label><input type="checkbox" value="C" class="choose-two-input"><span class="opt-text">C. deciding how to compensate professional drivers who become redundant</span></label>
+            <label><input type="checkbox" value="D" class="choose-two-input"><span class="opt-text">D. setting up the infrastructure to make roads suitable for automated vehicles</span></label>
+            <label><input type="checkbox" value="E" class="choose-two-input"><span class="opt-text">E. getting automated vehicles to adapt to various different driving conditions</span></label>
+          </div>
+          <div class="choose-two-hint">Select two options. Each correct option earns 1 mark (Q25–Q26: 2 marks in total).</div>
+        </div>
+
+        <div style="height: 30px;"></div>
+      </div>
+
+      <!-- ===== PASSAGE 3 QUESTIONS ===== -->
+      <div class="question-group" id="question-group-3" data-passage="3">
+        <div class="q-section-title">Questions 27–32</div>
+        <div class="q-section-sub">Choose the correct letter, A, B, C or D.</div>
+
+        <div class="q-block" id="qwrap-27">
+          <div class="q-text"><span class="q-number">27.</span>The writer refers to visitors to New York to illustrate the point that</div>
+          <div class="mcq-options" data-qnum="27">
+            <label><input type="radio" name="q27" value="A" class="choice-input" data-qnum="27"><span class="opt-text">A. exploration is an intrinsic element of being human.</span></label>
+            <label><input type="radio" name="q27" value="B" class="choice-input" data-qnum="27"><span class="opt-text">B. most people are enthusiastic about exploring.</span></label>
+            <label><input type="radio" name="q27" value="C" class="choice-input" data-qnum="27"><span class="opt-text">C. exploration can lead to surprising results.</span></label>
+            <label><input type="radio" name="q27" value="D" class="choice-input" data-qnum="27"><span class="opt-text">D. most people find exploration daunting.</span></label>
+          </div>
+        </div>
+
+        <div class="q-block" id="qwrap-28">
+          <div class="q-text"><span class="q-number">28.</span>According to the second paragraph, what is the writer’s view of explorers?</div>
+          <div class="mcq-options" data-qnum="28">
+            <label><input type="radio" name="q28" value="A" class="choice-input" data-qnum="28"><span class="opt-text">A. Their discoveries have brought both benefits and disadvantages.</span></label>
+            <label><input type="radio" name="q28" value="B" class="choice-input" data-qnum="28"><span class="opt-text">B. Their main value is in teaching others.</span></label>
+            <label><input type="radio" name="q28" value="C" class="choice-input" data-qnum="28"><span class="opt-text">C. They act on an urge that is common to everyone.</span></label>
+            <label><input type="radio" name="q28" value="D" class="choice-input" data-qnum="28"><span class="opt-text">D. They tend to be more attracted to certain professions than to others.</span></label>
+          </div>
+        </div>
+
+        <div class="q-block" id="qwrap-29">
+          <div class="q-text"><span class="q-number">29.</span>The writer refers to a description of Egdon Heath to suggest that</div>
+          <div class="mcq-options" data-qnum="29">
+            <label><input type="radio" name="q29" value="A" class="choice-input" data-qnum="29"><span class="opt-text">A. Hardy was writing about his own experience of exploration.</span></label>
+            <label><input type="radio" name="q29" value="B" class="choice-input" data-qnum="29"><span class="opt-text">B. Hardy was mistaken about the nature of exploration.</span></label>
+            <label><input type="radio" name="q29" value="C" class="choice-input" data-qnum="29"><span class="opt-text">C. Hardy’s aim was to investigate people’s emotional states.</span></label>
+            <label><input type="radio" name="q29" value="D" class="choice-input" data-qnum="29"><span class="opt-text">D. Hardy’s aim was to show the attraction of isolation.</span></label>
+          </div>
+        </div>
+
+        <div class="q-block" id="qwrap-30">
+          <div class="q-text"><span class="q-number">30.</span>In the fourth paragraph, the writer refers to ‘a golden age’ to suggest that</div>
+          <div class="mcq-options" data-qnum="30">
+            <label><input type="radio" name="q30" value="A" class="choice-input" data-qnum="30"><span class="opt-text">A. the amount of useful information produced by exploration has decreased.</span></label>
+            <label><input type="radio" name="q30" value="B" class="choice-input" data-qnum="30"><span class="opt-text">B. fewer people are interested in exploring than in the 19th century.</span></label>
+            <label><input type="radio" name="q30" value="C" class="choice-input" data-qnum="30"><span class="opt-text">C. recent developments have made exploration less exciting.</span></label>
+            <label><input type="radio" name="q30" value="D" class="choice-input" data-qnum="30"><span class="opt-text">D. we are wrong to think that exploration is no longer necessary.</span></label>
+          </div>
+        </div>
+
+        <div class="q-block" id="qwrap-31">
+          <div class="q-text"><span class="q-number">31.</span>In the sixth paragraph, when discussing the definition of exploration, the writer argues that</div>
+          <div class="mcq-options" data-qnum="31">
+            <label><input type="radio" name="q31" value="A" class="choice-input" data-qnum="31"><span class="opt-text">A. people tend to relate exploration to their own professional interests.</span></label>
+            <label><input type="radio" name="q31" value="B" class="choice-input" data-qnum="31"><span class="opt-text">B. certain people are likely to misunderstand the nature of exploration.</span></label>
+            <label><input type="radio" name="q31" value="C" class="choice-input" data-qnum="31"><span class="opt-text">C. the generally accepted definition has changed over time.</span></label>
+            <label><input type="radio" name="q31" value="D" class="choice-input" data-qnum="31"><span class="opt-text">D. historians and scientists have more valid definitions than the general public.</span></label>
+          </div>
+        </div>
+
+        <div class="q-block" id="qwrap-32">
+          <div class="q-text"><span class="q-number">32.</span>In the last paragraph, the writer explains that he is interested in</div>
+          <div class="mcq-options" data-qnum="32">
+            <label><input type="radio" name="q32" value="A" class="choice-input" data-qnum="32"><span class="opt-text">A. how someone’s personality is reflected in their choice of places to visit.</span></label>
+            <label><input type="radio" name="q32" value="B" class="choice-input" data-qnum="32"><span class="opt-text">B. the human ability to cast new light on places that may be familiar.</span></label>
+            <label><input type="radio" name="q32" value="C" class="choice-input" data-qnum="32"><span class="opt-text">C. how travel writing has evolved to meet changing demands.</span></label>
+            <label><input type="radio" name="q32" value="D" class="choice-input" data-qnum="32"><span class="opt-text">D. the feelings that writers develop about the places that they explore.</span></label>
+          </div>
+        </div>
+
+        <div class="q-section-title">Questions 33–37</div>
+        <div class="q-section-sub">Look at the following statements and the list of explorers below. Match each statement with the correct explorer, A&ndash;E. NB You may use any letter more than once.</div>
+
+        <div class="wordbank-box">
+          <div class="wb-title">List of Explorers</div>
+          <div style="font-size: 13.5px; line-height: 1.8;">
+            A. Peter Fleming &nbsp;&nbsp; B. Ran Fiennes &nbsp;&nbsp; C. Chris Bonington &nbsp;&nbsp; D. Robin Hanbury-Tenison &nbsp;&nbsp; E. Wilfred Thesiger
+          </div>
+        </div>
+
+        <div class="matching-grid-wrap">
+        <table class="matching-grid">
+          <thead>
+            <tr><th class="mg-blank"></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th></tr>
+          </thead>
+          <tbody>
+            <tr id="qwrap-33" data-qnum="33">
+              <td class="mg-question"><span class="q-number">33</span>He referred to the relevance of the form of transport used.</td>
+              <td class="mg-cell"><input type="radio" name="q33" value="A" class="matching-input choice-input" data-qnum="33"></td>
+              <td class="mg-cell"><input type="radio" name="q33" value="B" class="matching-input choice-input" data-qnum="33"></td>
+              <td class="mg-cell"><input type="radio" name="q33" value="C" class="matching-input choice-input" data-qnum="33"></td>
+              <td class="mg-cell"><input type="radio" name="q33" value="D" class="matching-input choice-input" data-qnum="33"></td>
+              <td class="mg-cell"><input type="radio" name="q33" value="E" class="matching-input choice-input" data-qnum="33"></td>
+            </tr>
+            <tr id="qwrap-34" data-qnum="34">
+              <td class="mg-question"><span class="q-number">34</span>He described feelings on coming back home after a long journey.</td>
+              <td class="mg-cell"><input type="radio" name="q34" value="A" class="matching-input choice-input" data-qnum="34"></td>
+              <td class="mg-cell"><input type="radio" name="q34" value="B" class="matching-input choice-input" data-qnum="34"></td>
+              <td class="mg-cell"><input type="radio" name="q34" value="C" class="matching-input choice-input" data-qnum="34"></td>
+              <td class="mg-cell"><input type="radio" name="q34" value="D" class="matching-input choice-input" data-qnum="34"></td>
+              <td class="mg-cell"><input type="radio" name="q34" value="E" class="matching-input choice-input" data-qnum="34"></td>
+            </tr>
+            <tr id="qwrap-35" data-qnum="35">
+              <td class="mg-question"><span class="q-number">35</span>He worked for the benefit of specific groups of people.</td>
+              <td class="mg-cell"><input type="radio" name="q35" value="A" class="matching-input choice-input" data-qnum="35"></td>
+              <td class="mg-cell"><input type="radio" name="q35" value="B" class="matching-input choice-input" data-qnum="35"></td>
+              <td class="mg-cell"><input type="radio" name="q35" value="C" class="matching-input choice-input" data-qnum="35"></td>
+              <td class="mg-cell"><input type="radio" name="q35" value="D" class="matching-input choice-input" data-qnum="35"></td>
+              <td class="mg-cell"><input type="radio" name="q35" value="E" class="matching-input choice-input" data-qnum="35"></td>
+            </tr>
+            <tr id="qwrap-36" data-qnum="36">
+              <td class="mg-question"><span class="q-number">36</span>He did not consider learning about oneself an essential part of exploration.</td>
+              <td class="mg-cell"><input type="radio" name="q36" value="A" class="matching-input choice-input" data-qnum="36"></td>
+              <td class="mg-cell"><input type="radio" name="q36" value="B" class="matching-input choice-input" data-qnum="36"></td>
+              <td class="mg-cell"><input type="radio" name="q36" value="C" class="matching-input choice-input" data-qnum="36"></td>
+              <td class="mg-cell"><input type="radio" name="q36" value="D" class="matching-input choice-input" data-qnum="36"></td>
+              <td class="mg-cell"><input type="radio" name="q36" value="E" class="matching-input choice-input" data-qnum="36"></td>
+            </tr>
+            <tr id="qwrap-37" data-qnum="37">
+              <td class="mg-question"><span class="q-number">37</span>He defined exploration as being both unique and of value to others.</td>
+              <td class="mg-cell"><input type="radio" name="q37" value="A" class="matching-input choice-input" data-qnum="37"></td>
+              <td class="mg-cell"><input type="radio" name="q37" value="B" class="matching-input choice-input" data-qnum="37"></td>
+              <td class="mg-cell"><input type="radio" name="q37" value="C" class="matching-input choice-input" data-qnum="37"></td>
+              <td class="mg-cell"><input type="radio" name="q37" value="D" class="matching-input choice-input" data-qnum="37"></td>
+              <td class="mg-cell"><input type="radio" name="q37" value="E" class="matching-input choice-input" data-qnum="37"></td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="q-section-title">Questions 38–40</div>
+        <div class="q-section-sub">Complete the summary below. Choose NO MORE THAN TWO WORDS from the passage for each answer.</div>
+
+        <div class="summary-block">
+          <strong>The writer’s own bias</strong><br><br>
+          The writer has experience of a large number of <span id="qwrap-38"><strong>38.</strong> <input type="text" class="blank-input" id="q38" data-qnum="38"></span>, and was the first stranger that certain previously <span id="qwrap-39"><strong>39.</strong> <input type="text" class="blank-input" id="q39" data-qnum="39"></span> people had encountered. He believes there is no need for further exploration of Earth’s <span id="qwrap-40"><strong>40.</strong> <input type="text" class="blank-input" id="q40" data-qnum="40"></span>, except to answer specific questions such as how buffalo eat.
+        </div>
+
+        <div style="height: 30px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-nav" id="footer-nav">
+    <div class="footer-nav-part">
+      <div class="footer-nav-part-label">Part 1</div>
+      <div class="nav-grid-wrap"><div class="nav-grid" id="nav-grid-1"></div></div>
+    </div>
+    <div class="footer-nav-part">
+      <div class="footer-nav-part-label">Part 2</div>
+      <div class="nav-grid-wrap"><div class="nav-grid" id="nav-grid-2"></div></div>
+    </div>
+    <div class="footer-nav-part">
+      <div class="footer-nav-part-label">Part 3</div>
+      <div class="nav-grid-wrap"><div class="nav-grid" id="nav-grid-3"></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  // ---------- CONFIG ----------
+  var ANSWER_KEY = {
+    1: "oval", 2: "husk", 3: "seed", 4: "mace",
+    5: "FALSE", 6: "NOT GIVEN", 7: "TRUE",
+    8: "Arabs", 9: "plague", 10: "lime", 11: "Run", 12: "Mauritius", 13: "tsunami",
+    14: "C", 15: "B", 16: "E", 17: "G", 18: "D",
+    19: "human error", 20: "car-sharing", 21: "ownership", 22: "mileage",
+    23: "C", 24: "D", 25: "A", 26: "E",
+    27: "A", 28: "C", 29: "C", 30: "D", 31: "A", 32: "B",
+    33: "E", 34: "A", 35: "D", 36: "E", 37: "B",
+    38: "expeditions", 39: "uncontacted", 40: "surface"
+  };
+
+  var ANSWER_ALTERNATES = {
+    20: ["car sharing"],
+    38: ["unique expeditions"],
+    39: ["isolated"],
+    40: ["land surface"]
+  };
+
+  var QUESTION_TYPE = {};
+  [1,2,3,4].forEach(function (q) { QUESTION_TYPE[q] = "fill"; });
+  [5,6,7].forEach(function (q) { QUESTION_TYPE[q] = "tfn"; });
+  [8,9,10,11,12,13].forEach(function (q) { QUESTION_TYPE[q] = "fill"; });
+  [14,15,16,17,18].forEach(function (q) { QUESTION_TYPE[q] = "matching"; });
+  [19,20,21,22].forEach(function (q) { QUESTION_TYPE[q] = "fill"; });
+  [23,24,25,26].forEach(function (q) { QUESTION_TYPE[q] = "choose2"; });
+  [27,28,29,30,31,32].forEach(function (q) { QUESTION_TYPE[q] = "mcq"; });
+  [33,34,35,36,37].forEach(function (q) { QUESTION_TYPE[q] = "matching"; });
+  [38,39,40].forEach(function (q) { QUESTION_TYPE[q] = "fill"; });
+
+  var CHOOSE_TWO_GROUPS = [
+    { qnums: [23, 24] },
+    { qnums: [25, 26] }
+  ];
+
+  var QUESTION_PASSAGE = {};
+  for (var qi = 1; qi <= 13; qi++) QUESTION_PASSAGE[qi] = 1;
+  for (qi = 14; qi <= 26; qi++) QUESTION_PASSAGE[qi] = 2;
+  for (qi = 27; qi <= 40; qi++) QUESTION_PASSAGE[qi] = 3;
+
+  var PASSAGE_LABEL = { 1: "Part 1", 2: "Part 2", 3: "Part 3" };
+
+  var TOTAL_QUESTIONS = 40;
+  var TEST_DURATION_SECONDS = 60 * 60;
+  var TEST_ID = "C15-R-T1";
+
+  // Paste the Web app URL you get after deploying Code.gs (Deploy > New
+  // deployment > Web app) here. Results won't reach Google Sheets until
+  // this is filled in.
+  var WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx0D3k0wJQ9fHtR0kVWDZw0qsvSbrj7WA6AqIJh8F4t5_ZvPs-Mx5X3QVXueko68fKS/exec";
+  var TFN_OPTIONS = ["TRUE", "FALSE", "NOT GIVEN"];
+  var WORDBANK = [];
+
+  var STORAGE_KEY = "ielts_reading_attempts_v1";
+
+  // ---------- STATE ----------
+  var state = {
+    studentName: "",
+    answers: {},
+    remainingSeconds: TEST_DURATION_SECONDS,
+    timerHandle: null,
+    submitted: false,
+    currentPassage: 1,
+    mode: "live", // "live" while taking the test, "review" while viewing a saved attempt
+    confirmedNormalizedName: "" // set once the student passes the name-confirmation step
+  };
+
+  var els = {};
+
+  function pad2(n) { return n < 10 ? "0" + n : "" + n; }
+
+  function formatTime(totalSeconds) {
+    var m = Math.floor(totalSeconds / 60);
+    var s = totalSeconds % 60;
+    return pad2(m) + ":" + pad2(s);
+  }
+
+  function normalize(str) {
+    return (str || "").toString().trim().toLowerCase().replace(/\s+/g, " ");
+  }
+
+  // ---------- STUDENT NAME VALIDATION (Vietnamese, with diacritics) ----------
+  var VN_DIACRITIC_CHARS =
+    "àáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ" +
+    "ÀÁẢÃẠĂẰẮẲẴẶÂẦẤẨẪẬÈÉẺẼẸÊỀẾỂỄỆÌÍỈĨỊÒÓỎÕỌÔỒỐỔỖỘƠỜỚỞỠỢÙÚỦŨỤƯỪỨỬỮỰỲÝỶỸỴĐ";
+  var VN_DIACRITIC_REGEX = new RegExp("[" + VN_DIACRITIC_CHARS + "]");
+  var ALLOWED_NAME_CHARS_REGEX = new RegExp("^[A-Za-z" + VN_DIACRITIC_CHARS + "\\s]+$");
+
+  function toVietnameseTitleCase(name) {
+    return name.split(" ").filter(Boolean).map(function (word) {
+      var lower = word.toLowerCase();
+      return lower.charAt(0).toUpperCase() + lower.slice(1);
+    }).join(" ");
+  }
+
+  function validateStudentName(rawName) {
+    var trimmed = (rawName || "").toString().replace(/\s+/g, " ").trim();
+    if (!trimmed) {
+      return { valid: false, error: "Vui lòng nhập họ và tên của bạn." };
+    }
+    var words = trimmed.split(" ");
+    if (words.length < 2) {
+      return { valid: false, error: "Vui lòng nhập đầy đủ họ và tên (ví dụ: Phạm Thị Hương)." };
+    }
+    if (!ALLOWED_NAME_CHARS_REGEX.test(trimmed)) {
+      return { valid: false, error: "Họ tên chỉ được chứa chữ cái và khoảng trắng, không chứa số hoặc ký tự đặc biệt." };
+    }
+    if (!VN_DIACRITIC_REGEX.test(trimmed)) {
+      return { valid: false, error: "Vui lòng nhập họ tên có đầy đủ dấu tiếng Việt (ví dụ: Phạm Thị Hương, không phải Pham Thi Huong)." };
+    }
+    return { valid: true, normalized: toVietnameseTitleCase(trimmed) };
+  }
+
+  function nameMatchKey(displayName) {
+    return normalize(displayName);
+  }
+
+  // ---------- SAVED ATTEMPTS (localStorage) ----------
+  function loadAllAttempts() {
+    try {
+      var raw = window.localStorage.getItem(STORAGE_KEY);
+      var parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+      console.error("Could not read saved attempts from localStorage:", e);
+      return [];
+    }
+  }
+
+  function saveAttempt(attempt) {
+    try {
+      var all = loadAllAttempts();
+      all.push(attempt);
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+      return true;
+    } catch (e) {
+      console.error("Could not save this attempt to localStorage:", e);
+      return false;
+    }
+  }
+
+  function findAttemptsFor(testId, normalizedName) {
+    return loadAllAttempts().filter(function (a) {
+      return a.testId === testId && a.normalizedStudentName === normalizedName;
+    }).sort(function (a, b) {
+      return new Date(a.submittedAt) - new Date(b.submittedAt);
+    });
+  }
+
+  function makeAttemptId() {
+    return "att_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 9);
+  }
+
+  function formatDateVN(isoString) {
+    var d = new Date(isoString);
+    if (isNaN(d.getTime())) return isoString;
+    var dd = pad2(d.getDate());
+    var mm = pad2(d.getMonth() + 1);
+    var yyyy = d.getFullYear();
+    return dd + "/" + mm + "/" + yyyy;
+  }
+
+  function formatDurationVN(totalSeconds) {
+    var m = Math.floor(totalSeconds / 60);
+    var s = totalSeconds % 60;
+    if (m <= 0) return s + " giây";
+    return m + " phút " + s + " giây";
+  }
+
+  function getBlockId(qnum) {
+    for (var gi = 0; gi < CHOOSE_TWO_GROUPS.length; gi++) {
+      if (CHOOSE_TWO_GROUPS[gi].qnums.indexOf(qnum) !== -1) {
+        return "qwrap-" + CHOOSE_TWO_GROUPS[gi].qnums.join("-");
+      }
+    }
+    return "qwrap-" + qnum;
+  }
+
+  // ---------- STEP 1: ENTRY FLOW (nhập họ tên -> xác nhận -> chọn hành động) ----------
+  function showEntryStep(stepName) {
+    els.entryStepName.classList.toggle("hidden", stepName !== "name");
+    els.entryStepConfirm.classList.toggle("hidden", stepName !== "confirm");
+    els.entryStepActions.classList.toggle("hidden", stepName !== "actions");
+  }
+
+  function handleNameContinue() {
+    var result = validateStudentName(els.nameInput.value);
+    if (!result.valid) {
+      els.nameError.textContent = result.error;
+      els.nameInput.focus();
+      return;
+    }
+    els.nameError.textContent = "";
+    state.studentName = result.normalized;
+    state.confirmedNormalizedName = nameMatchKey(result.normalized);
+    els.confirmNameBox.textContent = result.normalized;
+    els.confirmCheckbox.checked = false;
+    els.confirmContinueBtn.disabled = true;
+    showEntryStep("confirm");
+  }
+
+  function handleConfirmCheckboxChange() {
+    els.confirmContinueBtn.disabled = !els.confirmCheckbox.checked;
+  }
+
+  function handleConfirmBack() {
+    showEntryStep("name");
+  }
+
+  function handleConfirmContinue() {
+    if (!els.confirmCheckbox.checked) return;
+    renderEntryActionsStep();
+    showEntryStep("actions");
+  }
+
+  function handleActionsBack() {
+    els.reviewResultArea.innerHTML = "";
+    showEntryStep("confirm");
+  }
+
+  function renderEntryActionsStep() {
+    els.reviewResultArea.innerHTML = "";
+    var existing = findAttemptsFor(TEST_ID, state.confirmedNormalizedName);
+    if (existing.length > 0) {
+      els.entryStatusMessage.textContent = "Bạn đã hoàn thành bài này. Nếu muốn xem lại bài đã làm, hãy chọn \"Xem lại bài đã làm\".";
+      els.entryStatusMessage.classList.remove("hidden");
+      els.startBtn.disabled = true;
+    } else {
+      els.entryStatusMessage.classList.add("hidden");
+      els.entryStatusMessage.textContent = "";
+      els.startBtn.disabled = false;
+    }
+  }
+
+  function handleStartClick() {
+    if (els.startBtn.disabled) return;
+    state.mode = "live";
+    els.headerStudentName.textContent = "Học viên: " + state.studentName;
+
+    els.startScreen.style.display = "none";
+    els.testScreen.style.display = "flex";
+
+    updateTimerDisplay();
+    state.timerHandle = window.setInterval(tickTimer, 1000);
+  }
+
+  function handleReviewClick() {
+    var existing = findAttemptsFor(TEST_ID, state.confirmedNormalizedName);
+    if (existing.length === 0) {
+      els.reviewResultArea.innerHTML = "";
+      var notFound = document.createElement("div");
+      notFound.className = "entry-status-message warn";
+      notFound.textContent = "Chưa tìm thấy bài làm trước đó với họ tên này.";
+      els.reviewResultArea.appendChild(notFound);
+      return;
+    }
+    renderAttemptList(existing);
+  }
+
+  function renderAttemptList(attempts) {
+    els.reviewResultArea.innerHTML = "";
+    var header = document.createElement("div");
+    header.className = "entry-section-title";
+    header.textContent = "Các bài đã làm";
+    els.reviewResultArea.appendChild(header);
+
+    var list = document.createElement("div");
+    list.className = "attempt-list";
+    attempts.slice().reverse().forEach(function (attempt) {
+      var item = document.createElement("div");
+      item.className = "attempt-item";
+
+      var meta = document.createElement("div");
+      meta.className = "attempt-meta";
+      meta.innerHTML = formatDateVN(attempt.submittedAt) + " — <span class=\"attempt-score\">" +
+        attempt.score + "/" + attempt.totalQuestions + "</span> — " +
+        formatDurationVN(attempt.timeUsed);
+      item.appendChild(meta);
+
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "btn-secondary";
+      btn.textContent = "Xem lại";
+      btn.addEventListener("click", function () { loadAttemptIntoReview(attempt); });
+      item.appendChild(btn);
+
+      list.appendChild(item);
+    });
+    els.reviewResultArea.appendChild(list);
+  }
+
+  // ---------- REVIEW MODE (load a saved attempt, read-only) ----------
+  function restoreAnswerToDOM(qnum, type, value) {
+    if (type === "fill") {
+      var input = document.getElementById("q" + qnum);
+      if (input) input.value = value || "";
+    } else if (type === "tfn" || type === "mcq" || type === "matching" || type === "ynng") {
+      var radios = document.querySelectorAll('input[name="q' + qnum + '"]');
+      radios.forEach(function (r) { r.checked = (value !== "" && r.value === value); });
+    }
+  }
+
+  function restoreChoose2GroupsToDOM(answers) {
+    CHOOSE_TWO_GROUPS.forEach(function (group) {
+      var blockId = "qwrap-" + group.qnums.join("-");
+      var block = document.getElementById(blockId);
+      if (!block) return;
+      var selected = (answers[group.qnums[0]] || "").split(",").filter(Boolean);
+      block.querySelectorAll(".choose-two-input").forEach(function (cb) {
+        cb.checked = selected.indexOf(cb.value) !== -1;
+      });
+    });
+  }
+
+  function loadAttemptIntoReview(attempt) {
+    state.mode = "review";
+    state.studentName = attempt.studentName;
+    state.answers = Object.assign({}, attempt.answers);
+    state.submitted = true;
+    if (state.timerHandle) {
+      window.clearInterval(state.timerHandle);
+      state.timerHandle = null;
+    }
+
+    Object.keys(QUESTION_TYPE).forEach(function (qnumStr) {
+      var qnum = parseInt(qnumStr, 10);
+      var type = QUESTION_TYPE[qnum];
+      if (type === "choose2") return;
+      restoreAnswerToDOM(qnum, type, state.answers[qnum] || "");
+    });
+    restoreChoose2GroupsToDOM(state.answers);
+
+    disableAllInputs();
+    var results = calculateResults();
+    applyReviewAnnotations(results);
+
+    els.headerStudentName.textContent = "Học viên: " + attempt.studentName;
+    els.timerBlock.style.display = "none";
+    els.submitBtn.style.display = "none";
+    els.reviewBanner.style.display = "inline-block";
+    els.scoreSummaryBlock.style.display = "flex";
+    els.headerScore.textContent = results.score + " / " + TOTAL_QUESTIONS;
+    els.headerTimeUsed.textContent = formatTime(attempt.timeUsed);
+
+    els.startScreen.style.display = "none";
+    els.testScreen.style.display = "flex";
+  }
+
+  // ---------- STEP 3: TIMER (single timer for the whole 3-passage test) ----------
+  function tickTimer() {
+    state.remainingSeconds -= 1;
+    if (state.remainingSeconds <= 0) {
+      state.remainingSeconds = 0;
+      updateTimerDisplay();
+      submitTest(true);
+      return;
+    }
+    updateTimerDisplay();
+  }
+
+  function updateTimerDisplay() {
+    els.timerValue.textContent = formatTime(state.remainingSeconds);
+    if (state.remainingSeconds <= 60) {
+      els.timerValue.classList.add("warning");
+    }
+  }
+
+  // ---------- PASSAGE SWITCHING ----------
+  function switchPassage(passageNum) {
+    state.currentPassage = passageNum;
+    document.querySelectorAll(".passage-block").forEach(function (el) {
+      el.classList.toggle("active", parseInt(el.getAttribute("data-passage"), 10) === passageNum);
+    });
+    document.querySelectorAll(".question-group").forEach(function (el) {
+      el.classList.toggle("active", parseInt(el.getAttribute("data-passage"), 10) === passageNum);
+    });
+    document.querySelectorAll(".passage-tab").forEach(function (btn) {
+      btn.classList.toggle("active", parseInt(btn.getAttribute("data-passage"), 10) === passageNum);
+    });
+  }
+
+  function initPassageTabs() {
+    document.querySelectorAll(".passage-tab").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        switchPassage(parseInt(btn.getAttribute("data-passage"), 10));
+      });
+    });
+  }
+
+  // ---------- ANSWER CAPTURE ----------
+  function buildTfnOptions() {
+    var groups = document.querySelectorAll(".tfn-options");
+    groups.forEach(function (group) {
+      var qnum = group.getAttribute("data-qnum");
+      TFN_OPTIONS.forEach(function (optionValue, idx) {
+        var label = document.createElement("label");
+        var input = document.createElement("input");
+        input.type = "radio";
+        input.name = "q" + qnum;
+        input.id = "q" + qnum + "-opt" + idx;
+        input.value = optionValue;
+        input.addEventListener("change", function () {
+          captureAnswer(qnum, optionValue);
+        });
+        var text = document.createElement("span");
+        text.className = "opt-text";
+        text.textContent = optionValue;
+        label.appendChild(input);
+        label.appendChild(text);
+        group.appendChild(label);
+      });
+    });
+  }
+
+  function attachFillInListeners() {
+    Object.keys(QUESTION_TYPE).forEach(function (qnumStr) {
+      if (QUESTION_TYPE[qnumStr] !== "fill") return;
+      var input = document.getElementById("q" + qnumStr);
+      if (!input) return;
+      input.addEventListener("input", function () {
+        captureAnswer(qnumStr, input.value);
+      });
+    });
+  }
+
+  function attachChoiceListeners() {
+    document.querySelectorAll(".choice-input").forEach(function (input) {
+      input.addEventListener("change", function () {
+        captureAnswer(input.getAttribute("data-qnum"), input.value);
+      });
+    });
+  }
+
+  // ---------- WORD BANK DRAG-AND-DROP (Q30-35) ----------
+  var wbPickedTile = null;
+
+  function findTileEl(value) {
+    return document.getElementById("wb-tile-" + value);
+  }
+
+  function clearZone(zone, updateAnswer) {
+    var existingValue = zone.getAttribute("data-value-used");
+    if (existingValue) {
+      var tileEl = findTileEl(existingValue);
+      if (tileEl) tileEl.classList.remove("used");
+    }
+    zone.removeAttribute("data-value-used");
+    zone.classList.remove("filled");
+    zone.innerHTML = '<span class="drop-zone-placeholder">&nbsp;</span>';
+    if (updateAnswer) captureAnswer(zone.getAttribute("data-qnum"), "");
+  }
+
+  function placeTileInZone(value, zone) {
+    if (state.submitted) return;
+    var item = null;
+    for (var i = 0; i < WORDBANK.length; i++) {
+      if (WORDBANK[i].v === value) { item = WORDBANK[i]; break; }
+    }
+    if (!item) return;
+
+    clearZone(zone, false);
+    var otherZone = document.querySelector('.drop-zone[data-value-used="' + value + '"]');
+    if (otherZone && otherZone !== zone) clearZone(otherZone, true);
+
+    zone.innerHTML = "";
+    zone.classList.add("filled");
+    zone.setAttribute("data-value-used", value);
+
+    var content = document.createElement("span");
+    content.className = "drop-zone-content";
+    content.textContent = item.v + ". " + item.w;
+
+    var removeBtn = document.createElement("button");
+    removeBtn.type = "button";
+    removeBtn.className = "drop-zone-remove";
+    removeBtn.setAttribute("aria-label", "Remove");
+    removeBtn.textContent = "\u00d7";
+    removeBtn.addEventListener("click", function (evt) {
+      evt.stopPropagation();
+      if (state.submitted) return;
+      clearZone(zone, true);
+    });
+
+    zone.appendChild(content);
+    zone.appendChild(removeBtn);
+
+    var tileEl = findTileEl(value);
+    if (tileEl) {
+      tileEl.classList.add("used");
+      tileEl.classList.remove("picked");
+    }
+    if (wbPickedTile) {
+      wbPickedTile.classList.remove("picked");
+      wbPickedTile = null;
+    }
+
+    captureAnswer(zone.getAttribute("data-qnum"), value);
+  }
+
+  function buildWordbankTiles() {
+    var container = document.getElementById("wordbank-tiles");
+    WORDBANK.forEach(function (item) {
+      var tile = document.createElement("div");
+      tile.className = "wb-tile";
+      tile.id = "wb-tile-" + item.v;
+      tile.setAttribute("draggable", "true");
+      tile.setAttribute("data-value", item.v);
+      tile.textContent = item.v + ". " + item.w;
+
+      tile.addEventListener("dragstart", function (e) {
+        if (state.submitted || tile.classList.contains("used")) { e.preventDefault(); return; }
+        e.dataTransfer.setData("text/plain", item.v);
+        e.dataTransfer.effectAllowed = "move";
+        tile.classList.add("dragging");
+      });
+      tile.addEventListener("dragend", function () {
+        tile.classList.remove("dragging");
+      });
+      tile.addEventListener("click", function () {
+        if (state.submitted || tile.classList.contains("used")) return;
+        if (wbPickedTile === tile) {
+          tile.classList.remove("picked");
+          wbPickedTile = null;
+        } else {
+          if (wbPickedTile) wbPickedTile.classList.remove("picked");
+          wbPickedTile = tile;
+          tile.classList.add("picked");
+        }
+      });
+
+      container.appendChild(tile);
+    });
+  }
+
+  function initDropZones() {
+    document.querySelectorAll(".drop-zone").forEach(function (zone) {
+      zone.addEventListener("dragover", function (e) {
+        if (state.submitted) return;
+        e.preventDefault();
+        zone.classList.add("drag-over");
+      });
+      zone.addEventListener("dragleave", function () {
+        zone.classList.remove("drag-over");
+      });
+      zone.addEventListener("drop", function (e) {
+        if (state.submitted) return;
+        e.preventDefault();
+        zone.classList.remove("drag-over");
+        var value = e.dataTransfer.getData("text/plain");
+        if (value) placeTileInZone(value, zone);
+      });
+      zone.addEventListener("click", function () {
+        if (state.submitted || !wbPickedTile) return;
+        placeTileInZone(wbPickedTile.getAttribute("data-value"), zone);
+      });
+    });
+  }
+
+  function initChooseTwo() {
+    CHOOSE_TWO_GROUPS.forEach(function (group) {
+      var blockId = "qwrap-" + group.qnums.join("-");
+      var block = document.getElementById(blockId);
+      if (!block) return;
+      var inputs = Array.prototype.slice.call(block.querySelectorAll(".choose-two-input"));
+      inputs.forEach(function (input) {
+        input.addEventListener("change", function () {
+          var checked = inputs.filter(function (i) { return i.checked; });
+          if (checked.length > 2) {
+            input.checked = false;
+            checked = inputs.filter(function (i) { return i.checked; });
+          }
+          inputs.forEach(function (i) {
+            if (!state.submitted) i.disabled = checked.length >= 2 && !i.checked;
+          });
+          var selectedValues = checked.map(function (i) { return i.value; }).sort().join(",");
+          group.qnums.forEach(function (gq) { captureAnswer(gq, selectedValues); });
+        });
+      });
+    });
+  }
+
+  function captureAnswer(qnum, value) {
+    qnum = parseInt(qnum, 10);
+    var trimmed = (value || "").toString();
+    if (trimmed.trim() === "") {
+      delete state.answers[qnum];
+    } else {
+      state.answers[qnum] = trimmed;
+    }
+    refreshNavButton(qnum);
+  }
+
+  // ---------- NAVIGATOR ----------
+  function buildNavigator() {
+    var grids = { 1: document.getElementById("nav-grid-1"), 2: document.getElementById("nav-grid-2"), 3: document.getElementById("nav-grid-3") };
+    for (var q = 1; q <= TOTAL_QUESTIONS; q++) {
+      (function (qnum) {
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "nav-btn";
+        btn.id = "nav-btn-" + qnum;
+        btn.textContent = qnum;
+        btn.addEventListener("click", function () { scrollToQuestion(qnum); });
+        grids[QUESTION_PASSAGE[qnum]].appendChild(btn);
+      })(q);
+    }
+  }
+
+  function refreshNavButton(qnum) {
+    var btn = document.getElementById("nav-btn-" + qnum);
+    if (!btn || state.submitted) return;
+    var hasAnswer = Object.prototype.hasOwnProperty.call(state.answers, qnum);
+    btn.classList.toggle("answered", hasAnswer);
+  }
+
+  function scrollToQuestion(qnum) {
+    var passageNum = QUESTION_PASSAGE[qnum];
+    if (passageNum !== state.currentPassage) switchPassage(passageNum);
+    var target = document.getElementById(getBlockId(qnum));
+    if (!target) return;
+    target.scrollIntoView({ behavior: "smooth", block: "center" });
+    var navBtn = document.getElementById("nav-btn-" + qnum);
+    if (navBtn) {
+      navBtn.classList.add("flash");
+      window.setTimeout(function () { navBtn.classList.remove("flash"); }, 900);
+    }
+  }
+
+  // ---------- HIGHLIGHTING (unchanged logic, now applied to every passage/question group) ----------
+  function nodeIntersectsRange(node, range) {
+    var nodeRange = document.createRange();
+    nodeRange.selectNodeContents(node);
+    var START_TO_END = 1;
+    var END_TO_START = 3;
+    var a = range.compareBoundaryPoints(START_TO_END, nodeRange);
+    var b = range.compareBoundaryPoints(END_TO_START, nodeRange);
+    return a > 0 && b < 0;
+  }
+
+  function getIntersectingTextNodes(root, range) {
+    var nodes = [];
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+    var node;
+    while ((node = walker.nextNode())) {
+      if (node.nodeValue.length === 0) continue;
+      if (nodeIntersectsRange(node, range)) nodes.push(node);
+    }
+    return nodes;
+  }
+
+  function handleMarkClick(evt) {
+    var mark = evt.currentTarget;
+    var parent = mark.parentNode;
+    while (mark.firstChild) parent.insertBefore(mark.firstChild, mark);
+    parent.removeChild(mark);
+    parent.normalize();
+    evt.stopPropagation();
+  }
+
+  function wrapTextNodesInRange(range) {
+    var root = range.commonAncestorContainer;
+    var container = (root.nodeType === 3) ? root.parentNode : root;
+    var textNodes = getIntersectingTextNodes(container, range);
+    var createdMarks = [];
+
+    textNodes.forEach(function (node) {
+      var start = (node === range.startContainer) ? range.startOffset : 0;
+      var end = (node === range.endContainer) ? range.endOffset : node.length;
+      if (start >= end) return;
+      if (!/\S/.test(node.nodeValue.slice(start, end))) return;
+
+      if (end < node.length) node.splitText(end);
+      var middleNode = (start > 0) ? node.splitText(start) : node;
+
+      var mark = document.createElement("mark");
+      mark.className = "highlight";
+      mark.title = "Click to remove highlight";
+      mark.addEventListener("click", handleMarkClick);
+
+      middleNode.parentNode.insertBefore(mark, middleNode);
+      mark.appendChild(middleNode);
+      createdMarks.push(mark);
+    });
+
+    return createdMarks;
+  }
+
+  function makeSelectionHandler(containerEl) {
+    return function () {
+      var selection = window.getSelection();
+      if (!selection || selection.isCollapsed || selection.rangeCount === 0) return;
+      var range = selection.getRangeAt(0);
+      if (!containerEl.contains(range.commonAncestorContainer)) return;
+      if (range.toString().trim().length === 0) {
+        selection.removeAllRanges();
+        return;
+      }
+
+      containerEl.normalize();
+
+      var marks = [];
+      try {
+        marks = wrapTextNodesInRange(range);
+      } catch (e) {
+        marks = [];
+      }
+
+      if (marks.length > 0) {
+        var newRange = document.createRange();
+        newRange.setStartBefore(marks[0]);
+        newRange.setEndAfter(marks[marks.length - 1]);
+        selection.removeAllRanges();
+        selection.addRange(newRange);
+      } else {
+        selection.removeAllRanges();
+      }
+    };
+  }
+
+  function initHighlighting() {
+    document.querySelectorAll(".passage-block").forEach(function (el) {
+      el.addEventListener("mouseup", makeSelectionHandler(el));
+    });
+    document.querySelectorAll(".question-group").forEach(function (el) {
+      el.addEventListener("mouseup", makeSelectionHandler(el));
+    });
+  }
+
+  // ---------- SCORING ----------
+  function calculateResults() {
+    var score = 0;
+    var details = [];
+    var passageScores = {
+      1: { correct: 0, total: 0 },
+      2: { correct: 0, total: 0 },
+      3: { correct: 0, total: 0 }
+    };
+
+    var choose2ResultByQnum = {};
+    CHOOSE_TWO_GROUPS.forEach(function (group) {
+      var q0 = group.qnums[0], q1 = group.qnums[1];
+      // Partial credit: each correct option picked earns 1 mark (max 2). One right + one wrong = 1 mark.
+      // The first mark is booked on the first question of the pair, the second on the next one.
+      var selected = (state.answers[q0] || "").split(",").filter(Boolean).map(normalize);
+      var correctSet = [ANSWER_KEY[q0], ANSWER_KEY[q1]].map(normalize);
+      var hits = 0;
+      correctSet.forEach(function (c) { if (selected.indexOf(c) !== -1) hits++; });
+      choose2ResultByQnum[q0] = hits >= 1;
+      choose2ResultByQnum[q1] = hits >= 2;
+    });
+
+    function isFillCorrect(qnum, studentRaw, correctRaw) {
+      if (normalize(studentRaw) === normalize(correctRaw)) return true;
+      var alts = ANSWER_ALTERNATES[qnum];
+      if (!alts) return false;
+      var normStudent = normalize(studentRaw);
+      for (var ai = 0; ai < alts.length; ai++) {
+        if (normStudent === normalize(alts[ai])) return true;
+      }
+      return false;
+    }
+
+    for (var q = 1; q <= TOTAL_QUESTIONS; q++) {
+      var type = QUESTION_TYPE[q];
+      var studentRaw = state.answers[q] || "";
+      var correctRaw = ANSWER_KEY[q];
+      var isCorrect;
+      if (type === "choose2") {
+        isCorrect = choose2ResultByQnum[q];
+      } else if (type === "fill") {
+        isCorrect = isFillCorrect(q, studentRaw, correctRaw);
+      } else {
+        isCorrect = normalize(studentRaw) === normalize(correctRaw);
+      }
+
+      var passageNum = QUESTION_PASSAGE[q];
+      passageScores[passageNum].total++;
+      if (isCorrect) { score++; passageScores[passageNum].correct++; }
+
+      details.push({
+        question: q,
+        type: type,
+        passage: passageNum,
+        studentAnswer: studentRaw,
+        correctAnswer: correctRaw,
+        isCorrect: isCorrect
+      });
+    }
+    return { score: score, details: details, passageScores: passageScores };
+  }
+
+  // ---------- SUBMIT & IN-PLACE REVIEW ----------
+  function disableAllInputs() {
+    var inputs = els.testScreen.querySelectorAll("input[type='text'], input[type='radio'], input[type='checkbox'], select");
+    inputs.forEach(function (input) { input.disabled = true; });
+    document.querySelectorAll(".wb-tile").forEach(function (tile) {
+      tile.setAttribute("draggable", "false");
+      tile.classList.add("locked");
+      tile.classList.remove("picked");
+    });
+    document.querySelectorAll(".drop-zone-remove").forEach(function (btn) { btn.style.display = "none"; });
+  }
+
+  function markChoiceGroup(container, correctValue, studentValue, isCorrect) {
+    if (!container) return;
+    var correctInput = container.querySelector('input[value="' + correctValue + '"]');
+    if (correctInput) correctInput.closest("label").classList.add("opt-correct");
+    if (!isCorrect && studentValue) {
+      var wrongInput = container.querySelector('input[value="' + studentValue + '"]');
+      if (wrongInput) wrongInput.closest("label").classList.add("opt-wrong");
+    }
+  }
+
+  function applyReviewAnnotations(results) {
+    var choose2AnnotatedBlocks = {};
+
+    results.details.forEach(function (detail) {
+      var qnum = detail.question;
+      var type = detail.type;
+      var block = document.getElementById(getBlockId(qnum));
+      if (!block) return;
+
+      if (type === "choose2") {
+        var cgBlockId = getBlockId(qnum);
+        if (!choose2AnnotatedBlocks[cgBlockId]) {
+          var cgPair = null;
+          for (var cgj = 0; cgj < CHOOSE_TWO_GROUPS.length; cgj++) {
+            if (CHOOSE_TWO_GROUPS[cgj].qnums.indexOf(qnum) !== -1) { cgPair = CHOOSE_TWO_GROUPS[cgj]; break; }
+          }
+          var cgBothRight = cgPair ? cgPair.qnums.every(function (gq) { return results.details[gq - 1].isCorrect; }) : detail.isCorrect;
+          block.classList.add(cgBothRight ? "correct" : "wrong");
+          var cgGroup = null;
+          for (var cgi = 0; cgi < CHOOSE_TWO_GROUPS.length; cgi++) {
+            if (CHOOSE_TWO_GROUPS[cgi].qnums.indexOf(qnum) !== -1) { cgGroup = CHOOSE_TWO_GROUPS[cgi]; break; }
+          }
+          var correctSet = cgGroup ? cgGroup.qnums.map(function (gq) { return ANSWER_KEY[gq]; }) : [];
+          block.querySelectorAll(".choose-two-input").forEach(function (input) {
+            var label = input.closest("label");
+            if (correctSet.indexOf(input.value) !== -1) label.classList.add("opt-correct");
+            else if (input.checked) label.classList.add("opt-wrong");
+          });
+          choose2AnnotatedBlocks[cgBlockId] = true;
+        }
+      } else if (type === "tfn") {
+        block.classList.add(detail.isCorrect ? "correct" : "wrong");
+        markChoiceGroup(block.querySelector(".tfn-options"), detail.correctAnswer, detail.studentAnswer, detail.isCorrect);
+      } else if (type === "ynng") {
+        block.classList.add(detail.isCorrect ? "correct" : "wrong");
+        markChoiceGroup(block.querySelector(".ynng-options"), detail.correctAnswer, detail.studentAnswer, detail.isCorrect);
+      } else if (type === "mcq") {
+        block.classList.add(detail.isCorrect ? "correct" : "wrong");
+        markChoiceGroup(block.querySelector(".mcq-options"), detail.correctAnswer, detail.studentAnswer, detail.isCorrect);
+      } else if (type === "fill") {
+        block.classList.add(detail.isCorrect ? "correct" : "wrong");
+        var input = document.getElementById("q" + qnum);
+        input.classList.add(detail.isCorrect ? "correct" : "wrong");
+        if (!detail.isCorrect) {
+          var fb = document.createElement("span");
+          fb.className = "fill-feedback";
+          fb.textContent = "Correct answer: " + detail.correctAnswer;
+          input.insertAdjacentElement("afterend", fb);
+        }
+      } else if (type === "matching") {
+        block.classList.add(detail.isCorrect ? "correct" : "wrong");
+        var correctRadio = block.querySelector('input[value="' + detail.correctAnswer + '"]');
+        if (correctRadio) correctRadio.closest("td").classList.add("correct-cell");
+        if (!detail.isCorrect && detail.studentAnswer) {
+          var wrongRadio = block.querySelector('input[value="' + detail.studentAnswer + '"]');
+          if (wrongRadio) wrongRadio.closest("td").classList.add("wrong-cell");
+        }
+      } else if (type === "wordbank") {
+        var zone = document.getElementById("q" + qnum);
+        zone.classList.add(detail.isCorrect ? "correct" : "wrong");
+        if (!detail.isCorrect) {
+          var fb2 = document.createElement("span");
+          fb2.className = "fill-feedback";
+          fb2.textContent = "Correct answer: " + detail.correctAnswer;
+          zone.insertAdjacentElement("afterend", fb2);
+        }
+      }
+
+      var navBtn = document.getElementById("nav-btn-" + qnum);
+      if (navBtn) {
+        navBtn.classList.remove("answered");
+        navBtn.classList.add(detail.isCorrect ? "correct" : "incorrect");
+      }
+    });
+
+    [1, 2, 3].forEach(function (p) {
+      var tabBtn = document.querySelector('.passage-tab[data-passage="' + p + '"]');
+      if (tabBtn) {
+        var ps = results.passageScores[p];
+        tabBtn.textContent = PASSAGE_LABEL[p] + " — " + ps.correct + "/" + ps.total;
+      }
+    });
+  }
+
+  function computeWrongQuestionsByPassage(results) {
+    var wrong = { 1: [], 2: [], 3: [] };
+    results.details.forEach(function (detail) {
+      if (!detail.isCorrect) wrong[detail.passage].push(detail.question);
+    });
+    return wrong;
+  }
+
+  function submitTest(isAutoSubmit) {
+    if (state.submitted) return;
+    state.submitted = true;
+
+    if (state.timerHandle) {
+      window.clearInterval(state.timerHandle);
+      state.timerHandle = null;
+    }
+
+    var elapsedSeconds = TEST_DURATION_SECONDS - state.remainingSeconds;
+    disableAllInputs();
+
+    var results = calculateResults();
+    applyReviewAnnotations(results);
+    var wrongQuestions = computeWrongQuestionsByPassage(results);
+
+    els.timerBlock.style.display = "none";
+    els.submitBtn.style.display = "none";
+    els.scoreSummaryBlock.style.display = "flex";
+    els.headerScore.textContent = results.score + " / " + TOTAL_QUESTIONS;
+    els.headerTimeUsed.textContent = formatTime(elapsedSeconds);
+
+    var submittedAt = new Date().toISOString();
+
+    var attempt = {
+      attemptId: makeAttemptId(),
+      testId: TEST_ID,
+      studentName: state.studentName,
+      normalizedStudentName: state.confirmedNormalizedName || nameMatchKey(state.studentName),
+      submittedAt: submittedAt,
+      answers: Object.assign({}, state.answers),
+      score: results.score,
+      totalQuestions: TOTAL_QUESTIONS,
+      passageScores: results.passageScores,
+      wrongQuestions: wrongQuestions,
+      timeUsed: elapsedSeconds
+    };
+    saveAttempt(attempt);
+
+    var resultPayload = {
+      studentName: state.studentName,
+      testId: TEST_ID,
+      score: results.score,
+      totalQuestions: TOTAL_QUESTIONS,
+      passageScores: results.passageScores,
+      wrongQuestions: wrongQuestions,
+      answers: Object.assign({}, state.answers),
+      submittedAt: submittedAt,
+      timeUsed: elapsedSeconds
+    };
+    sendResultToTeacher(resultPayload);
+  }
+
+  function handleManualSubmit() {
+    if (state.submitted) return;
+    var answeredCount = Object.keys(state.answers).length;
+    var msg = answeredCount < TOTAL_QUESTIONS
+      ? "Bạn mới trả lời " + answeredCount + " trong tổng số " + TOTAL_QUESTIONS + " câu hỏi. Vẫn muốn nộp bài?"
+      : "Nộp bài ngay bây giờ?";
+    if (window.confirm(msg)) submitTest(false);
+  }
+
+  // ---------- TEACHER DATA HOOK ----------
+  function sendResultToTeacher(result) {
+    console.log("Result to send to teacher:", result);
+
+    if (!WEB_APP_URL || WEB_APP_URL.indexOf("PASTE_YOUR_APPS_SCRIPT") === 0) {
+      console.warn("WEB_APP_URL is not set yet — result was NOT sent to Google Sheets.");
+      return;
+    }
+
+    var wrongQuestions = result.wrongQuestions || { 1: [], 2: [], 3: [] };
+
+    var payload = {
+      studentName: result.studentName,
+      testId: result.testId,
+      score: result.score,
+      totalQuestions: result.totalQuestions,
+      passage1: result.passageScores[1].correct,
+      passage2: result.passageScores[2].correct,
+      passage3: result.passageScores[3].correct,
+      p1Wrong: wrongQuestions[1].join(","),
+      p2Wrong: wrongQuestions[2].join(","),
+      p3Wrong: wrongQuestions[3].join(","),
+      timeUsed: formatTime(result.timeUsed),
+      timestamp: result.submittedAt
+    };
+
+    fetch(WEB_APP_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(payload)
+    }).catch(function (err) {
+      console.error("Failed to send result to teacher:", err);
+    });
+  }
+
+  // ---------- INIT ----------
+  function init() {
+    els.startScreen = document.getElementById("start-screen");
+    els.testScreen = document.getElementById("test-screen");
+    els.entryStepName = document.getElementById("entry-step-name");
+    els.entryStepConfirm = document.getElementById("entry-step-confirm");
+    els.entryStepActions = document.getElementById("entry-step-actions");
+    els.nameInput = document.getElementById("student-name");
+    els.nameError = document.getElementById("name-error");
+    els.nameContinueBtn = document.getElementById("name-continue-btn");
+    els.confirmNameBox = document.getElementById("confirm-name-box");
+    els.confirmCheckbox = document.getElementById("confirm-checkbox");
+    els.confirmBackBtn = document.getElementById("confirm-back-btn");
+    els.confirmContinueBtn = document.getElementById("confirm-continue-btn");
+    els.entryStatusMessage = document.getElementById("entry-status-message");
+    els.startBtn = document.getElementById("start-btn");
+    els.reviewBtn = document.getElementById("review-btn");
+    els.reviewResultArea = document.getElementById("review-result-area");
+    els.actionsBackBtn = document.getElementById("actions-back-btn");
+    els.headerStudentName = document.getElementById("header-student-name");
+    els.reviewBanner = document.getElementById("review-banner");
+    els.timerBlock = document.getElementById("timer-block");
+    els.timerValue = document.getElementById("timer-value");
+    els.scoreSummaryBlock = document.getElementById("score-summary-block");
+    els.headerScore = document.getElementById("header-score");
+    els.headerTimeUsed = document.getElementById("header-time-used");
+    els.submitBtn = document.getElementById("submit-btn");
+
+    els.nameContinueBtn.addEventListener("click", handleNameContinue);
+    els.nameInput.addEventListener("keydown", function (e) { if (e.key === "Enter") handleNameContinue(); });
+    els.confirmCheckbox.addEventListener("change", handleConfirmCheckboxChange);
+    els.confirmBackBtn.addEventListener("click", handleConfirmBack);
+    els.confirmContinueBtn.addEventListener("click", handleConfirmContinue);
+    els.startBtn.addEventListener("click", handleStartClick);
+    els.reviewBtn.addEventListener("click", handleReviewClick);
+    els.actionsBackBtn.addEventListener("click", handleActionsBack);
+    els.submitBtn.addEventListener("click", handleManualSubmit);
+
+    initPassageTabs();
+    buildTfnOptions();
+    attachFillInListeners();
+    attachChoiceListeners();
+    buildWordbankTiles();
+    initDropZones();
+    initChooseTwo();
+    buildNavigator();
+    initHighlighting();
+  }
+
+  document.addEventListener("DOMContentLoaded", init);
+})();
+</script>
+
+</body>
+</html>

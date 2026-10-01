@@ -1,0 +1,1638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IELTS Listening Full Test — Cambridge Test 15, Test 1</title>
+<meta name="build" content="lu-ld-s">
+
+<style>
+  /* NOTE: the 6 @font-face blocks that used to sit here (Plus Jakarta Sans
+     x4 weights, Inter x2 weights) were removed on 2026-09-24: fontTools
+     confirmed every one of those embedded woff2 subsets was missing every
+     Vietnamese-specific glyph (đ, ơ, ư, and all double-diacritic vowels),
+     which caused Vietnamese text to visibly mix two different fonts
+     mid-word. --font/--font-transcript below still name the same families
+     first (harmless if unavailable) and now fall straight through to the
+     system UI font stack, which has full, consistent Vietnamese coverage
+     — the same approach the Reading engine (C15) already uses. */
+  :root{
+    --primary:#15934E;
+    --primary-dark:#119446;
+    --secondary:#A9F279;
+    --accent:#FFE76E;
+    --ink:#1D1E1E;
+    --ink-soft:#7C7C7C;
+    --ink-faint:#A9AAAA;
+    --border:#E5E5E5;
+    --table-border:#B9B9B9;
+    --surface:#FFFFFF;
+    --bg:#F7FBF9;
+    --primary-tint:#ECF6F1;
+    --primary-tint-strong:#B9DFCA;
+    --secondary-tint:#F1FDEA;
+    --secondary-tint-strong:#E2FBD1;
+    --accent-tint:#FFF8D6;
+    --accent-tint-strong:#FFF2AF;
+    --radius-sm:8px;
+    --radius-md:14px;
+    --radius-lg:20px;
+    --shadow-card:0 1px 2px rgba(29,30,30,.05), 0 10px 26px -16px rgba(29,30,30,.22);
+    --shadow-sticky:0 6px 18px -12px rgba(29,30,30,.22);
+    --font:'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-transcript:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --danger:#C0392B;
+    --danger-bg:#FDECEA;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font);
+    font-weight:400;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  img,svg{display:block;}
+  button{font-family:inherit;}
+  :focus-visible{outline:2.5px solid var(--primary-dark); outline-offset:2px; border-radius:6px;}
+
+  .wrap{max-width:840px; margin:0 auto; padding:0 clamp(16px, 2.2vw, 32px);}
+  .wrap-wide{max-width:min(1880px, 97vw);}
+
+  /* ---------- Header ---------- */
+  .page-header{
+    padding:30px 24px 30px;
+    border-bottom:1px solid var(--border);
+    background:
+      radial-gradient(560px 220px at 88% -40%, var(--secondary-tint) 0%, rgba(241,253,234,0) 70%),
+      var(--bg);
+  }
+  .page-header .wrap{max-width:min(1880px, 97vw);}
+  .brand-row{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    margin-bottom:22px;
+  }
+  .brand-logo{width:26px; height:26px;}
+  .brand-word{
+    font-family:var(--font);
+    font-weight:700;
+    font-size:16px;
+    letter-spacing:-0.01em;
+    color:var(--ink);
+    text-transform:lowercase;
+  }
+  h1.page-title{
+    font-family:var(--font);
+    font-weight:700;
+    font-size:clamp(28px, 4vw, 38px);
+    letter-spacing:-0.015em;
+    margin:0 0 10px;
+    color:var(--ink);
+  }
+  .header-meta{
+    font-family:var(--font);
+    font-size:16px;
+    font-weight:600;
+    color:var(--ink-soft);
+    margin:0 0 4px;
+  }
+  .header-meta strong{color:var(--ink); font-weight:600;}
+  .header-scope{
+    font-size:15px;
+    font-weight:500;
+    color:var(--ink-soft);
+    margin:0 0 20px;
+  }
+  .tagline{
+    font-size:16.5px;
+    font-weight:400;
+    color:var(--ink);
+    margin:0;
+    max-width:56ch;
+    padding-top:16px;
+    border-top:1px solid var(--border);
+  }
+
+  /* ---------- Sticky control stack ---------- */
+  .control-stack{position:sticky; top:0; z-index:40; background:var(--bg);}
+
+  .player-bar{
+    border-bottom:1px solid var(--border);
+    background:var(--surface);
+    box-shadow:var(--shadow-sticky);
+  }
+  .player-inner{
+    max-width:min(1880px, 97vw);
+    margin:0 auto;
+    padding:14px 24px;
+    display:flex;
+    align-items:center;
+    gap:16px;
+  }
+  .player-label{
+    display:flex; align-items:center; gap:8px;
+    font-weight:600; font-size:14px; color:var(--ink);
+    white-space:nowrap;
+  }
+  .play-btn{
+    flex:0 0 auto; width:40px; height:40px; border-radius:50%;
+    border:none; background:var(--primary); color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; transition:background .15s ease, transform .1s ease;
+  }
+  .play-btn:hover{background:var(--primary-dark);}
+  .play-btn:active{transform:scale(0.94);}
+  .play-btn svg{width:16px; height:16px;}
+
+  .progress-wrap{flex:1 1 auto; min-width:0;}
+  .progress-track{
+    position:relative; height:8px; border-radius:999px;
+    background:var(--primary-tint-strong); cursor:pointer; overflow:hidden;
+  }
+  .progress-fill{position:absolute; left:0; top:0; bottom:0; width:0%; background:var(--primary); border-radius:999px;}
+  .progress-track:hover .progress-fill{background:var(--primary-dark);}
+  .time-display{flex:0 0 auto; font-variant-numeric:tabular-nums; font-size:13px; font-weight:500; color:var(--ink-soft); white-space:nowrap;}
+
+  .audio-banner{display:none; max-width:min(1880px, 97vw); margin:0 auto; padding:0 24px 12px; font-size:13px; line-height:1.5; color:#7A4A00; font-weight:500;}
+  .audio-banner.show{display:block;}
+  .audio-banner .banner-box{background:var(--accent-tint); border:1px solid var(--accent-tint-strong); border-radius:10px; padding:10px 14px;}
+  .audio-banner strong{color:#5B3800;}
+
+  .qnav{border-bottom:1px solid var(--border); background:var(--surface);}
+  .qnav-inner{max-width:min(1880px, 97vw); margin:0 auto; padding:10px 24px; display:flex; gap:8px; overflow-x:auto; scrollbar-width:none;}
+  .qnav-inner::-webkit-scrollbar{display:none;}
+  .qnav-pill{
+    flex:0 0 auto; font-weight:600; font-size:13px; color:var(--ink-soft);
+    background:var(--bg); border:1px solid var(--border); padding:7px 13px;
+    border-radius:999px; cursor:pointer; transition:all .15s ease;
+  }
+  .qnav-pill:hover{border-color:var(--primary); color:var(--primary-dark);}
+  .qnav-pill.active{background:var(--primary); border-color:var(--primary); color:#fff;}
+  .qnav-pill.playing::after{
+    content:''; display:inline-block; width:6px; height:6px; border-radius:50%;
+    background:currentColor; margin-left:6px; vertical-align:middle;
+    animation:pulse 1.1s ease-in-out infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:1;} 50%{opacity:.25;}}
+
+  /* ---------- Content / split layout ---------- */
+  main.content{padding:34px 0 110px;}
+
+  .split-layout{
+    display:grid;
+    grid-template-columns:1.55fr 1fr;
+    gap:24px;
+    align-items:start;
+  }
+  .left-pane, .right-pane{min-width:0;}
+
+  .section-heading{
+    font-family:var(--font);
+    font-weight:600;
+    font-size:25px;
+    margin:0 0 6px;
+    color:var(--ink);
+  }
+  .pane-sub{font-size:16px; font-weight:400; color:var(--ink-soft); margin:0 0 18px;}
+
+  /* ---------- Left pane: reference sheet ---------- */
+  .left-pane{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius-lg);
+    box-shadow:var(--shadow-card);
+    padding:32px 34px 30px;
+  }
+
+  .table-scroll{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    margin-bottom:28px;
+    border-radius:10px;
+  }
+  table.qtable{
+    width:100%;
+    border-collapse:collapse;
+    font-size:18px;
+    font-weight:400;
+    border:1.5px solid var(--table-border);
+  }
+  table.qtable th{
+    text-align:left;
+    font-weight:600;
+    font-size:15px;
+    color:var(--ink);
+    padding:12px 14px;
+    background:var(--primary-tint);
+    border:1.5px solid var(--table-border);
+  }
+  table.qtable td{
+    vertical-align:top;
+    padding:14px;
+    border:1.5px solid var(--table-border);
+    color:var(--ink);
+    font-weight:400;
+    line-height:1.55;
+  }
+
+  .notes-title{font-family:var(--font); font-weight:600; font-size:17px; margin:0 0 6px;}
+  ul.notes{list-style:none; margin:0 0 4px; padding:0; border:1.5px solid var(--table-border); border-radius:10px; overflow:hidden;}
+  ul.notes li{
+    position:relative; padding:14px 16px 14px 34px;
+    border-bottom:1.5px solid var(--table-border);
+    font-size:18px; font-weight:400; line-height:1.5;
+  }
+  ul.notes li:last-child{border-bottom:none;}
+  ul.notes li::before{content:'•'; position:absolute; left:14px; top:14px; color:var(--ink-faint);}
+
+  /* qchip: play icon + number/answer, inline in the question text */
+  .qchip{
+    display:inline-flex; align-items:center; gap:0;
+    vertical-align:middle; margin:0 2px;
+    border-radius:999px; overflow:hidden;
+    border:1.5px solid var(--primary-tint-strong);
+    cursor:pointer;
+    transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  .qchip:hover{border-color:var(--primary);}
+  .qchip.is-selected{border-color:var(--primary); box-shadow:0 0 0 3px var(--primary-tint);}
+  .qchip.is-answered{border-color:var(--primary);}
+  .qchip-play{
+    width:28px; height:28px; flex:0 0 auto;
+    background:var(--primary); color:#fff;
+    border:none; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    cursor:pointer; padding:0;
+  }
+  .qchip-play:hover{background:var(--primary-dark);}
+  .qchip-play svg{width:11px; height:11px;}
+  .qchip-play.is-playing svg{width:10px; height:10px;}
+  .qchip-num{
+    min-width:28px; padding:0 12px; height:28px;
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font); font-weight:700; font-size:15.5px;
+    color:var(--primary-dark); background:var(--primary-tint);
+  }
+  .qchip.is-answered .qchip-num{
+    color:var(--ink); background:var(--accent-tint);
+    font-weight:700; text-transform:uppercase; letter-spacing:.02em;
+    padding:0 13px;
+  }
+
+  /* ---------- Options legend (shared A-C / A-E / A-H boxes) ---------- */
+  .options-legend{
+    border:1.5px solid var(--table-border); border-radius:10px;
+    padding:16px 18px; margin-bottom:20px;
+    background:var(--primary-tint);
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:9px 22px;
+  }
+  .options-legend-item{display:flex; gap:9px; font-size:16px; font-weight:400; color:var(--ink);}
+  .options-legend-letter{
+    flex:0 0 auto; font-family:var(--font); font-weight:700; font-size:15px;
+    color:var(--primary-dark);
+  }
+
+  /* ---------- Multiple choice / choose-two blocks ---------- */
+  .mc-block{
+    border:1.5px solid var(--table-border); border-radius:12px;
+    padding:18px 20px; margin-bottom:16px; cursor:pointer;
+    transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  .mc-block:hover{border-color:var(--primary);}
+  .mc-block.is-selected{border-color:var(--primary); box-shadow:0 0 0 3px var(--primary-tint);}
+  .mc-head{display:flex; align-items:flex-start; gap:12px; margin-bottom:13px;}
+  .mc-num{
+    flex:0 0 auto; font-family:var(--font); font-weight:700; font-size:14px;
+    color:#fff; background:var(--ink); min-width:26px; height:26px; border-radius:7px;
+    padding:0 7px; white-space:nowrap;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .mc-stem{flex:1 1 auto; font-weight:500; font-size:18px; color:var(--ink); padding-top:2px; line-height:1.45;}
+  .mc-options{display:flex; flex-direction:column; gap:8px; margin-left:38px;}
+  .mc-option{
+    display:flex; align-items:center; gap:10px;
+    padding:10px 13px; border-radius:8px; border:1.5px solid var(--table-border);
+    font-size:16.5px; font-weight:400; color:var(--ink);
+  }
+  .mc-option-letter{
+    flex:0 0 auto; width:23px; height:23px; border-radius:50%;
+    border:1.5px solid var(--ink-faint); color:var(--ink-soft);
+    font-family:var(--font); font-weight:700; font-size:13px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .mc-option.is-correct{border-color:var(--primary); background:var(--accent-tint);}
+  .mc-option.is-correct .mc-option-letter{border-color:var(--primary); background:var(--primary); color:#fff;}
+  .mc-block.is-playing .mc-num,
+  .mc-block.is-playing{border-color:var(--primary);}
+
+  .data-issue-tag{
+    display:inline-block; font-family:var(--font); font-weight:600; font-size:12.5px;
+    color:#7A4A00; background:var(--accent-tint); border:1px solid var(--accent-tint-strong);
+    padding:3px 9px; border-radius:999px; margin-left:8px; text-transform:none; letter-spacing:0;
+  }
+  .data-issue-note{
+    background:var(--accent-tint); border:1px solid var(--accent-tint-strong);
+    border-radius:10px; padding:14px 16px; font-size:16px; font-weight:400;
+    color:#5B3800; line-height:1.55;
+  }
+
+  /* ---------- Right pane: detail (script / answer) ---------- */
+  .right-pane{position:sticky; top:118px;}
+
+  .right-legend{margin-bottom:16px;}
+  .right-legend .notes-title{font-size:14.5px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.03em; font-weight:600;}
+  .right-legend ul.notes li{font-size:16.5px; padding:11px 14px 11px 30px;}
+  .right-legend ul.notes li::before{left:12px; top:11.5px;}
+  .right-legend ul.notes{background:var(--surface); box-shadow:var(--shadow-card);}
+
+  .script-panel{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius-lg);
+    box-shadow:var(--shadow-card);
+    overflow:hidden;
+  }
+  .script-panel + .script-panel{margin-top:16px;}
+  .script-panel-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 22px; cursor:pointer; user-select:none;
+    transition:background .15s ease;
+  }
+  .script-panel-head:hover{background:var(--primary-tint);}
+  .script-panel[data-role="script"].is-open .script-panel-head{border-bottom:1px solid var(--border);}
+  .box-label{font-family:var(--font); font-weight:600; font-size:17px; color:var(--ink);}
+  .script-chevron{width:18px; height:18px; color:var(--ink-faint); transition:transform .2s ease;}
+  .script-panel.is-open .script-chevron{transform:rotate(180deg); color:var(--primary-dark);}
+  .answer-check{width:21px; height:21px; color:var(--ink-faint); transition:color .15s ease;}
+  .script-panel[data-role="answer"].is-open .script-panel-head{background:var(--accent-tint);}
+  .script-panel[data-role="answer"].is-open .box-label{color:var(--primary-dark);}
+  .script-panel[data-role="answer"].is-open .answer-check{color:var(--primary);}
+
+  .box-body{padding:18px 22px 20px; font-size:17px; font-weight:400; color:var(--ink); display:none;}
+  .box-body.open{display:block;}
+  .script-body.open{max-height:60vh; overflow-y:auto;}
+  .box-body-empty{color:var(--ink-faint); font-size:15px;}
+
+  .t-line{font-family:var(--font-transcript); display:flex; gap:12px; font-size:17px; font-weight:400; padding:6px 7px; border-radius:8px; margin:0; line-height:1.5;}
+  .t-line + .t-line{margin-top:3px;}
+  .t-time{flex:0 0 auto; font-variant-numeric:tabular-nums; font-size:13.5px; font-weight:500; color:var(--ink-faint); padding-top:3px; width:44px;}
+  .t-text{flex:1 1 auto;}
+  mark.evidence-mark{font-family:var(--font-transcript);}
+  .t-line.is-evidence{background:var(--accent-tint);}
+  mark.evidence-mark{background:var(--accent); color:var(--ink); padding:1px 4px; border-radius:4px; font-weight:600; text-decoration:none;}
+
+  .answer-value{font-family:var(--font); font-weight:700; font-size:27px; color:var(--primary-dark); letter-spacing:.01em; margin:0;}
+
+  footer.site-footer{max-width:min(1880px, 97vw); margin:0 auto; padding:0 24px 110px; font-size:13px; font-weight:400; color:var(--ink-faint); text-align:center;}
+  .footer-brand{display:flex; align-items:center; justify-content:center; gap:7px; margin-bottom:12px;}
+  .footer-logo{width:19px; height:19px;}
+  .footer-word{font-family:var(--font); font-weight:700; font-size:14.5px; letter-spacing:-0.01em; color:var(--ink); text-transform:lowercase;}
+
+  /* ---------- Part 2-4 placeholders ---------- */
+  .part-placeholder{padding:60px 0 40px; min-height:58vh; display:flex; align-items:center;}
+  .part-placeholder[hidden]{display:none;}
+  .part-placeholder .wrap-wide{width:100%;}
+  .placeholder-card{
+    max-width:560px; margin:0 auto; text-align:center;
+    background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-lg);
+    box-shadow:var(--shadow-card); padding:44px 36px;
+  }
+  .placeholder-eyebrow{font-weight:600; font-size:13px; color:var(--primary-dark); margin:0 0 10px; text-transform:uppercase; letter-spacing:.04em;}
+  .placeholder-title{font-weight:700; font-size:24px; color:var(--ink); margin:0 0 14px;}
+  .placeholder-text{font-weight:400; font-size:14.5px; color:var(--ink-soft); margin:0; line-height:1.6;}
+
+  /* ---------- Bottom part navigation ---------- */
+  .part-nav{
+    position:fixed; left:50%; bottom:20px; transform:translateX(-50%);
+    z-index:50;
+    display:flex; gap:2px;
+    background:var(--ink); border-radius:999px; padding:5px;
+    box-shadow:0 10px 30px -8px rgba(29,30,30,.45);
+    width:min(92vw, 520px);
+  }
+  .part-nav-btn{
+    flex:1 1 0; border:none; background:transparent; color:#C9C9C7;
+    font-family:var(--font); font-weight:600; font-size:13.5px;
+    padding:11px 10px; border-radius:999px; cursor:pointer;
+    transition:background .15s ease, color .15s ease;
+    text-align:center;
+  }
+  .part-nav-btn:hover{color:#fff;}
+  .part-nav-btn.active{background:var(--primary); color:#fff;}
+
+  /* ---------- Map diagram (Part 2, Q15-20) ---------- */
+  .map-card{
+    border:1.5px solid var(--table-border); border-radius:var(--radius-md);
+    background:var(--surface); padding:18px 18px 14px; margin-bottom:20px;
+    box-shadow:var(--shadow-card);
+  }
+  .map-card svg{width:100%; height:auto; display:block;}
+  .map-note{font-size:13.5px; color:var(--ink-soft); margin:10px 2px 0; line-height:1.5;}
+
+  /* ---------- Flow chart (Part 3, Q27-30) — compact, single row ---------- */
+  .flowchart{display:flex; flex-direction:row; align-items:stretch; gap:0; margin:6px 0 4px; max-width:640px;}
+  .flow-step{
+    flex:1 1 0; min-width:0;
+    border:1.5px solid var(--table-border); border-radius:var(--radius-sm);
+    background:var(--surface); box-shadow:var(--shadow-card);
+    padding:10px 8px 11px; display:flex; flex-direction:column; align-items:center; text-align:center; gap:6px;
+    transition:border-color .15s ease;
+  }
+  .flow-step.is-selected{border-color:var(--primary); box-shadow:0 0 0 3px var(--primary-tint);}
+  .flow-step-label{font-family:var(--font); font-weight:700; font-size:10.5px; line-height:1.25; letter-spacing:.02em; text-transform:uppercase; color:var(--primary-dark); min-height:26px; display:flex; align-items:center; justify-content:center;}
+  .flow-step-body{display:flex; align-items:center; justify-content:center; gap:10px; font-size:17px; color:var(--ink);}
+  .flow-arrow{display:flex; align-items:center; justify-content:center; flex:0 0 auto; padding:0 3px; color:var(--ink-faint);}
+  .flow-arrow svg{width:16px; height:16px; transform:rotate(-90deg);}
+
+  @media (max-width:760px){
+    .flowchart{flex-direction:column; max-width:320px;}
+    .flow-step{align-items:flex-start; text-align:left; padding:14px 16px;}
+    .flow-step-label{min-height:0; justify-content:flex-start;}
+    .flow-arrow{padding:2px 0;}
+    .flow-arrow svg{transform:none;}
+  }
+
+  @media (max-width:600px){
+    .part-nav{bottom:14px; padding:4px;}
+    .part-nav-btn{font-size:12.5px; padding:10px 6px;}
+    .placeholder-card{padding:32px 22px; margin:0 18px;}
+    footer.site-footer{padding:0 18px 100px;}
+  }
+
+  @media (max-width: 980px){
+    .split-layout{grid-template-columns:1fr;}
+    .right-pane{position:static; top:auto;}
+  }
+
+  @media (max-width: 600px){
+    .page-header{padding:26px 18px 22px;}
+    .wrap, .wrap-wide{padding:0 18px;}
+    .player-inner{padding:12px 16px; gap:12px;}
+    .player-label span{display:none;}
+    .qnav-inner{padding:9px 16px;}
+    main.content{padding:24px 0 100px;}
+    .left-pane{padding:18px 16px 18px;}
+    .script-panel-head{padding:14px 16px;}
+    .box-body{padding:14px 16px 16px;}
+    table.qtable{font-size:16px; min-width:720px;}
+    .table-scroll{box-shadow:inset -14px 0 12px -14px rgba(29,30,30,.18);}
+    footer.site-footer{padding:0 18px 50px;}
+  }
+</style>
+<style>[hidden]{display:none!important}
+.split-layout{display:block;max-width:1200px;margin:auto}.left-pane{width:100%}
+.page-header{padding:24px 16px}.tagline{max-width:none}.page-header .wrap{max-width:1240px}
+.content{padding-bottom:90px}.wrap-wide{max-width:1240px}
+.exam-card{max-width:740px;margin:28px auto;padding:28px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-card)}
+.exam-card h2{margin-top:0}.exam-card label{display:block;font-weight:600;margin:18px 0 6px}
+.exam-card input,.exam-card select{font:inherit;width:100%;padding:12px;border:1px solid var(--table-border);border-radius:8px;background:white;color:var(--ink)}
+.field-hint{font-size:13px;color:#565e59;margin:6px 0 0;line-height:1.5}
+.field-hint strong{color:var(--ink)}
+.field-hint-list{font-size:13px;color:#565e59;margin:6px 0 0;padding-left:18px;line-height:1.6}
+.field-hint-list li{margin:0 0 2px}
+.field-hint-list strong{color:var(--ink)}
+.rules-block{margin-top:18px}
+.rules-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px}
+.rules-col{background:var(--primary-tint);border:1px solid var(--table-border);border-radius:10px;padding:14px 16px}
+.rules-subtitle{font-weight:700;font-size:13px;letter-spacing:.04em;color:var(--primary-dark);margin:0 0 8px;text-transform:uppercase}
+.rules-col ul.notes{background:var(--surface);box-shadow:none}
+.rules-col ul.notes li{font-size:14px;padding:9px 12px 9px 26px}
+.rules-col ul.notes li::before{left:10px;top:9px}
+mark.user-hl{background:var(--accent-tint);color:inherit;padding:0 1px;border-radius:2px;cursor:pointer;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+mark.user-hl:hover{background:var(--accent-tint-strong)}
+.teacher-panel{position:fixed;right:16px;bottom:16px;z-index:200;width:220px;display:flex;flex-direction:column;gap:8px;background:var(--surface);border:1.5px solid var(--table-border);border-radius:var(--radius-md);box-shadow:0 10px 30px -8px rgba(29,30,30,.45);padding:14px 16px}
+.teacher-panel-head{margin:0;font-family:var(--font);font-weight:700;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--primary-dark)}
+.teacher-panel .exam-button{padding:9px 12px;font-size:13.5px;min-height:36px}
+.teacher-status{margin:2px 0 0;font-size:12px;color:var(--ink-soft);min-height:14px}
+.exam-button{border:0;border-radius:10px;background:var(--primary);color:white;padding:12px 20px;font:600 15px var(--font);cursor:pointer;min-height:44px}.exam-button:disabled{opacity:.5;cursor:wait}
+.exam-button.secondary{background:var(--primary-tint);color:var(--ink)}
+#startForm button{margin-top:22px}#startError,#saveStatus,#audioStatus{overflow-wrap:anywhere}
+.exam-status{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;max-width:1200px;margin:auto;padding:12px 20px}
+#phaseLabel{font-weight:700;color:var(--primary-dark)}#timer{font-variant-numeric:tabular-nums;font-size:22px;font-weight:700}#audioStatus{font-size:13px;margin:0}#answered{font-size:13px;color:var(--ink-soft)}
+.qchip{display:inline-flex;gap:5px;vertical-align:middle;cursor:default;background:transparent;border:0;max-width:100%}.qchip-num{font-size:12px;min-width:24px;color:var(--primary-dark)}
+.answer-input{width:140px;max-width:100%;font:500 15px var(--font);padding:7px 9px;border:1px solid var(--table-border);border-radius:7px;background:white;color:var(--ink)}
+.mc-option{cursor:pointer;position:relative;min-height:44px}.mc-option:has(input:checked){background:var(--primary-tint-strong);border-color:var(--primary)}.mc-option input{width:18px;height:18px;flex-shrink:0;accent-color:var(--primary)}
+.mc-options{display:grid}.qnav-pill.answered{background:var(--primary-tint-strong);border-color:var(--primary)}
+.qnav-inner{flex-wrap:wrap}.qnav-pill{min-height:38px}.mc-block,.qchip{scroll-margin-top:190px}
+#result .score-row{display:flex;gap:24px;flex-wrap:wrap;margin:20px 0}.metric strong{display:block;font-size:30px;color:var(--primary-dark)}
+.part-score-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.part-score-grid p{background:var(--primary-tint);padding:12px;border-radius:10px;margin:0}.part-score-grid strong{display:block;font-size:22px}
+.help{font-size:13px;color:#565e59}.alert{color:#9b341b;font-weight:600}.site-footer{padding-bottom:100px}
+@media(max-width:650px){.exam-card{margin:16px;padding:20px}.page-header{padding:18px 4px}.part-score-grid{grid-template-columns:1fr 1fr}.qtable{min-width:740px}.exam-status{padding:10px 16px}.mc-option{font-size:14px}.answer-input{width:125px}.qnav-pill{padding:6px 9px}.page-title{font-size:28px!important}.rules-grid{grid-template-columns:1fr}}
+.entry-step[hidden]{display:none!important}
+.instructions{color:var(--ink-soft);margin:0 0 14px;font-size:14px}
+.entry-section-title{font-weight:700;color:var(--ink);margin:20px 0 8px;font-size:15px}
+.entry-section-title:first-child{margin-top:0}
+.browser-notice{background:var(--accent-tint);border:1px solid var(--accent-tint-strong);border-radius:var(--radius-md);padding:12px 14px;margin:14px 0;font-size:14px;color:var(--ink)}
+.confirm-name-box{background:var(--primary-tint);border:1px solid var(--primary-tint-strong);border-radius:var(--radius-md);padding:14px 16px;margin:14px 0;font-size:15px;color:var(--ink)}
+.confirm-name-box strong{display:block;font-size:18px;color:var(--primary-dark);margin-bottom:4px}
+.checkbox-row{display:flex;align-items:flex-start;gap:8px;margin:14px 0;font-size:14px;color:var(--ink)}
+.checkbox-row input{margin-top:3px}
+.entry-actions-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;align-items:center}
+.entry-actions-row .exam-button{margin-top:0}
+.entry-status-message{background:var(--primary-tint);border:1px solid var(--primary-tint-strong);border-radius:var(--radius-md);padding:10px 14px;margin:14px 0;font-size:14px;color:var(--ink)}
+.field-error{color:#9b341b;font-size:13px;margin:6px 0 0;font-weight:600;min-height:16px}
+.btn-text{background:none;border:none;color:var(--ink-soft);font-size:14px;text-decoration:underline;cursor:pointer;padding:6px 0;margin-top:10px}
+.notice-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:14px 18px;margin:10px 0 18px}
+.notice-box ul{margin:0;padding-left:20px;font-size:14px;color:var(--ink);line-height:1.6}
+.notice-box ul li{margin:0 0 6px}
+.notice-box ul li:last-child{margin-bottom:0}
+.notice-box.warning{background:#fdeeec;border:1px solid #f0b8ab;color:#8a2f1c;font-weight:600;padding:12px 14px;margin:14px 0}
+.review-audio-box{background:var(--primary-tint);border:1px solid var(--primary-tint-strong);border-radius:var(--radius-md);padding:14px 16px;margin:16px 0}
+.review-callout{background:var(--primary-tint);border:1px solid var(--primary-tint-strong);border-left:4px solid var(--primary);border-radius:var(--radius-md);padding:12px 16px;margin:14px 0}
+.review-callout-title{font-weight:700;color:var(--primary-dark);margin:0 0 6px;font-size:14px}
+.review-callout-body{margin:0;font-size:14px;color:var(--ink);line-height:1.6}
+.review-player-bar{position:fixed;left:0;right:0;bottom:0;z-index:150;background:var(--surface);border-top:1px solid var(--border);box-shadow:0 -6px 18px -12px rgba(29,30,30,.35)}
+.review-player-inner{max-width:min(1880px,97vw);margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:12px}
+.review-player-label{flex:0 0 auto;font-weight:600;font-size:13px;color:var(--ink);white-space:nowrap}
+.review-skip-btn{flex:0 0 auto;height:36px;padding:0 12px;border-radius:999px;border:1px solid var(--border);background:var(--surface);color:var(--ink);font-size:12px;font-weight:700;cursor:pointer;transition:background .15s ease}
+.review-skip-btn:hover{background:var(--primary-tint)}
+@media(max-width:650px){.review-player-label{display:none}.review-player-inner{padding:8px 12px;gap:8px}}
+/* ===== Listening Review: correctness annotations (only added once #result shows) ===== */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+.qchip.is-correct{border-color:var(--primary);}
+.qchip.is-wrong{border-color:var(--danger);background:var(--danger-bg);}
+.qchip.is-wrong .answer-input{color:var(--danger);text-decoration:line-through;background:transparent;}
+.qchip-feedback-icon{flex:0 0 auto;width:20px;height:20px;margin-left:2px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;}
+.qchip.is-correct .qchip-feedback-icon{background:var(--primary);}
+.qchip.is-wrong .qchip-feedback-icon{background:var(--danger);}
+.qchip-correct-answer{display:inline-block;margin-left:5px;font-size:12.5px;font-weight:700;color:var(--primary-dark);}
+.mc-block.is-review-correct{border-left:4px solid var(--primary);}
+.mc-block.is-review-wrong{border-left:4px solid var(--danger);}
+.review-status-badge{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;margin-left:10px;vertical-align:middle;white-space:nowrap;}
+.review-status-badge.is-correct{background:var(--primary-tint);color:var(--primary-dark);}
+.review-status-badge.is-wrong{background:var(--danger-bg);color:var(--danger);}
+.review-status-badge.is-unanswered{background:var(--bg);color:var(--ink-soft);border:1px solid var(--border);}
+.mc-option.opt-correct,.mc-option:has(input:checked).opt-correct{border-color:var(--primary);background:var(--primary-tint);}
+.mc-option.opt-correct .mc-option-letter{border-color:var(--primary);background:var(--primary);color:#fff;}
+.mc-option.opt-correct>span:last-child{color:var(--primary-dark);font-weight:700;}
+.mc-option.opt-wrong,.mc-option:has(input:checked).opt-wrong{border-color:var(--danger);background:var(--danger-bg);}
+.mc-option.opt-wrong .mc-option-letter{border-color:var(--danger);background:var(--danger);color:#fff;}
+.mc-option.opt-wrong>span:last-child{color:var(--danger);font-weight:700;text-decoration:line-through;}
+.qnav-pill.is-review-correct{background:var(--primary);border-color:var(--primary);color:#fff;}
+.qnav-pill.is-review-wrong{background:var(--danger);border-color:var(--danger);color:#fff;}
+/* ===== Listening Review: 2-panel Questions | Script layout (desktop-first) ===== */
+.right-pane.script-pane{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-card);display:flex;flex-direction:column;overflow:hidden;max-height:calc(100vh - 210px);position:sticky;top:118px;}
+.script-pane-head{flex:0 0 auto;padding:16px 22px;border-bottom:1px solid var(--border);background:var(--primary-tint);}
+.script-pane-title{font-family:var(--font);font-weight:700;font-size:15.5px;color:var(--primary-dark);}
+.script-pane-body{flex:1 1 auto;overflow-y:auto;padding:20px 22px;font-family:var(--font-transcript);font-size:16.5px;line-height:1.7;color:var(--ink);}
+.script-pane-body p{margin:0 0 14px;}
+.script-pane-body p:last-child{margin-bottom:0;}
+.script-pane-placeholder{color:var(--ink-soft);font-style:italic;}
+body.is-review-listening .part-view .wrap-wide{max-width:min(1900px,98vw);}
+body.is-review-listening .split-layout{display:grid;grid-template-columns:1fr 1.4fr;max-width:min(1900px,98vw);margin:0 auto;gap:24px;}
+body.is-review-listening .left-pane{width:auto;}
+@media (max-width:980px){
+ body.is-review-listening .split-layout{grid-template-columns:1fr;max-width:1200px;}
+ body.is-review-listening .right-pane.script-pane{position:static;top:auto;max-height:60vh;margin-top:20px;}
+}
+</style></head>
+<body>
+
+<header class="page-header">
+  <div class="wrap wrap-wide">
+    
+    <h1 class="page-title">IELTS Listening Full Test</h1>
+    <p class="header-meta"><strong>Cambridge IELTS 15 – Test 1</strong></p>
+    <p class="header-scope" id="headerScope">Part 1 | Questions 1–10</p>
+    <p class="tagline">40 questions · One continuous recording · 2 minutes to review</p>
+  </div>
+</header>
+
+<section id="startScreen" class="exam-card">
+<div id="entry-step-info">
+<h2>Sẵn sàng bắt đầu?</h2>
+<p class="instructions">Bài Nghe gồm 4 phần (Part 1–4) với 40 câu hỏi. Hãy đeo tai nghe và kiểm tra âm lượng thiết bị trước khi bắt đầu — audio chỉ được phát duy nhất 1 lần trong lúc làm bài.</p>
+<div class="entry-section-title">Lưu ý trước khi làm bài</div>
+<div class="notice-box"><ul><li>Audio chỉ được phát 1 lần duy nhất trong lúc làm bài — không thể dừng, tua hoặc nghe lại.</li><li>Sau khi audio kết thúc, bạn có 2 phút để kiểm tra và chỉnh sửa đáp án trước khi bài tự động nộp.</li><li>Mỗi bài chỉ được làm và nộp một lần.</li><li>Hãy đeo tai nghe, kiểm tra âm lượng và đảm bảo kết nối mạng ổn định trước khi bắt đầu.</li><li>Hãy kiểm tra kỹ họ tên và dấu tiếng Việt trước khi bắt đầu.</li></ul></div>
+<div class="review-callout"><p class="review-callout-title">🔁 Đã làm bài này trước đó?</p><p class="review-callout-body">Hãy nhập đúng họ tên đã dùng khi làm bài, sau đó chọn <strong>"Xem lại bài đã làm"</strong> ở bước cuối. Phần xem lại có đầy đủ audio để bạn tự tua và nghe lại không giới hạn số lần, giúp đối chiếu đáp án.</p></div>
+<div class="entry-section-title">Lưu ý về trình duyệt</div>
+<div class="notice-box"><ul><li>Vui lòng sử dụng một trình duyệt duy nhất trong suốt quá trình làm bài và xem lại bài: Chrome, Safari hoặc Cốc Cốc.</li><li>Nếu muốn xem lại bài sau khi đóng tab, hãy mở lại bằng đúng trình duyệt và đúng thiết bị đã sử dụng khi làm bài.</li><li>Không sử dụng tab ẩn danh hoặc chế độ duyệt web riêng tư.</li><li>Không xóa dữ liệu trình duyệt trước khi xem lại bài.</li></ul></div>
+<div class="notice-box warning">⚠️ Để có thể xem lại bài sau này, hãy sử dụng đúng một trình duyệt và không sử dụng chế độ ẩn danh.</div>
+<p class="help">Giữ nguyên trang này trong suốt quá trình làm bài. Nếu tải lại trang, hãy nhập đúng họ tên đã dùng trước đó: đồng hồ vẫn tiếp tục chạy và phần audio đã bỏ lỡ sẽ không được phát lại.</p>
+<div class="entry-section-title">Thông tin học viên</div>
+<label for="studentName">Họ và tên</label><input id="studentName" maxlength="120" autocomplete="name" placeholder="Nhập đầy đủ họ và tên có dấu tiếng Việt"><ul class="field-hint-list"><li>Nhập đầy đủ họ và tên có dấu tiếng Việt</li><li>Không viết tắt, không bỏ dấu</li><li>Ví dụ: <strong>Phạm Thị Hương</strong></li></ul>
+<input type="hidden" id="cycleId" value="C15-T1">
+<div class="field-error" id="infoError"></div>
+<div class="entry-actions-row"><button type="button" class="exam-button" id="infoContinueBtn">Tiếp tục</button></div>
+</div>
+<div id="entry-step-confirm" hidden>
+<p class="instructions">Bạn chắc chắn đã điền đúng họ tên và Chu kỳ ôn thi chưa?</p>
+<div class="confirm-name-box" id="confirmInfoBox"></div>
+<label class="checkbox-row"><input type="checkbox" id="confirmCheckbox"><span>Tôi đã kiểm tra và xác nhận thông tin của mình.</span></label>
+<div class="entry-actions-row"><button type="button" class="exam-button secondary" id="confirmBackBtn">Quay lại</button><button type="button" class="exam-button" id="confirmContinueBtn" disabled>Tiếp tục</button></div>
+</div>
+<form id="startForm">
+<div id="entry-step-actions" hidden>
+<div class="entry-status-message" id="entryStatusMessage" hidden></div>
+<p id="audioReady" class="help">Đang tải audio…</p>
+<p id="startError" class="alert" role="alert"></p>
+<div class="entry-actions-row"><button id="startButton" class="exam-button" disabled>Bắt đầu làm bài Nghe</button><button type="button" class="exam-button secondary" id="reviewButton" hidden>Xem lại bài đã làm</button></div>
+<p class="field-hint" id="reviewHint" hidden>Phần xem lại có đầy đủ audio để bạn tự tua và nghe lại không giới hạn số lần.</p>
+<button type="button" class="btn-text" id="actionsBackBtn">Quay lại</button>
+</div>
+</form>
+</section>
+<section id="result" class="exam-card" hidden aria-live="polite"><h2>Listening result</h2><p id="resultName"></p><div class="review-audio-box"><p class="entry-section-title" style="margin-top:0;">🎧 Nghe lại toàn bộ audio</p><p class="field-hint" style="margin-top:0;">Audio nghe lại luôn hiển thị ở thanh cố định cuối màn hình — kéo xuống xem từng câu hỏi vẫn tua và nghe lại được bình thường.</p></div><div class="score-row"><div class="metric">Raw score<strong id="rawScore"></strong></div><div class="metric">Estimated IELTS band<strong id="bandScore"></strong></div><div class="metric">Time used<strong id="timeUsed"></strong></div></div><div class="part-score-grid" id="partScores"></div><p id="attemptNote"></p><p id="saveStatus" role="status"></p><button id="retrySave" class="exam-button">Retry saving result</button> <button id="downloadResult" class="exam-button secondary">Download result</button><p class="help">Band scores are practice estimates. Your teacher can review the result if playback was interrupted.</p></section><div id="exam" hidden>
+<div class="control-stack" id="controlStack">
+  <section class="player-bar">
+    <div class="exam-status"><div><div id="candidate"></div><div id="phaseLabel">Ready</div><p id="audioStatus">Audio plays once. Playback controls are disabled.</p><button id="resumeAudio" class="exam-button secondary" hidden>Continue at current position</button></div><div><div id="timer" role="timer">00:00</div><div id="answered">0 / 40 answered</div></div></div><audio id="audio" preload="metadata" controlslist="nodownload noplaybackrate" disableRemotePlayback src="C15 L T1 mobile.mp3"></audio>
+  </section>
+
+  <nav class="qnav">
+    <div class="qnav-inner" id="qnavInner"></div>
+  </nav>
+</div>
+
+<main class="content">
+  <div class="part-view" id="part1View">
+  <div class="wrap wrap-wide">
+    <div class="split-layout">
+
+      <section class="left-pane">
+        <h2 class="section-heading">Bankside Recruitment Agency</h2>
+        <p class="pane-sub">Questions 1–10 · Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.</p>
+
+        <p class="notes-title">Bankside Recruitment Agency</p>
+        <ul class="notes">
+          <li>Address of agency: 497 Eastside, Docklands</li>
+          <li>Name of agent: Becky <span class="qchip" data-q="1"><span class="qchip-num" data-q="1">1</span><input class="answer-input" data-q="1" aria-label="Answer 1" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span></li>
+          <li>Phone number: 07866 510333</li>
+          <li>Best to call her in the <span class="qchip" data-q="2"><span class="qchip-num" data-q="2">2</span><input class="answer-input" data-q="2" aria-label="Answer 2" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span></li>
+        </ul>
+
+        <p class="notes-title" style="margin-top:16px;">Typical jobs</p>
+        <ul class="notes">
+          <li>Clerical and admin roles, mainly in the finance industry</li>
+          <li>Must have good <span class="qchip" data-q="3"><span class="qchip-num" data-q="3">3</span><input class="answer-input" data-q="3" aria-label="Answer 3" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> skills</li>
+          <li>Jobs are usually for at least one <span class="qchip" data-q="4"><span class="qchip-num" data-q="4">4</span><input class="answer-input" data-q="4" aria-label="Answer 4" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span></li>
+          <li>Pay is usually <span class="qchip" data-q="5"><span class="qchip-num" data-q="5">5</span><input class="answer-input" data-q="5" aria-label="Answer 5" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> £ per hour</li>
+        </ul>
+
+        <p class="notes-title" style="margin-top:16px;">Registration process</p>
+        <ul class="notes">
+          <li>Wear a <span class="qchip" data-q="6"><span class="qchip-num" data-q="6">6</span><input class="answer-input" data-q="6" aria-label="Answer 6" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> to the interview</li>
+          <li>Must bring your <span class="qchip" data-q="7"><span class="qchip-num" data-q="7">7</span><input class="answer-input" data-q="7" aria-label="Answer 7" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> to the interview</li>
+          <li>They will ask questions about each applicant's <span class="qchip" data-q="8"><span class="qchip-num" data-q="8">8</span><input class="answer-input" data-q="8" aria-label="Answer 8" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span></li>
+        </ul>
+
+        <p class="notes-title" style="margin-top:16px;">Advantages of using an agency</p>
+        <ul class="notes">
+          <li>The <span class="qchip" data-q="9"><span class="qchip-num" data-q="9">9</span><input class="answer-input" data-q="9" aria-label="Answer 9" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> you receive at interview will benefit you</li>
+          <li>Will get access to vacancies which are not advertised</li>
+          <li>Less <span class="qchip" data-q="10"><span class="qchip-num" data-q="10">10</span><input class="answer-input" data-q="10" aria-label="Answer 10" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> is involved in applying for jobs</li>
+        </ul>
+      </section>
+
+      <aside class="right-pane script-pane" id="scriptPanePart1" hidden aria-label="Script Part 1">
+  <div class="script-pane-head"><span class="script-pane-title">🎧 Script &mdash; Part 1</span></div>
+  <div class="script-pane-body" id="scriptBodyPart1"><p class="script-pane-placeholder">Script cho Part 1 se duoc cap nhat sau.</p></div>
+</aside>
+
+    </div>
+  </div>
+  </div>
+
+  <div class="part-view" id="part2View" hidden>
+  <div class="wrap wrap-wide">
+    <div class="split-layout">
+
+      <section class="left-pane">
+        <h2 class="section-heading">Matthews Island Holidays</h2>
+        <p class="pane-sub">Questions 11–14 · Choose the correct letter, A, B or C.</p>
+          <div class="mc-block" data-q="11">
+            <div class="mc-head">
+              
+              <p class="mc-num">11</p>
+              <p class="mc-stem">According to the speaker, the company</p>
+            </div>
+            <div class="mc-options">
+              <label class="mc-option" data-letter="A"><input type="radio" name="q11" value="A" aria-label="Question 11, option A"><span class="mc-option-letter">A</span><span>has been in business for longer than most of its competitors.</span></label>
+              <label class="mc-option" data-letter="B"><input type="radio" name="q11" value="B" aria-label="Question 11, option B"><span class="mc-option-letter">B</span><span>arranges holidays to more destinations than its competitors.</span></label>
+              <label class="mc-option" data-letter="C"><input type="radio" name="q11" value="C" aria-label="Question 11, option C"><span class="mc-option-letter">C</span><span>has more customers than its competitors.</span></label>
+            </div>
+          </div>
+
+          <div class="mc-block" data-q="12">
+            <div class="mc-head">
+              
+              <p class="mc-num">12</p>
+              <p class="mc-stem">Where can customers meet the tour manager before travelling to the Isle of Man?</p>
+            </div>
+            <div class="mc-options">
+              <label class="mc-option" data-letter="A"><input type="radio" name="q12" value="A" aria-label="Question 12, option A"><span class="mc-option-letter">A</span><span>Liverpool</span></label>
+              <label class="mc-option" data-letter="B"><input type="radio" name="q12" value="B" aria-label="Question 12, option B"><span class="mc-option-letter">B</span><span>Heysham</span></label>
+              <label class="mc-option" data-letter="C"><input type="radio" name="q12" value="C" aria-label="Question 12, option C"><span class="mc-option-letter">C</span><span>Luton</span></label>
+            </div>
+          </div>
+
+          <div class="mc-block" data-q="13">
+            <div class="mc-head">
+              
+              <p class="mc-num">13</p>
+              <p class="mc-stem">How many lunches are included in the price of the holiday?</p>
+            </div>
+            <div class="mc-options">
+              <label class="mc-option" data-letter="A"><input type="radio" name="q13" value="A" aria-label="Question 13, option A"><span class="mc-option-letter">A</span><span>three</span></label>
+              <label class="mc-option" data-letter="B"><input type="radio" name="q13" value="B" aria-label="Question 13, option B"><span class="mc-option-letter">B</span><span>four</span></label>
+              <label class="mc-option" data-letter="C"><input type="radio" name="q13" value="C" aria-label="Question 13, option C"><span class="mc-option-letter">C</span><span>five</span></label>
+            </div>
+          </div>
+
+          <div class="mc-block" data-q="14">
+            <div class="mc-head">
+              
+              <p class="mc-num">14</p>
+              <p class="mc-stem">Customers have to pay extra for</p>
+            </div>
+            <div class="mc-options">
+              <label class="mc-option" data-letter="A"><input type="radio" name="q14" value="A" aria-label="Question 14, option A"><span class="mc-option-letter">A</span><span>guaranteeing themselves a larger room.</span></label>
+              <label class="mc-option" data-letter="B"><input type="radio" name="q14" value="B" aria-label="Question 14, option B"><span class="mc-option-letter">B</span><span>booking at short notice.</span></label>
+              <label class="mc-option" data-letter="C"><input type="radio" name="q14" value="C" aria-label="Question 14, option C"><span class="mc-option-letter">C</span><span>transferring to another date.</span></label>
+            </div>
+          </div>
+
+        <p class="pane-sub" style="margin-top:22px;">Questions 15–20 · Complete the table below. Write ONE WORD AND/OR A NUMBER for each answer.</p>
+        <div class="table-scroll">
+        <table class="qtable">
+          <thead>
+            <tr><th>Day</th><th>Activity</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Day 1</td>
+              <td>Arrive</td>
+              <td>Introduction by manager; hotel dining room has view of the <span class="qchip" data-q="15"><span class="qchip-num" data-q="15">15</span><input class="answer-input" data-q="15" aria-label="Answer 15" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span></td>
+            </tr>
+            <tr>
+              <td>Day 2</td>
+              <td>Tynwald Exhibition and Peel</td>
+              <td>Tynwald may have been founded in <span class="qchip" data-q="16"><span class="qchip-num" data-q="16">16</span><input class="answer-input" data-q="16" aria-label="Answer 16" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span>, not 979</td>
+            </tr>
+            <tr>
+              <td>Day 3</td>
+              <td>Trip to Snaefell</td>
+              <td>Travel along promenade in a tram; train to Laxey; train to the <span class="qchip" data-q="17"><span class="qchip-num" data-q="17">17</span><input class="answer-input" data-q="17" aria-label="Answer 17" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> of Snaefell</td>
+            </tr>
+            <tr>
+              <td>Day 4</td>
+              <td>Free day</td>
+              <td>Company provides a <span class="qchip" data-q="18"><span class="qchip-num" data-q="18">18</span><input class="answer-input" data-q="18" aria-label="Answer 18" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> for local transport and heritage sites</td>
+            </tr>
+            <tr>
+              <td>Day 5</td>
+              <td>Take the <span class="qchip" data-q="19"><span class="qchip-num" data-q="19">19</span><input class="answer-input" data-q="19" aria-label="Answer 19" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> railway train from Douglas to Port Erin</td>
+              <td>Free time, then coach to Castletown — former <span class="qchip" data-q="20"><span class="qchip-num" data-q="20">20</span><input class="answer-input" data-q="20" aria-label="Answer 20" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> has old castle</td>
+            </tr>
+            <tr>
+              <td>Day 6</td>
+              <td>Leave</td>
+              <td>Leave the island by ferry or plane</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <aside class="right-pane script-pane" id="scriptPanePart2" hidden aria-label="Script Part 2">
+  <div class="script-pane-head"><span class="script-pane-title">🎧 Script &mdash; Part 2</span></div>
+  <div class="script-pane-body" id="scriptBodyPart2"><p class="script-pane-placeholder">Script cho Part 2 se duoc cap nhat sau.</p></div>
+</aside>
+
+    </div>
+  </div>
+  </div>
+
+  <div class="part-view" id="part3View" hidden>
+  <div class="wrap wrap-wide">
+    <div class="split-layout">
+
+      <section class="left-pane">
+        <h2 class="section-heading">Birth order and personality</h2>
+        <p class="pane-sub">Questions 21–26 · What did findings of previous research claim about the personality traits a child is likely to have because of their position in the family? Choose SIX answers from the box and match each position in the family to one trait.</p>
+<div class="notice-box" style="margin-bottom:14px;"><strong>Personality Traits</strong><br><strong>A</strong> outgoing  <strong>B</strong> selfish  <strong>C</strong> independent  <strong>D</strong> attention-seeking  <strong>E</strong> introverted  <strong>F</strong> co-operative  <strong>G</strong> caring  <strong>H</strong> competitive</div>
+          <div class="mc-block" data-q="21">
+            <div class="mc-head">
+              
+              <p class="mc-num">21</p>
+              <p class="mc-stem">Position in family: the eldest child</p>
+            </div>
+            <div class="mc-options">
+              <label class="mc-option" data-letter="A"><input type="radio" name="q21" value="A" aria-label="Question 21, option A"><span class="mc-option-letter">A</span><span>outgoing</span></label>
+              <label class="mc-option" data-letter="B"><input type="radio" name="q21" value="B" aria-label="Question 21, option B"><span class="mc-option-letter">B</span><span>selfish</span></label>
+              <label class="mc-option" data-letter="C"><input type="radio" name="q21" value="C" aria-label="Question 21, option C"><span class="mc-option-letter">C</span><span>independent</span></label>
+              <label class="mc-option" data-letter="D"><input type="radio" name="q21" value="D" aria-label="Question 21, option D"><span class="mc-option-letter">D</span><span>attention-seeking</span></label>
+              <label class="mc-option" data-letter="E"><input type="radio" name="q21" value="E" aria-label="Question 21, option E"><span class="mc-option-letter">E</span><span>introverted</span></label>
+              <label class="mc-option" data-letter="F"><input type="radio" name="q21" value="F" aria-label="Question 21, option F"><span class="mc-option-letter">F</span><span>co-operative</span></label>
+              <label class="mc-option" data-letter="G"><input type="radio" name="q21" value="G" aria-label="Question 21, option G"><span class="mc-option-letter">G</span><span>caring</span></label>
+              <label class="mc-option" data-letter="H"><input type="radio" name="q21" value="H" aria-label="Question 21, option H"><span class="mc-option-letter">H</span><span>competitive</span></label>
+            </div>
+          </div>
+
+          <div class="mc-block" data-q="22">
+            <div class="mc-head">
+              
+              <p class="mc-num">22</p>
+              <p class="mc-stem">Position in family: a middle child</p>
+            </div>
+            <div class="mc-options">
+              <label class="mc-option" data-letter="A"><input type="radio" name="q22" value="A" aria-label="Question 22, option A"><span class="mc-option-letter">A</span><span>outgoing</span></label>
+              <label class="mc-option" data-letter="B"><input type="radio" name="q22" value="B" aria-label="Question 22, option B"><span class="mc-option-letter">B</span><span>selfish</span></label>
+              <label class="mc-option" data-letter="C"><input type="radio" name="q22" value="C" aria-label="Question 22, option C"><span class="mc-option-letter">C</span><span>independent</span></label>
+              <label class="mc-option" data-letter="D"><input type="radio" name="q22" value="D" aria-label="Question 22, option D"><span class="mc-option-letter">D</span><span>attention-seeking</span></label>
+              <label class="mc-option" data-letter="E"><input type="radio" name="q22" value="E" aria-label="Question 22, option E"><span class="mc-option-letter">E</span><span>introverted</span></label>
+              <label class="mc-option" data-letter="F"><input type="radio" name="q22" value="F" aria-label="Question 22, option F"><span class="mc-option-letter">F</span><span>co-operative</span></label>
+              <label class="mc-option" data-letter="G"><input type="radio" name="q22" value="G" aria-label="Question 22, option G"><span class="mc-option-letter">G</span><span>caring</span></label>
+              <label class="mc-option" data-letter="H"><input type="radio" name="q22" value="H" aria-label="Question 22, option H"><span class="mc-option-letter">H</span><span>competitive</span></label>
+            </div>
+          </div>
+
+          <div class="mc-block" data-q="23">
+            <div class="mc-head">
+              
+              <p class="mc-num">23</p>
+              <p class="mc-stem">Position in family: the youngest child</p>
+            </div>
+            <div class="mc-options">
+              <label class="mc-option" data-letter="A"><input type="radio" name="q23" value="A" aria-label="Question 23, option A"><span class="mc-option-letter">A</span><span>outgoing</span></label>
+              <label class="mc-option" data-letter="B"><input type="radio" name="q23" value="B" aria-label="Question 23, option B"><span class="mc-option-letter">B</span><span>selfish</span></label>
+              <label class="mc-option" data-letter="C"><input type="radio" name="q23" value="C" aria-label="Question 23, option C"><span class="mc-option-letter">C</span><span>independent</span></label>
+              <label class="mc-option" data-letter="D"><input type="radio" name="q23" value="D" aria-label="Question 23, option D"><span class="mc-option-letter">D</span><span>attention-seeking</span></label>
+              <label class="mc-option" data-letter="E"><input type="radio" name="q23" value="E" aria-label="Question 23, option E"><span class="mc-option-letter">E</span><span>introverted</span></label>
+              <label class="mc-option" data-letter="F"><input type="radio" name="q23" value="F" aria-label="Question 23, option F"><span class="mc-option-letter">F</span><span>co-operative</span></label>
+              <label class="mc-option" data-letter="G"><input type="radio" name="q23" value="G" aria-label="Question 23, option G"><span class="mc-option-letter">G</span><span>caring</span></label>
+              <label class="mc-option" data-letter="H"><input type="radio" name="q23" value="H" aria-label="Question 23, option H"><span class="mc-option-letter">H</span><span>competitive</span></label>
+            </div>
+          </div>
+
+          <div class="mc-block" data-q="24">
+            <div class="mc-head">
+              
+              <p class="mc-num">24</p>
+              <p class="mc-stem">Position in family: a twin</p>
+            </div>
+            <div class="mc-options">
+              <label class="mc-option" data-letter="A"><input type="radio" name="q24" value="A" aria-label="Question 24, option A"><span class="mc-option-letter">A</span><span>outgoing</span></label>
+              <label class="mc-option" data-letter="B"><input type="radio" name="q24" value="B" aria-label="Question 24, option B"><span class="mc-option-letter">B</span><span>selfish</span></label>
+              <label class="mc-option" data-letter="C"><input type="radio" name="q24" value="C" aria-label="Question 24, option C"><span class="mc-option-letter">C</span><span>independent</span></label>
+              <label class="mc-option" data-letter="D"><input type="radio" name="q24" value="D" aria-label="Question 24, option D"><span class="mc-option-letter">D</span><span>attention-seeking</span></label>
+              <label class="mc-option" data-letter="E"><input type="radio" name="q24" value="E" aria-label="Question 24, option E"><span class="mc-option-letter">E</span><span>introverted</span></label>
+              <label class="mc-option" data-letter="F"><input type="radio" name="q24" value="F" aria-label="Question 24, option F"><span class="mc-option-letter">F</span><span>co-operative</span></label>
+              <label class="mc-option" data-letter="G"><input type="radio" name="q24" value="G" aria-label="Question 24, option G"><span class="mc-option-letter">G</span><span>caring</span></label>
+              <label class="mc-option" data-letter="H"><input type="radio" name="q24" value="H" aria-label="Question 24, option H"><span class="mc-option-letter">H</span><span>competitive</span></label>
+            </div>
+          </div>
+
+          <div class="mc-block" data-q="25">
+            <div class="mc-head">
+              
+              <p class="mc-num">25</p>
+              <p class="mc-stem">Position in family: an only child</p>
+            </div>
+            <div class="mc-options">
+              <label class="mc-option" data-letter="A"><input type="radio" name="q25" value="A" aria-label="Question 25, option A"><span class="mc-option-letter">A</span><span>outgoing</span></label>
+              <label class="mc-option" data-letter="B"><input type="radio" name="q25" value="B" aria-label="Question 25, option B"><span class="mc-option-letter">B</span><span>selfish</span></label>
+              <label class="mc-option" data-letter="C"><input type="radio" name="q25" value="C" aria-label="Question 25, option C"><span class="mc-option-letter">C</span><span>independent</span></label>
+              <label class="mc-option" data-letter="D"><input type="radio" name="q25" value="D" aria-label="Question 25, option D"><span class="mc-option-letter">D</span><span>attention-seeking</span></label>
+              <label class="mc-option" data-letter="E"><input type="radio" name="q25" value="E" aria-label="Question 25, option E"><span class="mc-option-letter">E</span><span>introverted</span></label>
+              <label class="mc-option" data-letter="F"><input type="radio" name="q25" value="F" aria-label="Question 25, option F"><span class="mc-option-letter">F</span><span>co-operative</span></label>
+              <label class="mc-option" data-letter="G"><input type="radio" name="q25" value="G" aria-label="Question 25, option G"><span class="mc-option-letter">G</span><span>caring</span></label>
+              <label class="mc-option" data-letter="H"><input type="radio" name="q25" value="H" aria-label="Question 25, option H"><span class="mc-option-letter">H</span><span>competitive</span></label>
+            </div>
+          </div>
+
+          <div class="mc-block" data-q="26">
+            <div class="mc-head">
+              
+              <p class="mc-num">26</p>
+              <p class="mc-stem">Position in family: a child with much older siblings</p>
+            </div>
+            <div class="mc-options">
+              <label class="mc-option" data-letter="A"><input type="radio" name="q26" value="A" aria-label="Question 26, option A"><span class="mc-option-letter">A</span><span>outgoing</span></label>
+              <label class="mc-option" data-letter="B"><input type="radio" name="q26" value="B" aria-label="Question 26, option B"><span class="mc-option-letter">B</span><span>selfish</span></label>
+              <label class="mc-option" data-letter="C"><input type="radio" name="q26" value="C" aria-label="Question 26, option C"><span class="mc-option-letter">C</span><span>independent</span></label>
+              <label class="mc-option" data-letter="D"><input type="radio" name="q26" value="D" aria-label="Question 26, option D"><span class="mc-option-letter">D</span><span>attention-seeking</span></label>
+              <label class="mc-option" data-letter="E"><input type="radio" name="q26" value="E" aria-label="Question 26, option E"><span class="mc-option-letter">E</span><span>introverted</span></label>
+              <label class="mc-option" data-letter="F"><input type="radio" name="q26" value="F" aria-label="Question 26, option F"><span class="mc-option-letter">F</span><span>co-operative</span></label>
+              <label class="mc-option" data-letter="G"><input type="radio" name="q26" value="G" aria-label="Question 26, option G"><span class="mc-option-letter">G</span><span>caring</span></label>
+              <label class="mc-option" data-letter="H"><input type="radio" name="q26" value="H" aria-label="Question 26, option H"><span class="mc-option-letter">H</span><span>competitive</span></label>
+            </div>
+          </div>
+
+        <p class="pane-sub" style="margin-top:22px;">Questions 27 and 28 · Choose the correct letter, A, B or C.</p>
+          <div class="mc-block" data-q="27">
+            <div class="mc-head">
+              
+              <p class="mc-num">27</p>
+              <p class="mc-stem">What do the speakers say about the evidence relating to birth order and academic success?</p>
+            </div>
+            <div class="mc-options">
+              <label class="mc-option" data-letter="A"><input type="radio" name="q27" value="A" aria-label="Question 27, option A"><span class="mc-option-letter">A</span><span>There is conflicting evidence about whether oldest children perform best in intelligence tests.</span></label>
+              <label class="mc-option" data-letter="B"><input type="radio" name="q27" value="B" aria-label="Question 27, option B"><span class="mc-option-letter">B</span><span>There is little doubt that birth order has less influence on academic achievement than socio-economic status.</span></label>
+              <label class="mc-option" data-letter="C"><input type="radio" name="q27" value="C" aria-label="Question 27, option C"><span class="mc-option-letter">C</span><span>Some studies have neglected to include important factors such as family size.</span></label>
+            </div>
+          </div>
+
+          <div class="mc-block" data-q="28">
+            <div class="mc-head">
+              
+              <p class="mc-num">28</p>
+              <p class="mc-stem">What does Ruth think is surprising about the difference in oldest children's academic performance?</p>
+            </div>
+            <div class="mc-options">
+              <label class="mc-option" data-letter="A"><input type="radio" name="q28" value="A" aria-label="Question 28, option A"><span class="mc-option-letter">A</span><span>It is mainly thanks to their roles as teachers for their younger siblings.</span></label>
+              <label class="mc-option" data-letter="B"><input type="radio" name="q28" value="B" aria-label="Question 28, option B"><span class="mc-option-letter">B</span><span>The advantages they have only lead to a slightly higher level of achievement.</span></label>
+              <label class="mc-option" data-letter="C"><input type="radio" name="q28" value="C" aria-label="Question 28, option C"><span class="mc-option-letter">C</span><span>The extra parental attention they receive at a young age makes little difference.</span></label>
+            </div>
+          </div>
+
+        <p class="pane-sub" style="margin-top:22px;">Questions 29 and 30 · Choose TWO letters, A–E.</p>
+          <div class="mc-block" data-q="29-30">
+            <div class="mc-head">
+              
+              <p class="mc-num">29-30</p>
+              <p class="mc-stem">Which TWO experiences of sibling rivalry do the speakers agree has been valuable for them?</p>
+            </div>
+            <div class="mc-options">
+              <label class="mc-option" data-letter="A"><input type="checkbox" name="q29-30" value="A" aria-label="Question 29-30, option A"><span class="mc-option-letter">A</span><span>learning to share</span></label>
+              <label class="mc-option" data-letter="B"><input type="checkbox" name="q29-30" value="B" aria-label="Question 29-30, option B"><span class="mc-option-letter">B</span><span>learning to stand up for oneself</span></label>
+              <label class="mc-option" data-letter="C"><input type="checkbox" name="q29-30" value="C" aria-label="Question 29-30, option C"><span class="mc-option-letter">C</span><span>learning to be a good loser</span></label>
+              <label class="mc-option" data-letter="D"><input type="checkbox" name="q29-30" value="D" aria-label="Question 29-30, option D"><span class="mc-option-letter">D</span><span>learning to be tolerant</span></label>
+              <label class="mc-option" data-letter="E"><input type="checkbox" name="q29-30" value="E" aria-label="Question 29-30, option E"><span class="mc-option-letter">E</span><span>learning to say sorry</span></label>
+            </div>
+          </div>
+      </section>
+
+      <aside class="right-pane script-pane" id="scriptPanePart3" hidden aria-label="Script Part 3">
+  <div class="script-pane-head"><span class="script-pane-title">🎧 Script &mdash; Part 3</span></div>
+  <div class="script-pane-body" id="scriptBodyPart3"><p class="script-pane-placeholder">Script cho Part 3 se duoc cap nhat sau.</p></div>
+</aside>
+
+    </div>
+  </div>
+  </div>
+
+  <div class="part-view" id="part4View" hidden>
+  <div class="wrap wrap-wide">
+    <div class="split-layout">
+
+      <section class="left-pane">
+        <h2 class="section-heading">The Eucalyptus Tree in Australia</h2>
+        <p class="pane-sub">Questions 31–40 · Complete the notes below. Write ONE WORD ONLY for each answer.</p>
+
+        <p class="notes-title">Importance</p>
+        <ul class="notes">
+          <li>It provides <span class="qchip" data-q="31"><span class="qchip-num" data-q="31">31</span><input class="answer-input" data-q="31" aria-label="Answer 31" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> and food for a wide range of species</li>
+          <li>Its leaves provide <span class="qchip" data-q="32"><span class="qchip-num" data-q="32">32</span><input class="answer-input" data-q="32" aria-label="Answer 32" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> which is used to make a disinfectant</li>
+        </ul>
+
+        <p class="notes-title" style="margin-top:16px;">Reasons for present decline in number</p>
+        <p class="notes-title" style="margin-top:8px;font-size:15px;">A) Diseases</p>
+        <ul class="notes">
+          <li>'Mundulla Yellows' — Cause: lime used for making <span class="qchip" data-q="33"><span class="qchip-num" data-q="33">33</span><input class="answer-input" data-q="33" aria-label="Answer 33" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> was absorbed; trees were unable to take in necessary iron through their roots</li>
+          <li>'Bell-miner Associated Die-back' — Cause: <span class="qchip" data-q="34"><span class="qchip-num" data-q="34">34</span><input class="answer-input" data-q="34" aria-label="Answer 34" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> feed on eucalyptus leaves; they secrete a substance containing sugar; bell-miner birds are attracted by this and keep away other species</li>
+        </ul>
+
+        <p class="notes-title" style="margin-top:16px;font-size:15px;">B) Bushfires (William Jackson's theory)</p>
+        <ul class="notes">
+          <li>High-frequency bushfires have impact on vegetation, resulting in the growth of <span class="qchip" data-q="35"><span class="qchip-num" data-q="35">35</span><input class="answer-input" data-q="35" aria-label="Answer 35" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span></li>
+          <li>Mid-frequency bushfires result in the growth of eucalyptus forests, because they make more <span class="qchip" data-q="36"><span class="qchip-num" data-q="36">36</span><input class="answer-input" data-q="36" aria-label="Answer 36" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> available to the trees, and maintain the quality of the <span class="qchip" data-q="37"><span class="qchip-num" data-q="37">37</span><input class="answer-input" data-q="37" aria-label="Answer 37" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span></li>
+          <li>Low-frequency bushfires result in the growth of '<span class="qchip" data-q="38"><span class="qchip-num" data-q="38">38</span><input class="answer-input" data-q="38" aria-label="Answer 38" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> rainforest', which is a <span class="qchip" data-q="39"><span class="qchip-num" data-q="39">39</span><input class="answer-input" data-q="39" aria-label="Answer 39" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> ecosystem and an ideal environment for the <span class="qchip" data-q="40"><span class="qchip-num" data-q="40">40</span><input class="answer-input" data-q="40" aria-label="Answer 40" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> of the bell-miner</li>
+        </ul>
+      </section>
+
+      <aside class="right-pane script-pane" id="scriptPanePart4" hidden aria-label="Script Part 4">
+  <div class="script-pane-head"><span class="script-pane-title">🎧 Script &mdash; Part 4</span></div>
+  <div class="script-pane-body" id="scriptBodyPart4"><p class="script-pane-placeholder">Script cho Part 4 se duoc cap nhat sau.</p></div>
+</aside>
+
+    </div>
+  </div>
+  </div>
+</main>
+
+<footer class="site-footer">Cambridge IELTS 15 · Test 1 · Listening · 40 questions</footer>
+
+</div><nav class="part-nav" id="partNav" hidden>
+  <button class="part-nav-btn active" data-part="1">Part 1</button>
+  <button class="part-nav-btn" data-part="2">Part 2</button>
+  <button class="part-nav-btn" data-part="3">Part 3</button>
+  <button class="part-nav-btn" data-part="4">Part 4</button>
+</nav>
+
+<div id="teacherPanel" class="teacher-panel" hidden>
+  <p class="teacher-panel-head">Teacher Test Mode</p>
+  <button id="teacherSkip" type="button" class="exam-button secondary">Skip to Review</button>
+  <button id="teacherSubmit" type="button" class="exam-button">Submit Now</button>
+  <button id="teacherExit" type="button" class="exam-button secondary">Exit Teacher Mode</button>
+  <p id="teacherStatus" class="teacher-status" role="status"></p>
+</div>
+
+<div class="review-player-bar" id="reviewPlayerBar" hidden>
+<div class="review-player-inner">
+<span class="review-player-label">🎧 Nghe lại</span>
+<button type="button" class="review-skip-btn" id="reviewSkipBack" aria-label="Tua lùi 10 giây" title="Lùi 10 giây">&minus;10s</button>
+<button type="button" class="play-btn" id="reviewPlayBtn" aria-label="Phát hoặc tạm dừng"><svg id="reviewPlayIcon" viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M8 5v14l11-7z"/></svg></button>
+<button type="button" class="review-skip-btn" id="reviewSkipFwd" aria-label="Tua tới 10 giây" title="Tới 10 giây">+10s</button>
+<div class="progress-wrap"><div class="progress-track" id="reviewProgressTrack"><div class="progress-fill" id="reviewProgressFill"></div></div></div>
+<div class="time-display" id="reviewTimeDisplay">00:00 / 00:00</div>
+</div>
+<audio id="reviewAudio" preload="none"></audio>
+</div>
+
+<script>const TEST_CONFIG={"testId": "C15-L-T1", "book": "Cam 15", "test": "Test 1", "endpoint": "https://script.google.com/macros/s/AKfycbx0D3k0wJQ9fHtR0kVWDZw0qsvSbrj7WA6AqIJh8F4t5_ZvPs-Mx5X3QVXueko68fKS/exec"};
+const TEST_QUESTIONS=[{"id": "1", "part": 1, "type": "blank", "answer": "JAMIESON"}, {"id": "2", "part": 1, "type": "blank", "answer": "AFTERNOON"}, {"id": "3", "part": 1, "type": "blank", "answer": "COMMUNICATION"}, {"id": "4", "part": 1, "type": "blank", "answer": "WEEK"}, {"id": "5", "part": 1, "type": "blank", "answer": "10"}, {"id": "6", "part": 1, "type": "blank", "answer": "SUIT"}, {"id": "7", "part": 1, "type": "blank", "answer": "PASSPORT"}, {"id": "8", "part": 1, "type": "blank", "answer": "PERSONALITY"}, {"id": "9", "part": 1, "type": "blank", "answer": "FEEDBACK"}, {"id": "10", "part": 1, "type": "blank", "answer": "TIME"}, {"id": "11", "part": 2, "type": "mc", "answer": "A", "options": [{"letter": "A", "text": "has been in business for longer than most of its competitors."}, {"letter": "B", "text": "arranges holidays to more destinations than its competitors."}, {"letter": "C", "text": "has more customers than its competitors."}]}, {"id": "12", "part": 2, "type": "mc", "answer": "B", "options": [{"letter": "A", "text": "Liverpool"}, {"letter": "B", "text": "Heysham"}, {"letter": "C", "text": "Luton"}]}, {"id": "13", "part": 2, "type": "mc", "answer": "A", "options": [{"letter": "A", "text": "three"}, {"letter": "B", "text": "four"}, {"letter": "C", "text": "five"}]}, {"id": "14", "part": 2, "type": "mc", "answer": "C", "options": [{"letter": "A", "text": "guaranteeing themselves a larger room."}, {"letter": "B", "text": "booking at short notice."}, {"letter": "C", "text": "transferring to another date."}]}, {"id": "15", "part": 2, "type": "blank", "answer": "RIVER"}, {"id": "16", "part": 2, "type": "blank", "answer": "1422"}, {"id": "17", "part": 2, "type": "blank", "answer": "TOP"}, {"id": "18", "part": 2, "type": "blank", "answer": "PASS"}, {"id": "19", "part": 2, "type": "blank", "answer": "STEAM"}, {"id": "20", "part": 2, "type": "blank", "answer": "CAPITAL"}, {"id": "21", "part": 3, "type": "mc", "answer": "G", "options": [{"letter": "A", "text": "outgoing"}, {"letter": "B", "text": "selfish"}, {"letter": "C", "text": "independent"}, {"letter": "D", "text": "attention-seeking"}, {"letter": "E", "text": "introverted"}, {"letter": "F", "text": "co-operative"}, {"letter": "G", "text": "caring"}, {"letter": "H", "text": "competitive"}]}, {"id": "22", "part": 3, "type": "mc", "answer": "F", "options": [{"letter": "A", "text": "outgoing"}, {"letter": "B", "text": "selfish"}, {"letter": "C", "text": "independent"}, {"letter": "D", "text": "attention-seeking"}, {"letter": "E", "text": "introverted"}, {"letter": "F", "text": "co-operative"}, {"letter": "G", "text": "caring"}, {"letter": "H", "text": "competitive"}]}, {"id": "23", "part": 3, "type": "mc", "answer": "A", "options": [{"letter": "A", "text": "outgoing"}, {"letter": "B", "text": "selfish"}, {"letter": "C", "text": "independent"}, {"letter": "D", "text": "attention-seeking"}, {"letter": "E", "text": "introverted"}, {"letter": "F", "text": "co-operative"}, {"letter": "G", "text": "caring"}, {"letter": "H", "text": "competitive"}]}, {"id": "24", "part": 3, "type": "mc", "answer": "E", "options": [{"letter": "A", "text": "outgoing"}, {"letter": "B", "text": "selfish"}, {"letter": "C", "text": "independent"}, {"letter": "D", "text": "attention-seeking"}, {"letter": "E", "text": "introverted"}, {"letter": "F", "text": "co-operative"}, {"letter": "G", "text": "caring"}, {"letter": "H", "text": "competitive"}]}, {"id": "25", "part": 3, "type": "mc", "answer": "B", "options": [{"letter": "A", "text": "outgoing"}, {"letter": "B", "text": "selfish"}, {"letter": "C", "text": "independent"}, {"letter": "D", "text": "attention-seeking"}, {"letter": "E", "text": "introverted"}, {"letter": "F", "text": "co-operative"}, {"letter": "G", "text": "caring"}, {"letter": "H", "text": "competitive"}]}, {"id": "26", "part": 3, "type": "mc", "answer": "C", "options": [{"letter": "A", "text": "outgoing"}, {"letter": "B", "text": "selfish"}, {"letter": "C", "text": "independent"}, {"letter": "D", "text": "attention-seeking"}, {"letter": "E", "text": "introverted"}, {"letter": "F", "text": "co-operative"}, {"letter": "G", "text": "caring"}, {"letter": "H", "text": "competitive"}]}, {"id": "27", "part": 3, "type": "mc", "answer": "C", "options": [{"letter": "A", "text": "There is conflicting evidence about whether oldest children perform best in intelligence tests."}, {"letter": "B", "text": "There is little doubt that birth order has less influence on academic achievement than socio-economic status."}, {"letter": "C", "text": "Some studies have neglected to include important factors such as family size."}]}, {"id": "28", "part": 3, "type": "mc", "answer": "A", "options": [{"letter": "A", "text": "It is mainly thanks to their roles as teachers for their younger siblings."}, {"letter": "B", "text": "The advantages they have only lead to a slightly higher level of achievement."}, {"letter": "C", "text": "The extra parental attention they receive at a young age makes little difference."}]}, {"id": "29-30", "part": 3, "type": "choose-two", "answer": ["B", "D"], "options": [{"letter": "A", "text": "learning to share"}, {"letter": "B", "text": "learning to stand up for oneself"}, {"letter": "C", "text": "learning to be a good loser"}, {"letter": "D", "text": "learning to be tolerant"}, {"letter": "E", "text": "learning to say sorry"}]}, {"id": "31", "part": 4, "type": "blank", "answer": "SHELTER"}, {"id": "32", "part": 4, "type": "blank", "answer": "OIL"}, {"id": "33", "part": 4, "type": "blank", "answer": "ROADS"}, {"id": "34", "part": 4, "type": "blank", "answer": "INSECTS"}, {"id": "35", "part": 4, "type": "blank", "answer": "GRASS"}, {"id": "36", "part": 4, "type": "blank", "answer": "WATER"}, {"id": "37", "part": 4, "type": "blank", "answer": "SOIL"}, {"id": "38", "part": 4, "type": "blank", "answer": "DRY"}, {"id": "39", "part": 4, "type": "blank", "answer": "SIMPLE"}, {"id": "40", "part": 4, "type": "blank", "answer": "NEST"}];
+/* Shared, dependency-free scoring and time rules. Also loaded by Apps Script. */
+(function(root){
+'use strict';
+const listeningBands=[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[11,4],[8,3.5],[6,3],[4,2.5],[0,0]];
+// Academic Reading has its own table; never infer it from Listening.
+const readingBands=[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5],[0,0]];
+function band(raw,skill){
+ if(!Number.isInteger(raw)||raw<0||raw>40)throw Error('Raw score must be an integer from 0 to 40.');
+ if(!['Listening','Reading'].includes(skill))throw Error('Unknown skill.');
+ return (skill==='Listening'?listeningBands:readingBands).find(x=>raw>=x[0])[1];
+}
+function normalize(s){return String(s||'').trim().toUpperCase().replace(/\s+/g,' ');}
+function score(questions,answers){
+ const parts=[0,0,0,0],details=[];
+ for(const q of questions){
+  let points=0;
+  if(q.type==='choose-two'){
+   const selected=Array.isArray(answers[q.id])?[...new Set(answers[q.id].map(normalize))]:[];
+   if(selected.length<=2)points=selected.filter(x=>q.answer.includes(x)).length;
+  }else points=Number(normalize(answers[q.id])===normalize(q.answer));
+  parts[q.part-1]+=points;const total=q.type==='choose-two'?2:1;details.push({id:q.id,points,total,part:q.part,isCorrect:points===total});
+ }
+ const raw=parts.reduce((a,b)=>a+b,0);return {raw,band:band(raw,'Listening'),parts,details};
+}
+function validate(p){
+ if(!p||typeof p.studentName!=='string'||!p.studentName.trim()||p.studentName.length>120)throw Error('Student name is required (up to 120 characters).');
+ if(!/^Cam \d+$/.test(p.book)||!/^Test [1-4]$/.test(p.test)||!['Listening','Reading'].includes(p.skill))throw Error('Invalid test identification.');
+ if(typeof p.cycleId!=='string'||!p.cycleId.trim()||p.cycleId.length>80)throw Error('Cycle ID is required.');
+ if(p.totalQuestions!==40||!Number.isInteger(p.score)||p.score<0||p.score>40||p.band!==band(p.score,p.skill))throw Error('Invalid score or band.');
+ const expectedId='C'+p.book.slice(4)+'-'+(p.skill==='Listening'?'L':'R')+'-T'+p.test.slice(5);
+ if(p.testId!==expectedId)throw Error('Test ID does not match Book, Test and Skill.');
+ const max=p.skill==='Listening'?[10,10,10,10]:(p.testId==='C15-R-T1'?[13,13,14]:[40,40,40]);
+ if(!Array.isArray(p.parts)||p.parts.length!==max.length||p.parts.some((v,i)=>!Number.isInteger(v)||v<0||v>max[i])||p.parts.reduce((a,b)=>a+b,0)!==p.score)throw Error('Part scores must match the raw score.');
+ if(!Number.isFinite(p.timeUsed)||p.timeUsed<0||p.timeUsed>86400)throw Error('Invalid time used.');
+ if(!/^att_[0-9a-z]+_[0-9a-z]+$/i.test(p.attemptId||''))throw Error('Invalid attempt ID.');
+ return p;
+}
+function phase(attempt,now){
+ if(attempt.phase==='submitted')return 'submitted';
+ if(now>=attempt.reviewEndsAt)return 'submitted';
+ if(now>=attempt.audioEndsAt)return 'review';
+ return 'listening';
+}
+const api={band,normalize,score,validate,phase,listeningBands,readingBands};
+if(typeof module!=='undefined')module.exports=api;root.TestCore=api;
+})(typeof globalThis!=='undefined'?globalThis:this);
+
+/* POST carries private result data. Read-only JSONP returns only protocol/receipt status. */
+window.Tracking=(function(){
+ function query(url,params){return new Promise((resolve,reject)=>{
+  const cb='tracking_'+crypto.randomUUID().replace(/-/g,'');
+  const el=document.createElement('script');let done=false;
+  const cleanup=()=>{clearTimeout(timer);el.remove();delete window[cb];};
+  const timer=setTimeout(()=>{if(!done){done=true;cleanup();reject(Error('No confirmation from the tracking service.'));}},12000);
+  window[cb]=data=>{if(!done){done=true;cleanup();resolve(data);}};
+  el.onerror=()=>{if(!done){done=true;cleanup();reject(Error('Cannot reach the tracking service.'));}};
+  el.src=url+'?'+new URLSearchParams({...params,callback:cb,_:Date.now()});document.head.appendChild(el);
+ });}
+ async function send(url,payload){
+  if(!/^https:\/\/script.google.com\/macros\/s\/[\w-]+\/exec$/.test(url))throw Error('Teacher tracking is not configured. Keep this page open or download your result.');
+  const health=await query(url,{action:'health'});
+  if(health.protocol!==2)throw Error('Tracking service needs the Listening update. Keep this page open or download your result.');
+  await fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload),signal:AbortSignal.timeout(20000)});
+  for(let i=0;i<4;i++){
+   const r=await query(url,{action:'receipt',attemptId:payload.attemptId});
+   if(r.ok)return r;
+   if(r.error)throw Error(r.error);
+   await new Promise(r=>setTimeout(r,1500));
+  }
+  throw Error('Saving is not confirmed. Retry safely with the same result.');
+ }
+ return {send};
+})();
+
+(function(){
+'use strict';
+const config=TEST_CONFIG, questions=TEST_QUESTIONS, $=id=>document.getElementById(id);
+const audio=$('audio');let attempt=null,key='',timerHandle,busy=false,owned=false,releaseLock,deviceSaved=true;
+// Captured once, at script init, before stopAudio() ever runs (stopAudio() strips
+// #audio's src). Used only to lazily feed the independent #reviewAudio player on
+// the result screen further below — never re-assigned to #audio, never touches
+// any exam-phase audio logic.
+const reviewAudioSrc=audio.src;
+let anchorWall=Date.now(),anchorMono=performance.now(),lastSave=0,allowedSeek=null,lastAudio=0;
+const fmt=s=>{const n=Math.ceil(Math.max(0,s));return `${String(Math.floor(n/60)).padStart(2,'0')}:${String(n%60).padStart(2,'0')}`;};
+// ---------- STUDENT NAME VALIDATION (Vietnamese, with diacritics) ----------
+// Shared standard with the Reading engine: full name required, must contain
+// Vietnamese diacritics (never inferred/added), only case is normalized.
+const VN_DIACRITIC_CHARS="àáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđÀÁẢÃẠĂẰẮẲẴẶÂẦẤẨẪẬÈÉẺẼẸÊỀẾỂỄỆÌÍỈĨỊÒÓỎÕỌÔỒỐỔỖỘƠỜỚỞỠỢÙÚỦŨỤƯỪỨỬỮỰỲÝỶỸỴĐ";
+const VN_DIACRITIC_REGEX=new RegExp("["+VN_DIACRITIC_CHARS+"]");
+const ALLOWED_NAME_CHARS_REGEX=new RegExp("^[A-Za-z"+VN_DIACRITIC_CHARS+"\\s]+$");
+function toVietnameseTitleCase(name){
+ return name.split(" ").filter(Boolean).map(word=>{const lower=word.toLowerCase();return lower.charAt(0).toUpperCase()+lower.slice(1);}).join(" ");
+}
+function validateStudentName(rawName){
+ const trimmed=(rawName||"").toString().replace(/\s+/g," ").trim();
+ if(!trimmed)return{valid:false,error:"Vui lòng nhập họ và tên của bạn."};
+ const words=trimmed.split(" ");
+ if(words.length<2)return{valid:false,error:"Vui lòng nhập đầy đủ họ và tên (ví dụ: Phạm Thị Hương)."};
+ if(!ALLOWED_NAME_CHARS_REGEX.test(trimmed))return{valid:false,error:"Họ tên chỉ được chứa chữ cái và khoảng trắng, không chứa số hoặc ký tự đặc biệt."};
+ if(!VN_DIACRITIC_REGEX.test(trimmed))return{valid:false,error:"Vui lòng nhập họ tên có đầy đủ dấu tiếng Việt (ví dụ: Phạm Thị Hương, không phải Pham Thi Huong)."};
+ return{valid:true,normalized:toVietnameseTitleCase(trimmed)};
+}
+// Reading's existing Attempt ID format, reused as-is so both engines share one scheme.
+function makeAttemptId(){return "att_"+Date.now().toString(36)+"_"+Math.random().toString(36).slice(2,9);}
+function now(){return Math.max(Date.now(),anchorWall+performance.now()-anchorMono,attempt?.lastNow||0);}
+function persist(){if(!attempt)return;attempt.lastNow=now();try{localStorage.setItem(key,JSON.stringify(attempt));deviceSaved=true;}catch(e){deviceSaved=false;$('audioStatus').textContent='Device storage failed. Keep this page open and download your result after submission.';}}
+function editable(){if(!attempt||!owned)return false;tick();return ['listening','review'].includes(attempt.phase);}
+function showPart(part){
+ document.querySelectorAll('.part-view').forEach((el,i)=>el.hidden=i!==part-1);
+ document.querySelectorAll('.part-nav-btn').forEach(el=>el.classList.toggle('active',Number(el.dataset.part)===part));
+ $('headerScope').textContent=`Part ${part} | Questions ${(part-1)*10+1}–${part*10}`;
+ $('qnavInner').replaceChildren();
+ for(let n=(part-1)*10+1;n<=part*10;n++){
+  const q=questions.find(q=>q.id.split('-').map(Number).includes(n));
+  const button=document.createElement('button');button.className='qnav-pill';button.textContent=n;button.dataset.q=q.id;
+  button.setAttribute('aria-label',`Go to question ${n}`);
+  button.onclick=()=>{const el=document.querySelector(`.qchip[data-q="${q.id}"],.mc-block[data-q="${q.id}"]`);el.scrollIntoView({block:'center',behavior:'smooth'});el.querySelector('input')?.focus({preventScroll:true});};
+  $('qnavInner').append(button);
+ }
+ updateProgress();
+}
+function updateProgress(){
+ let count=0;
+ questions.forEach(q=>{const a=attempt?.answers[q.id];count+=q.type==='choose-two'?(a||[]).length:(a&&String(a).trim()?1:0);});
+ $('answered').textContent=`${count} / 40 answered`;
+ document.querySelectorAll('.qnav-pill').forEach(el=>{let a=attempt?.answers[el.dataset.q];el.classList.toggle('answered',Array.isArray(a)?a.length>0:!!String(a||'').trim());});
+}
+function restoreAnswers(){
+ document.querySelectorAll('.answer-input').forEach(el=>el.value=attempt.answers[el.dataset.q]||'');
+ document.querySelectorAll('.mc-block').forEach(block=>{
+  const q=questions.find(q=>q.id===block.dataset.q),a=attempt.answers[q.id];
+  block.querySelectorAll('input').forEach(input=>{input.checked=q.type==='choose-two'?(a||[]).includes(input.value):a===input.value;input.disabled=attempt.phase==='submitted'||(q.type==='choose-two'&&(a||[]).length>=2&&!input.checked);});
+ });updateProgress();
+}
+function stopAudio(){audio.pause();audio.removeAttribute('src');audio.load();$('resumeAudio').hidden=true;}
+// Wrong-question numbers per Part (1-4), derived strictly from TestCore.score()'s
+// own details[] (no new/duplicate scoring logic; raw score and Band are untouched).
+function computeWrongQuestionsByPart(results){
+ const wrong={1:[],2:[],3:[],4:[]};
+ results.details.forEach(d=>{if(!d.isCorrect)wrong[d.part].push(d.id);});
+ return wrong;
+}
+function payload(){
+ const r=TestCore.score(questions,attempt.answers);
+ const wrongByPart=computeWrongQuestionsByPart(r);
+ return TestCore.validate({protocol:2,attemptId:attempt.id,studentName:attempt.name,cycleId:attempt.cycleId,book:config.book,test:config.test,skill:'Listening',testId:config.testId,score:r.raw,band:r.band,totalQuestions:40,parts:r.parts,part1:r.parts[0],part2:r.parts[1],part3:r.parts[2],part4:r.parts[3],p1Wrong:wrongByPart[1].join(', '),p2Wrong:wrongByPart[2].join(', '),p3Wrong:wrongByPart[3].join(', '),p4Wrong:wrongByPart[4].join(', '),answers:attempt.answers,timeUsed:Math.round((attempt.reviewEndsAt-attempt.startedAt)/1000),timestamp:new Date(attempt.reviewEndsAt).toISOString(),status:attempt.interrupted?'Interrupted':'Completed'});
+}
+function displayResult(){
+ const p=attempt.payload;$('result').hidden=false;$('resultName').textContent=attempt.name;
+ $('rawScore').textContent=`${p.score} / 40`;$('bandScore').textContent=p.band.toFixed(1);$('timeUsed').textContent=fmt(p.timeUsed);
+ $('partScores').replaceChildren();p.parts.forEach((v,i)=>{const el=document.createElement('p');el.textContent=`Part ${i+1}`;const n=document.createElement('strong');n.textContent=`${v} / 10`;el.append(n);$('partScores').append(el);});
+ $('attemptNote').textContent=attempt.interrupted?'Playback was interrupted or the page was reloaded. This result is flagged for your teacher.':'The test is complete. Answers are locked.';
+ $('saveStatus').textContent=attempt.saved?'Saved to teacher tracking.': (deviceSaved?'Your result is saved on this device. Google Sheets saving is not yet confirmed.':'Device saving failed. Download your result before closing this page.');
+ $('retrySave').hidden=!!attempt.saved;
+}
+function submit(){
+ if(!attempt||attempt.phase==='submitted')return;
+ attempt.phase='submitted';attempt.payload=payload();persist();stopAudio();
+ document.querySelectorAll('main input').forEach(el=>el.disabled=true);
+ $('phaseLabel').textContent='Test submitted';$('timer').textContent='00:00';
+ displayResult();$('result').scrollIntoView({block:'start',behavior:'smooth'});send();
+}
+async function send(){
+ if(busy||attempt.saved)return;busy=true;$('retrySave').disabled=true;$('saveStatus').textContent='Sending result — waiting for confirmation…';
+ try{await Tracking.send(config.endpoint,attempt.payload);attempt.saved=true;persist();$('saveStatus').textContent='Saved to teacher tracking.';$('retrySave').hidden=true;}
+ catch(e){$('saveStatus').textContent=e.message+' You can also download your result.';$('retrySave').hidden=false;}
+ finally{busy=false;$('retrySave').disabled=false;}
+}
+function tick(){
+ if(!attempt||!owned||attempt.phase==='submitted')return;
+ const t=now(),p=TestCore.phase(attempt,t);
+ if(p==='submitted'){submit();return;}
+ if(p==='review'&&attempt.phase!=='review'){
+  if(!audio.ended&&audio.currentTime<audio.duration-1)attempt.interrupted=true;
+  attempt.phase='review';stopAudio();persist();$('audioStatus').textContent=attempt.interrupted?'The listening period has ended. Playback was interrupted and is flagged for your teacher. Check your answers now.':'Audio finished. Check your answers; the test submits automatically.';
+ }
+ if(p==='review'){$('phaseLabel').textContent='Review your answers';$('timer').textContent=fmt((attempt.reviewEndsAt-t)/1000);}
+ else{$('phaseLabel').textContent='Listening in progress';$('timer').textContent=fmt((attempt.audioEndsAt-t)/1000);}
+ if(t-lastSave>1000){lastSave=t;persist();}
+}
+function seekInternal(position){allowedSeek=position;audio.currentTime=position;lastAudio=position;}
+async function continueAudio(){
+ tick();if(!attempt||attempt.phase!=='listening')return;
+ const position=Math.min(audio.duration-.05,Math.max(lastAudio,(now()-attempt.startedAt)/1000));
+ if(!Number.isFinite(position))return;
+ seekInternal(position);
+ try{await audio.play();$('resumeAudio').hidden=true;$('audioStatus').textContent='Audio plays once. Playback controls are disabled.';}
+ catch(e){$('resumeAudio').hidden=false;$('audioStatus').textContent='Playback needs your click. Time continues; missed audio will not replay.';}
+}
+async function start(){
+ const rawName=$('studentName').value.trim(),cycle=$('cycleId').value.trim();
+ if(!rawName||!cycle){$('startError').textContent='Vui lòng nhập họ tên và chọn Chu kỳ ôn thi.';return;}
+ const nameCheck=validateStudentName(rawName);
+ if(!nameCheck.valid){$('startError').textContent=nameCheck.error;return;}
+ const name=nameCheck.normalized;
+ if(!Number.isFinite(audio.duration)||audio.duration<1800){$('startError').textContent='Audio chưa tải xong. Vui lòng đợi trong giây lát.';return;}
+ if(!navigator.locks){$('startError').textContent='Vui lòng dùng trình duyệt Chrome, Edge hoặc Safari bản mới nhất, có hỗ trợ lưu trữ trên thiết bị.';return;}
+ key=`ielts:v2:${config.testId}:${TestCore.normalize(name)}:${TestCore.normalize(cycle)}`;
+ try{localStorage.setItem(key+':check','1');localStorage.removeItem(key+':check');}catch(e){$('startError').textContent='Vui lòng bật tính năng lưu trữ trên thiết bị trước khi bắt đầu làm bài.';return;}
+ $('startButton').disabled=true;
+ navigator.locks.request(key,{ifAvailable:true},async lock=>{
+  if(!lock){$('startError').textContent='Bài làm này đang mở ở một tab khác. Hãy tiếp tục ở tab đó hoặc đóng tab đó lại trước.';$('startButton').disabled=false;return;}
+  owned=true;
+  try{
+   const saved=localStorage.getItem(key);attempt=saved?JSON.parse(saved):null;
+   if(attempt&&(!attempt.id||!Number.isFinite(attempt.reviewEndsAt)||!attempt.answers))throw Error('Dữ liệu bài làm đã lưu bị lỗi. Vui lòng liên hệ giáo viên; không tự làm lại.');
+   if(!attempt){
+    const t=now();attempt={id:makeAttemptId(),name,cycleId:cycle,phase:'listening',answers:{},startedAt:t,audioEndsAt:t+audio.duration*1000,reviewEndsAt:t+audio.duration*1000+120000,lastNow:t,interrupted:false};
+   }else if(attempt.phase==='listening')attempt.interrupted=true;
+   anchorWall=Math.max(Date.now(),attempt.lastNow);anchorMono=performance.now();persist();
+   $('startScreen').hidden=true;$('exam').hidden=false;$('partNav').hidden=false;$('candidate').textContent=`${attempt.name} · ${attempt.cycleId}`;
+   restoreAnswers();showPart(1);
+   if(attempt.phase==='submitted'){stopAudio();displayResult();document.querySelectorAll('main input').forEach(el=>el.disabled=true);$('phaseLabel').textContent='Test submitted';if(!attempt.saved)send();}
+   else{tick();if(attempt.phase==='review')stopAudio();if(attempt.phase==='listening')await continueAudio();timerHandle=setInterval(tick,200);}
+   await new Promise(resolve=>releaseLock=resolve);
+  }catch(e){$('startError').textContent=e.message;$('startButton').disabled=false;owned=false;}
+ });
+}
+// Native controls are absent. Guard script/media-key seeking and playback rate too.
+audio.addEventListener('seeking',()=>{
+ if(!attempt||attempt.phase!=='listening'){audio.pause();return;}
+ if(allowedSeek!==null&&Math.abs(audio.currentTime-allowedSeek)<.15){allowedSeek=null;return;}
+ seekInternal(lastAudio);
+});
+audio.addEventListener('timeupdate',()=>{if(!audio.seeking&&attempt?.phase==='listening')lastAudio=Math.max(lastAudio,audio.currentTime);});
+audio.addEventListener('ratechange',()=>{if(audio.playbackRate!==1)audio.playbackRate=1;});
+audio.addEventListener('play',()=>{if(!owned||attempt?.phase!=='listening')audio.pause();});
+audio.addEventListener('pause',()=>{
+ if(attempt?.phase==='listening'&&!audio.ended){attempt.interrupted=true;persist();$('resumeAudio').hidden=false;$('audioStatus').textContent='Audio was interrupted. Continue at the current test position; time has not paused.';}
+});
+audio.addEventListener('ended',()=>{
+ if(attempt?.phase!=='listening')return;
+ if(lastAudio<audio.duration-2){attempt.interrupted=true;return;}
+ // Keep the existing absolute cap; delayed events must never extend review time.
+ attempt.audioEndsAt=Math.min(attempt.audioEndsAt,now());attempt.reviewEndsAt=Math.min(attempt.reviewEndsAt,attempt.audioEndsAt+120000);persist();tick();
+});
+audio.addEventListener('error',()=>{if(attempt?.phase==='listening'){attempt.interrupted=true;persist();$('audioStatus').textContent='Audio could not play. Tell your teacher. The test clock continues and this result will be flagged.';}else if(!attempt){$('startError').textContent='Không tải được audio. Vui lòng mở lại đúng file bài test gốc.';}});
+audio.addEventListener('loadedmetadata',()=>{$('audioReady').textContent=`Audio đã sẵn sàng · ${fmt(audio.duration)} + 02:00 kiểm tra lại`;$('startButton').disabled=false;});
+if(Number.isFinite(audio.duration)){$('audioReady').textContent=`Audio đã sẵn sàng · ${fmt(audio.duration)} + 02:00 kiểm tra lại`;$('startButton').disabled=false;}
+$('startForm').onsubmit=e=>{e.preventDefault();start();};
+$('resumeAudio').onclick=continueAudio;$('retrySave').onclick=send;
+$('downloadResult').onclick=()=>{const blob=new Blob([JSON.stringify(attempt.payload,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`${config.testId}-${attempt.id}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
+document.querySelectorAll('.part-nav-btn').forEach(el=>el.onclick=()=>showPart(Number(el.dataset.part)));
+document.querySelectorAll('.answer-input').forEach(el=>el.addEventListener('input',()=>{if(!editable()){restoreAnswers();return;}attempt.answers[el.dataset.q]=el.value;persist();updateProgress();}));
+document.querySelectorAll('.mc-block input').forEach(el=>el.addEventListener('change',()=>{
+ if(!editable()){restoreAnswers();return;}
+ const block=el.closest('.mc-block'),q=questions.find(q=>q.id===block.dataset.q);
+ const checked=[...block.querySelectorAll('input:checked')];
+ if(q.type==='choose-two'){
+  if(checked.length>2){el.checked=false;return;}
+  attempt.answers[q.id]=checked.map(x=>x.value);
+ }else attempt.answers[q.id]=el.value;
+ persist();restoreAnswers();
+}));
+window.addEventListener('pagehide',persist);window.addEventListener('online',()=>{if(attempt?.phase==='submitted'&&!attempt.saved)send();});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){tick();if(attempt?.phase==='listening'&&audio.paused)$('resumeAudio').hidden=false;}});
+if(navigator.mediaSession){for(const action of ['play','pause','seekbackward','seekforward','seekto','previoustrack','nexttrack'])try{navigator.mediaSession.setActionHandler(action,()=>{});}catch(e){}}
+const params=new URLSearchParams(location.search);if(params.get('cycle'))$('cycleId').value=params.get('cycle');
+/* Teacher Test Mode hook. Exposes read-only phase + the exact existing tick()/submit()
+   functions so a separate script can drive them from a keyboard shortcut. Adds no new
+   audio, scoring, timer or Google Sheets logic — it only calls what already exists. */
+window.__teacherAPI={
+ getPhase(){return attempt?attempt.phase:null;},
+ skipToReview(){
+  if(!attempt||attempt.phase!=='listening')return false;
+  attempt.audioEndsAt=Math.min(attempt.audioEndsAt,now());
+  attempt.reviewEndsAt=Math.min(attempt.reviewEndsAt,attempt.audioEndsAt+120000);
+  persist();tick();
+  return true;
+ },
+ submitNow(){
+  if(!attempt||attempt.phase==='submitted')return false;
+  submit();
+  return true;
+ }
+};
+
+// ---------------------------------------------------------------------------
+// Entry flow (device prep / confirm name / review) — ported UX pattern from
+// the Reading engine (C15), adapted to Listening's existing single-attempt-
+// per-key storage model. Purely additive: does not modify start(), submit(),
+// tick(), persist(), payload(), send(), TestCore, window.Tracking, the audio
+// event listeners, or window.__teacherAPI above. The Start button keeps its
+// original id/classes and is still driven only by the unmodified audio
+// readiness listeners and the unmodified $('startForm').onsubmit wiring.
+function showEntryStep(stepId){
+ $('entry-step-info').hidden=(stepId!=='entry-step-info');
+ $('entry-step-confirm').hidden=(stepId!=='entry-step-confirm');
+ $('entry-step-actions').hidden=(stepId!=='entry-step-actions');
+}
+// Read-only peek at any previously saved attempt for the current name+cycle.
+// Never writes, never touches the live `attempt`/`key` variables used by
+// start()/submit()/tick() above — only used to decide what the actions step
+// shows the student.
+function peekSavedAttempt(){
+ try{
+  const rawName=$('studentName').value.trim(),cycle=$('cycleId').value.trim();
+  if(!rawName||!cycle)return null;
+  const nameCheck=validateStudentName(rawName);
+  if(!nameCheck.valid)return null;
+  const k=`ielts:v2:${config.testId}:${TestCore.normalize(nameCheck.normalized)}:${TestCore.normalize(cycle)}`;
+  const saved=localStorage.getItem(k);
+  if(!saved)return null;
+  const parsed=JSON.parse(saved);
+  return (parsed&&parsed.phase)?parsed:null;
+ }catch(e){return null;}
+}
+function renderActionsStep(){
+ const existing=peekSavedAttempt();
+ const statusEl=$('entryStatusMessage'),reviewBtn=$('reviewButton'),reviewHint=$('reviewHint');
+ if(existing){
+  reviewBtn.hidden=false;reviewHint.hidden=false;
+  if(existing.phase==='submitted'){
+   statusEl.textContent='Bạn đã nộp bài này. Nhấn "Xem lại bài đã làm" để xem kết quả.';
+   reviewBtn.textContent='Xem lại bài đã làm';
+  }else{
+   statusEl.textContent='Bạn có một bài làm đang dở cho họ tên và chu kỳ này. Nhấn "Tiếp tục làm bài" để tiếp tục, hoặc "Bắt đầu làm bài Nghe" cũng sẽ tiếp tục đúng bài đang dở.';
+   reviewBtn.textContent='Tiếp tục làm bài';
+  }
+  statusEl.hidden=false;
+ }else{
+  reviewBtn.hidden=true;reviewHint.hidden=true;
+  statusEl.hidden=true;
+  statusEl.textContent='';
+ }
+}
+$('infoContinueBtn').onclick=()=>{
+ const rawName=$('studentName').value.trim(),cycle=$('cycleId').value.trim();
+ const infoError=$('infoError');
+ infoError.textContent='';
+ if(!rawName||!cycle){infoError.textContent='Vui lòng nhập họ tên và chọn Chu kỳ ôn thi.';return;}
+ const nameCheck=validateStudentName(rawName);
+ if(!nameCheck.valid){infoError.textContent=nameCheck.error;return;}
+ $('confirmInfoBox').innerHTML='';
+ const strong=document.createElement('strong');strong.textContent=nameCheck.normalized;
+ const cycleLine=document.createTextNode('Chu kỳ ôn thi: '+cycle);
+ $('confirmInfoBox').append(strong,cycleLine);
+ $('confirmCheckbox').checked=false;
+ $('confirmContinueBtn').disabled=true;
+ showEntryStep('entry-step-confirm');
+};
+$('studentName').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('infoContinueBtn').click();}});
+$('confirmBackBtn').onclick=()=>showEntryStep('entry-step-info');
+$('confirmCheckbox').addEventListener('change',()=>{$('confirmContinueBtn').disabled=!$('confirmCheckbox').checked;});
+$('confirmContinueBtn').onclick=()=>{
+ if($('confirmContinueBtn').disabled)return;
+ renderActionsStep();
+ showEntryStep('entry-step-actions');
+};
+$('actionsBackBtn').onclick=()=>showEntryStep('entry-step-confirm');
+// Reuses the exact same start() used by the Start button: Listening's own
+// storage model already resumes an in-progress attempt or re-displays a
+// submitted result when one exists, so "review" and "start" are the same
+// call here — only the button the student sees differs.
+$('reviewButton').onclick=e=>{e.preventDefault();start();};
+showEntryStep('entry-step-info');
+// Lazily feeds the read-only #reviewAudio player on the result screen once it
+// becomes visible (phase 'submitted', shown by the untouched submit()/start()).
+// #reviewAudio is a brand-new, independent <audio> element with no listeners of
+// its own — it never reuses #audio or its play/seeking/ended listeners, so the
+// exam's single-play/no-seek audio lock during the live test is completely
+// unaffected. Native controls give free seek/replay, which is the point here.
+function initReviewPlayer(){
+ const rAudio=$('reviewAudio'),playBtn=$('reviewPlayBtn'),playIcon=$('reviewPlayIcon'),track=$('reviewProgressTrack'),fill=$('reviewProgressFill'),timeEl=$('reviewTimeDisplay');
+ const PLAY_ICON='<path d="M8 5v14l11-7z"/>',PAUSE_ICON='<path d="M6 5h4v14H6zM14 5h4v14h-4z"/>';
+ function seekToRatio(ratio){
+  if(!Number.isFinite(rAudio.duration)||!rAudio.duration)return;
+  rAudio.currentTime=Math.min(rAudio.duration,Math.max(0,ratio))*rAudio.duration;
+ }
+ function ratioFromEvent(e){
+  const rect=track.getBoundingClientRect(),x=(e.touches?e.touches[0].clientX:e.clientX)-rect.left;
+  return rect.width?x/rect.width:0;
+ }
+ playBtn.onclick=()=>{if(rAudio.paused)rAudio.play();else rAudio.pause();};
+ rAudio.addEventListener('play',()=>{playIcon.innerHTML=PAUSE_ICON;});
+ rAudio.addEventListener('pause',()=>{playIcon.innerHTML=PLAY_ICON;});
+ rAudio.addEventListener('ended',()=>{playIcon.innerHTML=PLAY_ICON;});
+ rAudio.addEventListener('timeupdate',()=>{
+  if(!Number.isFinite(rAudio.duration)||!rAudio.duration)return;
+  fill.style.width=(rAudio.currentTime/rAudio.duration*100)+'%';
+  timeEl.textContent=fmt(rAudio.currentTime)+' / '+fmt(rAudio.duration);
+ });
+ rAudio.addEventListener('loadedmetadata',()=>{timeEl.textContent=fmt(0)+' / '+fmt(rAudio.duration);});
+ $('reviewSkipBack').onclick=()=>{rAudio.currentTime=Math.max(0,rAudio.currentTime-10);};
+ $('reviewSkipFwd').onclick=()=>{if(Number.isFinite(rAudio.duration))rAudio.currentTime=Math.min(rAudio.duration,rAudio.currentTime+10);};
+ let dragging=false;
+ track.addEventListener('pointerdown',e=>{dragging=true;track.setPointerCapture(e.pointerId);seekToRatio(ratioFromEvent(e));});
+ track.addEventListener('pointermove',e=>{if(dragging)seekToRatio(ratioFromEvent(e));});
+ track.addEventListener('pointerup',e=>{dragging=false;try{track.releasePointerCapture(e.pointerId);}catch(err){}});
+ track.addEventListener('pointercancel',()=>{dragging=false;});
+}
+initReviewPlayer();
+function syncPartNavOffset(){
+ const bar=$('reviewPlayerBar'),nav=$('partNav');
+ if(bar.hidden){nav.style.removeProperty('bottom');return;}
+ nav.style.bottom=(bar.offsetHeight+14)+'px';
+}
+window.addEventListener('resize',syncPartNavOffset);
+
+// ---------------------------------------------------------------------------
+// Listening Review: per-question correct/wrong annotations + a 2-panel
+// (Questions | Script) layout, added only once #result becomes visible (i.e.
+// only in review, never during the live test). Purely additive: reads
+// attempt.answers/questions/TestCore.score() (all already used elsewhere,
+// e.g. by payload()) and only ever APPENDS new elements / toggles new CSS
+// classes it defines itself \u2014 never edits start()/submit()/tick()/persist()/
+// payload()/send()/TestCore/window.Tracking/window.__teacherAPI or any
+// existing input/answer markup.
+// ---------------------------------------------------------------------------
+function escapeHtml(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+// Populate with the real Cambridge 20 Test 1 Listening script text per Part
+// once supplied; each Part shows a clear placeholder until then instead of a
+// blank/broken panel. A value may be a single string (blank-line-separated
+// paragraphs) or an array of paragraph strings.
+const TRANSCRIPTS={1:["Amber: Hello William. This is Amber – you said to phone if I wanted to get more information about the job agency you mentioned. Is now a good time?","William: Oh, hi Amber. Yes. Fine. So the agency I was talking about is called Bankside – they’re based in Docklands – I can tell you the address now – 497 Eastside.","Amber: OK, thanks. So is there anyone in particular I should speak to there?","William: The agent I always deal with is called Becky Jamieson.","Amber: Let me write that down – Becky …","William: Jamieson J-A-M-I-E-S-O-N.","Amber: Do you have her direct line?","William: Yes, it’s in my contacts somewhere – right, here we are: 078 double 6, 510 triple 3. I wouldn’t call her until the afternoon if I were you – she’s always really busy in the morning trying to fill last-minute vacancies. She’s really helpful and friendly so I’m sure it would be worth getting in touch with her for an informal chat.","Amber: It’s mainly clerical and admin jobs they deal with, isn’t it?","William: That’s right. I know you’re hoping to find a full-time job in the media eventually – but Becky mostly recruits temporary staff for the finance sector – which will look good on your CV – and generally pays better too.","Amber: Yeah – I’m just a bit worried because I don’t have much office experience.","William: I wouldn’t worry. They’ll probably start you as a receptionist, or something like that. So what’s important for that kind of job isn’t so much having business skills or knowing lots of different computer systems – it’s communication that really matters – so you’d be fine there. And you’ll pick up office skills really quickly on the job. It’s not that complicated.","Amber: OK good. So how long do people generally need temporary staff for? It would be great if I could get something lasting at least a month.","William: That shouldn’t be too difficult. But you’re more likely to be offered something for a week at first, which might get extended. It’s unusual to be sent somewhere for just a day or two.","Amber: Right, I’ve heard the pay isn’t too bad – better than working in a shop or a restaurant.","William: Oh yes – definitely. The hourly rate is about £10, 11 if you’re lucky.","Amber: That’s pretty good. I was only expecting to get eight or nine pounds an hour.","William: Do you want me to tell you anything about the registration process?","Amber: Yes, please. I know you have to have an interview.","William: The interview usually takes about an hour and you should arrange that about a week in advance.","Amber: I suppose I should dress smartly if it’s for office work – I can probably borrow a suit from Mum.","William: Good idea. It’s better to look too smart than too casual.","Amber: Will I need to bring copies of my exam certificates or anything like that?","William: No – they don’t need to see those, I don’t think.","Amber: What about my passport?","William: Oh yes – they will ask to see that.","Amber: OK.","William: I wouldn’t get stressed about the interview though. It’s just a chance for them to build a relationship with you – so they can try and match you to a job which you’ll like. So there are questions about personality that they always ask candidates – fairly basic ones. And they probably won’t ask anything too difficult like what your plans are for the future.","Amber: Hope not.","William: Anyway, there are lots of benefits to using an agency – for example, the interview will be useful because they’ll give you feedback on your performance so you can improve next time.","Amber: And they’ll have access to jobs which aren’t advertised.","William: Exactly – most temporary jobs aren’t advertised.","Amber: And I expect finding a temporary job this way takes a lot less time – it’s much easier than ringing up individual companies.","William: Yes indeed. Well I think …"],2:["Good morning. My name’s Erica Matthews, and I’m the owner of Matthews Island Holidays, a company set up by my parents. Thank you for coming to this presentation, in which I hope to interest you in what we have to offer. We’re a small, family-run company, and we believe in the importance of the personal touch, so we don’t aim to compete with other companies on the number of customers. What we do is build on our many years’ experience – more than almost any other rail holiday company – to ensure we provide perfect holidays in a small number of destinations, which we’ve got to know extremely well.","I’ll start with our six-day Isle of Man holiday. This is a fascinating island in the Irish Sea, with Wales to the south, England to the east, Scotland to the north and Northern Ireland to the west. Our holiday starts in Heysham, where your tour manager will meet you, then you’ll travel by ferry to the Isle of Man. Some people prefer to fly from Luton instead, and another popular option is to go by train to Liverpool and take a ferry from there.","You have five nights in the hotel, and the price covers five breakfasts and dinners, and lunch on the three days when there are organised trips: day four is free, and most people have lunch in a café or restaurant in Douglas.","The price of the holiday includes the ferry to the Isle of Man, all travel on the island, the hotel, and the meals I’ve mentioned. Incidentally, we try to make booking our holidays as simple and fair as possible, so unlike with many companies, the price is the same whether you book six months in advance or at the last minute, and there’s no supplement for single rooms in hotels. If you make a booking then need to change the start date, for example because of illness, you’re welcome to change to an alternative date or a different tour, for a small administrative fee.","OK, so what does the holiday consist of? Well, on day one you’ll arrive in time for a short introduction by your tour manager, followed by dinner in the hotel. The dining room looks out at the river, close to where it flows into the harbour, and there’s usually plenty of activity going on.","On day two you’ll take the coach to the small town of Peel, on the way calling in at the Tynwald Exhibition. The Isle of Man isn’t part of the United Kingdom, and it has its own parliament, called Tynwald. It’s claimed that this is the world’s oldest parliament that’s still functioning, and that it dates back to 979. However, the earliest surviving reference to it is from 1422, so perhaps it isn’t quite as old as it claims!","Day three we have a trip to the mountain Snaefell. This begins with a leisurely ride along the promenade in Douglas in a horse-drawn tram. Then you board an electric train which takes you to the fishing village of Laxey. From there it’s an eight-kilometre ride in the Snaefell Mountain Railway to the top. Lunch will be in the café, giving you spectacular views of the island.","Day four is free for you to explore, using the pass which we’ll give you. So you won’t have to pay for travel on local transport, or for entrance to the island’s heritage sites. Or you might just want to take it easy in Douglas and perhaps do a little light shopping.","The last full day, day five, is for some people the highlight of the holiday, with a ride on the steam railway, from Douglas to Port Erin. After some time to explore, a coach will take you to the headland that overlooks the Calf of Man, a small island just off the coast. From there you continue to Castletown, which used to be the capital of the Isle of Man, and its mediaeval castle.","And on day six it’s back to the ferry – or the airport, if you flew to the island – and time to go home.","Now I’d like to tell you …"],3:["Ruth: Ed, how are you getting on with the reading for our presentation next week?","Ed: Well, OK, Ruth – but there’s so much of it.","Ruth: I know, I hadn’t realised birth order was such a popular area of research.","Ed: But the stuff on birth order and personality is mostly unreliable. From what I’ve been reading a lot of claims about how your position in the family determines certain personality traits are just stereotypes, with no robust evidence to support them.","Ruth: OK, but that’s an interesting point – we could start by outlining what previous research has shown. There are studies going back over a hundred years.","Ed: Yeah – so we could just run through some of the typical traits. Like the consensus seems to be that oldest children are generally less well-adjusted because they never get over the arrival of a younger sibling.","Ruth: Right, but on a positive note, some studies claimed that they were thought to be good a nurturing – certainly in the past when people had large families they would have been expected to look after the younger ones.","Ed: There isn’t such a clear picture for middle children – but one trait that a lot of the studies mention is that they are easier to get on with than older or younger siblings.","Ruth: Generally eager to please and helpful – although that’s certainly not accurate as far as my family goes – my middle brother was a nightmare – always causing fights and envious of whatever I had.","Ed: As I said – none of this seems to relate to my own experience. I’m the youngest in my family and I don’t recognise myself in any of the studies I’ve read about. I’m supposed to have been a sociable and confident child who made friends easily – but I was actually terribly shy.","Ruth: Really? That’s funny. There have been hundreds of studies on twins but mostly about nurture versus nature…","Ed: There was one on personality, which said that a twin is likely to be quite shy in social situations because they always have their twin around to depend on for support.","Ruth: My cousins were like that when they were small – they were only interested in each other and found it hard to engage with other kids. They’re fine now though.","Ed: Only children have had a really bad press – a lot of studies have branded them as loners who think the world revolves around them because they’ve never had to fight for their parents’ attention.","Ruth: That does seem a bit harsh. One category I hadn’t considered before was children with much older siblings – a couple of studies mentioned that these children grow up more quickly and are expected to do basic things for themselves – like getting dressed.","Ed: I can see how that might be true – although I expect they’re sometimes the exact opposite – playing the baby role and clamouring for special treatment.","Ruth: What was the problem with most of these studies, do you think?","Ed: I think it was because in a lot of cases data was collected from only one sibling per family, who rated him or herself and his or her siblings at the same time.","Ruth: Mmm. Some of the old research into the relationship between birth order and academic achievement has been proved to be accurate though. Performances in intelligence tests decline slightly from the eldest child to his or her younger siblings. This has been proved in lots of recent studies.","Ed: Yes. Although what many of them didn’t take into consideration was family size. The more siblings there are, the likelier the family is to have a low socioeconomic status – which can also account for differences between siblings in academic performance.","Ruth: The oldest boy might be given more opportunities than his younger sisters, for example.","Ed: Exactly.","Ruth: But the main reason for the marginally higher academic performance of oldest children is quite surprising, I think. It’s not only that they benefit intellectually from extra attention at a young age – which is what I would have expected. It’s that they benefit from being teachers for their younger siblings, by verbalising processes.","Ed: Right, and this gives them status and confidence, which again contribute, in a small way, to better performance.","So would you say sibling rivalry has been a useful thing for you?","Ruth: I think so – my younger brother was incredibly annoying and we found a lot but I think this has made me a stronger person. I know how to defend myself. We had some terrible arguments and I would have died rather than apologise to him – but we had to put up with each other and most of the time we co-existed amicably enough.","Ed: Yes, my situation was pretty similar. But I don’t think having two older brothers made me any less selfish – I was never prepared to let me brothers use any of my stuff …","Ruth: That’s perfectly normal, whereas …"],4:["Today I’m going to talk about the eucalyptus tree. This is a very common tree here in Australia, where it’s also sometimes called the gum tree. First I’m going to talk about why it’s important, then I’m going to describe some problems it faces at present.","Right, well the eucalyptus tree is an important tree for lots of reasons. For example, it gives shelter to creatures like birds and bats, and these and other species also depend on it for food, particularly the nectar from its flowers. So it supports biodiversity. It’s useful to us humans too, because we can kill germs with a disinfectant made from oil extracted from eucalyptus leaves.","The eucalyptus grows all over Australia and the trees can live for up to four hundred years. So it’s alarming that all across the country, numbers of eucalyptus are falling because the trees are dying off prematurely. So what are the reasons for this?","One possible reason is disease. As far back as the 1970s the trees started getting a disease called Mundulla Yellows. The trees’ leaves would gradually turn yellow, then the tree would die. It wasn’t until 2004 that they found the cause of the problem was lime, or calcium hydroxide to give it its proper chemical name, which was being used in the construction of roads. The lime was being washed away into the ground and affecting the roots of the eucalyptus trees nearby. What is was doing was preventing the trees from sucking up the iron they needed for healthy growth. When this was injected back into the affected trees, they immediately recovered.","But this problem only affected a relatively small number of trees. By 2000, huge numbers of eucalyptus were dying along Australia’s East Coast, of a disease known as Bell-miner Associated Die-back. The bell-miner is a bird, and the disease seems to be common where there are high populations of bell-miners. Again it’s the leaves of the trees that are affected. What happens is that insects settle on the leaves and eat their way round them, destroying them as they go, and at the same time they secrete a solution which has sugar in it. The bell-miner birds really like this solution, and in order to get as much as possible, they keep away other creatures that might try to get it. So these birds and insects flourish at the expense of other species, and eventually so much damage is done to the leaves that the tree dies.","But experts say that trees can start looking sick before any sign of Bell-miner Associated Die-back. So it looks as if the problem might have another explanation. One possibility is that it’s to do with the huge bushfires that we have in Australia. A theory proposed over 40 years ago be ecologist William Jackson is that the frequency of bushfires in a particular region affects the type of vegetation that grows there. If there are very frequent bushfires in a region, this encourages grass to grow afterwards, while if the bushfires are rather less frequent, this results in the growth of eucalyptus forests.","So why is this? Why do fairly frequent bushfires actually support the growth of eucalyptus? Well, one reason is that the fire stops the growth of other species which would consume water needed by eucalyptus trees. And there’s another reason. If these other quick-growing species of bushes and plants are allowed to proliferate, they harm the eucalyptus in another way, by affecting the composition of the soil, and removing nutrients from it. So some bushfires are actually essential for the eucalyptus to survive as long as they are not too frequent. In fact there’s evidence that Australia’s indigenous people practised regular burning of bush land for thousands of years before the arrival of the Europeans.","But since Europeans arrived on the continent, the number of bushfires has been strictly controlled. Now scientists believe that this reduced frequency of bushfires to low levels had led to what’s known as ‘dry rainforest’, which seems an odd name as usually we associate tropical rainforest with wet conditions. And what’s special about this type of rainforest? Well, unlike tropical rainforest which is a rich ecosystem, this type of ecosystem is usually a simple one. It has very thick, dense vegetation, but not much variety of species. The vegetation provides lots of shade, so one species that does find it ideal is the bell-miner bird, which builds its nests in the undergrowth there. But again that’s not helpful for the eucalyptus tree."]};
+function renderScriptPane(part){
+ const body=$('scriptBodyPart'+part);
+ if(!body)return;
+ const raw=TRANSCRIPTS[part];
+ if(!raw){body.innerHTML='<p class="script-pane-placeholder">Script cho Part '+part+' s\u1ebd \u0111\u01b0\u1ee3c c\u1eadp nh\u1eadt sau.</p>';return;}
+ const paras=Array.isArray(raw)?raw:String(raw).split(/\n{2,}/);
+ body.innerHTML=paras.map(p=>'<p>'+escapeHtml(p).replace(/\n/g,'<br>')+'</p>').join('');
+}
+[1,2,3,4].forEach(renderScriptPane);
+function annotateReviewQuestion(q,info){
+ const studentRaw=attempt.answers[q.id];
+ if(q.type==='blank'){
+  const chip=document.querySelector('.qchip[data-q="'+q.id+'"]');
+  if(!chip)return;
+  chip.classList.add(info.isCorrect?'is-correct':'is-wrong');
+  const icon=document.createElement('span');
+  icon.className='qchip-feedback-icon';icon.setAttribute('aria-hidden','true');
+  icon.textContent=info.isCorrect?'\u2713':'\u2717';
+  chip.appendChild(icon);
+  const sr=document.createElement('span');sr.className='sr-only';
+  sr.textContent=info.isCorrect?'\u0110\u00fang':'Sai';
+  chip.appendChild(sr);
+  if(!info.isCorrect){
+   const empty=!studentRaw||!String(studentRaw).trim();
+   const fb=document.createElement('span');fb.className='qchip-correct-answer';
+   fb.textContent=(empty?'Ch\u01b0a tr\u1ea3 l\u1eddi \u2014 ':'')+'\u0110\u00e1p \u00e1n \u0111\u00fang: '+q.answer;
+   chip.insertAdjacentElement('afterend',fb);
+  }
+  return;
+ }
+ const block=document.querySelector('.mc-block[data-q="'+q.id+'"]');
+ if(!block)return;
+ const selected=q.type==='choose-two'?(Array.isArray(studentRaw)?studentRaw:[]):(studentRaw?[studentRaw]:[]);
+ const correctSet=q.type==='choose-two'?q.answer:[q.answer];
+ block.querySelectorAll('.mc-option').forEach(opt=>{
+  const letter=opt.dataset.letter;
+  if(correctSet.includes(letter))opt.classList.add('opt-correct');
+  else if(selected.includes(letter))opt.classList.add('opt-wrong');
+ });
+ const empty=selected.length===0;
+ block.classList.add(info.isCorrect?'is-review-correct':'is-review-wrong');
+ const badge=document.createElement('span');
+ badge.className='review-status-badge '+(empty?'is-unanswered':(info.isCorrect?'is-correct':'is-wrong'));
+ badge.textContent=empty?'\u25cb Ch\u01b0a tr\u1ea3 l\u1eddi':(info.isCorrect?'\u2713 \u0110\u00fang':'\u2717 Sai');
+ const stem=block.querySelector('.mc-stem');
+ if(stem){stem.appendChild(document.createTextNode(' '));stem.appendChild(badge);}
+}
+function annotateReviewPills(){
+ if(!attempt||attempt.phase!=='submitted')return;
+ const results=TestCore.score(questions,attempt.answers);
+ const byId={};results.details.forEach(d=>byId[d.id]=d);
+ document.querySelectorAll('.qnav-pill').forEach(pill=>{
+  const info=byId[pill.dataset.q];if(!info)return;
+  pill.classList.remove('is-review-correct','is-review-wrong');
+  pill.classList.add(info.isCorrect?'is-review-correct':'is-review-wrong');
+ });
+}
+let reviewAnnotated=false;
+function renderReviewAnnotations(){
+ if(reviewAnnotated)return;reviewAnnotated=true;
+ const results=TestCore.score(questions,attempt.answers);
+ const byId={};results.details.forEach(d=>byId[d.id]=d);
+ questions.forEach(q=>{const info=byId[q.id];if(info)annotateReviewQuestion(q,info);});
+ annotateReviewPills();
+ document.body.classList.add('is-review-listening');
+ document.querySelectorAll('.right-pane.script-pane').forEach(p=>p.hidden=false);
+}
+new MutationObserver(annotateReviewPills).observe($('qnavInner'),{childList:true});
+new MutationObserver(()=>{
+ if(!$('result').hidden){
+  $('reviewPlayerBar').hidden=false;
+  if(!$('reviewAudio').src)$('reviewAudio').src=reviewAudioSrc;
+  requestAnimationFrame(syncPartNavOffset);
+  renderReviewAnnotations();
+ }
+}).observe($('result'),{attributes:true,attributeFilter:['hidden']});
+})();
+</script>
+<script>
+/* Question-text highlighter. Fully independent of scoring/timer/submission/Sheets.
+   Selecting text inside a question pane wraps it in <mark class="user-hl">;
+   clicking an existing highlight removes it. Never touches attempt state or inputs' values. */
+(function(){
+'use strict';
+const HL='user-hl';
+function inNoHighlightZone(node){
+ if(!node)return true;
+ const el=node.nodeType===1?node:node.parentElement;
+ return !!(el&&el.closest('input,button,select,textarea,.qchip-play,.play-btn,.progress-track,.part-nav,.qnav,.exam-status'));
+}
+function clearSelection(){const s=window.getSelection();if(s)s.removeAllRanges();}
+function applyHighlight(range){
+ const mark=document.createElement('mark');
+ mark.className=HL;
+ try{
+  range.surroundContents(mark);
+  return true;
+ }catch(e){
+  try{
+   const frag=range.extractContents();
+   mark.appendChild(frag);
+   range.insertNode(mark);
+   return true;
+  }catch(e2){return false;}
+ }
+}
+function removeHighlight(mark){
+ const parent=mark.parentNode;if(!parent)return;
+ while(mark.firstChild)parent.insertBefore(mark.firstChild,mark);
+ parent.removeChild(mark);
+ parent.normalize();
+}
+function handleSelection(pane){
+ const sel=window.getSelection();
+ if(!sel||sel.isCollapsed||sel.rangeCount===0)return;
+ const range=sel.getRangeAt(0);
+ if(range.collapsed)return;
+ if(!pane.contains(range.commonAncestorContainer))return;
+ if(inNoHighlightZone(range.startContainer)||inNoHighlightZone(range.endContainer))return;
+ if(!range.toString().trim())return;
+ try{applyHighlight(range.cloneRange());}catch(e){}
+ clearSelection();
+}
+document.querySelectorAll('.left-pane').forEach(pane=>{
+ pane.addEventListener('mouseup',()=>handleSelection(pane));
+ pane.addEventListener('touchend',()=>{setTimeout(()=>handleSelection(pane),10);});
+ pane.addEventListener('click',e=>{
+  const mark=e.target.closest('mark.'+HL);
+  if(mark&&window.getSelection().isCollapsed)removeHighlight(mark);
+ });
+});
+})();
+</script>
+<script>
+/* Teacher Test Mode panel. Hidden from the normal student UI at all times; only a
+   keyboard shortcut reveals it. Never touches audio/scoring/timer/Sheets logic directly —
+   it only calls the exact existing tick()/submit() functions via window.__teacherAPI. */
+(function(){
+'use strict';
+const panel=document.getElementById('teacherPanel');
+const statusEl=document.getElementById('teacherStatus');
+if(!panel)return;
+function setStatus(msg){if(statusEl)statusEl.textContent=msg;}
+function refreshStatus(){
+ const api=window.__teacherAPI;
+ if(!api){setStatus('Teacher API not ready yet.');return;}
+ const phase=api.getPhase();
+ setStatus(phase?`Current phase: ${phase}`:'No active attempt yet. Start the test first.');
+}
+function togglePanel(){
+ panel.hidden=!panel.hidden;
+ if(!panel.hidden)refreshStatus();
+}
+document.addEventListener('keydown',e=>{
+ const key=(e.key||'').toLowerCase();
+ const isY=key==='y'||e.code==='KeyY';
+ if((e.ctrlKey||e.metaKey)&&e.shiftKey&&isY){
+  e.preventDefault();
+  togglePanel();
+ }
+});
+document.getElementById('teacherSkip').addEventListener('click',()=>{
+ const ok=window.__teacherAPI&&window.__teacherAPI.skipToReview();
+ setStatus(ok?'Skipped to review.':'Cannot skip: no active listening phase.');
+});
+document.getElementById('teacherSubmit').addEventListener('click',()=>{
+ const ok=window.__teacherAPI&&window.__teacherAPI.submitNow();
+ setStatus(ok?'Submitted.':'Cannot submit: already submitted or no attempt.');
+});
+document.getElementById('teacherExit').addEventListener('click',()=>{panel.hidden=true;});
+})();
+</script>
+</body>
+</html>
