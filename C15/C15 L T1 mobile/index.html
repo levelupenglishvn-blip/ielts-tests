@@ -532,6 +532,20 @@ mark.user-hl:hover{background:var(--accent-tint-strong)}
 .confirm-name-box strong{display:block;font-size:18px;color:var(--primary-dark);margin-bottom:4px}
 .checkbox-row{display:flex;align-items:flex-start;gap:8px;margin:14px 0;font-size:14px;color:var(--ink)}
 .checkbox-row input{margin-top:3px}
+
+/* Hướng dẫn chữa bài (hiện trước khi xem lại bài đã nộp) */
+.guide-title{margin:0 0 4px;text-align:center;font-size:20px;letter-spacing:.02em;color:var(--ink)}
+.guide-sub{margin:0 0 18px;text-align:center;color:#555;font-size:14.5px}
+.guide-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.guide-card{border:1px solid var(--border);border-top:5px solid var(--gc);border-radius:var(--radius-md);padding:14px 14px 12px;background:var(--surface)}
+.guide-card .g-step{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:var(--gc);color:#fff;font-weight:700;font-size:14px;margin-bottom:8px}
+.guide-card .g-tag{font-weight:800;font-size:15px;color:var(--gc);letter-spacing:.03em}
+.guide-card .g-head{font-weight:700;font-size:14px;color:var(--ink);margin:2px 0 8px}
+.guide-card ul{margin:0;padding-left:18px;font-size:14px;line-height:1.6;color:var(--ink)}
+.guide-card.g-green{--gc:#15934E}.guide-card.g-blue{--gc:#2563EB}.guide-card.g-purple{--gc:#7C3AED}
+.guide-flow{margin:16px 0 0;padding:11px 14px;border-radius:var(--radius-md);background:var(--primary-tint);border:1px solid var(--primary-tint-strong);text-align:center;font-weight:700;font-size:14.5px;color:var(--primary-dark)}
+.guide-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:18px;align-items:center}
+@media(max-width:650px){.guide-grid{grid-template-columns:1fr}.guide-title{font-size:18px}}
 .entry-actions-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;align-items:center}
 .entry-actions-row .exam-button{margin-top:0}
 .entry-status-message{background:var(--primary-tint);border:1px solid var(--primary-tint-strong);border-radius:var(--radius-md);padding:10px 14px;margin:14px 0;font-size:14px;color:var(--ink)}
@@ -625,6 +639,17 @@ body.is-review-listening .left-pane{width:auto;}
 <div class="confirm-name-box" id="confirmInfoBox"></div>
 <label class="checkbox-row"><input type="checkbox" id="confirmCheckbox"><span>Tôi đã kiểm tra và xác nhận thông tin của mình.</span></label>
 <div class="entry-actions-row"><button type="button" class="exam-button secondary" id="confirmBackBtn">Quay lại</button><button type="button" class="exam-button" id="confirmContinueBtn" disabled>Tiếp tục</button></div>
+</div>
+<div id="entry-step-guide" hidden>
+<h2 class="guide-title">HƯỚNG DẪN CHỮA BÀI LISTENING</h2>
+<p class="guide-sub">Làm theo 3 bước để cải thiện kỹ năng nghe.</p>
+<div class="guide-grid">
+<div class="guide-card g-green"><span class="g-step">1</span><div class="g-tag">ĐỌC HIỂU</div><div class="g-head">Hiểu nội dung</div><ul><li>Đọc và dịch script.</li><li>Tra từ mới.</li><li>Tìm nguyên nhân sai.</li></ul></div>
+<div class="guide-card g-blue"><span class="g-step">2</span><div class="g-tag">NHẬN DIỆN</div><div class="g-head">Luyện nghe âm</div><ul><li>Vừa nghe vừa đọc script.</li><li>Chú ý từ khó nghe.</li><li>Nghe lại không nhìn script.</li></ul></div>
+<div class="guide-card g-purple"><span class="g-step">3</span><div class="g-tag">NGHE HIỂU</div><div class="g-head">Nghe trực tiếp</div><ul><li>Nghe toàn bộ bài.</li><li>Tập trung vào ý nghĩa.</li><li>Nghe liền mạch, không dừng.</li></ul></div>
+</div>
+<div class="guide-flow">Đọc hiểu → Nhận diện âm → Nghe hiểu</div>
+<div class="guide-actions"><button type="button" class="exam-button secondary" id="guideBackBtn">Quay lại</button><button type="button" class="exam-button" id="guideOkBtn">Tôi đã hiểu</button></div>
 </div>
 <form id="startForm">
 <div id="entry-step-actions" hidden>
@@ -1336,7 +1361,10 @@ function showEntryStep(stepId){
  $('entry-step-info').hidden=(stepId!=='entry-step-info');
  $('entry-step-confirm').hidden=(stepId!=='entry-step-confirm');
  $('entry-step-actions').hidden=(stepId!=='entry-step-actions');
+ $('entry-step-guide').hidden=(stepId!=='entry-step-guide');
 }
+// Cầu nối giữa phần nhập tên và engine chính (hai phạm vi script khác nhau ở một số bản).
+window.__guideApi={needs:function(){var p=peekSavedAttempt();return !!(p&&p.phase==='submitted');},show:showEntryStep};
 // Read-only peek at any previously saved attempt for the current name+cycle.
 // Never writes, never touches the live `attempt`/`key` variables used by
 // start()/submit()/tick() above — only used to decide what the actions step
@@ -1401,7 +1429,14 @@ $('actionsBackBtn').onclick=()=>showEntryStep('entry-step-confirm');
 // storage model already resumes an in-progress attempt or re-displays a
 // submitted result when one exists, so "review" and "start" are the same
 // call here — only the button the student sees differs.
-$('reviewButton').onclick=e=>{e.preventDefault();start();};
+// Hướng dẫn chữa bài: với bài đã nộp, "Xem lại bài" mở hướng dẫn 3 thẻ trước;
+// chỉ khi bấm "Tôi đã hiểu" mới gọi start() (không đổi) để vào phần chữa bài.
+function needsGuide(){return !!(window.__guideApi&&window.__guideApi.needs());}
+$('reviewButton').onclick=e=>{e.preventDefault();if(needsGuide()){window.__guideApi.show('entry-step-guide');window.scrollTo(0,0);return;}start();};
+$('guideBackBtn').onclick=()=>window.__guideApi.show('entry-step-actions');
+$('guideOkBtn').onclick=()=>{window.__guideApi.show('entry-step-actions');start();};
+// Nút "Bắt đầu" với bài đã nộp cũng chỉ mở lại kết quả -> cũng phải qua hướng dẫn.
+$('startForm').addEventListener('submit',e=>{if(needsGuide()){e.preventDefault();e.stopImmediatePropagation();window.__guideApi.show('entry-step-guide');window.scrollTo(0,0);}},true);
 showEntryStep('entry-step-info');
 // Lazily feeds the read-only #reviewAudio player on the result screen once it
 // becomes visible (phase 'submitted', shown by the untouched submit()/start()).
