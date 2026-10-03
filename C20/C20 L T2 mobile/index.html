@@ -532,44 +532,42 @@ mark.user-hl:hover{background:var(--accent-tint-strong)}
 .checkbox-row{display:flex;align-items:flex-start;gap:8px;margin:14px 0;font-size:14px;color:var(--ink)}
 .checkbox-row input{margin-top:3px}
 
-/* ===== Màn hình kết quả: kết quả -> hướng dẫn & lựa chọn chữa bài -> chữa bài (chỉ đổi hiển thị) ===== */
-#result{padding:20px 24px}
+/* ===== Sau khi nộp: trang KẾT QUẢ + HƯỚNG DẪN (1 màn hình) -> trang CHỮA BÀI (chỉ đổi hiển thị) ===== */
+body.rv-result #exam,body.rv-result #partNav,body.rv-result #reviewPlayerBar{display:none!important}
+body.rv-review #result{display:none!important}
+body.rv-result .page-header .tagline,body.rv-result #headerScope,body.rv-result .page-header .header-meta{display:none}
+body.rv-result .page-header{padding:14px 16px 6px}
+body.rv-result h1.page-title{font-size:26px;margin:0}
+#rvBackBtn{display:none}
+body.rv-review #rvBackBtn{display:inline-block;margin:10px 0 0;padding:7px 14px;border:1px solid var(--primary);border-radius:999px;background:var(--primary-tint);color:var(--primary-dark);font:600 13.5px var(--font);cursor:pointer}
+#result{max-width:860px;margin:14px auto;padding:18px 24px}
 #result h2{margin:0 0 2px;font-size:19px;letter-spacing:.03em}
-#resultName{margin:0 0 10px;font-weight:600;color:#444;font-size:14.5px}
-#result .score-row{gap:10px;margin:8px 0}
-#result .metric{padding:8px 12px;font-size:12.5px}
-#result .metric strong{font-size:22px}
-#result .part-score-grid{gap:8px;margin:8px 0}
-#result .part-score-grid p{margin:0;padding:6px 10px;font-size:13px}
-.wrong-summary{margin:12px 0 4px;padding:10px 14px;border:1px solid #F3C6C0;background:#FDF3F1;border-radius:var(--radius-md)}
-.wrong-summary.all-correct{border-color:var(--primary-tint-strong);background:var(--primary-tint)}
-.wrong-summary .ws-title{font-weight:800;font-size:13.5px;margin:0 0 6px;color:var(--ink)}
-.wrong-summary .ws-row{display:flex;flex-wrap:wrap;align-items:center;gap:5px 6px;margin:3px 0;font-size:13px}
-.wrong-summary .ws-part{font-weight:700;min-width:54px;color:#555}
-.wrong-summary .ws-chip{display:inline-block;min-width:26px;text-align:center;padding:1px 8px;border-radius:999px;background:#C0392B;color:#fff;font-weight:700;font-size:12.5px}
-.wrong-summary .ws-none{color:var(--primary-dark);font-weight:700}
-#result .review-audio-box{margin:10px 0 4px;padding:7px 12px;border-radius:10px}
-#result .review-audio-box .entry-section-title{margin:0!important;font-size:13px}
-#result .review-audio-box .field-hint{margin:2px 0 0!important;font-size:12px;line-height:1.45}
-#result #attemptNote,#result #saveStatus{margin:6px 0 0;font-size:12.5px;color:#555}
-#result .exam-button{padding:8px 14px;min-height:36px;font-size:13.5px;margin-top:8px}
-#result .help{margin:8px 0 0;font-size:11.5px;color:#777}
-.review-guide{padding:22px 24px}
-.review-guide .guide-title{margin:0 0 4px;text-align:center;font-size:19px;letter-spacing:.03em;color:var(--ink)}
-.review-guide .guide-sub{margin:0 0 16px;text-align:center;color:#555;font-size:14px}
-.guide-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.guide-card{border:1px solid var(--border);border-top:5px solid var(--gc);border-radius:var(--radius-md);padding:13px 14px 11px;background:var(--surface)}
-.guide-card .g-step{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:var(--gc);color:#fff;font-weight:700;font-size:14px;margin-bottom:6px}
+#resultName{margin:0 0 6px;font-weight:600;color:#444;font-size:14.5px}
+#result .score-row{gap:22px;margin:6px 0 8px}
+#result .metric{padding:0 4px 0 0;font-size:13px}
+#result .metric strong{font-size:24px;line-height:1.2}
+#result .part-score-grid{gap:8px;margin:0}
+#result .part-score-grid p{margin:0;padding:6px 12px;font-size:13px}
+#result .part-score-grid strong{font-size:19px}
+#result #attemptNote,#result .review-audio-box,#result #downloadResult,#result .help{display:none!important}
+#result #saveStatus{margin:6px 0 0;font-size:12px;color:#666}
+#result #retrySave{padding:6px 12px;min-height:32px;font-size:13px;margin-top:6px}
+.guide-wrap{margin-top:14px;padding-top:14px;border-top:1px solid var(--border)}
+.guide-wrap .guide-title{margin:0 0 2px;text-align:center;font-size:17px;letter-spacing:.03em;color:var(--ink)}
+.guide-wrap .guide-sub{margin:0 0 10px;text-align:center;color:#555;font-size:13.5px}
+.guide-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.guide-card{border:1px solid var(--border);border-top:5px solid var(--gc);border-radius:var(--radius-md);padding:10px 13px 8px;background:var(--surface)}
 .guide-card .g-tag{font-weight:800;font-size:15px;color:var(--gc);letter-spacing:.03em}
-.guide-card .g-head{font-weight:700;font-size:14px;color:var(--ink);margin:2px 0 8px}
-.guide-card ul{margin:0;padding-left:18px;font-size:14px;line-height:1.6;color:var(--ink)}
+.guide-card .g-head{font-weight:700;font-size:14px;color:var(--ink);margin:1px 0 5px}
+.guide-card ul{margin:0;padding-left:18px;font-size:14px;line-height:1.55;color:var(--ink)}
 .guide-card.g-green{--gc:#15934E}.guide-card.g-blue{--gc:#2563EB}.guide-card.g-purple{--gc:#7C3AED}
-.option-box{margin-top:16px;padding:14px 16px;background:rgba(220,38,38,.10);border:2px solid #111;border-radius:var(--radius-md);color:#111;font-weight:700;font-size:14.5px;line-height:1.55}
+.option-box{margin-top:12px;padding:10px 14px;background:rgba(220,38,38,.08);border:2px solid #DC2626;border-radius:var(--radius-md);color:#111;font-weight:700;font-size:14px;line-height:1.55}
 .option-box .option-row{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}
-.option-box .option-row+.option-row{margin-top:12px;padding-top:12px;border-top:1px solid rgba(17,17,17,.35)}
-.option-box .option-text{flex:1 1 280px}
-.option-box .exam-button{flex:0 0 auto;margin:0;white-space:normal}
-@media(max-width:650px){#result,.review-guide{padding:16px}.guide-grid{grid-template-columns:1fr}.option-box .exam-button{width:100%}}
+.option-box .option-row+.option-row{margin-top:8px;padding-top:8px;border-top:1px solid rgba(220,38,38,.35)}
+.option-box .option-text{flex:1 1 280px;font-size:14px}
+.option-box .exam-button{flex:0 0 auto;margin:0;white-space:normal;padding:9px 16px;min-height:38px;font-size:14px}
+.pane-sub.pane-sub-strong{color:#000;font-weight:700}
+@media(max-width:650px){#result{margin:10px;padding:14px}.guide-grid{grid-template-columns:1fr}.guide-card{padding:8px 12px 6px}.guide-card .g-head{margin-bottom:3px}.guide-card ul{line-height:1.45}.option-box .exam-button{width:100%}#result .score-row{gap:14px}#result .metric strong{font-size:21px}}
 .entry-actions-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;align-items:center}
 .entry-actions-row .exam-button{margin-top:0}
 .entry-status-message{background:var(--primary-tint);border:1px solid var(--primary-tint-strong);border-radius:var(--radius-md);padding:10px 14px;margin:14px 0;font-size:14px;color:var(--ink)}
@@ -710,6 +708,7 @@ body.save-pending #result .score-row{filter:none}
     <h1 class="page-title">IELTS Listening Full Test</h1>
     <p class="header-meta"><strong>Cambridge IELTS 20 – Test 2</strong></p>
     <p class="header-scope" id="headerScope">Part 1 | Questions 1–10</p>
+    <button type="button" id="rvBackBtn">← Xem kết quả &amp; hướng dẫn</button>
     <p class="tagline">40 questions · One continuous recording · 2 minutes to review</p>
   </div>
 </header>
@@ -749,19 +748,20 @@ body.save-pending #result .score-row{filter:none}
 </form>
 </section>
 <div id="saveGate" role="alertdialog" aria-live="assertive" hidden><div class="sg-card"><div id="sgSpin"></div><h3 id="sgTitle"></h3><p id="sgMsg"></p><div id="sgActions" class="sg-actions" hidden><button id="sgRetry" class="exam-button" type="button">Thử lưu lại</button><button id="sgDownload" class="exam-button secondary" type="button">Tải kết quả (.json)</button><button id="sgShow" class="exam-button secondary" type="button">Xem điểm (chưa lưu)</button></div></div></div><div id="saveBanner" role="status" hidden></div>
-<section id="result" class="exam-card" hidden aria-live="polite"><h2>KẾT QUẢ BÀI LÀM</h2><p id="resultName"></p><div class="review-audio-box"><p class="entry-section-title" style="margin-top:0;">🎧 Nghe lại toàn bộ audio</p><p class="field-hint" style="margin-top:0;">Audio nghe lại luôn hiển thị ở thanh cố định cuối màn hình — kéo xuống xem từng câu hỏi vẫn tua và nghe lại được bình thường.</p></div><div class="score-row"><div class="metric">Raw score<strong id="rawScore"></strong></div><div class="metric">Estimated IELTS band<strong id="bandScore"></strong></div><div class="metric">Time used<strong id="timeUsed"></strong></div></div><div class="part-score-grid" id="partScores"></div><div class="wrong-summary" id="wrongSummary" hidden></div><p id="attemptNote"></p><p id="saveStatus" role="status"></p><button id="retrySave" class="exam-button">Retry saving result</button> <button id="downloadResult" class="exam-button secondary">Download result</button><p class="help">Band scores are practice estimates. Your teacher can review the result if playback was interrupted.</p></section><section id="reviewGuide" class="exam-card review-guide" hidden>
-<h2 class="guide-title">HƯỚNG DẪN &amp; LỰA CHỌN CHỮA BÀI</h2>
+<section id="result" class="exam-card" hidden aria-live="polite"><h2>KẾT QUẢ BÀI LÀM</h2><p id="resultName"></p><div class="score-row"><div class="metric">Raw score<strong id="rawScore"></strong></div><div class="metric">Estimated IELTS band<strong id="bandScore"></strong></div><div class="metric">Time used<strong id="timeUsed"></strong></div></div><div class="part-score-grid" id="partScores"></div><p id="attemptNote"></p><p id="saveStatus" role="status"></p><button id="retrySave" class="exam-button">Retry saving result</button> <button id="downloadResult" class="exam-button secondary">Download result</button>
+<div class="guide-wrap">
+<h3 class="guide-title">HƯỚNG DẪN &amp; LỰA CHỌN CHỮA BÀI</h3>
 <p class="guide-sub">Làm theo 3 bước để cải thiện kỹ năng nghe.</p>
 <div class="guide-grid">
-<div class="guide-card g-green"><span class="g-step">1</span><div class="g-tag">ĐỌC HIỂU</div><div class="g-head">Hiểu nội dung</div><ul><li>Đọc và dịch script.</li><li>Tra từ mới.</li><li>Tìm nguyên nhân sai.</li></ul></div>
-<div class="guide-card g-blue"><span class="g-step">2</span><div class="g-tag">NHẬN DIỆN</div><div class="g-head">Luyện nghe âm</div><ul><li>Vừa nghe vừa đọc script.</li><li>Chú ý từ khó nghe.</li><li>Nghe lại không nhìn script.</li></ul></div>
-<div class="guide-card g-purple"><span class="g-step">3</span><div class="g-tag">NGHE HIỂU</div><div class="g-head">Nghe trực tiếp</div><ul><li>Nghe toàn bộ bài.</li><li>Tập trung vào ý nghĩa.</li><li>Nghe liền mạch, không dừng.</li></ul></div>
+<div class="guide-card g-green"><div class="g-tag">ĐỌC HIỂU</div><div class="g-head">Hiểu nội dung</div><ul><li>Đọc và dịch script.</li><li>Tra từ mới.</li><li>Tìm nguyên nhân sai.</li></ul></div>
+<div class="guide-card g-blue"><div class="g-tag">NHẬN DIỆN</div><div class="g-head">Luyện nghe âm</div><ul><li>Vừa nghe vừa đọc script.</li><li>Chú ý từ khó nghe.</li><li>Nghe lại không nhìn script.</li></ul></div>
+<div class="guide-card g-purple"><div class="g-tag">NGHE HIỂU</div><div class="g-head">Nghe trực tiếp</div><ul><li>Nghe toàn bộ bài.</li><li>Tập trung vào ý nghĩa.</li><li>Nghe liền mạch, không dừng.</li></ul></div>
 </div>
 <div class="option-box">
-<div class="option-row"><div class="option-text">OPTION 1 — Chữa bài ngay: Nhấn nút “Ấn vào đây để chữa bài” để tự động kéo xuống phần chữa bài bên dưới.</div><button type="button" class="exam-button" id="startReviewBtn">Ấn vào đây để chữa bài</button></div>
+<div class="option-row"><div class="option-text">OPTION 1 — Chữa bài ngay: Nhấn nút “Ấn vào đây để chữa bài” để chuyển sang trang chữa bài.</div><button type="button" class="exam-button" id="startReviewBtn">Ấn vào đây để chữa bài</button></div>
 <div class="option-row"><div class="option-text">OPTION 2 — Chữa bài sau: Nếu chưa chữa được ngay và đã đóng tab, hãy đăng nhập lại bằng đúng họ tên của bạn và chọn “Xem lại bài”.</div></div>
 </div>
-</section><div id="exam" hidden>
+</div></section><div id="exam" hidden>
 <div class="control-stack" id="controlStack">
   <section class="player-bar">
     <div class="exam-status"><div><div id="candidate"></div><div id="phaseLabel">Ready</div><p id="audioStatus">Audio plays once. Playback controls are disabled.</p><button id="resumeAudio" class="exam-button secondary" hidden>Continue at current position</button></div><div><div id="timer" role="timer">00:00</div><div id="answered">0 / 40 answered</div></div></div><audio id="audio" preload="metadata" controlslist="nodownload noplaybackrate" disableRemotePlayback src="audio.mp3"></audio>
@@ -779,7 +779,7 @@ body.save-pending #result .score-row{filter:none}
 
       <section class="left-pane">
         <h2 class="section-heading">Caring for an elderly relative</h2>
-        <p class="pane-sub">Questions 1–10 · Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.</p>
+        <p class="pane-sub pane-sub-strong">Questions 1–10 · Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.</p>
 
         <p class="notes-title">Local councils can arrange practical support to help those caring for elderly people at home</p>
         <ul class="notes">
@@ -840,7 +840,7 @@ body.save-pending #result .score-row{filter:none}
 
       <section class="left-pane">
         <h2 class="section-heading">Joining the Elmley Town Council volunteer scheme (Steve Wainwright)</h2>
-        <p class="pane-sub">Questions 11–16 · What is the role of the volunteers in each of the following activities? Choose SIX answers from the box and write the correct letter, A–I, next to Questions 11–16. Drag an option from the right into the box next to the activity.</p>
+        <p class="pane-sub pane-sub-strong">Questions 11–16 · What is the role of the volunteers in each of the following activities? Choose SIX answers from the box and write the correct letter, A–I, next to Questions 11–16. Drag an option from the right into the box next to the activity.</p>
         <div class="match-layout" data-group="g1">
           <div class="match-rows">
             <p class="notes-title">Volunteer activities</p>
@@ -889,7 +889,7 @@ body.save-pending #result .score-row{filter:none}
           </aside>
         </div>
 
-        <p class="pane-sub" style="margin-top:22px;">Questions 17–20 · Choose the correct letter, A, B or C.</p>
+        <p class="pane-sub pane-sub-strong" style="margin-top:22px;">Questions 17–20 · Choose the correct letter, A, B or C.</p>
           <div class="mc-block" data-q="17">
             <div class="mc-head">
               
@@ -958,7 +958,7 @@ body.save-pending #result .score-row{filter:none}
 
       <section class="left-pane">
         <h2 class="section-heading">A Human Geography assignment (Rosie and Colin)</h2>
-        <p class="pane-sub">Questions 21–25 · What is Rosie and Colin&#x27;s opinion about each of the following aspects of human geography? Choose FIVE answers from the box and write the correct letter, A–G, next to Questions 21–25. Drag an option from the right into the box next to the aspect.</p>
+        <p class="pane-sub pane-sub-strong">Questions 21–25 · What is Rosie and Colin&#x27;s opinion about each of the following aspects of human geography? Choose FIVE answers from the box and write the correct letter, A–G, next to Questions 21–25. Drag an option from the right into the box next to the aspect.</p>
         <div class="match-layout" data-group="g2">
           <div class="match-rows">
             <p class="notes-title">Aspects of human geography</p>
@@ -1000,7 +1000,7 @@ body.save-pending #result .score-row{filter:none}
           </aside>
         </div>
 
-        <p class="pane-sub" style="margin-top:22px;">Questions 26–30 · Choose the correct letter, A, B or C.</p>
+        <p class="pane-sub pane-sub-strong" style="margin-top:22px;">Questions 26–30 · Choose the correct letter, A, B or C.</p>
           <div class="mc-block" data-q="26">
             <div class="mc-head">
               
@@ -1082,7 +1082,7 @@ body.save-pending #result .score-row{filter:none}
 
       <section class="left-pane">
         <h2 class="section-heading">Developing food trends</h2>
-        <p class="pane-sub">Questions 31–40 · Complete the notes below. Write ONE WORD ONLY for each answer.</p>
+        <p class="pane-sub pane-sub-strong">Questions 31–40 · Complete the notes below. Write ONE WORD ONLY for each answer.</p>
 
         <p class="notes-title">Developing food trends</p>
         <ul class="notes">
@@ -1344,32 +1344,22 @@ function payload(){
  const wrongByPart=computeWrongQuestionsByPart(r);
  return TestCore.validate({protocol:2,attemptId:attempt.id,studentName:attempt.name,cycleId:attempt.cycleId,book:config.book,test:config.test,skill:'Listening',testId:config.testId,score:r.raw,band:r.band,totalQuestions:40,parts:r.parts,part1:r.parts[0],part2:r.parts[1],part3:r.parts[2],part4:r.parts[3],p1Wrong:wrongByPart[1].join(', '),p2Wrong:wrongByPart[2].join(', '),p3Wrong:wrongByPart[3].join(', '),p4Wrong:wrongByPart[4].join(', '),answers:attempt.answers,timeUsed:Math.round((attempt.reviewEndsAt-attempt.startedAt)/1000),timestamp:new Date(attempt.reviewEndsAt).toISOString(),status:attempt.interrupted?'Interrupted':'Completed'});
 }
-// Màn hình kết quả (chỉ hiển thị): gọi SAU displayResult() gốc, không đổi chấm điểm / lưu kết quả.
-function renderReviewLayout(){
- const res=TestCore.score(questions,attempt.answers);
- const box=$('wrongSummary');box.replaceChildren();
- const wrong={1:[],2:[],3:[],4:[]};res.details.forEach(d=>{if(!d.isCorrect)wrong[d.part].push(d.id);});
- const total=[1,2,3,4].reduce((n,p)=>n+wrong[p].length,0);
- const title=document.createElement('p');title.className='ws-title';
- box.classList.toggle('all-correct',total===0);
- if(total===0){title.textContent='Không có câu sai — làm tốt lắm!';box.append(title);}
- else{
-  title.textContent=`Các câu sai (${total})`;box.append(title);
-  [1,2,3,4].forEach(p=>{const row=document.createElement('div');row.className='ws-row';
-   const lab=document.createElement('span');lab.className='ws-part';lab.textContent='Part '+p;row.append(lab);
-   if(!wrong[p].length){const n=document.createElement('span');n.className='ws-none';n.textContent='Đúng hết';row.append(n);}
-   else wrong[p].forEach(id=>{const c=document.createElement('span');c.className='ws-chip';c.textContent=id;row.append(c);});
-   box.append(row);});
- }
- box.hidden=false;
- const audioBox=document.querySelector('#result .review-audio-box');if(audioBox&&box.nextElementSibling!==audioBox)box.after(audioBox);
- $('reviewGuide').hidden=false;
+// Sau khi nộp (chỉ hiển thị, gọi SAU displayResult() gốc): trang KẾT QUẢ + HƯỚNG DẪN, rồi trang CHỮA BÀI.
+function setReviewView(v){
+ document.body.classList.toggle('rv-result',v==='result');document.body.classList.toggle('rv-review',v==='review');
+ window.scrollTo(0,0);
+ try{if(typeof syncPartNavOffset==='function')syncPartNavOffset();}catch(e){}
 }
-$('startReviewBtn').onclick=()=>{
- const t=$('controlStack');if(!t)return;
- window.scrollTo({top:Math.max(0,t.getBoundingClientRect().top+window.scrollY),behavior:'smooth'});
-};
-function displayResult(){displayResultCore();try{renderReviewLayout();}catch(e){}}
+$('startReviewBtn').onclick=()=>{try{history.pushState({rv:1},'');}catch(e){}setReviewView('review');};
+$('rvBackBtn').onclick=()=>setReviewView('result');
+window.addEventListener('popstate',e=>{
+ if(document.body.classList.contains('rv-result')||document.body.classList.contains('rv-review'))setReviewView(e.state&&e.state.rv?'review':'result');
+});
+function displayResult(){
+ // Luôn hiển trang KẾT QUẢ + HƯỚNG DẪN trước (cả khi vừa nộp bài lẫn khi mở lại tab để chữa bài): học viên phải xem lại thẻ hướng dẫn rồi bấm Option 1 mới sang trang chữa bài.
+ displayResultCore();
+ try{setReviewView('result');}catch(e){}
+}
 function displayResultCore(){
  const p=attempt.payload;$('result').hidden=false;$('resultName').textContent=attempt.name;
  $('rawScore').textContent=`${p.score} / 40`;$('bandScore').textContent=p.band.toFixed(1);$('timeUsed').textContent=fmt(p.timeUsed);
