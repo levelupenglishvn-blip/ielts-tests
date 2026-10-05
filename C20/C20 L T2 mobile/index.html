@@ -1218,6 +1218,8 @@ if(typeof module!=='undefined')module.exports=api;root.TestCore=api;
 /* POST carries private result data. Read-only JSONP returns only protocol/receipt status. */
 window.Tracking=(function(){
  const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+ // AbortSignal.timeout is missing on iOS/Safari < 16: use a portable timeout signal.
+ const tsig=ms=>{if(typeof AbortSignal!=='undefined'&&AbortSignal.timeout)return AbortSignal.timeout(ms);const c=new AbortController();setTimeout(()=>c.abort(),ms);return c.signal;};
  function query(url,params,ms){return new Promise((resolve,reject)=>{
   const cb='tracking_'+crypto.randomUUID().replace(/-/g,'');
   const el=document.createElement('script');let done=false;
@@ -1232,7 +1234,7 @@ window.Tracking=(function(){
  // network / browser that blocks one of them can still confirm through the other.
  async function receipt(url,id){
   const viaJsonp=query(url,{action:'receipt',attemptId:id},20000).catch(()=>null);
-  const viaFetch=fetch(url+'?'+new URLSearchParams({action:'receipt',attemptId:id,_:Date.now()}),{redirect:'follow',signal:AbortSignal.timeout(20000)}).then(r=>r.text()).then(t=>JSON.parse(t)).catch(()=>null);
+  const viaFetch=fetch(url+'?'+new URLSearchParams({action:'receipt',attemptId:id,_:Date.now()}),{redirect:'follow',signal:tsig(20000)}).then(r=>r.text()).then(t=>JSON.parse(t)).catch(()=>null);
   const rs=await Promise.all([viaJsonp,viaFetch]);
   return rs.find(r=>r&&r.ok)||rs.find(r=>r&&r.error)||null;
  }
@@ -1241,19 +1243,27 @@ window.Tracking=(function(){
  // delivered, so the caller falls back to receipt polling.
  async function post(url,payload){
   try{
-   const res=await fetch(url,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload),redirect:'follow',signal:AbortSignal.timeout(45000)});
+   const res=await fetch(url,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload),redirect:'follow',keepalive:true,signal:tsig(45000)});
    const t=await res.text();try{return JSON.parse(t);}catch(e){return null;}
   }catch(e){return null;}
  }
  /* No blocking health pre-check any more: a slow health reply used to abort the whole save before
-    the POST was ever sent. The receipt is checked first, so a retry never re-sends a saved result. */
- async function send(url,payload,onProgress){
+    the POST was ever sent. For a retry the receipt is checked first, so it never re-sends a saved result. */
+ async function send(url,payload,onProgress,opts){
+  opts=opts||{};
   if(!/^https:\/\/script.google.com\/macros\/s\/[\w-]+\/exec$/.test(url))throw Error('Chưa cấu hình hệ thống lưu điểm. Hãy tải kết quả và gửi cho giáo viên.');
-  let r=await receipt(url,payload.attemptId);
-  if(r&&r.ok)return r;
-  if(r&&r.error)throw Error(r.error);
+  let r=null;
+  // The very first delivery of an attempt goes out IMMEDIATELY: the receipt pre-check used to run first and could
+  // take many seconds, so a student who left right after submitting had sent nothing. Retries / re-opened
+  // attempts still check the receipt first, so a saved result is never sent twice.
+  if(!opts.firstPost){
+   r=await receipt(url,payload.attemptId);
+   if(r&&r.ok)return r;
+   if(r&&r.error)throw Error(r.error);
+  }
   for(let round=1;round<=3;round++){
    if(onProgress)onProgress(round);
+   if(opts.onPosting)opts.onPosting(round);
    const reply=await post(url,payload);
    if(reply&&reply.status==='ok')return {ok:true};
    if(reply&&reply.status==='error')throw Error(reply.message||'Hệ thống lưu điểm báo lỗi.');
@@ -1398,7 +1408,7 @@ function markSaved(){
 async function send(){
  if(busy||attempt.saved)return;busy=true;$('retrySave').disabled=true;$('sgRetry').disabled=true;
  $('saveStatus').textContent='Đang gửi kết quả — chờ xác nhận…';setGate('saving');
- try{await Tracking.send(config.endpoint,attempt.payload,n=>{if(n>1)$('saveStatus').textContent='Đang gửi lại lần '+n+' — chờ xác nhận…';});markSaved();}
+ try{await Tracking.send(config.endpoint,attempt.payload,n=>{if(n>1)$('saveStatus').textContent='Đang gửi lại lần '+n+' — chờ xác nhận…';},{firstPost:!attempt.posted,onPosting:()=>{if(!attempt.posted){attempt.posted=Date.now();persist();}}});markSaved();}
  catch(e){
   $('saveStatus').textContent=e.message+' Đang tự thử lại. Bạn cũng có thể tải kết quả xuống.';$('retrySave').hidden=false;setGate('failed',e.message);
   clearTimeout(autoRetryTimer);autoRetryTimer=setTimeout(()=>{if(attempt&&attempt.phase==='submitted'&&!attempt.saved)send();},8000);
@@ -1495,6 +1505,8 @@ document.querySelectorAll('.mc-block input').forEach(el=>el.addEventListener('ch
  persist();restoreAnswers();
 }));
 window.addEventListener('pagehide',persist);window.addEventListener('online',()=>{if(attempt?.phase==='submitted'&&!attempt.saved)send();});
+window.addEventListener('pageshow',()=>{if(attempt?.phase==='submitted'&&!attempt.saved)send();});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&attempt?.phase==='submitted'&&!attempt.saved)send();});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden){tick();if(attempt?.phase==='listening'&&audio.paused)$('resumeAudio').hidden=false;}});
 if(navigator.mediaSession){for(const action of ['play','pause','seekbackward','seekforward','seekto','previoustrack','nexttrack'])try{navigator.mediaSession.setActionHandler(action,()=>{});}catch(e){}}
 const params=new URLSearchParams(location.search);if(params.get('cycle'))$('cycleId').value=params.get('cycle');

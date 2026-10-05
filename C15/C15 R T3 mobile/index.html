@@ -1,0 +1,3048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="build" content="lu-rd-s">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IELTS Reading — C15 R T3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --font-heading: 'Plus Jakarta Sans', Arial, Helvetica, sans-serif;
+    --font-body: 'Inter', Arial, Helvetica, sans-serif;
+    --navy: #1f2a44;
+    --navy-dark: #141b2e;
+    --brand: #15934E;
+    --brand-dark: #119446;
+    --brand-tint: #ECF6F1;
+    --heading: #119446;
+    --accent: #15934E;
+    --accent-dark: #119446;
+    --bg: #ffffff;
+    --panel: #f7f8fa;
+    --border: #dfe3ea;
+    --text: #1a1f2b;
+    --muted: #667085;
+    --danger: #c0392b;
+    --danger-bg: #fdecea;
+    --success: #15934E;
+    --success-bg: #ECF6F1;
+    --answered: #15934E;
+    --input-bg: #ffffff;
+    --radius-sm: 6px;
+    --radius: 10px;
+    --radius-lg: 16px;
+    --radius-pill: 999px;
+    --shadow-card: 0 8px 28px rgba(36, 49, 42, 0.07);
+    --shadow-pop: 0 10px 28px rgba(20, 27, 46, 0.16);
+  }
+
+  * { box-sizing: border-box; }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --navy: #26314f;
+      --navy-dark: #171d30;
+      --brand: #34D399;
+      --brand-dark: #10B981;
+      --brand-tint: #113124;
+      --heading: #6EE7B7;
+      --accent: #34D399;
+      --accent-dark: #10B981;
+      --bg: #1c1f26;
+      --panel: #131519;
+      --border: #33383f;
+      --text: #e6e8eb;
+      --muted: #9aa1ac;
+      --danger: #ef5350;
+      --danger-bg: #3a1f20;
+      --success: #34D399;
+      --success-bg: #113124;
+      --answered: #34D399;
+      --input-bg: #22252c;
+      --shadow-card: 0 8px 28px rgba(0, 0, 0, 0.35);
+      --shadow-pop: 0 10px 30px rgba(0, 0, 0, 0.45);
+    }
+  }
+  :root[data-theme="dark"] {
+    --navy: #26314f;
+    --navy-dark: #171d30;
+    --brand: #34D399;
+    --brand-dark: #10B981;
+    --brand-tint: #113124;
+    --heading: #6EE7B7;
+    --accent: #34D399;
+    --accent-dark: #10B981;
+    --bg: #1c1f26;
+    --panel: #131519;
+    --border: #33383f;
+    --text: #e6e8eb;
+    --muted: #9aa1ac;
+    --danger: #ef5350;
+    --danger-bg: #3a1f20;
+    --success: #34D399;
+    --success-bg: #113124;
+    --answered: #34D399;
+    --input-bg: #22252c;
+    --shadow-card: 0 8px 28px rgba(0, 0, 0, 0.35);
+    --shadow-pop: 0 10px 30px rgba(0, 0, 0, 0.45);
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: var(--panel);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  button { font-family: inherit; cursor: pointer; }
+
+  input:focus, select:focus, button:focus, [tabindex]:focus {
+    outline: 3px solid #93c5fd;
+    outline-offset: 1px;
+  }
+
+  input[type="radio"], input[type="checkbox"] { accent-color: var(--accent); }
+
+  /* ---------- START SCREEN ---------- */
+  #start-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .start-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    max-width: 540px;
+    width: 100%;
+    padding: 40px 36px;
+  }
+
+  .start-card h1 { font-size: 22px; margin: 0 0 6px 0; color: var(--heading); font-family: var(--font-heading); }
+  .start-card .subtitle { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+
+  .start-card p.instructions {
+    font-size: 14px;
+    color: var(--text);
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 14px 16px;
+    margin-bottom: 24px;
+  }
+
+  .field label { display: block; font-size: 13px; font-weight: bold; margin-bottom: 6px; }
+
+  .field input[type="text"] {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 15px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    margin-bottom: 6px;
+    background: var(--input-bg);
+    color: var(--text);
+  }
+
+  .field-error { color: var(--danger); font-size: 13px; min-height: 18px; margin-bottom: 12px; }
+  .field select {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 15px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm, 4px);
+    margin-bottom: 6px;
+    background: var(--input-bg);
+    color: var(--text);
+  }
+  .field-hint { font-size: 12.5px; color: var(--muted, #6b7280); margin-bottom: 4px; }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 11px 22px;
+    font-size: 15px;
+    border-radius: 4px;
+    margin-top: 8px;
+  }
+  .btn-primary:hover { background: var(--accent-dark); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--accent-dark);
+    border: 1px solid var(--border);
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+    margin-top: 8px;
+  }
+  .btn-secondary:hover { background: var(--panel); }
+
+  .btn-text {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 13px;
+    text-decoration: underline;
+    padding: 6px 0;
+    margin-top: 8px;
+  }
+  .btn-text:hover { color: var(--text); }
+
+  .btn-primary:disabled, .btn-secondary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .hidden { display: none !important; }
+
+  .entry-section-title {
+    font-size: 13px;
+    font-weight: bold;
+    margin: 18px 0 8px 0;
+    color: var(--text);
+  }
+
+  .notice-box {
+    font-size: 13px;
+    color: var(--text);
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 12px 14px;
+    margin-bottom: 14px;
+  }
+  .notice-box ul { margin: 0; padding-left: 18px; }
+  .notice-box li { margin-bottom: 4px; }
+  .notice-box.warning {
+    background: var(--danger-bg);
+    border-color: var(--danger);
+    color: var(--danger);
+    font-weight: bold;
+  }
+
+  .confirm-name-box {
+    background: var(--brand-tint);
+    border: 1px solid var(--brand);
+    border-radius: 4px;
+    padding: 14px 16px;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--heading);
+    text-align: center;
+    margin: 14px 0 16px 0;
+  }
+
+  .checkbox-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 14px;
+    margin-bottom: 16px;
+    cursor: pointer;
+  }
+  .checkbox-row input[type="checkbox"] { margin-top: 3px; }
+
+  .entry-actions-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+
+  .entry-status-message {
+    font-size: 14px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 12px 14px;
+    margin-bottom: 16px;
+  }
+  .entry-status-message.warn {
+    background: var(--danger-bg);
+    border-color: var(--danger);
+    color: var(--danger);
+  }
+
+  .attempt-list { margin: 12px 0; }
+  .attempt-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    flex-wrap: wrap;
+  }
+  .attempt-item .attempt-meta { color: var(--text); }
+  .attempt-item .attempt-meta .attempt-score { font-weight: bold; color: var(--heading); }
+
+  .review-banner {
+    display: none;
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--danger);
+    background: var(--danger-bg);
+    border-radius: 3px;
+    padding: 2px 8px;
+    margin-top: 4px;
+  }
+
+  /* ---------- TEST SCREEN ---------- */
+  #test-screen { display: none; height: 100vh; flex-direction: column; }
+
+  .test-header {
+    background: var(--navy);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    flex-shrink: 0;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .test-header .title-block .test-title { font-size: 15px; font-weight: bold; font-family: var(--font-heading); }
+  .test-header .title-block .student-name { font-size: 12px; color: #c7d0e0; }
+
+  .timer-block, .score-summary-block {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--navy-dark);
+    padding: 6px 14px;
+    border-radius: 4px;
+  }
+
+  .timer-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: #a9b4c7; }
+
+  .timer-value {
+    font-size: 18px;
+    font-weight: bold;
+    font-variant-numeric: tabular-nums;
+    min-width: 58px;
+    text-align: center;
+  }
+  .timer-value.warning { color: #ff8a80; }
+
+  .score-summary-block { font-size: 13.5px; font-weight: bold; display: none; flex-wrap: wrap; }
+  .score-summary-block .score-value { color: #8fd6a8; }
+
+  .save-status-block {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    background: var(--navy-dark);
+    padding: 6px 14px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #c7d0e0;
+  }
+  .save-status-block.is-saved { color: #8fd6a8; }
+  .save-status-block.is-error { color: #ff8a80; }
+  .retry-save-btn {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.4);
+    color: #fff;
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .retry-save-btn:hover { background: rgba(255,255,255,0.12); }
+  .retry-save-btn:disabled { opacity: 0.5; cursor: wait; }
+
+  .submit-header-btn {
+    background: #fff;
+    color: var(--navy);
+    border: none;
+    padding: 9px 18px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 4px;
+  }
+  .submit-header-btn:hover { background: #e3e7ee; }
+
+  .test-body { flex: 1; display: grid; grid-template-columns: 1.25fr 1fr; overflow: hidden; }
+
+  .passage-pane, .questions-pane { overflow-y: auto; height: 100%; padding: 28px 32px; }
+
+  .passage-pane { background: var(--bg); border-right: 1px solid var(--border); }
+  .passage-pane h2 { font-size: 20px; color: var(--heading); margin-top: 0; font-family: var(--font-heading); }
+  .passage-pane p {
+    margin: 0 0 17px 0;
+    max-width: 74ch;
+    font-size: 17.5px;
+    line-height: 1.75;
+    text-align: justify;
+    text-justify: inter-word;
+  }
+  .passage-pane p.tip { font-size: 12.5px; color: var(--muted); margin-top: 24px; text-align: left; }
+
+  /* visual overrides */
+  .para-label {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1.3;
+    color: var(--brand-dark);
+    background: var(--brand-tint);
+    border: 1px solid var(--brand);
+    border-radius: 999px;
+    padding: 4px 14px;
+    margin: 4px 0 10px 0;
+    text-align: left;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .passage-tabs {
+    position: sticky;
+    top: -28px;
+    margin: -28px -32px 18px -32px;
+    padding: 12px 32px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    z-index: 6;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .passage-tab {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 7px 14px;
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--text);
+    white-space: nowrap;
+  }
+  .passage-tab:hover { border-color: var(--accent); }
+  .passage-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  .passage-block { display: none; }
+  .passage-block.active { display: block; }
+
+  mark.highlight { background: #fff1a8; color: #1a1f2b; padding: 0 1px; cursor: pointer; }
+
+  .questions-pane { background: var(--panel); }
+
+  .question-group { display: none; }
+  .question-group.active { display: block; }
+
+  .footer-nav {
+    flex-shrink: 0;
+    display: flex;
+    gap: 12px;
+    padding: 10px 20px;
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    overflow-x: auto;
+  }
+
+  .footer-nav-part {
+    flex: 1 1 0;
+    min-width: 250px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 10px;
+  }
+  .footer-nav-part-label { font-size: 11px; font-weight: bold; color: var(--brand-dark); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; }
+  .footer-nav-part .nav-grid-wrap { max-height: 78px; overflow-y: auto; }
+
+  .nav-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+
+  .nav-btn { background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 5px 0; font-size: 12.5px; color: var(--text); }
+  .nav-btn:hover { border-color: var(--accent); background: var(--brand-tint); }
+  .nav-btn.answered { background: var(--answered); border-color: var(--answered); color: #fff; }
+  .nav-btn.correct { background: var(--success); border-color: var(--success); color: #fff; }
+  .nav-btn.incorrect { background: var(--danger); border-color: var(--danger); color: #fff; }
+  .nav-btn.flash { box-shadow: 0 0 0 3px #93c5fd; }
+
+  .q-section-title { font-size: 15px; font-weight: bold; color: var(--heading); margin: 24px 0 4px 0; font-family: var(--font-heading); }
+  .q-section-sub { font-size: 14px; color: var(--muted); margin-bottom: 16px; }
+
+  .q-block {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--border);
+    border-radius: 4px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    scroll-margin-top: 220px;
+  }
+  .q-block.correct { border-left-color: var(--success); }
+  .q-block.wrong { border-left-color: var(--danger); }
+
+  .q-block .q-number { font-weight: bold; margin-right: 6px; color: var(--brand-dark); }
+  .emph { color: var(--brand-dark); }
+  .q-block .q-text { font-size: 15px; }
+
+  /* ---- True/False/Not Given (Passage 1 — unchanged) ---- */
+  .tfn-options { display: flex; gap: 18px; margin-top: 10px; flex-wrap: wrap; }
+  .tfn-options label { font-size: 14px; display: flex; align-items: center; gap: 6px; }
+
+  .tfn-options label.opt-correct input[type="radio"] { accent-color: var(--success); }
+  .tfn-options label.opt-correct .opt-text { color: var(--success); font-weight: bold; }
+  .tfn-options label.opt-wrong input[type="radio"] { accent-color: var(--danger); }
+  .tfn-options label.opt-wrong .opt-text { color: var(--danger); font-weight: bold; }
+
+  /* visual overrides */
+  .ynng-options, .mcq-options, .checkbox-options { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+  .ynng-options label, .mcq-options label, .checkbox-options label { font-size: 14px; display: flex; align-items: flex-start; gap: 8px; cursor: pointer; }
+  .ynng-options label.opt-correct input, .mcq-options label.opt-correct input, .checkbox-options label.opt-correct input { accent-color: var(--success); }
+  .ynng-options label.opt-correct .opt-text, .mcq-options label.opt-correct .opt-text, .checkbox-options label.opt-correct .opt-text { color: var(--success); font-weight: bold; }
+  .ynng-options label.opt-wrong input, .mcq-options label.opt-wrong input, .checkbox-options label.opt-wrong input { accent-color: var(--danger); }
+  .ynng-options label.opt-wrong .opt-text, .mcq-options label.opt-wrong .opt-text, .checkbox-options label.opt-wrong .opt-text { color: var(--danger); font-weight: bold; text-decoration: line-through; }
+  .choose-two-hint { font-size: 12.5px; color: var(--muted); margin-top: 8px; }
+
+  .wordbank-box { background: var(--panel); border: 1px solid var(--border); border-radius: 4px; padding: 12px 14px; margin: 4px 0 16px 0; font-size: 13.5px; }
+  .wordbank-box .wb-title { font-weight: bold; margin-bottom: 8px; color: var(--heading); }
+  .wb-tiles { display: flex; flex-wrap: wrap; gap: 8px; }
+  .wb-tile {
+    background: var(--bg);
+    border: 1.5px solid var(--text);
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 13.5px;
+    font-weight: bold;
+    color: var(--text);
+    cursor: grab;
+    user-select: none;
+    transition: opacity .15s ease, box-shadow .15s ease;
+  }
+  .wb-tile:active { cursor: grabbing; }
+  .wb-tile.dragging { opacity: 0.4; }
+  .wb-tile.picked { background: var(--text); color: var(--bg); box-shadow: 0 0 0 3px var(--border); }
+  .wb-tile.used { opacity: 0.35; border-style: dashed; cursor: not-allowed; }
+  .wb-tile.locked { cursor: default; }
+
+  .drop-zone {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    min-width: 120px;
+    min-height: 28px;
+    padding: 3px 8px;
+    margin: 0 2px;
+    border: 1.5px dashed var(--border);
+    border-radius: 4px;
+    background: var(--panel);
+    vertical-align: middle;
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--text);
+  }
+  .drop-zone.drag-over { border-color: var(--text); background: var(--panel); }
+  .drop-zone.filled { border-style: solid; border-color: var(--text); background: var(--bg); cursor: default; }
+  .drop-zone:not(.filled) { cursor: pointer; }
+  .drop-zone-remove {
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 15px;
+    line-height: 1;
+    padding: 0 2px;
+    font-weight: bold;
+  }
+  .drop-zone-remove:hover { color: var(--danger); }
+  .drop-zone.correct { border-color: var(--success); background: var(--success-bg); }
+  .drop-zone.wrong { border-color: var(--danger); background: var(--danger-bg); color: var(--danger); text-decoration: line-through; }
+
+  /* ---- Matching Information: radio grid ---- */
+  .matching-grid-wrap { overflow-x: auto; margin-bottom: 16px; }
+  table.matching-grid {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--bg);
+    font-size: 14px;
+    border-top: 1px solid var(--text);
+  }
+  table.matching-grid th {
+    font-weight: bold;
+    font-size: 14px;
+    color: var(--text);
+    text-align: center;
+    padding: 8px 6px;
+    border-bottom: 2px solid var(--text);
+    border-left: 1px solid var(--text);
+  }
+  table.matching-grid th:first-child { border-bottom: none; border-left: none; }
+  table.matching-grid th:nth-child(2) { border-left: 2px solid var(--text); }
+  table.matching-grid td.mg-question {
+    padding: 14px 14px 14px 4px;
+    text-align: left;
+    vertical-align: middle;
+    line-height: 1.5;
+    border-top: 1px solid var(--text);
+  }
+  table.matching-grid td.mg-question .q-number { display: inline-block; min-width: 22px; font-weight: bold; color: var(--brand-dark); }
+  table.matching-grid td.mg-cell {
+    text-align: center;
+    vertical-align: middle;
+    border-top: 1px solid var(--text);
+    border-left: 1px solid var(--text);
+    padding: 10px 4px;
+  }
+  table.matching-grid td.mg-cell:first-of-type { border-left: 2px solid var(--text); }
+  table.matching-grid tbody tr:last-child td { border-bottom: 1px solid var(--text); }
+  input.matching-input[type="radio"] { width: 18px; height: 18px; accent-color: var(--brand); cursor: pointer; }
+  table.matching-grid tr.correct td.mg-question { background: var(--success-bg); }
+  table.matching-grid tr.wrong td.mg-question { background: var(--danger-bg); }
+  table.matching-grid td.mg-cell.correct-cell { background: var(--success-bg); }
+  table.matching-grid td.mg-cell.wrong-cell { background: var(--danger-bg); }
+  table.matching-grid td.mg-cell.correct-cell input,
+  table.matching-grid td.mg-cell.wrong-cell input { accent-color: var(--success); }
+  table.matching-grid td.mg-cell.wrong-cell input { accent-color: var(--danger); }
+
+  .summary-block {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+    font-size: 15px;
+    line-height: 1.85;
+  }
+  .summary-block strong, table.fill-table td strong { color: var(--brand-dark); }
+
+  input.blank-input {
+    padding: 5px 7px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    font-size: 14.5px;
+    background: var(--input-bg);
+    color: var(--text);
+    width: 140px;
+  }
+  input.blank-input.wrong { color: var(--danger); text-decoration: line-through; border-color: var(--danger); }
+  input.blank-input.correct { border-color: var(--success); }
+
+  table.fill-table { width: 100%; border-collapse: collapse; background: var(--bg); font-size: 14.5px; }
+  table.fill-table th, table.fill-table td { border: 1px solid var(--border); padding: 11px 10px; text-align: left; vertical-align: top; }
+  table.fill-table th { background: var(--panel); font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--muted); font-weight: bold; }
+  table.fill-table td:first-child { font-weight: bold; }
+  table.fill-table tr.correct td { background: var(--success-bg); }
+  table.fill-table tr.wrong td { background: var(--danger-bg); }
+
+  table.fill-table input[type="text"] { width: 140px; padding: 5px 7px; border: 1px solid var(--border); border-radius: 3px; font-size: 14.5px; background: var(--input-bg); color: var(--text); }
+  table.fill-table tr.wrong input[type="text"] { color: var(--danger); text-decoration: line-through; border-color: var(--danger); }
+  input:disabled, select:disabled { cursor: not-allowed; }
+
+  .fill-feedback { display: block; margin-top: 6px; font-size: 13px; font-weight: bold; color: var(--success); }
+
+  @media (max-width: 900px) {
+    .test-body { grid-template-columns: 1fr; overflow: auto; height: auto; }
+    #test-screen { height: auto; min-height: 100vh; }
+    .passage-pane, .questions-pane { overflow-y: visible; height: auto; }
+    .passage-pane { border-right: none; border-bottom: 1px solid var(--border); }
+    .passage-tabs { position: static; margin: 0 -20px 16px -20px; padding: 12px 20px; }
+    .footer-nav { flex-direction: column; }
+    .footer-nav-part { min-width: 0; }
+  }
+
+  /* visual overrides */
+
+  .start-card { border-radius: var(--radius-lg); box-shadow: var(--shadow-card); }
+  .start-card p.instructions,
+  .notice-box,
+  .entry-status-message,
+  .attempt-item { border-radius: var(--radius); }
+  .confirm-name-box { border-radius: var(--radius); }
+  .review-banner { border-radius: var(--radius-pill); padding: 3px 10px; }
+
+  .field input[type="text"] { border-radius: var(--radius-sm); }
+
+  .btn-primary, .btn-secondary { border-radius: var(--radius); }
+  .btn-primary:hover { box-shadow: 0 2px 10px rgba(21, 147, 78, 0.25); }
+
+  .test-header { padding: 12px 24px; }
+  .timer-block, .score-summary-block { border-radius: var(--radius); }
+  .submit-header-btn { border-radius: var(--radius); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12); }
+  .submit-header-btn:hover { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16); }
+
+  .passage-tab { border-radius: var(--radius-pill); padding: 7px 16px; }
+  .passage-tab.active { box-shadow: 0 2px 8px rgba(21, 147, 78, 0.25); }
+
+  mark.highlight {
+    background: #ffe563;
+    color: #202020;
+    border-radius: 4px;
+    transition: filter .12s ease;
+  }
+  mark.highlight:hover { filter: brightness(0.94); }
+
+  .q-block { border-radius: var(--radius); transition: box-shadow .15s ease, border-color .15s ease; }
+  .q-block:focus-within { box-shadow: 0 0 0 3px var(--brand-tint); }
+
+  /* visual overrides */
+  .tfn-options label {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
+    padding: 7px 16px 7px 10px;
+    transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .tfn-options label:hover { border-color: var(--accent); }
+  .tfn-options label:has(input:checked) {
+    border-color: var(--accent);
+    background: var(--brand-tint);
+    box-shadow: 0 0 0 1px var(--accent);
+  }
+
+  .ynng-options label, .mcq-options label, .checkbox-options label {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px 13px;
+    transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .ynng-options label:hover, .mcq-options label:hover, .checkbox-options label:hover { border-color: var(--accent); }
+  .ynng-options label:has(input:checked),
+  .mcq-options label:has(input:checked),
+  .checkbox-options label:has(input:checked) {
+    border-color: var(--accent);
+    background: var(--brand-tint);
+    box-shadow: 0 0 0 1px var(--accent);
+  }
+  /* visual overrides */
+  .tfn-options label.opt-correct,
+  .ynng-options label.opt-correct, .mcq-options label.opt-correct, .checkbox-options label.opt-correct {
+    border-color: var(--success);
+    background: var(--success-bg);
+    box-shadow: none;
+  }
+  .tfn-options label.opt-wrong,
+  .ynng-options label.opt-wrong, .mcq-options label.opt-wrong, .checkbox-options label.opt-wrong {
+    border-color: var(--danger);
+    background: var(--danger-bg);
+    box-shadow: none;
+  }
+
+  .wordbank-box { border-radius: var(--radius); }
+  .wb-tile { border-radius: var(--radius-pill); }
+  .drop-zone { border-radius: var(--radius-sm); }
+
+  /* visual overrides */
+  .q-block .q-number,
+  table.matching-grid td.mg-question .q-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 6px;
+    margin-right: 8px;
+    background: var(--text);
+    color: var(--bg);
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 700;
+    vertical-align: middle;
+  }
+
+  /* visual overrides */
+  .matching-grid-wrap { border: 1px solid var(--border); border-radius: var(--radius); overflow: auto; }
+  table.matching-grid,
+  table.matching-grid th,
+  table.matching-grid td.mg-question,
+  table.matching-grid td.mg-cell { border-color: var(--border); }
+  table.matching-grid thead th { background: var(--panel); }
+
+  div:has(> table.fill-table) { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  table.fill-table th, table.fill-table td { border-color: var(--border); padding: 12px 14px; }
+  input.blank-input, table.fill-table input[type="text"] { border-radius: var(--radius-sm); }
+
+  .summary-block { border-radius: var(--radius); }
+
+  .footer-nav-part { border-radius: var(--radius); box-shadow: var(--shadow-card); }
+  .nav-btn { border-radius: var(--radius-sm); }
+
+  /* visual overrides */
+  .result-overlay {
+    position: fixed; inset: 0; z-index: 1000;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(20, 27, 46, 0.55);
+    padding: 16px;
+  }
+  .result-overlay[hidden] { display: none; }
+  .result-card {
+    background: var(--bg); color: var(--text);
+    width: 100%; max-width: 580px; max-height: 92vh; overflow-y: auto;
+    border-radius: var(--radius-lg); box-shadow: var(--shadow-pop);
+    padding: 26px 28px 22px;
+    border-top: 5px solid var(--brand);
+  }
+  .result-card h2 { margin: 0 0 2px 0; font-size: 21px; font-family: var(--font-heading); color: var(--heading); }
+  .result-student { font-size: 13px; color: var(--muted); margin-bottom: 16px; }
+  .result-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+  .result-metric { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px; }
+  .result-metric .m-label { display: block; font-size: 11.5px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .result-metric strong { font-family: var(--font-heading); font-size: 26px; font-variant-numeric: tabular-nums; }
+  .result-metric.is-main strong { color: var(--brand-dark); }
+  .result-metric.is-wrong strong { color: var(--danger); }
+  .result-section-title { font-size: 12.5px; font-weight: bold; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); margin: 6px 0 8px; }
+  .result-passages { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 12px; }
+  .result-passages .result-metric strong { font-size: 21px; }
+  .result-note { font-size: 12.5px; color: var(--muted); margin: 0 0 12px 0; }
+  .result-save { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 13.5px; padding: 10px 12px; border-radius: var(--radius); background: var(--panel); border: 1px solid var(--border); margin-bottom: 14px; }
+  .result-save.is-saved { border-color: var(--success); background: var(--success-bg); }
+  .result-save.is-error { border-color: var(--danger); background: var(--danger-bg); }
+  .result-save button { border: 1px solid var(--border); background: var(--bg); color: var(--text); border-radius: var(--radius-sm); padding: 4px 12px; cursor: pointer; font-size: 13px; }
+  .result-save button:disabled { opacity: 0.5; cursor: wait; }
+  .result-actions { display: flex; gap: 10px; justify-content: flex-end; }
+  @media (max-width: 520px) {
+    .result-card { padding: 20px 16px 16px; }
+    .result-passages { grid-template-columns: 1fr; }
+    .result-metric strong { font-size: 23px; }
+  }
+
+  /* visual overrides */
+  .wb-section { position: relative; }
+  .wordbank-box.wb-sticky { position: sticky; top: 0; z-index: 5; box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
+  .wb-section .drop-zone { min-width: 150px; scroll-margin-top: 170px; }
+  @media (max-width: 900px) { .test-body { overflow: clip; } }  /* visual overrides */
+
+
+  /* visual overrides */
+  .test-body { grid-template-columns: var(--left-col, 1.25fr) 12px minmax(0, 1fr); }
+  .splitter { position: relative; cursor: col-resize; background: var(--panel); border-right: 1px solid var(--border); touch-action: none; outline: none; user-select: none; -webkit-user-select: none; }
+  .splitter:hover, .splitter:focus-visible, body.is-resizing .splitter { background: var(--brand-tint); }
+  .splitter-grip { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 28px; height: 40px; display: flex; align-items: center; justify-content: center;
+    background: var(--bg); border: 1.5px solid var(--text); border-radius: 4px; font-size: 16px; line-height: 1; color: var(--text); }
+  body.is-resizing { cursor: col-resize; user-select: none; -webkit-user-select: none; }
+  body.is-resizing .passage-pane, body.is-resizing .questions-pane { pointer-events: none; }
+  @media (max-width: 900px) { .splitter { display: none; } .test-body { grid-template-columns: 1fr; } }
+  .wb-hint { font-size: 12.5px; color: var(--muted); margin: -2px 0 10px 0; }
+  .wordbank-box .wb-tile { text-align: left; }
+  .hd-wrap { margin: 6px 0 8px 0; }
+  .passage-pane .hd-wrap + p { margin-top: 0; }
+  .drop-zone.hd-zone { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px 10px; width: 100%; min-height: 40px; margin: 0; padding: 6px 12px;
+    box-sizing: border-box; font-size: 15.5px; text-align: center; user-select: none; -webkit-user-select: none; position: relative; }
+  .hd-zone .zone-head { display: inline-flex; align-items: baseline; gap: 8px; font-family: var(--font-heading); }
+  .hd-zone .zone-head strong { font-size: 16px; }
+  .hd-zone .zone-sec { font-size: 12.5px; font-weight: 600; color: var(--muted); }
+  .hd-zone.filled { background: var(--brand-tint); }
+  .hd-zone .drop-zone-content { flex: 0 1 auto; }
+  .hd-zone .drop-zone-remove { margin-left: 2px; }
+  .hd-zone.drag-over { background: var(--brand-tint); border-style: solid; }
+  .hd-zone.correct { background: var(--success-bg); }
+  .hd-zone.wrong { background: var(--danger-bg); text-decoration: none; }
+  .hd-zone.wrong .drop-zone-content { text-decoration: line-through; }
+  .hd-wrap .fill-feedback { display: block; margin: 4px 0 0 0; text-align: center; }
+  .end-block .drop-zone.end-zone { display: flex; width: 100%; box-sizing: border-box; margin: 10px 0 0 0; min-height: 36px; font-weight: 600; }
+  .end-block .fill-feedback { display: block; margin-top: 6px; }
+  .zone-menu { position: fixed; z-index: 9000; max-width: min(520px, calc(100vw - 16px)); max-height: 60vh; overflow-y: auto; background: var(--bg); color: var(--text);
+    border: 1.5px solid var(--text); border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.22); padding: 6px; display: flex; flex-direction: column; gap: 4px; }
+  .zone-menu-item { text-align: left; background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 9px 12px; font: 600 14px var(--font-body); color: var(--text); cursor: pointer; }
+  .zone-menu-item:hover, .zone-menu-item:focus-visible { border-color: var(--text); background: var(--brand-tint); }
+  .zone-menu-item.current { border-color: var(--brand); }
+
+
+  /* visual overrides */
+  .tut-overlay { position: fixed; inset: 0; z-index: 99990; background: rgba(15,20,30,0.62); display: flex; align-items: center; justify-content: center; padding: 14px; }
+  .tut-overlay[hidden] { display: none; }
+  .tut-card { width: 100%; max-width: 640px; max-height: 96vh; overflow-y: auto; background: var(--bg); color: var(--text); border: 2px solid var(--brand); border-radius: 16px; padding: 18px 18px 16px; box-shadow: 0 14px 44px rgba(0,0,0,0.3); }
+  .tut-card h3 { margin: 0 0 4px; font-family: var(--font-heading); font-size: 19px; }
+  .tut-sub { margin: 0 0 12px; font-size: 14px; color: var(--muted); }
+  .tut-stage { position: relative; height: 320px; border: 1px solid var(--border); border-radius: 12px; background: var(--panel); overflow: hidden; user-select: none; -webkit-user-select: none; }
+  .tut-bank { position: absolute; left: 10px; right: 10px; top: 8px; display: flex; gap: 6px; flex-wrap: wrap; z-index: 2; background: var(--panel); padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+  .tut-tile { padding: 5px 10px; border: 1.5px solid var(--text); border-radius: 999px; background: var(--bg); font-size: 12.5px; font-weight: 700; transition: transform .25s, box-shadow .25s, opacity .25s, background .25s; }
+  .tut-tile.picked { background: var(--text); color: var(--bg); }
+  .tut-tile.lift { transform: scale(1.08); box-shadow: 0 6px 14px rgba(0,0,0,0.25); }
+  .tut-tile.used { opacity: .35; border-style: dashed; }
+  .tut-list { position: absolute; left: 10px; right: 10px; top: 84px; transition: transform .9s ease; }
+  .tut-q { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 7px 10px; margin-bottom: 8px; font-size: 12.5px; }
+  .tut-q b { display: inline-block; background: var(--text); color: var(--bg); border-radius: 4px; padding: 0 6px; margin-right: 6px; }
+  .tut-z { margin-top: 5px; height: 26px; border: 1.5px dashed var(--border); border-radius: 6px; display: flex; align-items: center; padding: 0 8px; font-weight: 700; font-size: 12.5px; }
+  .tut-z.on { border-style: solid; border-color: var(--text); }
+  .tut-gap { text-align: center; color: var(--muted); font-size: 12px; margin: 2px 0 10px; }
+  .tut-menu { position: absolute; z-index: 5; background: var(--bg); border: 1.5px solid var(--text); border-radius: 8px; padding: 4px; box-shadow: 0 8px 20px rgba(0,0,0,0.25); opacity: 0; transform: translateY(-4px); transition: opacity .2s, transform .2s; pointer-events: none; }
+  .tut-menu.show { opacity: 1; transform: none; }
+  .tut-menu div { font-size: 12.5px; font-weight: 600; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); margin: 2px; background: var(--panel); }
+  .tut-menu div.hot { background: var(--brand-tint); border-color: var(--brand); }
+  .tut-cursor { position: absolute; z-index: 9; width: 22px; height: 22px; left: 0; top: 0; pointer-events: none; transition: left .7s ease, top .7s ease; font-size: 21px; line-height: 1; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.35)); }
+  .tut-cursor.click::after { content: ""; position: absolute; left: -6px; top: -6px; width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--brand); animation: tutPing .45s ease-out; }
+  @keyframes tutPing { from { transform: scale(.4); opacity: 1; } to { transform: scale(1.5); opacity: 0; } }
+  .tut-caption { margin: 12px 0 8px; min-height: 66px; font-size: 14.5px; line-height: 1.5; }
+  .tut-caption strong { color: var(--brand-dark); }
+  .tut-steps { display: flex; gap: 6px; margin-bottom: 12px; }
+  .tut-dot { flex: 1; height: 5px; border-radius: 3px; background: var(--border); }
+  .tut-dot.on { background: var(--brand); }
+  .tut-actions { display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; }
+  .tut-link-row { margin: -4px 0 14px; }
+  @media (prefers-reduced-motion: reduce) { .tut-cursor, .tut-list, .tut-tile { transition: none; } }
+  .tut-overlay.tut-main { background: var(--bg); }
+  .tut-overlay.tut-main .tut-card { box-shadow: none; }
+  .tut-wait { text-align: center; font-weight: 700; color: var(--muted); padding: 10px 0 4px; font-size: 14.5px; }
+
+  /* visual overrides */
+  #save-gate {
+    position: fixed; inset: 0; z-index: 100000;
+    background: rgba(255, 255, 255, 0.94);
+    -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+    display: flex; align-items: center; justify-content: center; padding: 20px;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) #save-gate { background: rgba(20, 24, 31, 0.94); } }
+  #save-gate[hidden], #save-banner[hidden] { display: none; }
+  #save-gate .sg-card {
+    max-width: 520px; width: 100%; background: var(--bg); color: var(--text);
+    border: 2px solid var(--brand); border-radius: 18px; padding: 28px 26px; text-align: center;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.14); outline: none;
+  }
+  #save-gate h3 { margin: 14px 0 8px; font-family: var(--font-heading); font-size: 21px; line-height: 1.3; }
+  #save-gate p { margin: 0 0 6px; font-size: 15.5px; line-height: 1.5; overflow-wrap: anywhere; }
+  #save-gate .sg-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 16px; }
+  #save-gate .sg-actions[hidden] { display: none; }
+  #save-gate .sg-btn {
+    border: 0; border-radius: 10px; background: var(--brand); color: #fff; padding: 12px 20px;
+    font: 600 15px var(--font-body); cursor: pointer; min-height: 44px;
+  }
+  #save-gate .sg-btn.secondary { background: var(--panel); color: var(--text); border: 1px solid var(--border); }
+  #save-gate .sg-btn:disabled { opacity: 0.5; cursor: wait; }
+  #sg-spin {
+    width: 44px; height: 44px; margin: 0 auto; border: 5px solid var(--brand-tint); border-top-color: var(--brand);
+    border-radius: 50%; animation: sgspin 1s linear infinite;
+  }
+  #sg-spin[hidden] { display: none; }
+  @keyframes sgspin { to { transform: rotate(360deg); } }
+  #save-banner {
+    position: fixed; top: 8px; left: 50%; transform: translateX(-50%); z-index: 99999;
+    background: #b91c1c; color: #fff; font: 700 14px var(--font-body); padding: 8px 16px;
+    border-radius: 999px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25); max-width: 94vw; text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ STEP 1: START SCREEN (nhập họ tên / xác nhận / chọn hành động) ============ -->
+<div id="start-screen">
+  <div class="start-card">
+    <h1>C15 R T3</h1>
+    <div class="subtitle">IELTS Reading Test</div>
+
+    <!-- Bước A: nhập họ tên -->
+    <div id="entry-step-name">
+      <p class="instructions">
+        Bài Reading gồm 3 bài đọc (Part 1–3) và 40 câu hỏi. Bạn sẽ có 60 phút cho toàn bộ 3 bài
+        đọc — đồng hồ không reset khi bạn chuyển giữa các Part. Bài làm sẽ tự động nộp khi hết
+        giờ, hoặc bạn có thể chủ động nộp bài sớm hơn bằng nút Nộp bài.
+      </p>
+
+      <div class="entry-section-title">Lưu ý trước khi làm bài</div>
+      <div class="notice-box">
+        <ul>
+          <li>Bài Reading có thời gian làm bài <strong>60 phút</strong>.</li>
+          <li>Mỗi bài chỉ được <strong>làm và nộp một lần</strong>.</li>
+          <li>Hãy kiểm tra kỹ <strong>họ tên và dấu tiếng Việt</strong> trước khi bắt đầu.</li>
+          <li>Nếu bạn đã làm bài trước đó và muốn xem lại, hãy nhập <strong>đúng họ tên đã sử dụng khi làm bài</strong> rồi chọn <strong>"Xem lại bài đã làm"</strong>.</li>
+        </ul>
+      </div>
+
+      <div class="entry-section-title">Lưu ý về trình duyệt</div>
+      <div class="notice-box">
+        <ul>
+          <li>Vui lòng sử dụng <strong>một trình duyệt duy nhất</strong> trong suốt quá trình làm bài và xem lại bài: Chrome, Safari hoặc Cốc Cốc.</li>
+          <li>Nếu muốn xem lại bài sau khi đóng tab, hãy mở lại bằng <strong>đúng trình duyệt và đúng thiết bị</strong> đã sử dụng khi làm bài.</li>
+          <li><strong>Không sử dụng tab ẩn danh</strong> hoặc chế độ duyệt web riêng tư.</li>
+          <li>Không xóa dữ liệu trình duyệt trước khi xem lại bài.</li>
+        </ul>
+      </div>
+      <div class="notice-box warning">⚠️ Để có thể xem lại bài sau này, hãy sử dụng đúng một trình duyệt và không sử dụng chế độ ẩn danh.</div>
+
+      <div class="field">
+        <label for="student-name">Họ và tên</label>
+        <input type="text" id="student-name" placeholder="Nhập đầy đủ họ và tên có dấu tiếng Việt" autocomplete="off">
+        <div class="field-error" id="name-error"></div>
+      </div>
+      <button class="btn-primary" id="name-continue-btn">Tiếp tục</button>
+    </div>
+
+    <!-- Bước B: xác nhận họ tên -->
+    <div id="entry-step-confirm" class="hidden">
+      <p class="instructions">Bạn chắc chắn đã điền đúng họ tên và đầy đủ dấu tiếng Việt chưa?</p>
+      <div class="confirm-name-box" id="confirm-name-box"></div>
+      <label class="checkbox-row">
+        <input type="checkbox" id="confirm-checkbox">
+        <span>Tôi đã kiểm tra và xác nhận họ tên của mình.</span>
+      </label>
+      <div class="entry-actions-row">
+        <button class="btn-secondary" id="confirm-back-btn">Quay lại</button>
+        <button class="btn-primary" id="confirm-continue-btn" disabled>Tiếp tục</button>
+      </div>
+    </div>
+
+    <!-- Bước C: chọn hành động -->
+    <div id="entry-step-actions" class="hidden">
+      <div class="entry-status-message hidden" id="entry-status-message"></div>
+
+      <div class="entry-actions-row">
+        <button class="btn-primary" id="start-btn">Bắt đầu làm bài</button>
+        <button class="btn-secondary" id="review-btn">Xem lại bài đã làm</button>
+      </div>
+      <div class="tut-link-row"><button class="btn-text" id="tut-open" type="button">▶ Xem hướng dẫn kéo thả (30 giây)</button></div>
+
+      <div id="review-result-area"></div>
+
+      <button class="btn-text" id="actions-back-btn">Quay lại</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ STEP 2/4: TEST + REVIEW SCREEN ============ -->
+<div id="test-screen">
+  <div class="test-header">
+    <div class="title-block">
+      <div class="test-title">IELTS Reading — C15 R T3</div>
+      <div class="student-name" id="header-student-name"></div>
+      <div class="review-banner" id="review-banner">Chế độ xem lại — không thể nộp lại bài</div>
+    </div>
+    <div class="timer-block" id="timer-block">
+      <span class="timer-label">Thời gian còn lại</span>
+      <span class="timer-value" id="timer-value">60:00</span>
+    </div>
+    <div class="score-summary-block" id="score-summary-block">
+      <span>Điểm: <span class="score-value" id="header-score"></span></span>
+      <span>&nbsp;·&nbsp;Band: <span class="score-value" id="header-band"></span></span>
+      <span>&nbsp;·&nbsp;Thời gian làm bài: <span id="header-time-used"></span></span>
+    </div>
+    <div class="save-status-block" id="save-status-block">
+      <span id="save-status-text"></span>
+      <button type="button" class="retry-save-btn" id="retry-save-btn" hidden>Thử lại</button>
+    </div>
+    <button class="submit-header-btn" id="show-result-btn" style="display:none">Kết quả</button>
+    <button class="submit-header-btn" id="submit-btn">Nộp bài</button>
+  </div>
+
+  <div class="test-body">
+    <!-- PASSAGE -->
+    <div class="passage-pane" id="passage">
+      <div class="passage-tabs" id="passage-tabs">
+        <button type="button" class="passage-tab active" data-passage="1">Part 1</button>
+        <button type="button" class="passage-tab" data-passage="2">Part 2</button>
+        <button type="button" class="passage-tab" data-passage="3">Part 3</button>
+      </div>
+
+      <div class="passage-block active" id="passage-block-1" data-passage="1">
+        <h2>Reading Passage: Henry Moore (1898-1986)</h2>
+        <p><em>The British sculptor Henry Moore was a leading figure in the 20th-century art world</em></p>
+        <p>Henry Moore was born in Castleford, a small town near Leeds in the north of England. He was the seventh child of Raymond Moore and his wife Mary Baker. He studied at Castleford Grammar School from 1909 to 1915, where his early interest in art was encouraged by his teacher Alice Gostick. After leaving school, Moore hoped to become a sculptor, but instead he complied with his father’s wish that he train as a schoolteacher. He had to abandon his training in 1917 when he was sent to France to fight in the First World War.</p>
+        <p>After the war, Moore enrolled at the Leeds School of Art, where he studied for two years. In his first year, he spent most of his time drawing. Although he wanted to study sculpture, no teacher was appointed until his second year. At the end of that year, he passed the sculpture examination and was awarded a scholarship to the Royal College of Art in London. In September 1921, he moved to London and began three years of advanced study in sculpture.</p>
+        <p>Alongside the instruction he received at the Royal College, Moore visited many of the London museums, particularly the British Museum, which had a wide-ranging collection of ancient sculpture. During these visits, he discovered the power and beauty of ancient Egyptian and African sculpture. As he became increasingly interested in these ‘primitive’ forms of art, he turned away from European sculptural traditions.</p>
+        <p>After graduating, Moore spent the first six months of 1925 travelling in France. When he visited the Trocadero Museum in Paris, he was impressed by a cast of a Mayan* sculpture of the rain spirit. It was a male reclining figure with its knees drawn up together, and its head at a right angle to its body. Moore became fascinated with this stone sculpture, which he thought had a power and originality that no other stone sculpture possessed. He himself started carving a variety of subjects in stone, including depiction of reclining women, mother-and-child groups, and masks.</p>
+        <p>Moore’s exceptional talent soon gained recognition, and in 1926 he started work as a sculpture instructor at the Royal College. In 1933, he became a member of a group of young artists called Unit One. The aim of the group was to convince the English public of the merits of the emerging international movement in modern art and architecture.</p>
+        <p>Around this time, Moore moved away from the human figure to experiment with abstract shapes. In 1931, he held an exhibition at the Leicester Galleries in London. His work was enthusiastically welcomed by fellow sculptors, but the reviews in the press were extremely negative and turned Moore into a notorious figure. There were calls for his resignation from the Royal College, and the following year, when his contract expired, he left to start a sculpture department at the Chelsea School of Art in London.</p>
+        <p>Throughout the 1930s, Moore did not show any inclination to please the British public. He became interested in the paintings of the Spanish artist Pablo Picasso, whose work inspired him to distort the human body in a radical way. At times, he seemed to abandon the human figure altogether. The pages of his sketchbooks from this period show his ideas for abstract sculptures that bore little resemblance to the human form.</p>
+        <p>In 1940, during the Second World War, Moore stopped teaching at the Chelsea School and moved to a farmhouse about 20 miles north of London. A shortage of materials forced him to focus on drawing. He did numerous small sketches of Londoners, later turning these ideas into large coloured drawings in his studio. In 1942, he returned to Castleford to make a series of sketches of the miners who worked there.</p>
+        <p>In 1944, Harlow, a town near London, offered Moore a commission for a sculpture depicting a family. The resulting work signifies a dramatic change in Moore’s style, away from the experimentation of the 1930s towards a more natural and humanistic subject matter. He did dozens of studies in clay for the sculpture, and these were cast in bronze and issued in editions of seven to nine copies each. In this way, Moore’s work became available to collectors all over the world. The boost to his income enabled him to take on ambitious projects and start working on the scale he felt his sculpture demanded.</p>
+        <p>Critics who had begun to think that Moore had become less revolutionary were proven wrong by the appearance, in 1950, of the first of Moore’s series of standing figures in bronze, with their harsh and angular pierced forms and distinct impression of menace. Moore also varied his subject matter in the 1950s with such works as Warrior with Shield and Falling Warrior. These were rare examples of Moore’s use of the male figure and owe something to his visit to Greece in 1951, when he had the opportunity to study ancient works of art.</p>
+        <p>In his final years, Moore created the Henry Moore Foundation to promote art appreciation and to display his work. Moore was the first modern English sculptor to achieve international critical acclaim and he is still regarded as one of the most important sculptors of the 20th century.</p>
+        <p><em>*Mayan: belonging to an ancient civilisation that inhabited parts of current-day Mexico, Guatemala, Belize, El Salvador and Honduras.</em></p>
+        <p class="tip">Tip: select any text on this page (passage or questions) to highlight it — the text stays selected afterwards so you can copy it too. Click a highlight to remove it.</p>
+      </div>
+
+      <div class="passage-block" id="passage-block-2" data-passage="2">
+        <h2>Reading Passage: The Desolenator: producing clean water</h2>
+        <div id="qwrap-14" class="hd-wrap"><div class="drop-zone hd-zone" id="q14" data-qnum="14" data-bank="hd" data-menu="1" data-sec="A"><span class="zone-head"><strong>14</strong><span class="zone-sec">Section A</span></span><span class="drop-zone-placeholder">&nbsp;</span></div></div>
+        <p>Travelling around Thailand in the 1990s, William Janssen was impressed with the basic rooftop solar heating systems that were on many homes, where energy from the sun was absorbed by a plate and then used to heat water for domestic use. Two decades later Janssen developed that basic idea he saw in Southeast Asia into a portable device that uses the power from the sun to purify water.</p>
+        <div id="qwrap-15" class="hd-wrap"><div class="drop-zone hd-zone" id="q15" data-qnum="15" data-bank="hd" data-menu="1" data-sec="B"><span class="zone-head"><strong>15</strong><span class="zone-sec">Section B</span></span><span class="drop-zone-placeholder">&nbsp;</span></div></div>
+        <p>The Desolenator operates as a mobile desalination unit that can take water from different places, such as the sea, rivers, boreholes and rain, and purify it for human consumption. It is particularly valuable in regions where natural groundwater reserves have been polluted, or where seawater is the only water source available.</p>
+        <p>Janssen saw that there was a need for a sustainable way to clean water in both the developing and the developed countries when he moved to the United Arab Emirates and saw large-scale water processing. ‘I was confronted with the enormous carbon footprint that the Gulf nations have because of all of the desalination that they do,’ he says.</p>
+        <div id="qwrap-16" class="hd-wrap"><div class="drop-zone hd-zone" id="q16" data-qnum="16" data-bank="hd" data-menu="1" data-sec="C"><span class="zone-head"><strong>16</strong><span class="zone-sec">Section C</span></span><span class="drop-zone-placeholder">&nbsp;</span></div></div>
+        <p>The Desolenator can produce 15 litres of drinking water per day, enough to sustain a family for cooking and drinking. Its main selling point is that unlike standard desalination techniques, it doesn’t require a generated power supply: just sunlight. It measures 120 cm by 90 cm, and it is easy to transport, thanks to its two wheels. Water enters through a pipe, and flows as a thin film between a sheet of double glazing and the surface of a solar panel, where it is heated by the sun. The warm water flows into a small boiler (heated by a solar-powered battery) where it is converted to steam. When the steam cools, it becomes distilled water. The device has a very simple filter to trap particles, and this can easily be shaken to remove them. There are two tubes for liquid coming out: one for the waste – salt from seawater, fluoride, etc. – and another for the distilled water. The performance of the unit is shown on an LCD screen and transmitted to the company which provides servicing when necessary.</p>
+        <div id="qwrap-17" class="hd-wrap"><div class="drop-zone hd-zone" id="q17" data-qnum="17" data-bank="hd" data-menu="1" data-sec="D"><span class="zone-head"><strong>17</strong><span class="zone-sec">Section D</span></span><span class="drop-zone-placeholder">&nbsp;</span></div></div>
+        <p>A recent analysis found that at least two-thirds of the world’s population lives with severe water scarcity for at least a month every year. Janssen says that by 2030 half of the world’s population will be living with water stress – where the demand exceeds the supply over a certain period of time. ‘It is really important that a sustainable solution is brought to the market that is able to help these people,’ he says. Many countries ‘don’t have the money for desalination plants, which are very expensive to build. They don’t have the money to operate them, they are very maintenance intensive, and they don’t have the money to buy the diesel to run the desalination plants, so it is a really bad situation.’</p>
+        <div id="qwrap-18" class="hd-wrap"><div class="drop-zone hd-zone" id="q18" data-qnum="18" data-bank="hd" data-menu="1" data-sec="E"><span class="zone-head"><strong>18</strong><span class="zone-sec">Section E</span></span><span class="drop-zone-placeholder">&nbsp;</span></div></div>
+        <p>The device is aimed at a wide variety of users – from homeowners in the developing world who do not have a constant supply of water to people living off the grid in rural parts of the US. The first commercial versions of the Desolenator are expected to be in operation in India early next year, after field tests are carried out. The market for the self-sufficient devices in developing countries is twofold – those who cannot afford the money for the device outright and pay through microfinance, and middle-income homes that can lease their own equipment. ‘People in India don’t pay for a fridge outright; they pay for it over six months. They would put the Desolenator on their roof and hook it up to their municipal supply and they would get very reliable drinking water on a daily basis,’ Janssen says. In the developed world, it is aimed at niche markets where tap water is unavailable – for camping, on boats, or for the military, for instance.</p>
+        <div id="qwrap-19" class="hd-wrap"><div class="drop-zone hd-zone" id="q19" data-qnum="19" data-bank="hd" data-menu="1" data-sec="F"><span class="zone-head"><strong>19</strong><span class="zone-sec">Section F</span></span><span class="drop-zone-placeholder">&nbsp;</span></div></div>
+        <p>Prices will vary according to where it is bought. In the developing world, the price will depend on what deal aid organisations can negotiate. In developed countries, it is likely to come in at $1,000 (£685) a unit, said Janssen. ‘We are a venture with a social mission. We are aware that the product we have envisioned is mainly finding application in the developing world and humanitarian sector and that this is the way we will proceed. We do realise, though, that to be a viable company there is a bottom line to keep in mind,’ he says.</p>
+        <div id="qwrap-20" class="hd-wrap"><div class="drop-zone hd-zone" id="q20" data-qnum="20" data-bank="hd" data-menu="1" data-sec="G"><span class="zone-head"><strong>20</strong><span class="zone-sec">Section G</span></span><span class="drop-zone-placeholder">&nbsp;</span></div></div>
+        <p>The company itself is based at Imperial College London, although Janssen, its chief executive, still lives in the UAE. It has raised £340,000 in funding so far. Within two years, he says, the company aims to be selling 1,000 units a month, mainly in the humanitarian field. They are expected to be sold in areas such as Australia, northern Chile, Peru, Texas and California.</p>
+        <p class="tip">Tip: select any text on this page (passage or questions) to highlight it — the text stays selected afterwards so you can copy it too. Click a highlight to remove it.</p>
+      </div>
+
+      <div class="passage-block" id="passage-block-3" data-passage="3">
+        <h2>Reading Passage: Why fairy tales are really scary tales</h2>
+        <p><em>Some people think that fairy tales are just stories to amuse children, but their universal and enduring appeal may be due to more serious reasons</em></p>
+        <p>People of every culture tell each other fairy tales but the same story often takes a variety of forms in different parts of the world. In the story of Little Red Riding Hood that European children are familiar with, a young girl on the way to see her grandmother meets a wolf and tells him where she is going. The wolf runs on ahead and disposes of the grandmother, then gets into bed dressed in the grandmother’s clothes to wait for Little Red Riding Hood. You may think you know the story – but which version? In some versions, the wolf swallows up the grandmother, while in others it locks her in a cupboard. In some stories Red Riding Hood gets the better of the wolf on her own, while in others a hunter or a woodcutter hears her cries and comes to her rescue.</p>
+        <p>The universal appeal of these tales is frequently attributed to the idea that they contain cautionary messages: in the case of Little Red Riding Hood, to listen to your mother, and avoid talking to strangers. ‘It might be what we find interesting about this story is that it’s got this survival-relevant information in it,’ says anthropologist Jamie Tehrani at Durham University in the UK. But his research suggests otherwise. ‘We have this huge gap in our knowledge about the history and prehistory of storytelling, despite the fact that we know this genre is an incredibly ancient one,’ he says. That hasn’t stopped anthropologists, folklorists* and other academics devising theories to explain the importance of fairy tales in human society. Now Tehrani has found a way to test these ideas, borrowing a technique from evolutionary biologists.</p>
+        <p>To work out the evolutionary history, development and relationships among groups of organisms, biologists compare the characteristics of living species in a process called ‘phylogenetic analysis’. Tehrani has used the same approach to compare related versions of fairy tales to discover how they have evolved and which elements have survived longest.</p>
+        <p>Tehrani’s analysis focused on Little Red Riding Hood in its many forms, which include another Western fairy tale known as The Wolf and the Kids. Checking for variants of these two tales and similar stories from Africa, East Asia and other regions, he ended up with 58 stories recorded from oral traditions. Once his phylogenetic analysis had established that they were indeed related, he used the same methods to explore how they have developed and altered over time.</p>
+        <p>First he tested some assumptions about which aspects of the story alter least as it evolves, indicating their importance. Folklorists believe that what happens in a story is more central to the story than the characters in it – that visiting a relative, only to be met by a scary animal in disguise, is more fundamental than whether the visitor is a little girl or three siblings, or the animal is a tiger instead of a wolf.</p>
+        <p>However, Tehrani found no significant difference in the rate of evolution of incidents compared with that of characters. ‘Certain episodes are very stable because they are crucial to the story, but there are lots of other details that can evolve quite freely,’ he says. Neither did his analysis support the theory that the central section of a story is the most conserved part. He found no significant difference in the flexibility of events there compared with the beginning or the end.</p>
+        <p>But the really big surprise came when he looked at the cautionary elements of the story. ‘Studies on hunter-gatherer folk tales suggest that these narratives include really important information about the environment and the possible dangers that may be faced there – stuff that’s relevant to survival,’ he says. Yet in his analysis such elements were just as flexible as seemingly trivial details. What, then, is important enough to be reproduced from generation to generation?</p>
+        <p>The answer, it would appear, is fear – blood-thirsty and gruesome aspects of the story, such as the eating of the grandmother by the wolf, turned out to be the best preserved of all. Why are these details retained by generations of storytellers, when other features are not? Tehrani has an idea: ‘In an oral context, a story won’t survive because of one great teller. It also needs to be interesting when it’s told by someone who’s not necessarily a great storyteller.’ Maybe being swallowed whole by a wolf, then cut out of its stomach alive is so gripping that it helps the story remain popular, no matter how badly it’s told.</p>
+        <p>Jack Zipes at the University of Minnesota, Minneapolis, is unconvinced by Tehrani’s views on fairy tales. ‘Even if they’re gruesome, they won’t stick unless they matter,’ he says. He believes the perennial theme of women as victims in stories like Little Red Riding Hood explains why they continue to feel relevant. But Tehrani points out that although this is often the case in Western versions, it is not always true elsewhere. In Chinese and Japanese versions, often known as The Tiger Grandmother, the villain is a woman, and in both Iran and Nigeria, the victim is a boy.</p>
+        <p>Mathias Clasen at Aarhus University in Denmark isn’t surprised by Tehrani’s findings. ‘Habits and morals change, but the things that scare us, and the fact that we seek out entertainment that’s designed to scare us – those are constant,’ he says. Clasen believes that scary stories teach us what it feels like to be afraid without having to experience real danger, and so build up resistance to negative emotions.</p>
+        <p><em>*Folklorists: those who study traditional stories</em></p>
+        <p class="tip">Tip: select any text on this page (passage or questions) to highlight it — the text stays selected afterwards so you can copy it too. Click a highlight to remove it.</p>
+      </div>
+    </div>
+
+    <div class="splitter" id="splitter" role="separator" aria-orientation="vertical" aria-label="Kéo để đổi độ rộng hai khung" tabindex="0" title="Kéo để đổi độ rộng (nhấp đúp để đặt lại)"><span class="splitter-grip">&harr;</span></div>
+
+    <!-- QUESTIONS -->
+    <div class="questions-pane">
+      <!-- ===== PASSAGE 1 QUESTIONS ===== -->
+      <div class="question-group active" id="question-group-1" data-passage="1">
+        <div class="q-section-title">Questions 1–7</div>
+        <div class="q-section-sub">Do the following statements agree with the claims of the writer in Reading Passage 1? Choose TRUE, FALSE, or NOT GIVEN.</div>
+
+        <div class="q-block" id="qwrap-1">
+          <div class="q-text"><span class="q-number">1.</span>On leaving school, Moore did what his father wanted him to do.</div>
+          <div class="tfn-options" data-qnum="1" data-options="TRUE|FALSE|NOT GIVEN"></div>
+        </div>
+
+        <div class="q-block" id="qwrap-2">
+          <div class="q-text"><span class="q-number">2.</span>Moore began studying sculpture in his first term at the Leeds School of Art.</div>
+          <div class="tfn-options" data-qnum="2" data-options="TRUE|FALSE|NOT GIVEN"></div>
+        </div>
+
+        <div class="q-block" id="qwrap-3">
+          <div class="q-text"><span class="q-number">3.</span>When Moore started at the Royal College of Art, its reputation for teaching sculpture was excellent.</div>
+          <div class="tfn-options" data-qnum="3" data-options="TRUE|FALSE|NOT GIVEN"></div>
+        </div>
+
+        <div class="q-block" id="qwrap-4">
+          <div class="q-text"><span class="q-number">4.</span>Moore became aware of ancient sculpture as a result of visiting London Museums.</div>
+          <div class="tfn-options" data-qnum="4" data-options="TRUE|FALSE|NOT GIVEN"></div>
+        </div>
+
+        <div class="q-block" id="qwrap-5">
+          <div class="q-text"><span class="q-number">5.</span>The Trocadero Museum’s Mayan sculpture attracted a lot of public interest.</div>
+          <div class="tfn-options" data-qnum="5" data-options="TRUE|FALSE|NOT GIVEN"></div>
+        </div>
+
+        <div class="q-block" id="qwrap-6">
+          <div class="q-text"><span class="q-number">6.</span>Moore thought the Mayan sculpture was similar in certain respects to other stone sculptures.</div>
+          <div class="tfn-options" data-qnum="6" data-options="TRUE|FALSE|NOT GIVEN"></div>
+        </div>
+
+        <div class="q-block" id="qwrap-7">
+          <div class="q-text"><span class="q-number">7.</span>The artists who belonged to Unit One wanted to make modern art and architecture more popular.</div>
+          <div class="tfn-options" data-qnum="7" data-options="TRUE|FALSE|NOT GIVEN"></div>
+        </div>
+
+        <div class="q-section-title">Questions 8–13</div>
+        <div class="q-section-sub">Complete the notes below. Choose ONE WORD ONLY from the passage for each answer.</div>
+
+        <div class="summary-block">
+          <strong>Moore’s career as an artist</strong><br><br>
+          <strong>1930s</strong><br>
+          &bull; Moore’s exhibition at the Leicester Galleries is criticised by the press<br>
+          &bull; Moore is urged to offer his <span id="qwrap-8"><strong>8.</strong> <input type="text" class="blank-input" id="q8" data-qnum="8"></span> and leave the Royal College.<br><br>
+          <strong>1940s</strong><br>
+          &bull; Moore turns to drawing because <span id="qwrap-9"><strong>9.</strong> <input type="text" class="blank-input" id="q9" data-qnum="9"></span> for sculpting are not readily available<br>
+          &bull; While visiting his hometown, Moore does some drawings of <span id="qwrap-10"><strong>10.</strong> <input type="text" class="blank-input" id="q10" data-qnum="10"></span><br>
+          &bull; Moore is employed to produce a sculpture of a <span id="qwrap-11"><strong>11.</strong> <input type="text" class="blank-input" id="q11" data-qnum="11"></span><br>
+          &bull; <span id="qwrap-12"><strong>12.</strong> <input type="text" class="blank-input" id="q12" data-qnum="12"></span> start to buy Moore’s work<br>
+          &bull; Moore’s increased <span id="qwrap-13"><strong>13.</strong> <input type="text" class="blank-input" id="q13" data-qnum="13"></span> makes it possible for him to do more ambitious sculptures<br><br>
+          <strong>1950s</strong><br>
+          &bull; Moore’s series of bronze figures marks a further change in his style
+        </div>
+
+        <div style="height: 30px;"></div>
+      </div>
+
+      <!-- ===== PASSAGE 2 QUESTIONS ===== -->
+      <div class="question-group" id="question-group-2" data-passage="2">
+        <div class="q-section-title">Questions 14–20</div>
+        <div class="q-section-sub">Reading Passage 2 has seven sections, A&ndash;G. Choose the correct heading for each section from the list of headings below. Write the correct number, i&ndash;x. The answer boxes are at the start of each section in the passage.</div>
+
+        <div class="wb-section">
+        <div class="wordbank-box" data-bank-box="hd">
+          <div class="wb-title">List of Headings</div>
+          <div class="wb-hint">💡 Kéo đáp án thả vào ô trống, hoặc bấm chọn đáp án rồi bấm vào ô trống để điền.</div>
+          <div class="wb-tiles" id="tiles-hd"></div>
+        </div>
+        </div>
+
+        <div class="q-section-title">Questions 21–26</div>
+        <div class="q-section-sub">Complete the summary below. Choose ONE WORD ONLY from the passage for each answer.</div>
+
+        <div class="summary-block">
+          <strong>How the Desolenator works</strong><br><br>
+          The energy required to operate the Desolenator comes from sunlight. The device can be used in different locations, as it has <span id="qwrap-21"><strong>21.</strong> <input type="text" class="blank-input" id="q21" data-qnum="21"></span>. Water is fed into a pipe, and a <span id="qwrap-22"><strong>22.</strong> <input type="text" class="blank-input" id="q22" data-qnum="22"></span> of water flows over a solar panel. The water then enters a boiler, where it turns into steam. Any particles in the water are caught in a <span id="qwrap-23"><strong>23.</strong> <input type="text" class="blank-input" id="q23" data-qnum="23"></span>. The purified water comes out through one tube, and all types of <span id="qwrap-24"><strong>24.</strong> <input type="text" class="blank-input" id="q24" data-qnum="24"></span> come out through another. A screen displays the <span id="qwrap-25"><strong>25.</strong> <input type="text" class="blank-input" id="q25" data-qnum="25"></span> of the device, and transmits the information to the company so that they know when the Desolenator requires <span id="qwrap-26"><strong>26.</strong> <input type="text" class="blank-input" id="q26" data-qnum="26"></span>.
+        </div>
+
+        <div style="height: 30px;"></div>
+      </div>
+
+      <!-- ===== PASSAGE 3 QUESTIONS ===== -->
+      <div class="question-group" id="question-group-3" data-passage="3">
+        <div class="q-section-title">Questions 27–31</div>
+        <div class="q-section-sub">Complete each sentence with the correct ending, A&ndash;F, below. Write the correct letter, A&ndash;F.</div>
+
+        <div class="wb-section">
+        <div class="wordbank-box" data-bank-box="en">
+          <div class="wb-title">List of Endings</div>
+          <div class="wb-hint">💡 Kéo đáp án thả vào ô trống, hoặc bấm chọn đáp án rồi bấm vào ô trống để điền.</div>
+          <div class="wb-tiles" id="tiles-en"></div>
+        </div>
+
+        <div class="q-block end-block" id="qwrap-27">
+          <div class="q-text"><span class="q-number">27.</span>In fairy tales, details of the plot</div>
+          <div class="drop-zone end-zone" id="q27" data-qnum="27" data-bank="en" data-menu="1"><span class="drop-zone-placeholder">&nbsp;</span></div>
+        </div>
+        <div class="q-block end-block" id="qwrap-28">
+          <div class="q-text"><span class="q-number">28.</span>Tehrani rejects the idea that the useful lessons for life in fairy tales</div>
+          <div class="drop-zone end-zone" id="q28" data-qnum="28" data-bank="en" data-menu="1"><span class="drop-zone-placeholder">&nbsp;</span></div>
+        </div>
+        <div class="q-block end-block" id="qwrap-29">
+          <div class="q-text"><span class="q-number">29.</span>Various theories about the social significance of fairy tales</div>
+          <div class="drop-zone end-zone" id="q29" data-qnum="29" data-bank="en" data-menu="1"><span class="drop-zone-placeholder">&nbsp;</span></div>
+        </div>
+        <div class="q-block end-block" id="qwrap-30">
+          <div class="q-text"><span class="q-number">30.</span>Insights into the development of fairy tales</div>
+          <div class="drop-zone end-zone" id="q30" data-qnum="30" data-bank="en" data-menu="1"><span class="drop-zone-placeholder">&nbsp;</span></div>
+        </div>
+        <div class="q-block end-block" id="qwrap-31">
+          <div class="q-text"><span class="q-number">31.</span>All the fairy tales analysed by Tehrani</div>
+          <div class="drop-zone end-zone" id="q31" data-qnum="31" data-bank="en" data-menu="1"><span class="drop-zone-placeholder">&nbsp;</span></div>
+        </div>
+        </div>
+
+        <div class="q-section-title">Questions 32–36</div>
+        <div class="q-section-sub">Complete the summary using the list of words, A&ndash;I, below. Write the correct letter, A&ndash;I.</div>
+
+        <div class="wb-section">
+        <div class="wordbank-box wb-sticky" data-bank-box="wb">
+          <div class="wb-title">List of Words</div>
+          <div class="wb-hint">💡 Kéo đáp án thả vào ô trống, hoặc bấm chọn đáp án rồi bấm vào ô trống để điền.</div>
+          <div class="wb-tiles" id="tiles-wb"></div>
+        </div>
+
+        <div class="summary-block">
+          <strong>Phylogenetic analysis of Little Red Riding Hood</strong><br><br>
+          Tehrani used techniques from evolutionary biology to find out if <span id="qwrap-32"><strong>32.</strong> <span class="drop-zone" id="q32" data-qnum="32" data-bank="wb" data-menu="1"><span class="drop-zone-placeholder">&nbsp;</span></span></span> existed among 58 stories from around the world. He also wanted to know which aspects of the stories had fewest <span id="qwrap-33"><strong>33.</strong> <span class="drop-zone" id="q33" data-qnum="33" data-bank="wb" data-menu="1"><span class="drop-zone-placeholder">&nbsp;</span></span></span>, as he believed these aspects would be the most important ones. Contrary to other beliefs, he found that some <span id="qwrap-34"><strong>34.</strong> <span class="drop-zone" id="q34" data-qnum="34" data-bank="wb" data-menu="1"><span class="drop-zone-placeholder">&nbsp;</span></span></span> that were included in a story tended to change over time, and that the middle of a story seemed no more important than the other parts. He was also surprised that parts of a story which seemed to provide some sort of <span id="qwrap-35"><strong>35.</strong> <span class="drop-zone" id="q35" data-qnum="35" data-bank="wb" data-menu="1"><span class="drop-zone-placeholder">&nbsp;</span></span></span> were unimportant. The aspect that he found most important in a story’s survival was <span id="qwrap-36"><strong>36.</strong> <span class="drop-zone" id="q36" data-qnum="36" data-bank="wb" data-menu="1"><span class="drop-zone-placeholder">&nbsp;</span></span></span>.
+        </div>
+        </div>
+
+        <div class="q-section-title">Questions 37–40</div>
+        <div class="q-section-sub">Choose the correct letter, A, B, C or D.</div>
+
+        <div class="q-block" id="qwrap-37">
+          <div class="q-text"><span class="q-number">37.</span>What method did Jamie Tehrani use to test his ideas about fairy tales?</div>
+          <div class="mcq-options" data-qnum="37">
+            <label><input type="radio" name="q37" value="A" class="choice-input" data-qnum="37"><span class="opt-text">A. He compared oral and written forms of the same stories.</span></label>
+            <label><input type="radio" name="q37" value="B" class="choice-input" data-qnum="37"><span class="opt-text">B. He looked at many different forms of the same basic story.</span></label>
+            <label><input type="radio" name="q37" value="C" class="choice-input" data-qnum="37"><span class="opt-text">C. He looked at unrelated stories from many different countries.</span></label>
+            <label><input type="radio" name="q37" value="D" class="choice-input" data-qnum="37"><span class="opt-text">D. He contrasted the development of fairy tales with that of living creatures.</span></label>
+          </div>
+        </div>
+
+        <div class="q-block" id="qwrap-38">
+          <div class="q-text"><span class="q-number">38.</span>When discussing Tehrani’s views, Jack Zipes suggests that</div>
+          <div class="mcq-options" data-qnum="38">
+            <label><input type="radio" name="q38" value="A" class="choice-input" data-qnum="38"><span class="opt-text">A. Tehrani ignores key changes in the role of women.</span></label>
+            <label><input type="radio" name="q38" value="B" class="choice-input" data-qnum="38"><span class="opt-text">B. stories which are too horrific are not always taken seriously.</span></label>
+            <label><input type="radio" name="q38" value="C" class="choice-input" data-qnum="38"><span class="opt-text">C. Tehrani overemphasises the importance of violence in stories.</span></label>
+            <label><input type="radio" name="q38" value="D" class="choice-input" data-qnum="38"><span class="opt-text">D. features of stories only survive if they have a deeper significance.</span></label>
+          </div>
+        </div>
+
+        <div class="q-block" id="qwrap-39">
+          <div class="q-text"><span class="q-number">39.</span>Why does Tehrani refer to Chinese and Japanese fairy tales?</div>
+          <div class="mcq-options" data-qnum="39">
+            <label><input type="radio" name="q39" value="A" class="choice-input" data-qnum="39"><span class="opt-text">A. to indicate that Jack Zipes’ theory is incorrect</span></label>
+            <label><input type="radio" name="q39" value="B" class="choice-input" data-qnum="39"><span class="opt-text">B. to suggest that crime is a global problem</span></label>
+            <label><input type="radio" name="q39" value="C" class="choice-input" data-qnum="39"><span class="opt-text">C. to imply that all fairy tales have a similar meaning</span></label>
+            <label><input type="radio" name="q39" value="D" class="choice-input" data-qnum="39"><span class="opt-text">D. to add more evidence for Jack Zipes’ ideas</span></label>
+          </div>
+        </div>
+
+        <div class="q-block" id="qwrap-40">
+          <div class="q-text"><span class="q-number">40.</span>What does Mathias Clasen believe about fairy tales?</div>
+          <div class="mcq-options" data-qnum="40">
+            <label><input type="radio" name="q40" value="A" class="choice-input" data-qnum="40"><span class="opt-text">A. They are a safe way of learning to deal with fear.</span></label>
+            <label><input type="radio" name="q40" value="B" class="choice-input" data-qnum="40"><span class="opt-text">B. They are a type of entertainment that some people avoid.</span></label>
+            <label><input type="radio" name="q40" value="C" class="choice-input" data-qnum="40"><span class="opt-text">C. They reflect the changing values of our society.</span></label>
+            <label><input type="radio" name="q40" value="D" class="choice-input" data-qnum="40"><span class="opt-text">D. They reduce our ability to deal with real-world problems.</span></label>
+          </div>
+        </div>
+
+        <div style="height: 30px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-nav" id="footer-nav">
+    <div class="footer-nav-part">
+      <div class="footer-nav-part-label">Part 1</div>
+      <div class="nav-grid-wrap"><div class="nav-grid" id="nav-grid-1"></div></div>
+    </div>
+    <div class="footer-nav-part">
+      <div class="footer-nav-part-label">Part 2</div>
+      <div class="nav-grid-wrap"><div class="nav-grid" id="nav-grid-2"></div></div>
+    </div>
+    <div class="footer-nav-part">
+      <div class="footer-nav-part-label">Part 3</div>
+      <div class="nav-grid-wrap"><div class="nav-grid" id="nav-grid-3"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ RESULT BOX (after submit) ============ -->
+<div class="result-overlay" id="result-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="result-title">
+  <div class="result-card">
+    <h2 id="result-title">Kết quả bài làm</h2>
+    <div class="result-student" id="res-student"></div>
+    <div class="result-metrics">
+      <div class="result-metric is-main"><span class="m-label">Total Score</span><strong id="res-score"></strong></div>
+      <div class="result-metric is-main"><span class="m-label">IELTS Band</span><strong id="res-band"></strong></div>
+      <div class="result-metric is-wrong"><span class="m-label">Incorrect Answers</span><strong id="res-wrong"></strong></div>
+      <div class="result-metric"><span class="m-label">Unanswered Questions</span><strong id="res-unanswered"></strong></div>
+    </div>
+    <div class="result-section-title">Câu sai theo từng Passage</div>
+    <div class="result-passages">
+      <div class="result-metric is-wrong"><span class="m-label">Passage 1 Wrong</span><strong id="res-p1-wrong"></strong></div>
+      <div class="result-metric is-wrong"><span class="m-label">Passage 2 Wrong</span><strong id="res-p2-wrong"></strong></div>
+      <div class="result-metric is-wrong"><span class="m-label">Passage 3 Wrong</span><strong id="res-p3-wrong"></strong></div>
+    </div>
+    <p class="result-note">Câu bỏ trống được tính là câu sai (đã nằm trong &ldquo;Incorrect Answers&rdquo;). Thời gian làm bài: <span id="res-time"></span>.</p>
+    <div class="result-save" id="res-save" role="status">
+      <span id="res-save-text"></span>
+      <button type="button" id="res-retry-btn" hidden>Thử lại</button>
+    </div>
+    <div class="result-actions"><button type="button" class="btn-primary" id="res-close-btn">Xem lại bài làm</button></div>
+  </div>
+</div>
+
+<!-- ============ SAVE GATE (hiện khi nộp bài, ẩn khi kết quả đã được lưu về cho giáo viên) ============ -->
+<div id="save-gate" role="alertdialog" aria-modal="true" aria-live="assertive" aria-labelledby="sg-title" hidden>
+  <div class="sg-card" id="sg-card" tabindex="-1">
+    <div id="sg-spin"></div>
+    <h3 id="sg-title"></h3>
+    <p id="sg-msg"></p>
+    <div id="sg-actions" class="sg-actions" hidden>
+      <button id="sg-retry" class="sg-btn" type="button">Thử lưu lại</button>
+      <button id="sg-download" class="sg-btn secondary" type="button">Tải kết quả (.json)</button>
+      <button id="sg-show" class="sg-btn secondary" type="button">Xem điểm (chưa lưu)</button>
+    </div>
+  </div>
+</div>
+<div id="save-banner" role="status" hidden></div>
+<div class="tut-overlay" id="tut-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="tut-title">
+  <div class="tut-card">
+    <h3 id="tut-title">Hướng dẫn trước khi làm bài: các câu kéo thả</h3>
+    <p class="tut-sub">Ở bài Matching, bạn <strong>không cần cuộn lên cuộn xuống</strong> để kéo đáp án. Có 3 cách, chọn cách nào cũng được.</p>
+    <div class="tut-stage" id="tut-stage" aria-hidden="true">
+      <div class="tut-bank" id="tut-bank">
+        <div class="tut-tile" data-k="A">A. may be provided…</div>
+        <div class="tut-tile" data-k="B">B. are the reason…</div>
+        <div class="tut-tile" data-k="C">C. show variation.</div>
+      </div>
+      <div class="tut-list" id="tut-list">
+        <div class="tut-q"><b>27</b>In fairy tales, details of the plot<div class="tut-z" data-z="27"></div></div>
+        <div class="tut-q"><b>28</b>Tehrani rejects the idea that…<div class="tut-z" data-z="28"></div></div>
+        <div class="tut-gap">⋮ &nbsp;(các câu ở xa, phải cuộn xuống)&nbsp; ⋮</div>
+        <div class="tut-q"><b>30</b>Insights into the development…<div class="tut-z" data-z="30"></div></div>
+        <div class="tut-q"><b>31</b>All the fairy tales analysed…<div class="tut-z" data-z="31"></div></div>
+      </div>
+      <div class="tut-menu" id="tut-menu"><div data-m="A">A. may be provided…</div><div data-m="B">B. are the reason…</div><div data-m="C">C. show variation.</div></div>
+      <div class="tut-cursor" id="tut-cursor">&#9757;</div>
+    </div>
+    <div class="tut-caption" id="tut-caption"></div>
+    <div class="tut-steps"><span class="tut-dot" data-d="0"></span><span class="tut-dot" data-d="1"></span><span class="tut-dot" data-d="2"></span></div>
+    <div class="tut-wait" id="tut-wait" hidden></div>
+    <div class="tut-actions">
+      <button type="button" class="btn-secondary" id="tut-replay" hidden>Xem lại</button>
+      <button type="button" class="btn-primary" id="tut-go" hidden>Đã hiểu và đóng</button>
+    </div>
+  </div>
+</div>
+
+
+<script>
+(function () {
+  "use strict";
+
+  var ANSWER_KEY = {
+    1: "TRUE", 2: "FALSE", 3: "NOT GIVEN", 4: "TRUE", 5: "NOT GIVEN",
+    6: "FALSE", 7: "TRUE", 8: "resignation", 9: "materials", 10: "miners",
+    11: "family", 12: "collectors", 13: "income", 14: "iii", 15: "vi",
+    16: "v", 17: "x", 18: "iv", 19: "viii", 20: "i",
+    21: "wheels", 22: "film", 23: "filter", 24: "waste", 25: "performance",
+    26: "servicing", 27: "C", 28: "B", 29: "F", 30: "A",
+    31: "E", 32: "D", 33: "F", 34: "B", 35: "C",
+    36: "G", 37: "B", 38: "D", 39: "A", 40: "A"
+  };
+
+  var ANSWER_ALTERNATES = {};
+
+  var QUESTION_TYPE = {};
+  [1,2,3,4,5,6,7].forEach(function (q) { QUESTION_TYPE[q] = "tfn"; });
+  [8,9,10,11,12,13].forEach(function (q) { QUESTION_TYPE[q] = "fill"; });
+  [14,15,16,17,18,19,20].forEach(function (q) { QUESTION_TYPE[q] = "wordbank"; });
+  [21,22,23,24,25,26].forEach(function (q) { QUESTION_TYPE[q] = "fill"; });
+  [27,28,29,30,31,32,33,34,35,36].forEach(function (q) { QUESTION_TYPE[q] = "wordbank"; });
+  [37,38,39,40].forEach(function (q) { QUESTION_TYPE[q] = "mcq"; });
+
+  var CHOOSE_TWO_GROUPS = [];
+
+  var QUESTION_PASSAGE = {};
+  for (var qi = 1; qi <= 13; qi++) QUESTION_PASSAGE[qi] = 1;
+  for (qi = 14; qi <= 26; qi++) QUESTION_PASSAGE[qi] = 2;
+  for (qi = 27; qi <= 40; qi++) QUESTION_PASSAGE[qi] = 3;
+
+  var PASSAGE_LABEL = { 1: "Part 1", 2: "Part 2", 3: "Part 3" };
+
+  var TOTAL_QUESTIONS = 40;
+  var TEST_DURATION_SECONDS = 60 * 60;
+  var TEST_ID = "C15-R-T3";
+
+  var WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx0D3k0wJQ9fHtR0kVWDZw0qsvSbrj7WA6AqIJh8F4t5_ZvPs-Mx5X3QVXueko68fKS/exec";
+  var TFN_OPTIONS = ["YES", "NO", "NOT GIVEN"];
+  var BANKS = {
+    hd: [{ v: "i", w: "Getting the finance for production" }, { v: "ii", w: "An unexpected benefit" }, { v: "iii", w: "From initial inspiration to new product" }, { v: "iv", w: "The range of potential customers for the device" }, { v: "v", w: "What makes the device different from alternatives" }, { v: "vi", w: "Cleaning water from a range of sources" }, { v: "vii", w: "Overcoming production difficulties" }, { v: "viii", w: "Profit not the primary goal" }, { v: "ix", w: "A warm welcome for the device" }, { v: "x", w: "The number of people affected by water shortages" }],
+    en: [{ v: "A", w: "may be provided through methods used in biological research." }, { v: "B", w: "are the reason for their survival." }, { v: "C", w: "show considerable global variation." }, { v: "D", w: "contain animals which transform to become humans." }, { v: "E", w: "were originally spoken rather than written." }, { v: "F", w: "have been developed without factual basis." }],
+    wb: [{ v: "A", w: "ending" }, { v: "B", w: "events" }, { v: "C", w: "warning" }, { v: "D", w: "links" }, { v: "E", w: "records" }, { v: "F", w: "variations" }, { v: "G", w: "horror" }, { v: "H", w: "people" }, { v: "I", w: "plot" }]
+  };
+
+  var STORAGE_KEY = "ielts_reading_attempts_v1";
+
+  var state = {
+    studentName: "",
+    cycleId: "",
+    answers: {},
+    remainingSeconds: TEST_DURATION_SECONDS,
+    timerHandle: null,
+    submitted: false,
+    currentPassage: 1,
+    mode: "live", // "live" while taking the test, "review" while viewing a saved attempt
+    confirmedNormalizedName: "", // set once the student passes the name-confirmation step
+    savePending: false // true from the moment a live attempt is submitted until the teacher-side save is confirmed
+  };
+
+  var els = {};
+
+  function pad2(n) { return n < 10 ? "0" + n : "" + n; }
+
+  function formatTime(totalSeconds) {
+    var m = Math.floor(totalSeconds / 60);
+    var s = totalSeconds % 60;
+    return pad2(m) + ":" + pad2(s);
+  }
+
+  function normalize(str) {
+    return (str || "").toString().trim().toLowerCase().replace(/\s+/g, " ");
+  }
+
+  var VN_DIACRITIC_CHARS =
+    "àáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ" +
+    "ÀÁẢÃẠĂẰẮẲẴẶÂẦẤẨẪẬÈÉẺẼẸÊỀẾỂỄỆÌÍỈĨỊÒÓỎÕỌÔỒỐỔỖỘƠỜỚỞỠỢÙÚỦŨỤƯỪỨỬỮỰỲÝỶỸỴĐ";
+  var VN_DIACRITIC_REGEX = new RegExp("[" + VN_DIACRITIC_CHARS + "]");
+  var ALLOWED_NAME_CHARS_REGEX = new RegExp("^[A-Za-z" + VN_DIACRITIC_CHARS + "\\s]+$");
+
+  function toVietnameseTitleCase(name) {
+    return name.split(" ").filter(Boolean).map(function (word) {
+      var lower = word.toLowerCase();
+      return lower.charAt(0).toUpperCase() + lower.slice(1);
+    }).join(" ");
+  }
+
+  function validateStudentName(rawName) {
+    var trimmed = (rawName || "").toString().replace(/\s+/g, " ").trim();
+    if (!trimmed) {
+      return { valid: false, error: "Vui lòng nhập họ và tên của bạn." };
+    }
+    var words = trimmed.split(" ");
+    if (words.length < 2) {
+      return { valid: false, error: "Vui lòng nhập đầy đủ họ và tên (ví dụ: Phạm Thị Hương)." };
+    }
+    if (!ALLOWED_NAME_CHARS_REGEX.test(trimmed)) {
+      return { valid: false, error: "Họ tên chỉ được chứa chữ cái và khoảng trắng, không chứa số hoặc ký tự đặc biệt." };
+    }
+    if (!VN_DIACRITIC_REGEX.test(trimmed)) {
+      return { valid: false, error: "Vui lòng nhập họ tên có đầy đủ dấu tiếng Việt (ví dụ: Phạm Thị Hương, không phải Pham Thi Huong)." };
+    }
+    return { valid: true, normalized: toVietnameseTitleCase(trimmed) };
+  }
+
+  function nameMatchKey(displayName) {
+    return normalize(displayName);
+  }
+
+  function loadAllAttempts() {
+    try {
+      var raw = window.localStorage.getItem(STORAGE_KEY);
+      var parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+      console.error("Could not read saved attempts from localStorage:", e);
+      return [];
+    }
+  }
+
+  function saveAttempt(attempt) {
+    try {
+      var all = loadAllAttempts();
+      all.push(attempt);
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+      return true;
+    } catch (e) {
+      console.error("Could not save this attempt to localStorage:", e);
+      return false;
+    }
+  }
+
+  // Flags a stored attempt as confirmed-saved on the teacher side. Attempts created before this field existed
+  // have no `saved` property and are never auto-resent (their delivery state is unknown, resending could duplicate).
+  function markAttemptSaved(attemptId) {
+    try {
+      var all = loadAllAttempts(), hit = false;
+      all.forEach(function (a) { if (a.attemptId === attemptId && a.saved !== true) { a.saved = true; hit = true; } });
+      if (hit) window.localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+    } catch (e) { console.error("Could not update the saved flag:", e); }
+  }
+
+  function findAttemptsFor(testId, normalizedName, cycleId) {
+    return loadAllAttempts().filter(function (a) {
+      return a.testId === testId && a.normalizedStudentName === normalizedName && (a.cycleId || "") === (cycleId || "");
+    }).sort(function (a, b) {
+      return new Date(a.submittedAt) - new Date(b.submittedAt);
+    });
+  }
+
+  function makeAttemptId() {
+    return "att_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 9);
+  }
+
+  function formatDateVN(isoString) {
+    var d = new Date(isoString);
+    if (isNaN(d.getTime())) return isoString;
+    var dd = pad2(d.getDate());
+    var mm = pad2(d.getMonth() + 1);
+    var yyyy = d.getFullYear();
+    return dd + "/" + mm + "/" + yyyy;
+  }
+
+  function formatDurationVN(totalSeconds) {
+    var m = Math.floor(totalSeconds / 60);
+    var s = totalSeconds % 60;
+    if (m <= 0) return s + " giây";
+    return m + " phút " + s + " giây";
+  }
+
+  function getBlockId(qnum) {
+    for (var gi = 0; gi < CHOOSE_TWO_GROUPS.length; gi++) {
+      if (CHOOSE_TWO_GROUPS[gi].qnums.indexOf(qnum) !== -1) {
+        return "qwrap-" + CHOOSE_TWO_GROUPS[gi].qnums.join("-");
+      }
+    }
+    return "qwrap-" + qnum;
+  }
+
+  function showEntryStep(stepName) {
+    els.entryStepName.classList.toggle("hidden", stepName !== "name");
+    els.entryStepConfirm.classList.toggle("hidden", stepName !== "confirm");
+    els.entryStepActions.classList.toggle("hidden", stepName !== "actions");
+  }
+
+  function handleNameContinue() {
+    var result = validateStudentName(els.nameInput.value);
+    if (!result.valid) {
+      els.nameError.textContent = result.error;
+      els.nameInput.focus();
+      return;
+    }
+    var cycleValue = els.cycleSelect ? els.cycleSelect.value.trim() : "";
+    if (els.cycleSelect && !cycleValue) {
+      els.nameError.textContent = "Vui lòng chọn Chu kỳ ôn thi.";
+      els.cycleSelect.focus();
+      return;
+    }
+    els.nameError.textContent = "";
+    state.studentName = result.normalized;
+    state.cycleId = cycleValue;
+    state.confirmedNormalizedName = nameMatchKey(result.normalized);
+    els.confirmNameBox.textContent = "";
+    var confirmStrong = document.createElement("strong");
+    confirmStrong.textContent = result.normalized;
+    els.confirmNameBox.appendChild(confirmStrong);
+    if (cycleValue) {
+      els.confirmNameBox.appendChild(document.createElement("br"));
+      els.confirmNameBox.appendChild(document.createTextNode("Chu kỳ ôn thi: " + cycleValue));
+    }
+    els.confirmCheckbox.checked = false;
+    els.confirmContinueBtn.disabled = true;
+    showEntryStep("confirm");
+  }
+
+  function handleConfirmCheckboxChange() {
+    els.confirmContinueBtn.disabled = !els.confirmCheckbox.checked;
+  }
+
+  function handleConfirmBack() {
+    showEntryStep("name");
+  }
+
+  function handleConfirmContinue() {
+    if (!els.confirmCheckbox.checked) return;
+    renderEntryActionsStep();
+    showEntryStep("actions");
+    openTutorial(null, true);
+  }
+
+  function handleActionsBack() {
+    els.reviewResultArea.innerHTML = "";
+    showEntryStep("confirm");
+  }
+
+  function renderEntryActionsStep() {
+    els.reviewResultArea.innerHTML = "";
+    var existing = findAttemptsFor(TEST_ID, state.confirmedNormalizedName, state.cycleId);
+    if (existing.length > 0) {
+      els.entryStatusMessage.textContent = "Bạn đã hoàn thành bài này. Nếu muốn xem lại bài đã làm, hãy chọn \"Xem lại bài đã làm\".";
+      els.entryStatusMessage.classList.remove("hidden");
+      els.startBtn.disabled = true;
+    } else {
+      els.entryStatusMessage.classList.add("hidden");
+      els.entryStatusMessage.textContent = "";
+      els.startBtn.disabled = false;
+    }
+  }
+
+  // ---- short animated tutorial for the drag-and-drop questions (plain HTML/CSS, no video file) ----
+  var tut = { run: 0, onGo: null };
+  function tutSleep(ms) { return new Promise(function (r) { window.setTimeout(r, ms); }); }
+  function tutPlay() {
+    var run = ++tut.run;
+    var stage = document.getElementById("tut-stage"), cur = document.getElementById("tut-cursor"), list = document.getElementById("tut-list"),
+        menu = document.getElementById("tut-menu"), cap = document.getElementById("tut-caption");
+    function live() { return tut.run === run && !document.getElementById("tut-overlay").hidden; }
+    function pos(el, dx, dy) {
+      var a = stage.getBoundingClientRect(), b = el.getBoundingClientRect();
+      cur.style.left = (b.left - a.left + (dx == null ? b.width / 2 : dx)) + "px";
+      cur.style.top = (b.top - a.top + (dy == null ? b.height / 2 : dy)) + "px";
+    }
+    function click() { cur.classList.remove("click"); void cur.offsetWidth; cur.classList.add("click"); }
+    function tile(k) { return stage.querySelector('.tut-tile[data-k="' + k + '"]'); }
+    function zone(q) { return stage.querySelector('.tut-z[data-z="' + q + '"]'); }
+    function reset() {
+      list.style.transition = "none"; list.style.transform = "translateY(0)"; void list.offsetWidth; list.style.transition = "";
+      stage.querySelectorAll(".tut-tile").forEach(function (t) { t.className = "tut-tile"; });
+      stage.querySelectorAll(".tut-z").forEach(function (z) { z.textContent = ""; z.classList.remove("on"); });
+      menu.classList.remove("show");
+      cur.style.transition = "none"; pos(stage.querySelector(".tut-bank"), 300, 70); void cur.offsetWidth; cur.style.transition = "";
+    }
+    function dot(i) { document.querySelectorAll(".tut-dot").forEach(function (d, j) { d.classList.toggle("on", j <= i); }); }
+    function fill(q, k, txt) { var z = zone(q); z.textContent = txt; z.classList.add("on"); tile(k).classList.add("used"); }
+    var SCROLL = -130;
+    async function scene1() {
+      dot(0);
+      cap.innerHTML = "<strong>Cách 1 — Kéo thả:</strong> giữ chuột vào đáp án rồi kéo xuống. Khi kéo gần mép dưới của khung, trang sẽ <strong>tự cuộn</strong> cho bạn.";
+      pos(tile("B")); await tutSleep(900); if (!live()) return false;
+      tile("B").classList.add("lift"); click(); await tutSleep(300);
+      pos(stage.querySelector(".tut-gap"), 60, 40); await tutSleep(800); if (!live()) return false;
+      list.style.transform = "translateY(" + SCROLL + "px)"; await tutSleep(1000); if (!live()) return false;
+      pos(zone(30), 70, 13); await tutSleep(800); if (!live()) return false;
+      tile("B").classList.remove("lift"); click(); fill(30, "B", "B. are the reason…"); await tutSleep(1400);
+      return live();
+    }
+    async function scene2() {
+      reset(); dot(1);
+      cap.innerHTML = "<strong>Cách 2 — Bấm vào ô trống:</strong> không cần kéo. Bấm vào ô của câu hỏi, một <strong>danh sách đáp án</strong> hiện ra ngay tại đó, bấm chọn là xong.";
+      list.style.transform = "translateY(" + SCROLL + "px)"; await tutSleep(1000); if (!live()) return false;
+      pos(zone(31), 70, 13); await tutSleep(900); if (!live()) return false;
+      click(); var a = stage.getBoundingClientRect(), z = zone(31).getBoundingClientRect();
+      menu.style.left = "40px"; menu.style.top = (z.bottom - a.top - 96) + "px"; menu.classList.add("show"); await tutSleep(1000); if (!live()) return false;
+      var opt = menu.querySelector('[data-m="C"]'); opt.classList.add("hot"); pos(opt, 40, 10); await tutSleep(900); if (!live()) return false;
+      click(); menu.classList.remove("show"); opt.classList.remove("hot"); fill(31, "C", "C. show variation."); await tutSleep(1400);
+      return live();
+    }
+    async function scene3() {
+      reset(); dot(2);
+      cap.innerHTML = "<strong>Cách 3 — Bấm chọn rồi bấm ô:</strong> bấm vào đáp án (đáp án đổi màu), cuộn tới câu hỏi, rồi bấm vào ô trống để điền.";
+      pos(tile("A")); await tutSleep(900); if (!live()) return false;
+      tile("A").classList.add("picked"); click(); await tutSleep(800); if (!live()) return false;
+      list.style.transform = "translateY(" + SCROLL + "px)"; pos(stage.querySelector(".tut-gap"), 60, 40); await tutSleep(1100); if (!live()) return false;
+      pos(zone(30), 70, 13); await tutSleep(800); if (!live()) return false;
+      click(); tile("A").classList.remove("picked"); fill(30, "A", "A. may be provided…"); await tutSleep(1600);
+      return live();
+    }
+    (async function loop() {
+      while (live()) {
+        reset(); await tutSleep(300);
+        if (!(await scene1())) return;
+        if (!(await scene2())) return;
+        if (!(await scene3())) return;
+      }
+    })();
+  }
+  var tutTimer = null;
+  function openTutorial(onGo, mandatory) {
+    tut.onGo = onGo || null; tut.mandatory = !!mandatory;
+    var ov = document.getElementById("tut-overlay"), go = document.getElementById("tut-go"), rp = document.getElementById("tut-replay"), wait = document.getElementById("tut-wait");
+    ov.hidden = false;
+    ov.classList.toggle("tut-main", !!mandatory);
+    go.textContent = mandatory ? "Đã hiểu và đóng" : "Đóng";
+    window.clearInterval(tutTimer);
+    if (mandatory) {
+      var left = 5;
+      go.hidden = true; rp.hidden = true; wait.hidden = false;
+      wait.textContent = "Vui lòng xem hướng dẫn… (" + left + "s)";
+      tutTimer = window.setInterval(function () {
+        left--;
+        if (left > 0) { wait.textContent = "Vui lòng xem hướng dẫn… (" + left + "s)"; return; }
+        window.clearInterval(tutTimer);
+        wait.hidden = true; go.hidden = false; rp.hidden = false;
+        try { go.focus(); } catch (e) {}
+      }, 1000);
+    } else {
+      go.hidden = false; rp.hidden = false; wait.hidden = true;
+      try { go.focus(); } catch (e) {}
+    }
+    window.setTimeout(tutPlay, 150);
+  }
+  function closeTutorial() {
+    tut.run++;
+    window.clearInterval(tutTimer);
+    document.getElementById("tut-overlay").hidden = true;
+  }
+  function initTutorial() {
+    document.getElementById("tut-replay").addEventListener("click", tutPlay);
+    document.getElementById("tut-go").addEventListener("click", function () {
+      var cb = tut.onGo; tut.onGo = null; closeTutorial();
+      if (cb) cb();
+    });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !document.getElementById("tut-overlay").hidden && !tut.mandatory) closeTutorial(); });
+    document.getElementById("tut-open").addEventListener("click", function () { openTutorial(null, false); });
+  }
+
+  function handleStartClick() {
+    if (els.startBtn.disabled) return;
+    state.mode = "live";
+    els.headerStudentName.textContent = "Học viên: " + state.studentName + (state.cycleId ? " · " + state.cycleId : "");
+
+    els.startScreen.style.display = "none";
+    els.testScreen.style.display = "flex";
+
+    updateTimerDisplay();
+    state.timerHandle = window.setInterval(tickTimer, 1000);
+  }
+
+  function handleReviewClick() {
+    var existing = findAttemptsFor(TEST_ID, state.confirmedNormalizedName, state.cycleId);
+    if (existing.length === 0) {
+      els.reviewResultArea.innerHTML = "";
+      var notFound = document.createElement("div");
+      notFound.className = "entry-status-message warn";
+      notFound.textContent = "Chưa tìm thấy bài làm trước đó với họ tên này.";
+      els.reviewResultArea.appendChild(notFound);
+      return;
+    }
+    renderAttemptList(existing);
+  }
+
+  function renderAttemptList(attempts) {
+    els.reviewResultArea.innerHTML = "";
+    var header = document.createElement("div");
+    header.className = "entry-section-title";
+    header.textContent = "Các bài đã làm";
+    els.reviewResultArea.appendChild(header);
+
+    var list = document.createElement("div");
+    list.className = "attempt-list";
+    attempts.slice().reverse().forEach(function (attempt) {
+      var item = document.createElement("div");
+      item.className = "attempt-item";
+
+      var meta = document.createElement("div");
+      meta.className = "attempt-meta";
+      meta.innerHTML = formatDateVN(attempt.submittedAt) + " — <span class=\"attempt-score\">" +
+        attempt.score + "/" + attempt.totalQuestions + "</span> — " +
+        formatDurationVN(attempt.timeUsed);
+      item.appendChild(meta);
+
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "btn-secondary";
+      btn.textContent = "Xem lại";
+      btn.addEventListener("click", function () { loadAttemptIntoReview(attempt); });
+      item.appendChild(btn);
+
+      list.appendChild(item);
+    });
+    els.reviewResultArea.appendChild(list);
+  }
+
+  function restoreAnswerToDOM(qnum, type, value) {
+    if (type === "fill") {
+      var input = document.getElementById("q" + qnum);
+      if (input) input.value = value || "";
+    } else if (type === "tfn" || type === "mcq" || type === "matching" || type === "ynng") {
+      var radios = document.querySelectorAll('input[name="q' + qnum + '"]');
+      radios.forEach(function (r) { r.checked = (value !== "" && r.value === value); });
+    }
+    else if (type === "wordbank") {
+      var wbZone = document.getElementById("q" + qnum);
+      if (wbZone && value) placeTileInZone(value, wbZone, true);
+    }
+  }
+
+  function restoreChoose2GroupsToDOM(answers) {
+    CHOOSE_TWO_GROUPS.forEach(function (group) {
+      var blockId = "qwrap-" + group.qnums.join("-");
+      var block = document.getElementById(blockId);
+      if (!block) return;
+      var selected = (answers[group.qnums[0]] || "").split(",").filter(Boolean);
+      block.querySelectorAll(".choose-two-input").forEach(function (cb) {
+        cb.checked = selected.indexOf(cb.value) !== -1;
+      });
+    });
+  }
+
+  function loadAttemptIntoReview(attempt) {
+    state.mode = "review";
+    state.studentName = attempt.studentName;
+    state.cycleId = attempt.cycleId || "";
+    state.answers = Object.assign({}, attempt.answers);
+    state.submitted = true;
+    if (state.timerHandle) {
+      window.clearInterval(state.timerHandle);
+      state.timerHandle = null;
+    }
+
+    Object.keys(QUESTION_TYPE).forEach(function (qnumStr) {
+      var qnum = parseInt(qnumStr, 10);
+      var type = QUESTION_TYPE[qnum];
+      if (type === "choose2") return;
+      restoreAnswerToDOM(qnum, type, state.answers[qnum] || "");
+    });
+    restoreChoose2GroupsToDOM(state.answers);
+
+    disableAllInputs();
+    var results = calculateResults();
+    applyReviewAnnotations(results);
+
+    els.headerStudentName.textContent = "Học viên: " + attempt.studentName + (attempt.cycleId ? " · " + attempt.cycleId : "");
+    els.timerBlock.style.display = "none";
+    els.submitBtn.style.display = "none";
+    els.reviewBanner.style.display = "inline-block";
+    els.scoreSummaryBlock.style.display = "flex";
+    els.headerScore.textContent = results.score + " / " + TOTAL_QUESTIONS;
+    els.headerTimeUsed.textContent = formatTime(attempt.timeUsed);
+    els.headerBand.textContent = readingBand(results.score).toFixed(1);
+    renderResultBox(results, attempt.timeUsed);
+
+    els.startScreen.style.display = "none";
+    els.testScreen.style.display = "flex";
+
+    if (attempt.saved === false) verifyOrResendStoredAttempt(attempt, results);
+  }
+
+  function verifyOrResendStoredAttempt(attempt, results) {
+    var payload = {
+      attemptId: attempt.attemptId,
+      studentName: attempt.studentName,
+      cycleId: attempt.cycleId || "",
+      testId: attempt.testId,
+      score: results.score,
+      totalQuestions: TOTAL_QUESTIONS,
+      passageScores: results.passageScores,
+      wrongQuestions: computeWrongQuestionsByPassage(results),
+      answers: Object.assign({}, attempt.answers),
+      submittedAt: attempt.submittedAt,
+      timeUsed: attempt.timeUsed
+    };
+    state.lastResultPayload = payload;
+    state.savePending = true;
+    state.pendingVerify = { attempt: attempt, results: results };
+    updateSaveStatus("sending", "Đang kiểm tra kết quả đã gửi cho giáo viên…");
+    trackingQuery({ action: "receipt", attemptId: attempt.attemptId }).then(function (r) {
+      if (r && r.ok) {
+        markAttemptSaved(attempt.attemptId);
+        state.pendingVerify = null;
+        updateSaveStatus("saved", "Đã lưu vào hệ thống theo dõi.");
+      } else if (r && r.error) {
+        updateSaveStatus("error", "Chưa kiểm tra được kết quả đã gửi: " + r.error);
+      } else {
+        state.pendingVerify = null;
+        state.sendBusy = false;
+        sendResultToTeacher(payload);
+      }
+    }).catch(function () {
+      updateSaveStatus("error", "Chưa kiểm tra được kết quả đã gửi (mạng chậm hoặc mất kết nối).");
+    });
+  }
+
+  function tickTimer() {
+    state.remainingSeconds -= 1;
+    if (state.remainingSeconds <= 0) {
+      state.remainingSeconds = 0;
+      updateTimerDisplay();
+      submitTest(true);
+      return;
+    }
+    updateTimerDisplay();
+  }
+
+  function updateTimerDisplay() {
+    els.timerValue.textContent = formatTime(state.remainingSeconds);
+    if (state.remainingSeconds <= 60) {
+      els.timerValue.classList.add("warning");
+    }
+  }
+
+  function switchPassage(passageNum) {
+    state.currentPassage = passageNum;
+    document.querySelectorAll(".passage-block").forEach(function (el) {
+      el.classList.toggle("active", parseInt(el.getAttribute("data-passage"), 10) === passageNum);
+    });
+    document.querySelectorAll(".question-group").forEach(function (el) {
+      el.classList.toggle("active", parseInt(el.getAttribute("data-passage"), 10) === passageNum);
+    });
+    document.querySelectorAll(".passage-tab").forEach(function (btn) {
+      btn.classList.toggle("active", parseInt(btn.getAttribute("data-passage"), 10) === passageNum);
+    });
+  }
+
+  function initPassageTabs() {
+    document.querySelectorAll(".passage-tab").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        switchPassage(parseInt(btn.getAttribute("data-passage"), 10));
+      });
+    });
+  }
+
+  function buildTfnOptions() {
+    var groups = document.querySelectorAll(".tfn-options");
+    groups.forEach(function (group) {
+      var qnum = group.getAttribute("data-qnum");
+      var groupOptions = (group.getAttribute("data-options") || "").split("|").filter(Boolean);
+      if (!groupOptions.length) groupOptions = TFN_OPTIONS;
+      groupOptions.forEach(function (optionValue, idx) {
+        var label = document.createElement("label");
+        var input = document.createElement("input");
+        input.type = "radio";
+        input.name = "q" + qnum;
+        input.id = "q" + qnum + "-opt" + idx;
+        input.value = optionValue;
+        input.addEventListener("change", function () {
+          captureAnswer(qnum, optionValue);
+        });
+        var text = document.createElement("span");
+        text.className = "opt-text";
+        text.textContent = optionValue;
+        label.appendChild(input);
+        label.appendChild(text);
+        group.appendChild(label);
+      });
+    });
+  }
+
+  function attachFillInListeners() {
+    Object.keys(QUESTION_TYPE).forEach(function (qnumStr) {
+      if (QUESTION_TYPE[qnumStr] !== "fill") return;
+      var input = document.getElementById("q" + qnumStr);
+      if (!input) return;
+      input.addEventListener("input", function () {
+        captureAnswer(qnumStr, input.value);
+      });
+    });
+  }
+
+  function attachChoiceListeners() {
+    document.querySelectorAll(".choice-input").forEach(function (input) {
+      input.addEventListener("change", function () {
+        captureAnswer(input.getAttribute("data-qnum"), input.value);
+      });
+    });
+  }
+
+  var wbPickedTile = null;
+  var wbDragging = false;
+
+  // While a tile is being dragged, scroll the pane under the pointer when it nears the top/bottom edge
+  // (browsers do not do this reliably inside overflow containers).
+  document.addEventListener("dragover", function (e) {
+    if (!wbDragging) return;
+    var pane = e.target && e.target.closest ? e.target.closest(".questions-pane, .passage-pane") : null;
+    var scrollable = pane && pane.scrollHeight > pane.clientHeight + 2 && window.getComputedStyle(pane).overflowY !== "visible";
+    var EDGE = 90, STEP = 22;
+    if (scrollable) {
+      var r = pane.getBoundingClientRect();
+      if (e.clientY < r.top + EDGE) pane.scrollTop -= STEP;
+      else if (e.clientY > r.bottom - EDGE) pane.scrollTop += STEP;
+    } else {
+      if (e.clientY < EDGE) window.scrollBy(0, -STEP);
+      else if (e.clientY > window.innerHeight - EDGE) window.scrollBy(0, STEP);
+    }
+  });
+  document.addEventListener("drop", function () { wbDragging = false; });
+
+  function bankItem(bank, value) {
+    var list = BANKS[bank] || [];
+    for (var i = 0; i < list.length; i++) if (list[i].v === value) return list[i];
+    return null;
+  }
+
+  function findTileEl(bank, value) {
+    return document.getElementById("wb-tile-" + bank + "-" + value);
+  }
+
+  function zoneHeadHTML(zone) {
+    var sec = zone.getAttribute("data-sec");
+    if (!sec) return "";
+    return '<span class="zone-head"><strong>' + zone.getAttribute("data-qnum") + '</strong><span class="zone-sec">Section ' + sec + '</span></span>';
+  }
+
+  function clearZone(zone, updateAnswer) {
+    var bank = zone.getAttribute("data-bank");
+    var existingValue = zone.getAttribute("data-value-used");
+    if (existingValue) {
+      var tileEl = findTileEl(bank, existingValue);
+      if (tileEl) tileEl.classList.remove("used");
+    }
+    zone.removeAttribute("data-value-used");
+    zone.classList.remove("filled");
+    zone.innerHTML = zoneHeadHTML(zone) + '<span class="drop-zone-placeholder">&nbsp;</span>';
+    if (updateAnswer) captureAnswer(zone.getAttribute("data-qnum"), "");
+  }
+
+  function placeTileInZone(value, zone, force) {
+    if (state.submitted && !force) return;
+    var bank = zone.getAttribute("data-bank");
+    var item = bankItem(bank, value);
+    if (!item) return;
+
+    clearZone(zone, false);
+    var otherZone = document.querySelector('.drop-zone[data-bank="' + bank + '"][data-value-used="' + value + '"]');
+    if (otherZone && otherZone !== zone) clearZone(otherZone, true);
+
+    zone.innerHTML = zoneHeadHTML(zone);
+    zone.classList.add("filled");
+    zone.setAttribute("data-value-used", value);
+
+    var content = document.createElement("span");
+    content.className = "drop-zone-content";
+    content.textContent = item.v + ". " + item.w;
+
+    var removeBtn = document.createElement("button");
+    removeBtn.type = "button";
+    removeBtn.className = "drop-zone-remove";
+    removeBtn.setAttribute("aria-label", "Remove");
+    removeBtn.textContent = "×";
+    removeBtn.addEventListener("click", function (evt) {
+      evt.stopPropagation();
+      if (state.submitted) return;
+      clearZone(zone, true);
+    });
+
+    zone.appendChild(content);
+    zone.appendChild(removeBtn);
+
+    var tileEl = findTileEl(bank, value);
+    if (tileEl) {
+      tileEl.classList.add("used");
+      tileEl.classList.remove("picked");
+    }
+    if (wbPickedTile) {
+      wbPickedTile.classList.remove("picked");
+      wbPickedTile = null;
+    }
+
+    captureAnswer(zone.getAttribute("data-qnum"), value);
+  }
+
+  function buildWordbankTiles() {
+    Object.keys(BANKS).forEach(function (bank) {
+      var container = document.getElementById("tiles-" + bank);
+      if (!container) return;
+      BANKS[bank].forEach(function (item) {
+        var tile = document.createElement("div");
+        tile.className = "wb-tile";
+        tile.id = "wb-tile-" + bank + "-" + item.v;
+        tile.setAttribute("draggable", "true");
+        tile.setAttribute("data-value", item.v);
+        tile.setAttribute("data-bank", bank);
+        tile.textContent = item.v + ". " + item.w;
+
+        tile.addEventListener("dragstart", function (e) {
+          if (state.submitted || tile.classList.contains("used")) { e.preventDefault(); return; }
+          closeZoneMenu();
+          wbDragging = true;
+          e.dataTransfer.setData("text/plain", bank + ":" + item.v);
+          e.dataTransfer.effectAllowed = "move";
+          tile.classList.add("dragging");
+        });
+        tile.addEventListener("dragend", function () {
+          tile.classList.remove("dragging");
+          wbDragging = false;
+        });
+        tile.addEventListener("click", function () {
+          if (state.submitted || tile.classList.contains("used")) return;
+          closeZoneMenu();
+          if (wbPickedTile === tile) {
+            tile.classList.remove("picked");
+            wbPickedTile = null;
+          } else {
+            if (wbPickedTile) wbPickedTile.classList.remove("picked");
+            wbPickedTile = tile;
+            tile.classList.add("picked");
+          }
+        });
+
+        container.appendChild(tile);
+      });
+    });
+  }
+
+  // Tap/click on a heading box with nothing picked: a small list of the headings still free (handy on phones,
+  // where the list of headings is far below the passage).
+  var zoneMenuEl = null, zoneMenuAt = 0;
+  function closeZoneMenu() {
+    if (zoneMenuEl && zoneMenuEl.parentNode) zoneMenuEl.parentNode.removeChild(zoneMenuEl);
+    zoneMenuEl = null;
+  }
+  function openZoneMenu(zone) {
+    closeZoneMenu();
+    var bank = zone.getAttribute("data-bank");
+    var menu = document.createElement("div");
+    menu.className = "zone-menu";
+    menu.setAttribute("role", "listbox");
+    var any = false;
+    BANKS[bank].forEach(function (item) {
+      var tile = findTileEl(bank, item.v);
+      if (tile && tile.classList.contains("used") && zone.getAttribute("data-value-used") !== item.v) return;
+      any = true;
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "zone-menu-item" + (zone.getAttribute("data-value-used") === item.v ? " current" : "");
+      b.textContent = item.v + ". " + item.w;
+      b.addEventListener("click", function (e) {
+        e.stopPropagation();
+        closeZoneMenu();
+        placeTileInZone(item.v, zone);
+      });
+      menu.appendChild(b);
+    });
+    if (!any) return;
+    document.body.appendChild(menu);
+    zoneMenuEl = menu;
+    zoneMenuAt = Date.now();
+    var r = zone.getBoundingClientRect();
+    var w = Math.min(menu.offsetWidth || 320, window.innerWidth - 16);
+    var left = Math.max(8, Math.min(r.left, window.innerWidth - w - 8));
+    var top = r.bottom + 4;
+    if (top + menu.offsetHeight > window.innerHeight - 8) top = Math.max(8, r.top - menu.offsetHeight - 4);
+    menu.style.left = left + "px";
+    menu.style.top = top + "px";
+  }
+
+  function initDropZones() {
+    document.addEventListener("click", function (e) {
+      if (zoneMenuEl && !zoneMenuEl.contains(e.target) && !(e.target.closest && e.target.closest(".drop-zone[data-menu]"))) closeZoneMenu();
+    });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeZoneMenu(); });
+    document.querySelectorAll(".passage-pane, .questions-pane").forEach(function (p) { p.addEventListener("scroll", function () { if (Date.now() - zoneMenuAt > 250) closeZoneMenu(); }); });
+    window.addEventListener("resize", closeZoneMenu);
+    document.querySelectorAll(".drop-zone").forEach(function (zone) {
+      var bank = zone.getAttribute("data-bank");
+      zone.addEventListener("dragover", function (e) {
+        if (state.submitted) return;
+        e.preventDefault();
+        zone.classList.add("drag-over");
+      });
+      zone.addEventListener("dragleave", function () {
+        zone.classList.remove("drag-over");
+      });
+      zone.addEventListener("drop", function (e) {
+        if (state.submitted) return;
+        e.preventDefault();
+        zone.classList.remove("drag-over");
+        var raw = e.dataTransfer.getData("text/plain") || "";
+        var i = raw.indexOf(":");
+        if (i < 0 || raw.slice(0, i) !== bank) return;
+        placeTileInZone(raw.slice(i + 1), zone);
+      });
+      zone.addEventListener("click", function () {
+        if (state.submitted) return;
+        if (wbPickedTile) {
+          if (wbPickedTile.getAttribute("data-bank") === bank) placeTileInZone(wbPickedTile.getAttribute("data-value"), zone);
+          return;
+        }
+        if (zone.hasAttribute("data-menu")) openZoneMenu(zone);
+      });
+    });
+  }
+
+  function initSplitter() {
+    var body = document.querySelector(".test-body"), sp = document.getElementById("splitter");
+    if (!body || !sp) return;
+    var dragging = false;
+    function setLeft(px) {
+      var w = body.getBoundingClientRect().width;
+      px = Math.max(w * 0.25, Math.min(w * 0.75, px));
+      body.style.setProperty("--left-col", Math.round(px) + "px");
+    }
+    sp.addEventListener("pointerdown", function (e) {
+      dragging = true;
+      try { sp.setPointerCapture(e.pointerId); } catch (x) {}
+      document.body.classList.add("is-resizing");
+      e.preventDefault();
+    });
+    sp.addEventListener("pointermove", function (e) {
+      if (dragging) setLeft(e.clientX - body.getBoundingClientRect().left);
+    });
+    function stop() { dragging = false; document.body.classList.remove("is-resizing"); }
+    sp.addEventListener("pointerup", stop);
+    sp.addEventListener("pointercancel", stop);
+    sp.addEventListener("dblclick", function () { body.style.removeProperty("--left-col"); });
+    sp.addEventListener("keydown", function (e) {
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      var cur = document.getElementById("passage").getBoundingClientRect().width;
+      setLeft(cur + (e.key === "ArrowLeft" ? -40 : 40));
+      e.preventDefault();
+    });
+  }
+
+  function initChooseTwo() {
+    CHOOSE_TWO_GROUPS.forEach(function (group) {
+      var blockId = "qwrap-" + group.qnums.join("-");
+      var block = document.getElementById(blockId);
+      if (!block) return;
+      var inputs = Array.prototype.slice.call(block.querySelectorAll(".choose-two-input"));
+      inputs.forEach(function (input) {
+        input.addEventListener("change", function () {
+          var checked = inputs.filter(function (i) { return i.checked; });
+          if (checked.length > 2) {
+            input.checked = false;
+            checked = inputs.filter(function (i) { return i.checked; });
+          }
+          inputs.forEach(function (i) {
+            if (!state.submitted) i.disabled = checked.length >= 2 && !i.checked;
+          });
+          var selectedValues = checked.map(function (i) { return i.value; }).sort().join(",");
+          group.qnums.forEach(function (gq) { captureAnswer(gq, selectedValues); });
+        });
+      });
+    });
+  }
+
+  function captureAnswer(qnum, value) {
+    qnum = parseInt(qnum, 10);
+    var trimmed = (value || "").toString();
+    if (trimmed.trim() === "") {
+      delete state.answers[qnum];
+    } else {
+      state.answers[qnum] = trimmed;
+    }
+    refreshNavButton(qnum);
+  }
+
+  function buildNavigator() {
+    var grids = { 1: document.getElementById("nav-grid-1"), 2: document.getElementById("nav-grid-2"), 3: document.getElementById("nav-grid-3") };
+    for (var q = 1; q <= TOTAL_QUESTIONS; q++) {
+      (function (qnum) {
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "nav-btn";
+        btn.id = "nav-btn-" + qnum;
+        btn.textContent = qnum;
+        btn.addEventListener("click", function () { scrollToQuestion(qnum); });
+        grids[QUESTION_PASSAGE[qnum]].appendChild(btn);
+      })(q);
+    }
+  }
+
+  function refreshNavButton(qnum) {
+    var btn = document.getElementById("nav-btn-" + qnum);
+    if (!btn || state.submitted) return;
+    var hasAnswer = Object.prototype.hasOwnProperty.call(state.answers, qnum);
+    btn.classList.toggle("answered", hasAnswer);
+  }
+
+  function scrollToQuestion(qnum) {
+    var passageNum = QUESTION_PASSAGE[qnum];
+    if (passageNum !== state.currentPassage) switchPassage(passageNum);
+    var target = document.getElementById(getBlockId(qnum));
+    if (!target) return;
+    target.scrollIntoView({ behavior: "smooth", block: "center" });
+    var navBtn = document.getElementById("nav-btn-" + qnum);
+    if (navBtn) {
+      navBtn.classList.add("flash");
+      window.setTimeout(function () { navBtn.classList.remove("flash"); }, 900);
+    }
+  }
+
+  function nodeIntersectsRange(node, range) {
+    var nodeRange = document.createRange();
+    nodeRange.selectNodeContents(node);
+    var START_TO_END = 1;
+    var END_TO_START = 3;
+    var a = range.compareBoundaryPoints(START_TO_END, nodeRange);
+    var b = range.compareBoundaryPoints(END_TO_START, nodeRange);
+    return a > 0 && b < 0;
+  }
+
+  function getIntersectingTextNodes(root, range) {
+    var nodes = [];
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+    var node;
+    while ((node = walker.nextNode())) {
+      if (node.nodeValue.length === 0) continue;
+      if (nodeIntersectsRange(node, range)) nodes.push(node);
+    }
+    return nodes;
+  }
+
+  function handleMarkClick(evt) {
+    var mark = evt.currentTarget;
+    var parent = mark.parentNode;
+    while (mark.firstChild) parent.insertBefore(mark.firstChild, mark);
+    parent.removeChild(mark);
+    parent.normalize();
+    evt.stopPropagation();
+  }
+
+  function wrapTextNodesInRange(range) {
+    var root = range.commonAncestorContainer;
+    var container = (root.nodeType === 3) ? root.parentNode : root;
+    var textNodes = getIntersectingTextNodes(container, range);
+    var createdMarks = [];
+
+    textNodes.forEach(function (node) {
+      var start = (node === range.startContainer) ? range.startOffset : 0;
+      var end = (node === range.endContainer) ? range.endOffset : node.length;
+      if (start >= end) return;
+      if (!/\S/.test(node.nodeValue.slice(start, end))) return;
+
+      if (end < node.length) node.splitText(end);
+      var middleNode = (start > 0) ? node.splitText(start) : node;
+
+      var mark = document.createElement("mark");
+      mark.className = "highlight";
+      mark.title = "Click to remove highlight";
+      mark.addEventListener("click", handleMarkClick);
+
+      middleNode.parentNode.insertBefore(mark, middleNode);
+      mark.appendChild(middleNode);
+      createdMarks.push(mark);
+    });
+
+    return createdMarks;
+  }
+
+  function makeSelectionHandler(containerEl) {
+    return function () {
+      var selection = window.getSelection();
+      if (!selection || selection.isCollapsed || selection.rangeCount === 0) return;
+      var range = selection.getRangeAt(0);
+      if (!containerEl.contains(range.commonAncestorContainer)) return;
+      if (range.toString().trim().length === 0) {
+        selection.removeAllRanges();
+        return;
+      }
+
+      containerEl.normalize();
+
+      var marks = [];
+      try {
+        marks = wrapTextNodesInRange(range);
+      } catch (e) {
+        marks = [];
+      }
+
+      if (marks.length > 0) {
+        var newRange = document.createRange();
+        newRange.setStartBefore(marks[0]);
+        newRange.setEndAfter(marks[marks.length - 1]);
+        selection.removeAllRanges();
+        selection.addRange(newRange);
+      } else {
+        selection.removeAllRanges();
+      }
+    };
+  }
+
+  function initHighlighting() {
+    document.querySelectorAll(".passage-block").forEach(function (el) {
+      el.addEventListener("mouseup", makeSelectionHandler(el));
+    });
+    document.querySelectorAll(".question-group").forEach(function (el) {
+      el.addEventListener("mouseup", makeSelectionHandler(el));
+    });
+  }
+
+  function calculateResults() {
+    var score = 0;
+    var details = [];
+    var passageScores = {
+      1: { correct: 0, total: 0 },
+      2: { correct: 0, total: 0 },
+      3: { correct: 0, total: 0 }
+    };
+
+    var choose2ResultByQnum = {};
+    CHOOSE_TWO_GROUPS.forEach(function (group) {
+      var q0 = group.qnums[0], q1 = group.qnums[1];
+      var selected = (state.answers[q0] || "").split(",").filter(Boolean).map(normalize);
+      var correctSet = [ANSWER_KEY[q0], ANSWER_KEY[q1]].map(normalize);
+      var hits = 0;
+      correctSet.forEach(function (c) { if (selected.indexOf(c) !== -1) hits++; });
+      choose2ResultByQnum[q0] = hits >= 1;
+      choose2ResultByQnum[q1] = hits >= 2;
+    });
+
+    function isFillCorrect(qnum, studentRaw, correctRaw) {
+      if (normalize(studentRaw) === normalize(correctRaw)) return true;
+      var alts = ANSWER_ALTERNATES[qnum];
+      if (!alts) return false;
+      var normStudent = normalize(studentRaw);
+      for (var ai = 0; ai < alts.length; ai++) {
+        if (normStudent === normalize(alts[ai])) return true;
+      }
+      return false;
+    }
+
+    for (var q = 1; q <= TOTAL_QUESTIONS; q++) {
+      var type = QUESTION_TYPE[q];
+      var studentRaw = state.answers[q] || "";
+      var correctRaw = ANSWER_KEY[q];
+      var isCorrect;
+      if (type === "choose2") {
+        isCorrect = choose2ResultByQnum[q];
+      } else if (type === "fill") {
+        isCorrect = isFillCorrect(q, studentRaw, correctRaw);
+      } else {
+        isCorrect = normalize(studentRaw) === normalize(correctRaw);
+      }
+
+      var passageNum = QUESTION_PASSAGE[q];
+      passageScores[passageNum].total++;
+      if (isCorrect) { score++; passageScores[passageNum].correct++; }
+
+      details.push({
+        question: q,
+        type: type,
+        passage: passageNum,
+        studentAnswer: studentRaw,
+        correctAnswer: correctRaw,
+        isCorrect: isCorrect
+      });
+    }
+    return { score: score, details: details, passageScores: passageScores };
+  }
+
+
+  function countUnanswered() {
+    var n = 0;
+    for (var q = 1; q <= TOTAL_QUESTIONS; q++) {
+      if (!Object.prototype.hasOwnProperty.call(state.answers, q)) n++;
+    }
+    return n;
+  }
+
+  function renderResultBox(results, elapsedSeconds) {
+    els.resStudent.textContent = "Học viên: " + state.studentName + (state.cycleId ? " · " + state.cycleId : "");
+    els.resScore.textContent = results.score + " / " + TOTAL_QUESTIONS;
+    els.resBand.textContent = readingBand(results.score).toFixed(1);
+    els.resWrong.textContent = String(TOTAL_QUESTIONS - results.score);
+    els.resUnanswered.textContent = String(countUnanswered());
+    [1, 2, 3].forEach(function (p) {
+      var ps = results.passageScores[p];
+      document.getElementById("res-p" + p + "-wrong").textContent = String(ps.total - ps.correct);
+    });
+    els.resTime.textContent = formatDurationVN(elapsedSeconds);
+    els.showResultBtn.style.display = "inline-block";
+  }
+
+  var resultOpener = null;
+  function openResultBox() {
+    resultOpener = document.activeElement;
+    els.resultOverlay.hidden = false;
+    els.resCloseBtn.focus();
+  }
+
+  function closeResultBox() {
+    els.resultOverlay.hidden = true;
+    if (resultOpener && resultOpener.focus) { try { resultOpener.focus(); } catch (e) {} }
+    resultOpener = null;
+  }
+
+  function disableAllInputs() {
+    var inputs = els.testScreen.querySelectorAll("input[type='text'], input[type='radio'], input[type='checkbox'], select");
+    inputs.forEach(function (input) { input.disabled = true; });
+    document.querySelectorAll(".wb-tile").forEach(function (tile) {
+      tile.setAttribute("draggable", "false");
+      tile.classList.add("locked");
+      tile.classList.remove("picked");
+    });
+    document.querySelectorAll(".drop-zone-remove").forEach(function (btn) { btn.style.display = "none"; });
+    closeZoneMenu();
+  }
+
+  function markChoiceGroup(container, correctValue, studentValue, isCorrect) {
+    if (!container) return;
+    var correctInput = container.querySelector('input[value="' + correctValue + '"]');
+    if (correctInput) correctInput.closest("label").classList.add("opt-correct");
+    if (!isCorrect && studentValue) {
+      var wrongInput = container.querySelector('input[value="' + studentValue + '"]');
+      if (wrongInput) wrongInput.closest("label").classList.add("opt-wrong");
+    }
+  }
+
+  function applyReviewAnnotations(results) {
+    var choose2AnnotatedBlocks = {};
+
+    results.details.forEach(function (detail) {
+      var qnum = detail.question;
+      var type = detail.type;
+      var block = document.getElementById(getBlockId(qnum));
+      if (!block) return;
+
+      if (type === "choose2") {
+        var cgBlockId = getBlockId(qnum);
+        if (!choose2AnnotatedBlocks[cgBlockId]) {
+          var cgPair = null;
+          for (var cgj = 0; cgj < CHOOSE_TWO_GROUPS.length; cgj++) {
+            if (CHOOSE_TWO_GROUPS[cgj].qnums.indexOf(qnum) !== -1) { cgPair = CHOOSE_TWO_GROUPS[cgj]; break; }
+          }
+          var cgBothRight = cgPair ? cgPair.qnums.every(function (gq) { return results.details[gq - 1].isCorrect; }) : detail.isCorrect;
+          block.classList.add(cgBothRight ? "correct" : "wrong");
+          var cgGroup = null;
+          for (var cgi = 0; cgi < CHOOSE_TWO_GROUPS.length; cgi++) {
+            if (CHOOSE_TWO_GROUPS[cgi].qnums.indexOf(qnum) !== -1) { cgGroup = CHOOSE_TWO_GROUPS[cgi]; break; }
+          }
+          var correctSet = cgGroup ? cgGroup.qnums.map(function (gq) { return ANSWER_KEY[gq]; }) : [];
+          block.querySelectorAll(".choose-two-input").forEach(function (input) {
+            var label = input.closest("label");
+            if (correctSet.indexOf(input.value) !== -1) label.classList.add("opt-correct");
+            else if (input.checked) label.classList.add("opt-wrong");
+          });
+          choose2AnnotatedBlocks[cgBlockId] = true;
+        }
+      } else if (type === "tfn") {
+        block.classList.add(detail.isCorrect ? "correct" : "wrong");
+        markChoiceGroup(block.querySelector(".tfn-options"), detail.correctAnswer, detail.studentAnswer, detail.isCorrect);
+      } else if (type === "ynng") {
+        block.classList.add(detail.isCorrect ? "correct" : "wrong");
+        markChoiceGroup(block.querySelector(".ynng-options"), detail.correctAnswer, detail.studentAnswer, detail.isCorrect);
+      } else if (type === "mcq") {
+        block.classList.add(detail.isCorrect ? "correct" : "wrong");
+        markChoiceGroup(block.querySelector(".mcq-options"), detail.correctAnswer, detail.studentAnswer, detail.isCorrect);
+      } else if (type === "fill") {
+        block.classList.add(detail.isCorrect ? "correct" : "wrong");
+        var input = document.getElementById("q" + qnum);
+        input.classList.add(detail.isCorrect ? "correct" : "wrong");
+        if (!detail.isCorrect) {
+          var fb = document.createElement("span");
+          fb.className = "fill-feedback";
+          fb.textContent = "Correct answer: " + detail.correctAnswer;
+          input.insertAdjacentElement("afterend", fb);
+        }
+      } else if (type === "matching") {
+        block.classList.add(detail.isCorrect ? "correct" : "wrong");
+        var correctRadio = block.querySelector('input[value="' + detail.correctAnswer + '"]');
+        if (correctRadio) correctRadio.closest("td").classList.add("correct-cell");
+        if (!detail.isCorrect && detail.studentAnswer) {
+          var wrongRadio = block.querySelector('input[value="' + detail.studentAnswer + '"]');
+          if (wrongRadio) wrongRadio.closest("td").classList.add("wrong-cell");
+        }
+      } else if (type === "wordbank") {
+        var zone = document.getElementById("q" + qnum);
+        zone.classList.add(detail.isCorrect ? "correct" : "wrong");
+        if (!detail.isCorrect) {
+          var fb2 = document.createElement("span");
+          fb2.className = "fill-feedback";
+          var wbWord = "";
+          var wbItem = bankItem(zone.getAttribute("data-bank"), detail.correctAnswer);
+          if (wbItem) wbWord = ". " + wbItem.w;
+          fb2.textContent = "Correct answer: " + detail.correctAnswer + wbWord;
+          zone.insertAdjacentElement("afterend", fb2);
+        }
+      }
+
+      var navBtn = document.getElementById("nav-btn-" + qnum);
+      if (navBtn) {
+        navBtn.classList.remove("answered");
+        navBtn.classList.add(detail.isCorrect ? "correct" : "incorrect");
+      }
+    });
+
+    [1, 2, 3].forEach(function (p) {
+      var tabBtn = document.querySelector('.passage-tab[data-passage="' + p + '"]');
+      if (tabBtn) {
+        var ps = results.passageScores[p];
+        tabBtn.textContent = PASSAGE_LABEL[p] + " — " + ps.correct + "/" + ps.total;
+      }
+    });
+  }
+
+  function computeWrongQuestionsByPassage(results) {
+    var wrong = { 1: [], 2: [], 3: [] };
+    results.details.forEach(function (detail) {
+      if (!detail.isCorrect) wrong[detail.passage].push(detail.question);
+    });
+    return wrong;
+  }
+
+  function submitTest(isAutoSubmit) {
+    if (state.submitted) return;
+    state.submitted = true;
+
+    if (state.timerHandle) {
+      window.clearInterval(state.timerHandle);
+      state.timerHandle = null;
+    }
+
+    var elapsedSeconds = TEST_DURATION_SECONDS - state.remainingSeconds;
+    disableAllInputs();
+
+    var results = calculateResults();
+    applyReviewAnnotations(results);
+    var wrongQuestions = computeWrongQuestionsByPassage(results);
+
+    els.timerBlock.style.display = "none";
+    els.submitBtn.style.display = "none";
+    els.scoreSummaryBlock.style.display = "flex";
+    els.headerScore.textContent = results.score + " / " + TOTAL_QUESTIONS;
+    els.headerBand.textContent = readingBand(results.score).toFixed(1);
+    els.headerTimeUsed.textContent = formatTime(elapsedSeconds);
+    renderResultBox(results, elapsedSeconds);
+    openResultBox();
+
+    var submittedAt = new Date().toISOString();
+
+    var attempt = {
+      attemptId: makeAttemptId(),
+      testId: TEST_ID,
+      studentName: state.studentName,
+      normalizedStudentName: state.confirmedNormalizedName || nameMatchKey(state.studentName),
+      cycleId: state.cycleId,
+      submittedAt: submittedAt,
+      answers: Object.assign({}, state.answers),
+      score: results.score,
+      totalQuestions: TOTAL_QUESTIONS,
+      passageScores: results.passageScores,
+      wrongQuestions: wrongQuestions,
+      timeUsed: elapsedSeconds,
+      saved: false // becomes true only when the tracking service confirmed the row (see markAttemptSaved)
+    };
+    saveAttempt(attempt);
+
+    var resultPayload = {
+      attemptId: attempt.attemptId,
+      studentName: state.studentName,
+      cycleId: state.cycleId,
+      testId: TEST_ID,
+      score: results.score,
+      totalQuestions: TOTAL_QUESTIONS,
+      passageScores: results.passageScores,
+      wrongQuestions: wrongQuestions,
+      answers: Object.assign({}, state.answers),
+      submittedAt: submittedAt,
+      timeUsed: elapsedSeconds
+    };
+    state.lastResultPayload = resultPayload;
+    state.savePending = true;
+    sendResultToTeacher(resultPayload);
+  }
+
+  function handleManualSubmit() {
+    if (state.submitted) return;
+    var answeredCount = Object.keys(state.answers).length;
+    var msg = answeredCount < TOTAL_QUESTIONS
+      ? "Bạn mới trả lời " + answeredCount + " trong tổng số " + TOTAL_QUESTIONS + " câu hỏi. Vẫn muốn nộp bài?"
+      : "Nộp bài ngay bây giờ?";
+    if (window.confirm(msg)) submitTest(false);
+  }
+
+  var READING_BANDS = [[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5],[0,0]];
+  function readingBand(raw) {
+    for (var i = 0; i < READING_BANDS.length; i++) {
+      if (raw >= READING_BANDS[i][0]) return READING_BANDS[i][1];
+    }
+    return 0;
+  }
+
+  function trackingQuery(params) {
+    return new Promise(function (resolve, reject) {
+      var cb = "tracking_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
+      var el = document.createElement("script");
+      var done = false;
+      var timer = window.setTimeout(function () {
+        if (!done) { done = true; cleanup(); reject(new Error("No confirmation from the tracking service.")); }
+      }, 12000);
+      function cleanup() {
+        window.clearTimeout(timer);
+        if (el.parentNode) el.parentNode.removeChild(el);
+        try { delete window[cb]; } catch (e) { window[cb] = undefined; }
+      }
+      window[cb] = function (data) {
+        if (!done) { done = true; cleanup(); resolve(data); }
+      };
+      el.onerror = function () {
+        if (!done) { done = true; cleanup(); reject(new Error("Cannot reach the tracking service.")); }
+      };
+      var qs = Object.keys(params).map(function (k) {
+        return encodeURIComponent(k) + "=" + encodeURIComponent(params[k]);
+      }).join("&");
+      el.src = WEB_APP_URL + "?" + qs + "&callback=" + cb + "&_=" + Date.now();
+      document.head.appendChild(el);
+    });
+  }
+
+  function wait(ms) { return new Promise(function (r) { window.setTimeout(r, ms); }); }
+  // AbortSignal.timeout is missing on iOS/Safari < 16: portable version.
+  function timeoutSignal(ms) {
+    if (typeof AbortSignal !== "undefined" && AbortSignal.timeout) return AbortSignal.timeout(ms);
+    var c = new AbortController();
+    window.setTimeout(function () { c.abort(); }, ms);
+    return c.signal;
+  }
+
+  function postAndConfirm(payload, attemptNo) {
+    return fetch(WEB_APP_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      keepalive: true,
+      signal: timeoutSignal(45000),
+      body: JSON.stringify(payload)
+    }).catch(function () {
+      // timeout / network error: the receipt poll below decides whether the row exists
+    }).then(function () {
+      var tries = 0;
+      function poll() {
+        return trackingQuery({ action: "receipt", attemptId: payload.attemptId }).then(function (r) {
+          if (r && r.ok) return true;
+          if (r && r.error) throw new Error(r.error);
+          if (++tries >= 4) return false;
+          return wait(1500).then(poll);
+        });
+      }
+      return poll();
+    }).then(function (confirmed) {
+      if (confirmed) return true;
+      if (attemptNo < 2) return postAndConfirm(payload, attemptNo + 1);
+      console.error("Result save was not confirmed by the tracking service.");
+      return false;
+    });
+  }
+
+  function startTrackedSend(result) {
+    var m = /^C(\d+)-R-T([1-4])$/.exec(result.testId || "");
+    if (!m || !result.cycleId || !result.attemptId) return false;
+    if (!/^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(WEB_APP_URL)) return false;
+    var wq = result.wrongQuestions || { 1: [], 2: [], 3: [] };
+    var ps = result.passageScores;
+    var parts = [ps[1].correct, ps[2].correct, ps[3].correct];
+    var tracked = {
+      protocol: 2,
+      attemptId: result.attemptId,
+      studentName: result.studentName,
+      cycleId: result.cycleId,
+      book: "Cam " + m[1],
+      test: "Test " + m[2],
+      skill: "Reading",
+      testId: result.testId,
+      score: result.score,
+      band: readingBand(result.score),
+      totalQuestions: result.totalQuestions,
+      parts: parts,
+      part1: parts[0],
+      part2: parts[1],
+      part3: parts[2],
+      p1Wrong: wq[1].join(", "),
+      p2Wrong: wq[2].join(", "),
+      p3Wrong: wq[3].join(", "),
+      answers: result.answers,
+      timeUsed: Math.round(result.timeUsed),
+      timestamp: result.submittedAt,
+      status: "Completed"
+    };
+    // The POST goes out IMMEDIATELY. A health pre-check used to run first and could take 12 s, so a student who
+    // left right after submitting had sent nothing.
+    postAndConfirm(tracked, 0).then(function (confirmed) {
+      if (confirmed) {
+        markAttemptSaved(result.attemptId);
+        updateSaveStatus("saved", "Đã lưu vào hệ thống theo dõi.");
+      } else {
+        sendLegacyResult(result);
+      }
+    }).catch(function (err) {
+      console.error("Tracking service unavailable, using the basic result upload:", err);
+      sendLegacyResult(result);
+    });
+    return true;
+  }
+
+  function sendResultToTeacher(result) {
+    if (state.sendBusy) return;
+    updateSaveStatus("sending", "Đang gửi kết quả — đang chờ xác nhận…");
+    if (WEB_APP_URL && WEB_APP_URL.indexOf("PASTE_YOUR_APPS_SCRIPT") !== 0 && startTrackedSend(result)) return;
+    sendLegacyResult(result);
+  }
+
+  function handleRetrySave() {
+    if (state.sendBusy || !state.lastResultPayload) return;
+    sendResultToTeacher(state.lastResultPayload);
+  }
+
+  function updateSaveStatus(kind, message) {
+    updateSaveGate(kind, message);
+    if (kind === "error") scheduleAutoRetry();
+    if (kind === "saved") window.clearTimeout(autoRetryTimer);
+    if (els.resSave) {
+      els.resSave.classList.toggle("is-saved", kind === "saved");
+      els.resSave.classList.toggle("is-error", kind === "error");
+      els.resSaveText.textContent = message;
+      els.resRetryBtn.hidden = (kind !== "error");
+      els.resRetryBtn.disabled = (kind === "sending");
+    }
+    if (!els.saveStatusBlock) return;
+    state.sendBusy = (kind === "sending");
+    els.saveStatusBlock.style.display = "flex";
+    els.saveStatusBlock.classList.toggle("is-saved", kind === "saved");
+    els.saveStatusBlock.classList.toggle("is-error", kind === "error");
+    els.saveStatusText.textContent = message;
+    els.retrySaveBtn.hidden = (kind !== "error");
+    els.retrySaveBtn.disabled = (kind === "sending");
+  }
+
+  function sendLegacyResult(result) {
+    console.log("Result to send to teacher:", result);
+
+    if (!WEB_APP_URL || WEB_APP_URL.indexOf("PASTE_YOUR_APPS_SCRIPT") === 0) {
+      console.warn("WEB_APP_URL is not set yet — result was NOT sent to Google Sheets.");
+      updateSaveStatus("error", "Chưa cấu hình gửi kết quả cho giáo viên.");
+      return;
+    }
+
+    var wrongQuestions = result.wrongQuestions || { 1: [], 2: [], 3: [] };
+
+    var payload = {
+      skill: "Reading",
+      attemptId: result.attemptId || "",
+      studentName: result.studentName,
+      cycleId: result.cycleId || "",
+      testId: result.testId,
+      score: result.score,
+      totalQuestions: result.totalQuestions,
+      passage1: result.passageScores[1].correct,
+      passage2: result.passageScores[2].correct,
+      passage3: result.passageScores[3].correct,
+      p1Wrong: wrongQuestions[1].join(","),
+      p2Wrong: wrongQuestions[2].join(","),
+      p3Wrong: wrongQuestions[3].join(","),
+      timeUsed: formatTime(result.timeUsed),
+      timestamp: result.submittedAt
+    };
+
+    // Goes out immediately. keepalive lets it finish even if the student leaves; a resolved fetch means Google answered.
+    fetch(WEB_APP_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      keepalive: true,
+      signal: timeoutSignal(45000),
+      body: JSON.stringify(payload)
+    }).then(function () {
+      markAttemptSaved(result.attemptId);
+      updateSaveStatus("saved", "Đã gửi kết quả cho giáo viên.");
+    }).catch(function (err) {
+      console.error("Failed to send result to teacher:", err);
+      // timeout / network error: the row may still have arrived, so ask before sending again
+      trackingQuery({ action: "receipt", attemptId: result.attemptId }).then(function (r) {
+        if (r && r.ok) {
+          markAttemptSaved(result.attemptId);
+          updateSaveStatus("saved", "Đã gửi kết quả cho giáo viên.");
+        } else {
+          updateSaveStatus("error", "Gửi kết quả thất bại (mạng chậm hoặc mất kết nối).");
+        }
+      }).catch(function () {
+        updateSaveStatus("error", "Gửi kết quả thất bại (mạng chậm hoặc mất kết nối).");
+      });
+    });
+  }
+
+  // ---- keep trying while the page is open; resume when the student comes back to the tab ----
+  var autoRetryTimer = null;
+  function scheduleAutoRetry() {
+    window.clearTimeout(autoRetryTimer);
+    autoRetryTimer = window.setTimeout(resumePendingSave, 8000);
+  }
+  function resumePendingSave() {
+    if (!state.savePending || state.sendBusy || !state.lastResultPayload) return;
+    if (state.pendingVerify) { verifyOrResendStoredAttempt(state.pendingVerify.attempt, state.pendingVerify.results); return; }
+    sendResultToTeacher(state.lastResultPayload);
+  }
+
+
+  var gateDismissed = false;
+
+  function updateSaveGate(kind, message) {
+    var g = els.saveGate, bn = els.saveBanner;
+    if (!g || !bn) return;
+    if (kind === "saved" || !state.savePending) {
+      if (kind === "saved") state.savePending = false;
+      g.hidden = true; bn.hidden = true;
+      return;
+    }
+    var failed = (kind === "error");
+    els.sgSpin.hidden = failed;
+    els.sgTitle.textContent = failed
+      ? "Chưa lưu được kết quả — đừng đóng tab!"
+      : "Đang lưu kết quả về cho giáo viên…";
+    els.sgMsg.textContent = failed
+      ? (((message || "").replace(/\s*Vui lòng bấm\s*["“”]?Thử lại["“”]?\.?/, "") + " Giữ nguyên tab này (không đóng, không tải lại) rồi bấm “Thử lưu lại”.").trim())
+      : "Vui lòng KHÔNG đóng tab hoặc tải lại trang. Điểm sẽ hiện ngay khi lưu xong (thường vài giây).";
+    els.sgActions.hidden = !failed;
+    els.sgRetry.disabled = (kind === "sending");
+    var wasHidden = g.hidden;
+    g.hidden = gateDismissed;
+    bn.hidden = !gateDismissed;
+    bn.textContent = failed
+      ? "⚠ Kết quả CHƯA được lưu — đừng đóng tab"
+      : "⏳ Đang lưu kết quả — đừng đóng tab";
+    if (!g.hidden && wasHidden) {
+      try { (failed ? els.sgRetry : els.sgCard).focus(); } catch (e) {}
+    }
+  }
+
+  function downloadResultJson() {
+    var payload = state.lastResultPayload;
+    if (!payload) return;
+    var blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = TEST_ID + "-" + (payload.attemptId || "result") + ".json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+  }
+
+  function initSaveGate() {
+    els.saveGate = document.getElementById("save-gate");
+    els.saveBanner = document.getElementById("save-banner");
+    els.sgCard = document.getElementById("sg-card");
+    els.sgSpin = document.getElementById("sg-spin");
+    els.sgTitle = document.getElementById("sg-title");
+    els.sgMsg = document.getElementById("sg-msg");
+    els.sgActions = document.getElementById("sg-actions");
+    els.sgRetry = document.getElementById("sg-retry");
+    els.sgDownload = document.getElementById("sg-download");
+    els.sgShow = document.getElementById("sg-show");
+    els.sgRetry.addEventListener("click", handleRetrySave);
+    els.sgDownload.addEventListener("click", downloadResultJson);
+    els.sgShow.addEventListener("click", function () {
+      gateDismissed = true;
+      els.saveGate.hidden = true;
+      els.saveBanner.hidden = false;
+      els.saveBanner.textContent = "⚠ Kết quả CHƯA được lưu — đừng đóng tab";
+    });
+    window.addEventListener("online", resumePendingSave);
+    window.addEventListener("pageshow", resumePendingSave);
+    document.addEventListener("visibilitychange", function () { if (!document.hidden) resumePendingSave(); });
+    window.addEventListener("beforeunload", function (e) {
+      if (!state.savePending) return;
+      e.preventDefault();
+      e.returnValue = "Kết quả của bạn chưa được lưu về cho giáo viên. Bạn có chắc muốn thoát?";
+      return e.returnValue;
+    });
+  }
+
+  function init() {
+    els.startScreen = document.getElementById("start-screen");
+    els.testScreen = document.getElementById("test-screen");
+    els.entryStepName = document.getElementById("entry-step-name");
+    els.entryStepConfirm = document.getElementById("entry-step-confirm");
+    els.entryStepActions = document.getElementById("entry-step-actions");
+    els.nameInput = document.getElementById("student-name");
+    els.nameError = document.getElementById("name-error");
+    els.cycleSelect = document.getElementById("cycle-id");
+    try {
+      var cyclePreset = new URLSearchParams(window.location.search).get("cycle");
+      if (cyclePreset && els.cycleSelect) els.cycleSelect.value = cyclePreset;
+    } catch (e) {}
+    els.nameContinueBtn = document.getElementById("name-continue-btn");
+    els.confirmNameBox = document.getElementById("confirm-name-box");
+    els.confirmCheckbox = document.getElementById("confirm-checkbox");
+    els.confirmBackBtn = document.getElementById("confirm-back-btn");
+    els.confirmContinueBtn = document.getElementById("confirm-continue-btn");
+    els.entryStatusMessage = document.getElementById("entry-status-message");
+    els.startBtn = document.getElementById("start-btn");
+    els.reviewBtn = document.getElementById("review-btn");
+    els.reviewResultArea = document.getElementById("review-result-area");
+    els.actionsBackBtn = document.getElementById("actions-back-btn");
+    els.headerStudentName = document.getElementById("header-student-name");
+    els.reviewBanner = document.getElementById("review-banner");
+    els.timerBlock = document.getElementById("timer-block");
+    els.timerValue = document.getElementById("timer-value");
+    els.scoreSummaryBlock = document.getElementById("score-summary-block");
+    els.headerScore = document.getElementById("header-score");
+    els.headerTimeUsed = document.getElementById("header-time-used");
+    els.headerBand = document.getElementById("header-band");
+    els.submitBtn = document.getElementById("submit-btn");
+    els.saveStatusBlock = document.getElementById("save-status-block");
+    els.saveStatusText = document.getElementById("save-status-text");
+    els.retrySaveBtn = document.getElementById("retry-save-btn");
+    els.showResultBtn = document.getElementById("show-result-btn");
+    els.resultOverlay = document.getElementById("result-overlay");
+    els.resStudent = document.getElementById("res-student");
+    els.resScore = document.getElementById("res-score");
+    els.resBand = document.getElementById("res-band");
+    els.resWrong = document.getElementById("res-wrong");
+    els.resUnanswered = document.getElementById("res-unanswered");
+    els.resTime = document.getElementById("res-time");
+    els.resSave = document.getElementById("res-save");
+    els.resSaveText = document.getElementById("res-save-text");
+    els.resRetryBtn = document.getElementById("res-retry-btn");
+    els.resCloseBtn = document.getElementById("res-close-btn");
+
+    els.nameContinueBtn.addEventListener("click", handleNameContinue);
+    els.nameInput.addEventListener("keydown", function (e) { if (e.key === "Enter") handleNameContinue(); });
+    els.confirmCheckbox.addEventListener("change", handleConfirmCheckboxChange);
+    els.confirmBackBtn.addEventListener("click", handleConfirmBack);
+    els.confirmContinueBtn.addEventListener("click", handleConfirmContinue);
+    els.startBtn.addEventListener("click", handleStartClick);
+    initTutorial();
+    els.reviewBtn.addEventListener("click", handleReviewClick);
+    els.actionsBackBtn.addEventListener("click", handleActionsBack);
+    els.submitBtn.addEventListener("click", handleManualSubmit);
+    els.retrySaveBtn.addEventListener("click", handleRetrySave);
+    els.resRetryBtn.addEventListener("click", handleRetrySave);
+    els.showResultBtn.addEventListener("click", openResultBox);
+    els.resCloseBtn.addEventListener("click", closeResultBox);
+    els.resultOverlay.addEventListener("click", function (e) { if (e.target === els.resultOverlay) closeResultBox(); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !els.resultOverlay.hidden) closeResultBox(); });
+
+    initSplitter();
+    initPassageTabs();
+    buildTfnOptions();
+    attachFillInListeners();
+    attachChoiceListeners();
+    buildWordbankTiles();
+    initDropZones();
+    initChooseTwo();
+    buildNavigator();
+    initHighlighting();
+    initSaveGate();
+  }
+
+  document.addEventListener("DOMContentLoaded", init);
+})();
+</script>
+
+</body>
+</html>

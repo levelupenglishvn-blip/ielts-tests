@@ -1445,6 +1445,16 @@
     }
   }
 
+  // Flags a stored attempt as confirmed-saved on the teacher side. Attempts created before this field existed
+  // have no `saved` property and are never auto-resent (their delivery state is unknown, resending could duplicate).
+  function markAttemptSaved(attemptId) {
+    try {
+      var all = loadAllAttempts(), hit = false;
+      all.forEach(function (a) { if (a.attemptId === attemptId && a.saved !== true) { a.saved = true; hit = true; } });
+      if (hit) window.localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+    } catch (e) { console.error("Could not update the saved flag:", e); }
+  }
+
   function findAttemptsFor(testId, normalizedName, cycleId) {
     return loadAllAttempts().filter(function (a) {
       return a.testId === testId && a.normalizedStudentName === normalizedName && (a.cycleId || "") === (cycleId || "");
@@ -1669,6 +1679,43 @@
 
     els.startScreen.style.display = "none";
     els.testScreen.style.display = "flex";
+
+    if (attempt.saved === false) verifyOrResendStoredAttempt(attempt, results);
+  }
+
+  function verifyOrResendStoredAttempt(attempt, results) {
+    var payload = {
+      attemptId: attempt.attemptId,
+      studentName: attempt.studentName,
+      cycleId: attempt.cycleId || "",
+      testId: attempt.testId,
+      score: results.score,
+      totalQuestions: TOTAL_QUESTIONS,
+      passageScores: results.passageScores,
+      wrongQuestions: computeWrongQuestionsByPassage(results),
+      answers: Object.assign({}, attempt.answers),
+      submittedAt: attempt.submittedAt,
+      timeUsed: attempt.timeUsed
+    };
+    state.lastResultPayload = payload;
+    state.savePending = true;
+    state.pendingVerify = { attempt: attempt, results: results };
+    updateSaveStatus("sending", "Đang kiểm tra kết quả đã gửi cho giáo viên…");
+    trackingQuery({ action: "receipt", attemptId: attempt.attemptId }).then(function (r) {
+      if (r && r.ok) {
+        markAttemptSaved(attempt.attemptId);
+        state.pendingVerify = null;
+        updateSaveStatus("saved", "Đã lưu vào hệ thống theo dõi.");
+      } else if (r && r.error) {
+        updateSaveStatus("error", "Chưa kiểm tra được kết quả đã gửi: " + r.error);
+      } else {
+        state.pendingVerify = null;
+        state.sendBusy = false;
+        sendResultToTeacher(payload);
+      }
+    }).catch(function () {
+      updateSaveStatus("error", "Chưa kiểm tra được kết quả đã gửi (mạng chậm hoặc mất kết nối).");
+    });
   }
 
   function tickTimer() {
@@ -2297,7 +2344,8 @@
       totalQuestions: TOTAL_QUESTIONS,
       passageScores: results.passageScores,
       wrongQuestions: wrongQuestions,
-      timeUsed: elapsedSeconds
+      timeUsed: elapsedSeconds,
+      saved: false // becomes true only when the tracking service confirmed the row (see markAttemptSaved)
     };
     saveAttempt(attempt);
 
@@ -2364,13 +2412,24 @@
   }
 
   function wait(ms) { return new Promise(function (r) { window.setTimeout(r, ms); }); }
+  // AbortSignal.timeout is missing on iOS/Safari < 16: portable version.
+  function timeoutSignal(ms) {
+    if (typeof AbortSignal !== "undefined" && AbortSignal.timeout) return AbortSignal.timeout(ms);
+    var c = new AbortController();
+    window.setTimeout(function () { c.abort(); }, ms);
+    return c.signal;
+  }
 
   function postAndConfirm(payload, attemptNo) {
     return fetch(WEB_APP_URL, {
       method: "POST",
       mode: "no-cors",
       headers: { "Content-Type": "text/plain;charset=utf-8" },
+      keepalive: true,
+      signal: timeoutSignal(45000),
       body: JSON.stringify(payload)
+    }).catch(function () {
+      // timeout / network error: the receipt poll below decides whether the row exists
     }).then(function () {
       var tries = 0;
       function poll() {
@@ -2421,17 +2480,15 @@
       timestamp: result.submittedAt,
       status: "Completed"
     };
-    trackingQuery({ action: "health" }).then(function (h) {
-      if (h && h.protocol === 2) {
-        return postAndConfirm(tracked, 0).then(function (confirmed) {
-          if (confirmed) {
-            updateSaveStatus("saved", "Đã lưu vào hệ thống theo dõi.");
-          } else {
-            sendLegacyResult(result);
-          }
-        });
+    // The POST goes out IMMEDIATELY. A health pre-check used to run first and could take 12 s, so a student who
+    // left right after submitting had sent nothing.
+    postAndConfirm(tracked, 0).then(function (confirmed) {
+      if (confirmed) {
+        markAttemptSaved(result.attemptId);
+        updateSaveStatus("saved", "Đã lưu vào hệ thống theo dõi.");
+      } else {
+        sendLegacyResult(result);
       }
-      sendLegacyResult(result);
     }).catch(function (err) {
       console.error("Tracking service unavailable, using the basic result upload:", err);
       sendLegacyResult(result);
@@ -2453,6 +2510,8 @@
 
   function updateSaveStatus(kind, message) {
     updateSaveGate(kind, message);
+    if (kind === "error") scheduleAutoRetry();
+    if (kind === "saved") window.clearTimeout(autoRetryTimer);
     if (els.resSave) {
       els.resSave.classList.toggle("is-saved", kind === "saved");
       els.resSave.classList.toggle("is-error", kind === "error");
@@ -2510,6 +2569,18 @@
       console.error("Failed to send result to teacher:", err);
       updateSaveStatus("error", "Gửi kết quả thất bại (mất kết nối mạng). Vui lòng bấm \"Thử lại\".");
     });
+  }
+
+  // ---- keep trying while the page is open; resume when the student comes back to the tab ----
+  var autoRetryTimer = null;
+  function scheduleAutoRetry() {
+    window.clearTimeout(autoRetryTimer);
+    autoRetryTimer = window.setTimeout(resumePendingSave, 8000);
+  }
+  function resumePendingSave() {
+    if (!state.savePending || state.sendBusy || !state.lastResultPayload) return;
+    if (state.pendingVerify) { verifyOrResendStoredAttempt(state.pendingVerify.attempt, state.pendingVerify.results); return; }
+    sendResultToTeacher(state.lastResultPayload);
   }
 
 
@@ -2577,6 +2648,9 @@
       els.saveBanner.hidden = false;
       els.saveBanner.textContent = "⚠ Kết quả CHƯA được lưu — đừng đóng tab";
     });
+    window.addEventListener("online", resumePendingSave);
+    window.addEventListener("pageshow", resumePendingSave);
+    document.addEventListener("visibilitychange", function () { if (!document.hidden) resumePendingSave(); });
     window.addEventListener("beforeunload", function (e) {
       if (!state.savePending) return;
       e.preventDefault();

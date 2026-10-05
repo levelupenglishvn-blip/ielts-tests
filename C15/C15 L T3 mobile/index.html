@@ -1,0 +1,1819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IELTS Listening Full Test — Cambridge Test 15, Test 3</title>
+
+<style>
+  /* NOTE: the 6 @font-face blocks that used to sit here (Plus Jakarta Sans
+     x4 weights, Inter x2 weights) were removed on 2026-09-24: fontTools
+     confirmed every one of those embedded woff2 subsets was missing every
+     Vietnamese-specific glyph (đ, ơ, ư, and all double-diacritic vowels),
+     which caused Vietnamese text to visibly mix two different fonts
+     mid-word. --font/--font-transcript below still name the same families
+     first (harmless if unavailable) and now fall straight through to the
+     system UI font stack, which has full, consistent Vietnamese coverage
+     — the same approach the Reading engine (C15) already uses. */
+  :root{
+    --primary:#15934E;
+    --primary-dark:#119446;
+    --secondary:#A9F279;
+    --accent:#FFE76E;
+    --ink:#1D1E1E;
+    --ink-soft:#7C7C7C;
+    --ink-faint:#A9AAAA;
+    --border:#E5E5E5;
+    --table-border:#B9B9B9;
+    --surface:#FFFFFF;
+    --bg:#F7FBF9;
+    --primary-tint:#ECF6F1;
+    --primary-tint-strong:#B9DFCA;
+    --secondary-tint:#F1FDEA;
+    --secondary-tint-strong:#E2FBD1;
+    --accent-tint:#FFF8D6;
+    --accent-tint-strong:#FFF2AF;
+    --radius-sm:8px;
+    --radius-md:14px;
+    --radius-lg:20px;
+    --shadow-card:0 1px 2px rgba(29,30,30,.05), 0 10px 26px -16px rgba(29,30,30,.22);
+    --shadow-sticky:0 6px 18px -12px rgba(29,30,30,.22);
+    --font:'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-transcript:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --danger:#C0392B;
+    --danger-bg:#FDECEA;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font);
+    font-weight:400;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  img,svg{display:block;}
+  button{font-family:inherit;}
+  :focus-visible{outline:2.5px solid var(--primary-dark); outline-offset:2px; border-radius:6px;}
+
+  .wrap{max-width:840px; margin:0 auto; padding:0 clamp(16px, 2.2vw, 32px);}
+  .wrap-wide{max-width:min(1880px, 97vw);}
+
+  /* ---------- Header ---------- */
+  .page-header{
+    padding:30px 24px 30px;
+    border-bottom:1px solid var(--border);
+    background:
+      radial-gradient(560px 220px at 88% -40%, var(--secondary-tint) 0%, rgba(241,253,234,0) 70%),
+      var(--bg);
+  }
+  .page-header .wrap{max-width:min(1880px, 97vw);}
+  .brand-row{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    margin-bottom:22px;
+  }
+  .brand-logo{width:26px; height:26px;}
+  .brand-word{
+    font-family:var(--font);
+    font-weight:700;
+    font-size:16px;
+    letter-spacing:-0.01em;
+    color:var(--ink);
+    text-transform:lowercase;
+  }
+  h1.page-title{
+    font-family:var(--font);
+    font-weight:700;
+    font-size:clamp(28px, 4vw, 38px);
+    letter-spacing:-0.015em;
+    margin:0 0 10px;
+    color:var(--ink);
+  }
+  .header-meta{
+    font-family:var(--font);
+    font-size:16px;
+    font-weight:600;
+    color:var(--ink-soft);
+    margin:0 0 4px;
+  }
+  .header-meta strong{color:var(--ink); font-weight:600;}
+  .header-scope{
+    font-size:15px;
+    font-weight:500;
+    color:var(--ink-soft);
+    margin:0 0 20px;
+  }
+  .tagline{
+    font-size:16.5px;
+    font-weight:400;
+    color:var(--ink);
+    margin:0;
+    max-width:56ch;
+    padding-top:16px;
+    border-top:1px solid var(--border);
+  }
+
+  /* ---------- Sticky control stack ---------- */
+  .control-stack{position:sticky; top:0; z-index:40; background:var(--bg);}
+
+  .player-bar{
+    border-bottom:1px solid var(--border);
+    background:var(--surface);
+    box-shadow:var(--shadow-sticky);
+  }
+  .player-inner{
+    max-width:min(1880px, 97vw);
+    margin:0 auto;
+    padding:14px 24px;
+    display:flex;
+    align-items:center;
+    gap:16px;
+  }
+  .player-label{
+    display:flex; align-items:center; gap:8px;
+    font-weight:600; font-size:14px; color:var(--ink);
+    white-space:nowrap;
+  }
+  .play-btn{
+    flex:0 0 auto; width:40px; height:40px; border-radius:50%;
+    border:none; background:var(--primary); color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; transition:background .15s ease, transform .1s ease;
+  }
+  .play-btn:hover{background:var(--primary-dark);}
+  .play-btn:active{transform:scale(0.94);}
+  .play-btn svg{width:16px; height:16px;}
+
+  .progress-wrap{flex:1 1 auto; min-width:0;}
+  .progress-track{
+    position:relative; height:8px; border-radius:999px;
+    background:var(--primary-tint-strong); cursor:pointer; overflow:hidden;
+  }
+  .progress-fill{position:absolute; left:0; top:0; bottom:0; width:0%; background:var(--primary); border-radius:999px;}
+  .progress-track:hover .progress-fill{background:var(--primary-dark);}
+  .time-display{flex:0 0 auto; font-variant-numeric:tabular-nums; font-size:13px; font-weight:500; color:var(--ink-soft); white-space:nowrap;}
+
+  .audio-banner{display:none; max-width:min(1880px, 97vw); margin:0 auto; padding:0 24px 12px; font-size:13px; line-height:1.5; color:#7A4A00; font-weight:500;}
+  .audio-banner.show{display:block;}
+  .audio-banner .banner-box{background:var(--accent-tint); border:1px solid var(--accent-tint-strong); border-radius:10px; padding:10px 14px;}
+  .audio-banner strong{color:#5B3800;}
+
+  .qnav{border-bottom:1px solid var(--border); background:var(--surface);}
+  .qnav-inner{max-width:min(1880px, 97vw); margin:0 auto; padding:10px 24px; display:flex; gap:8px; overflow-x:auto; scrollbar-width:none;}
+  .qnav-inner::-webkit-scrollbar{display:none;}
+  .qnav-pill{
+    flex:0 0 auto; font-weight:600; font-size:13px; color:var(--ink-soft);
+    background:var(--bg); border:1px solid var(--border); padding:7px 13px;
+    border-radius:999px; cursor:pointer; transition:all .15s ease;
+  }
+  .qnav-pill:hover{border-color:var(--primary); color:var(--primary-dark);}
+  .qnav-pill.active{background:var(--primary); border-color:var(--primary); color:#fff;}
+  .qnav-pill.playing::after{
+    content:''; display:inline-block; width:6px; height:6px; border-radius:50%;
+    background:currentColor; margin-left:6px; vertical-align:middle;
+    animation:pulse 1.1s ease-in-out infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:1;} 50%{opacity:.25;}}
+
+  /* ---------- Content / split layout ---------- */
+  main.content{padding:34px 0 110px;}
+
+  .split-layout{
+    display:grid;
+    grid-template-columns:1.55fr 1fr;
+    gap:24px;
+    align-items:start;
+  }
+  .left-pane, .right-pane{min-width:0;}
+
+  .section-heading{
+    font-family:var(--font);
+    font-weight:600;
+    font-size:25px;
+    margin:0 0 6px;
+    color:var(--ink);
+  }
+  .pane-sub{font-size:16px; font-weight:400; color:var(--ink-soft); margin:0 0 18px;}
+
+  /* ---------- Left pane: reference sheet ---------- */
+  .left-pane{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius-lg);
+    box-shadow:var(--shadow-card);
+    padding:32px 34px 30px;
+  }
+
+  .table-scroll{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    margin-bottom:28px;
+    border-radius:10px;
+  }
+  table.qtable{
+    width:100%;
+    border-collapse:collapse;
+    font-size:18px;
+    font-weight:400;
+    border:1.5px solid var(--table-border);
+  }
+  table.qtable th{
+    text-align:left;
+    font-weight:600;
+    font-size:15px;
+    color:var(--ink);
+    padding:12px 14px;
+    background:var(--primary-tint);
+    border:1.5px solid var(--table-border);
+  }
+  table.qtable td{
+    vertical-align:top;
+    padding:14px;
+    border:1.5px solid var(--table-border);
+    color:var(--ink);
+    font-weight:400;
+    line-height:1.55;
+  }
+
+  .notes-title{font-family:var(--font); font-weight:600; font-size:17px; margin:0 0 6px;}
+  ul.notes{list-style:none; margin:0 0 4px; padding:0; border:1.5px solid var(--table-border); border-radius:10px; overflow:hidden;}
+  ul.notes li{
+    position:relative; padding:14px 16px 14px 34px;
+    border-bottom:1.5px solid var(--table-border);
+    font-size:18px; font-weight:400; line-height:1.5;
+  }
+  ul.notes li:last-child{border-bottom:none;}
+  ul.notes li::before{content:'•'; position:absolute; left:14px; top:14px; color:var(--ink-faint);}
+
+  /* qchip: play icon + number/answer, inline in the question text */
+  .qchip{
+    display:inline-flex; align-items:center; gap:0;
+    vertical-align:middle; margin:0 2px;
+    border-radius:999px; overflow:hidden;
+    border:1.5px solid var(--primary-tint-strong);
+    cursor:pointer;
+    transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  .qchip:hover{border-color:var(--primary);}
+  .qchip.is-selected{border-color:var(--primary); box-shadow:0 0 0 3px var(--primary-tint);}
+  .qchip.is-answered{border-color:var(--primary);}
+  .qchip-play{
+    width:28px; height:28px; flex:0 0 auto;
+    background:var(--primary); color:#fff;
+    border:none; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    cursor:pointer; padding:0;
+  }
+  .qchip-play:hover{background:var(--primary-dark);}
+  .qchip-play svg{width:11px; height:11px;}
+  .qchip-play.is-playing svg{width:10px; height:10px;}
+  .qchip-num{
+    min-width:28px; padding:0 12px; height:28px;
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font); font-weight:700; font-size:15.5px;
+    color:var(--primary-dark); background:var(--primary-tint);
+  }
+  .qchip.is-answered .qchip-num{
+    color:var(--ink); background:var(--accent-tint);
+    font-weight:700; text-transform:uppercase; letter-spacing:.02em;
+    padding:0 13px;
+  }
+
+  /* ---------- Options legend (shared A-C / A-E / A-H boxes) ---------- */
+  .options-legend{
+    border:1.5px solid var(--table-border); border-radius:10px;
+    padding:16px 18px; margin-bottom:20px;
+    background:var(--primary-tint);
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:9px 22px;
+  }
+  .options-legend-item{display:flex; gap:9px; font-size:16px; font-weight:400; color:var(--ink);}
+  .options-legend-letter{
+    flex:0 0 auto; font-family:var(--font); font-weight:700; font-size:15px;
+    color:var(--primary-dark);
+  }
+
+  /* ---------- Multiple choice / choose-two blocks ---------- */
+  .mc-block{
+    border:1.5px solid var(--table-border); border-radius:12px;
+    padding:18px 20px; margin-bottom:16px; cursor:pointer;
+    transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  .mc-block:hover{border-color:var(--primary);}
+  .mc-block.is-selected{border-color:var(--primary); box-shadow:0 0 0 3px var(--primary-tint);}
+  .mc-head{display:flex; align-items:flex-start; gap:12px; margin-bottom:13px;}
+  .mc-num{
+    flex:0 0 auto; font-family:var(--font); font-weight:700; font-size:14px;
+    color:#fff; background:var(--ink); min-width:26px; height:26px; border-radius:7px;
+    padding:0 7px; white-space:nowrap;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .mc-stem{flex:1 1 auto; font-weight:500; font-size:18px; color:var(--ink); padding-top:2px; line-height:1.45;}
+  .mc-options{display:flex; flex-direction:column; gap:8px; margin-left:38px;}
+  .mc-option{
+    display:flex; align-items:center; gap:10px;
+    padding:10px 13px; border-radius:8px; border:1.5px solid var(--table-border);
+    font-size:16.5px; font-weight:400; color:var(--ink);
+  }
+  .mc-option-letter{
+    flex:0 0 auto; width:23px; height:23px; border-radius:50%;
+    border:1.5px solid var(--ink-faint); color:var(--ink-soft);
+    font-family:var(--font); font-weight:700; font-size:13px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .mc-option.is-correct{border-color:var(--primary); background:var(--accent-tint);}
+  .mc-option.is-correct .mc-option-letter{border-color:var(--primary); background:var(--primary); color:#fff;}
+  .mc-block.is-playing .mc-num,
+  .mc-block.is-playing{border-color:var(--primary);}
+
+  .data-issue-tag{
+    display:inline-block; font-family:var(--font); font-weight:600; font-size:12.5px;
+    color:#7A4A00; background:var(--accent-tint); border:1px solid var(--accent-tint-strong);
+    padding:3px 9px; border-radius:999px; margin-left:8px; text-transform:none; letter-spacing:0;
+  }
+  .data-issue-note{
+    background:var(--accent-tint); border:1px solid var(--accent-tint-strong);
+    border-radius:10px; padding:14px 16px; font-size:16px; font-weight:400;
+    color:#5B3800; line-height:1.55;
+  }
+
+  /* ---------- Right pane: detail (script / answer) ---------- */
+  .right-pane{position:sticky; top:118px;}
+
+  .right-legend{margin-bottom:16px;}
+  .right-legend .notes-title{font-size:14.5px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.03em; font-weight:600;}
+  .right-legend ul.notes li{font-size:16.5px; padding:11px 14px 11px 30px;}
+  .right-legend ul.notes li::before{left:12px; top:11.5px;}
+  .right-legend ul.notes{background:var(--surface); box-shadow:var(--shadow-card);}
+
+  .script-panel{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius-lg);
+    box-shadow:var(--shadow-card);
+    overflow:hidden;
+  }
+  .script-panel + .script-panel{margin-top:16px;}
+  .script-panel-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 22px; cursor:pointer; user-select:none;
+    transition:background .15s ease;
+  }
+  .script-panel-head:hover{background:var(--primary-tint);}
+  .script-panel[data-role="script"].is-open .script-panel-head{border-bottom:1px solid var(--border);}
+  .box-label{font-family:var(--font); font-weight:600; font-size:17px; color:var(--ink);}
+  .script-chevron{width:18px; height:18px; color:var(--ink-faint); transition:transform .2s ease;}
+  .script-panel.is-open .script-chevron{transform:rotate(180deg); color:var(--primary-dark);}
+  .answer-check{width:21px; height:21px; color:var(--ink-faint); transition:color .15s ease;}
+  .script-panel[data-role="answer"].is-open .script-panel-head{background:var(--accent-tint);}
+  .script-panel[data-role="answer"].is-open .box-label{color:var(--primary-dark);}
+  .script-panel[data-role="answer"].is-open .answer-check{color:var(--primary);}
+
+  .box-body{padding:18px 22px 20px; font-size:17px; font-weight:400; color:var(--ink); display:none;}
+  .box-body.open{display:block;}
+  .script-body.open{max-height:60vh; overflow-y:auto;}
+  .box-body-empty{color:var(--ink-faint); font-size:15px;}
+
+  .t-line{font-family:var(--font-transcript); display:flex; gap:12px; font-size:17px; font-weight:400; padding:6px 7px; border-radius:8px; margin:0; line-height:1.5;}
+  .t-line + .t-line{margin-top:3px;}
+  .t-time{flex:0 0 auto; font-variant-numeric:tabular-nums; font-size:13.5px; font-weight:500; color:var(--ink-faint); padding-top:3px; width:44px;}
+  .t-text{flex:1 1 auto;}
+  mark.evidence-mark{font-family:var(--font-transcript);}
+  .t-line.is-evidence{background:var(--accent-tint);}
+  mark.evidence-mark{background:var(--accent); color:var(--ink); padding:1px 4px; border-radius:4px; font-weight:600; text-decoration:none;}
+
+  .answer-value{font-family:var(--font); font-weight:700; font-size:27px; color:var(--primary-dark); letter-spacing:.01em; margin:0;}
+
+  footer.site-footer{max-width:min(1880px, 97vw); margin:0 auto; padding:0 24px 110px; font-size:13px; font-weight:400; color:var(--ink-faint); text-align:center;}
+  .footer-brand{display:flex; align-items:center; justify-content:center; gap:7px; margin-bottom:12px;}
+  .footer-logo{width:19px; height:19px;}
+  .footer-word{font-family:var(--font); font-weight:700; font-size:14.5px; letter-spacing:-0.01em; color:var(--ink); text-transform:lowercase;}
+
+  /* ---------- Part 2-4 placeholders ---------- */
+  .part-placeholder{padding:60px 0 40px; min-height:58vh; display:flex; align-items:center;}
+  .part-placeholder[hidden]{display:none;}
+  .part-placeholder .wrap-wide{width:100%;}
+  .placeholder-card{
+    max-width:560px; margin:0 auto; text-align:center;
+    background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-lg);
+    box-shadow:var(--shadow-card); padding:44px 36px;
+  }
+  .placeholder-eyebrow{font-weight:600; font-size:13px; color:var(--primary-dark); margin:0 0 10px; text-transform:uppercase; letter-spacing:.04em;}
+  .placeholder-title{font-weight:700; font-size:24px; color:var(--ink); margin:0 0 14px;}
+  .placeholder-text{font-weight:400; font-size:14.5px; color:var(--ink-soft); margin:0; line-height:1.6;}
+
+  /* ---------- Bottom part navigation ---------- */
+  .part-nav{
+    position:fixed; left:50%; bottom:20px; transform:translateX(-50%);
+    z-index:50;
+    display:flex; gap:2px;
+    background:var(--ink); border-radius:999px; padding:5px;
+    box-shadow:0 10px 30px -8px rgba(29,30,30,.45);
+    width:min(92vw, 520px);
+  }
+  .part-nav-btn{
+    flex:1 1 0; border:none; background:transparent; color:#C9C9C7;
+    font-family:var(--font); font-weight:600; font-size:13.5px;
+    padding:11px 10px; border-radius:999px; cursor:pointer;
+    transition:background .15s ease, color .15s ease;
+    text-align:center;
+  }
+  .part-nav-btn:hover{color:#fff;}
+  .part-nav-btn.active{background:var(--primary); color:#fff;}
+
+  /* ---------- Map diagram (Part 2, Q15-20) ---------- */
+  .map-card{
+    border:1.5px solid var(--table-border); border-radius:var(--radius-md);
+    background:var(--surface); padding:18px 18px 14px; margin-bottom:20px;
+    box-shadow:var(--shadow-card);
+  }
+  .map-card svg{width:100%; height:auto; display:block;}
+  .map-note{font-size:13.5px; color:var(--ink-soft); margin:10px 2px 0; line-height:1.5;}
+
+  /* ---------- Flow chart (Part 3, Q27-30) — compact, single row ---------- */
+  .flowchart{display:flex; flex-direction:row; align-items:stretch; gap:0; margin:6px 0 4px; max-width:640px;}
+  .flow-step{
+    flex:1 1 0; min-width:0;
+    border:1.5px solid var(--table-border); border-radius:var(--radius-sm);
+    background:var(--surface); box-shadow:var(--shadow-card);
+    padding:10px 8px 11px; display:flex; flex-direction:column; align-items:center; text-align:center; gap:6px;
+    transition:border-color .15s ease;
+  }
+  .flow-step.is-selected{border-color:var(--primary); box-shadow:0 0 0 3px var(--primary-tint);}
+  .flow-step-label{font-family:var(--font); font-weight:700; font-size:10.5px; line-height:1.25; letter-spacing:.02em; text-transform:uppercase; color:var(--primary-dark); min-height:26px; display:flex; align-items:center; justify-content:center;}
+  .flow-step-body{display:flex; align-items:center; justify-content:center; gap:10px; font-size:17px; color:var(--ink);}
+  .flow-arrow{display:flex; align-items:center; justify-content:center; flex:0 0 auto; padding:0 3px; color:var(--ink-faint);}
+  .flow-arrow svg{width:16px; height:16px; transform:rotate(-90deg);}
+
+  @media (max-width:760px){
+    .flowchart{flex-direction:column; max-width:320px;}
+    .flow-step{align-items:flex-start; text-align:left; padding:14px 16px;}
+    .flow-step-label{min-height:0; justify-content:flex-start;}
+    .flow-arrow{padding:2px 0;}
+    .flow-arrow svg{transform:none;}
+  }
+
+  @media (max-width:600px){
+    .part-nav{bottom:14px; padding:4px;}
+    .part-nav-btn{font-size:12.5px; padding:10px 6px;}
+    .placeholder-card{padding:32px 22px; margin:0 18px;}
+    footer.site-footer{padding:0 18px 100px;}
+  }
+
+  @media (max-width: 980px){
+    .split-layout{grid-template-columns:1fr;}
+    .right-pane{position:static; top:auto;}
+  }
+
+  @media (max-width: 600px){
+    .page-header{padding:26px 18px 22px;}
+    .wrap, .wrap-wide{padding:0 18px;}
+    .player-inner{padding:12px 16px; gap:12px;}
+    .player-label span{display:none;}
+    .qnav-inner{padding:9px 16px;}
+    main.content{padding:24px 0 100px;}
+    .left-pane{padding:18px 16px 18px;}
+    .script-panel-head{padding:14px 16px;}
+    .box-body{padding:14px 16px 16px;}
+    table.qtable{font-size:16px; min-width:720px;}
+    .table-scroll{box-shadow:inset -14px 0 12px -14px rgba(29,30,30,.18);}
+    footer.site-footer{padding:0 18px 50px;}
+  }
+</style>
+<style>[hidden]{display:none!important}
+.split-layout{display:block;max-width:1200px;margin:auto}.left-pane{width:100%}
+.page-header{padding:24px 16px}.tagline{max-width:none}.page-header .wrap{max-width:1240px}
+.content{padding-bottom:90px}.wrap-wide{max-width:1240px}
+.exam-card{max-width:740px;margin:28px auto;padding:28px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-card)}
+.exam-card h2{margin-top:0}.exam-card label{display:block;font-weight:600;margin:18px 0 6px}
+.exam-card input,.exam-card select{font:inherit;width:100%;padding:12px;border:1px solid var(--table-border);border-radius:8px;background:white;color:var(--ink)}
+.field-hint{font-size:13px;color:#565e59;margin:6px 0 0;line-height:1.5}
+.field-hint strong{color:var(--ink)}
+.field-hint-list{font-size:13px;color:#565e59;margin:6px 0 0;padding-left:18px;line-height:1.6}
+.field-hint-list li{margin:0 0 2px}
+.field-hint-list strong{color:var(--ink)}
+.rules-block{margin-top:18px}
+.rules-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px}
+.rules-col{background:var(--primary-tint);border:1px solid var(--table-border);border-radius:10px;padding:14px 16px}
+.rules-subtitle{font-weight:700;font-size:13px;letter-spacing:.04em;color:var(--primary-dark);margin:0 0 8px;text-transform:uppercase}
+.rules-col ul.notes{background:var(--surface);box-shadow:none}
+.rules-col ul.notes li{font-size:14px;padding:9px 12px 9px 26px}
+.rules-col ul.notes li::before{left:10px;top:9px}
+mark.user-hl{background:var(--accent-tint);color:inherit;padding:0 1px;border-radius:2px;cursor:pointer;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+mark.user-hl:hover{background:var(--accent-tint-strong)}
+.teacher-panel{position:fixed;right:16px;bottom:16px;z-index:200;width:220px;display:flex;flex-direction:column;gap:8px;background:var(--surface);border:1.5px solid var(--table-border);border-radius:var(--radius-md);box-shadow:0 10px 30px -8px rgba(29,30,30,.45);padding:14px 16px}
+.teacher-panel-head{margin:0;font-family:var(--font);font-weight:700;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--primary-dark)}
+.teacher-panel .exam-button{padding:9px 12px;font-size:13.5px;min-height:36px}
+.teacher-status{margin:2px 0 0;font-size:12px;color:var(--ink-soft);min-height:14px}
+.exam-button{border:0;border-radius:10px;background:var(--primary);color:white;padding:12px 20px;font:600 15px var(--font);cursor:pointer;min-height:44px}.exam-button:disabled{opacity:.5;cursor:wait}
+.exam-button.secondary{background:var(--primary-tint);color:var(--ink)}
+#startForm button{margin-top:22px}#startError,#saveStatus,#audioStatus{overflow-wrap:anywhere}
+.exam-status{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;max-width:1200px;margin:auto;padding:12px 20px}
+#phaseLabel{font-weight:700;color:var(--primary-dark)}#timer{font-variant-numeric:tabular-nums;font-size:22px;font-weight:700}#audioStatus{font-size:13px;margin:0}#answered{font-size:13px;color:var(--ink-soft)}
+.qchip{display:inline-flex;gap:5px;vertical-align:middle;cursor:default;background:transparent;border:0;max-width:100%}.qchip-num{font-size:12px;min-width:24px;color:var(--primary-dark)}
+.answer-input{width:140px;max-width:100%;font:500 15px var(--font);padding:7px 9px;border:1px solid var(--table-border);border-radius:7px;background:white;color:var(--ink)}
+.mc-option{cursor:pointer;position:relative;min-height:44px}.mc-option:has(input:checked){background:var(--primary-tint-strong);border-color:var(--primary)}.mc-option input{width:18px;height:18px;flex-shrink:0;accent-color:var(--primary)}
+.mc-options{display:grid}.qnav-pill.answered{background:var(--primary-tint-strong);border-color:var(--primary)}
+.qnav-inner{flex-wrap:wrap}.qnav-pill{min-height:38px}.mc-block,.qchip{scroll-margin-top:190px}
+#result .score-row{display:flex;gap:24px;flex-wrap:wrap;margin:20px 0}.metric strong{display:block;font-size:30px;color:var(--primary-dark)}
+.part-score-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.part-score-grid p{background:var(--primary-tint);padding:12px;border-radius:10px;margin:0}.part-score-grid strong{display:block;font-size:22px}
+.help{font-size:13px;color:#565e59}.alert{color:#9b341b;font-weight:600}.site-footer{padding-bottom:100px}
+@media(max-width:650px){.exam-card{margin:16px;padding:20px}.page-header{padding:18px 4px}.part-score-grid{grid-template-columns:1fr 1fr}.qtable{min-width:740px}.exam-status{padding:10px 16px}.mc-option{font-size:14px}.answer-input{width:125px}.qnav-pill{padding:6px 9px}.page-title{font-size:28px!important}.rules-grid{grid-template-columns:1fr}}
+.entry-step[hidden]{display:none!important}
+.instructions{color:var(--ink-soft);margin:0 0 14px;font-size:14px}
+.entry-section-title{font-weight:700;color:var(--ink);margin:20px 0 8px;font-size:15px}
+.entry-section-title:first-child{margin-top:0}
+.browser-notice{background:var(--accent-tint);border:1px solid var(--accent-tint-strong);border-radius:var(--radius-md);padding:12px 14px;margin:14px 0;font-size:14px;color:var(--ink)}
+.confirm-name-box{background:var(--primary-tint);border:1px solid var(--primary-tint-strong);border-radius:var(--radius-md);padding:14px 16px;margin:14px 0;font-size:15px;color:var(--ink)}
+.confirm-name-box strong{display:block;font-size:18px;color:var(--primary-dark);margin-bottom:4px}
+.checkbox-row{display:flex;align-items:flex-start;gap:8px;margin:14px 0;font-size:14px;color:var(--ink)}
+.checkbox-row input{margin-top:3px}
+
+/* ===== Sau khi nộp: trang KẾT QUẢ + HƯỚNG DẪN (1 màn hình) -> trang CHỮA BÀI (chỉ đổi hiển thị) ===== */
+body.rv-result #exam,body.rv-result #partNav,body.rv-result #reviewPlayerBar{display:none!important}
+body.rv-review #result{display:none!important}
+body.rv-result .page-header .tagline,body.rv-result #headerScope,body.rv-result .page-header .header-meta{display:none}
+body.rv-result .page-header{padding:14px 16px 6px}
+body.rv-result h1.page-title{font-size:26px;margin:0}
+#rvBackBtn{display:none}
+body.rv-review #rvBackBtn{display:inline-block;margin:10px 0 0;padding:7px 14px;border:1px solid var(--primary);border-radius:999px;background:var(--primary-tint);color:var(--primary-dark);font:600 13.5px var(--font);cursor:pointer}
+#result{max-width:860px;margin:14px auto;padding:18px 24px}
+#result h2{margin:0 0 2px;font-size:19px;letter-spacing:.03em}
+#resultName{margin:0 0 6px;font-weight:600;color:#444;font-size:14.5px}
+#result .score-row{gap:22px;margin:6px 0 8px}
+#result .metric{padding:0 4px 0 0;font-size:13px}
+#result .metric strong{font-size:24px;line-height:1.2}
+#result .part-score-grid{gap:8px;margin:0}
+#result .part-score-grid p{margin:0;padding:6px 12px;font-size:13px}
+#result .part-score-grid strong{font-size:19px}
+#result #attemptNote,#result .review-audio-box,#result #downloadResult,#result .help{display:none!important}
+#result #saveStatus{margin:6px 0 0;font-size:12px;color:#666}
+#result #retrySave{padding:6px 12px;min-height:32px;font-size:13px;margin-top:6px}
+.guide-wrap{margin-top:14px;padding-top:14px;border-top:1px solid var(--border)}
+.guide-wrap .guide-title{margin:0 0 2px;text-align:center;font-size:17px;letter-spacing:.03em;color:var(--ink)}
+.guide-wrap .guide-sub{margin:0 0 10px;text-align:center;color:#555;font-size:13.5px}
+.guide-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.guide-card{border:1px solid var(--border);border-top:5px solid var(--gc);border-radius:var(--radius-md);padding:10px 13px 8px;background:var(--surface)}
+.guide-card .g-tag{font-weight:800;font-size:15px;color:var(--gc);letter-spacing:.03em}
+.guide-card .g-head{font-weight:700;font-size:14px;color:var(--ink);margin:1px 0 5px}
+.guide-card ul{margin:0;padding-left:18px;font-size:14px;line-height:1.55;color:var(--ink)}
+.guide-card.g-green{--gc:#15934E}.guide-card.g-blue{--gc:#2563EB}.guide-card.g-purple{--gc:#7C3AED}
+.option-box{margin-top:12px;padding:10px 14px;background:rgba(220,38,38,.08);border:2px solid #DC2626;border-radius:var(--radius-md);color:#111;font-weight:700;font-size:14px;line-height:1.55}
+.option-box .option-row{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.option-box .option-row+.option-row{margin-top:8px;padding-top:8px;border-top:1px solid rgba(220,38,38,.35)}
+.option-box .option-text{flex:1 1 280px;font-size:14px}
+.option-box .exam-button{flex:0 0 auto;margin:0;white-space:normal;padding:9px 16px;min-height:38px;font-size:14px}
+.pane-sub.pane-sub-strong{color:#000;font-weight:700}
+@media(max-width:650px){#result{margin:10px;padding:14px}.guide-grid{grid-template-columns:1fr}.guide-card{padding:8px 12px 6px}.guide-card .g-head{margin-bottom:3px}.guide-card ul{line-height:1.45}.option-box .exam-button{width:100%}#result .score-row{gap:14px}#result .metric strong{font-size:21px}}
+.entry-actions-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;align-items:center}
+.entry-actions-row .exam-button{margin-top:0}
+.entry-status-message{background:var(--primary-tint);border:1px solid var(--primary-tint-strong);border-radius:var(--radius-md);padding:10px 14px;margin:14px 0;font-size:14px;color:var(--ink)}
+.field-error{color:#9b341b;font-size:13px;margin:6px 0 0;font-weight:600;min-height:16px}
+.btn-text{background:none;border:none;color:var(--ink-soft);font-size:14px;text-decoration:underline;cursor:pointer;padding:6px 0;margin-top:10px}
+.notice-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:14px 18px;margin:10px 0 18px}
+.notice-box ul{margin:0;padding-left:20px;font-size:14px;color:var(--ink);line-height:1.6}
+.notice-box ul li{margin:0 0 6px}
+.notice-box ul li:last-child{margin-bottom:0}
+.notice-box.warning{background:#fdeeec;border:1px solid #f0b8ab;color:#8a2f1c;font-weight:600;padding:12px 14px;margin:14px 0}
+.review-audio-box{background:var(--primary-tint);border:1px solid var(--primary-tint-strong);border-radius:var(--radius-md);padding:14px 16px;margin:16px 0}
+.review-callout{background:var(--primary-tint);border:1px solid var(--primary-tint-strong);border-left:4px solid var(--primary);border-radius:var(--radius-md);padding:12px 16px;margin:14px 0}
+.review-callout-title{font-weight:700;color:var(--primary-dark);margin:0 0 6px;font-size:14px}
+.review-callout-body{margin:0;font-size:14px;color:var(--ink);line-height:1.6}
+.review-player-bar{position:fixed;left:0;right:0;bottom:0;z-index:150;background:var(--surface);border-top:1px solid var(--border);box-shadow:0 -6px 18px -12px rgba(29,30,30,.35)}
+.review-player-inner{max-width:min(1880px,97vw);margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:12px}
+.review-player-label{flex:0 0 auto;font-weight:600;font-size:13px;color:var(--ink);white-space:nowrap}
+.review-skip-btn{flex:0 0 auto;height:36px;padding:0 12px;border-radius:999px;border:1px solid var(--border);background:var(--surface);color:var(--ink);font-size:12px;font-weight:700;cursor:pointer;transition:background .15s ease}
+.review-skip-btn:hover{background:var(--primary-tint)}
+@media(max-width:650px){.review-player-label{display:none}.review-player-inner{padding:8px 12px;gap:8px}}
+/* ===== Listening Review: correctness annotations (only added once #result shows) ===== */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+.qchip.is-correct{border-color:var(--primary);}
+.qchip.is-wrong{border-color:var(--danger);background:var(--danger-bg);}
+.qchip.is-wrong .answer-input{color:var(--danger);text-decoration:line-through;background:transparent;}
+.qchip-feedback-icon{flex:0 0 auto;width:20px;height:20px;margin-left:2px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;}
+.qchip.is-correct .qchip-feedback-icon{background:var(--primary);}
+.qchip.is-wrong .qchip-feedback-icon{background:var(--danger);}
+.qchip-correct-answer{display:inline-block;margin-left:5px;font-size:12.5px;font-weight:700;color:var(--primary-dark);}
+.mc-block.is-review-correct{border-left:4px solid var(--primary);}
+.mc-block.is-review-wrong{border-left:4px solid var(--danger);}
+.review-status-badge{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;margin-left:10px;vertical-align:middle;white-space:nowrap;}
+.review-status-badge.is-correct{background:var(--primary-tint);color:var(--primary-dark);}
+.review-status-badge.is-wrong{background:var(--danger-bg);color:var(--danger);}
+.review-status-badge.is-unanswered{background:var(--bg);color:var(--ink-soft);border:1px solid var(--border);}
+.mc-option.opt-correct,.mc-option:has(input:checked).opt-correct{border-color:var(--primary);background:var(--primary-tint);}
+.mc-option.opt-correct .mc-option-letter{border-color:var(--primary);background:var(--primary);color:#fff;}
+.mc-option.opt-correct>span:last-child{color:var(--primary-dark);font-weight:700;}
+.mc-option.opt-wrong,.mc-option:has(input:checked).opt-wrong{border-color:var(--danger);background:var(--danger-bg);}
+.mc-option.opt-wrong .mc-option-letter{border-color:var(--danger);background:var(--danger);color:#fff;}
+.mc-option.opt-wrong>span:last-child{color:var(--danger);font-weight:700;text-decoration:line-through;}
+.qnav-pill.is-review-correct{background:var(--primary);border-color:var(--primary);color:#fff;}
+.qnav-pill.is-review-wrong{background:var(--danger);border-color:var(--danger);color:#fff;}
+/* ===== Listening Review: 2-panel Questions | Script layout (desktop-first) ===== */
+.right-pane.script-pane{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-card);display:flex;flex-direction:column;overflow:hidden;max-height:calc(100vh - 210px);position:sticky;top:118px;}
+.script-pane-head{flex:0 0 auto;padding:16px 22px;border-bottom:1px solid var(--border);background:var(--primary-tint);}
+.script-pane-title{font-family:var(--font);font-weight:700;font-size:15.5px;color:var(--primary-dark);}
+.script-pane-body{flex:1 1 auto;overflow-y:auto;padding:20px 22px;font-family:var(--font-transcript);font-size:16.5px;line-height:1.7;color:var(--ink);}
+.script-pane-body p{margin:0 0 14px;}
+.script-pane-body p:last-child{margin-bottom:0;}
+.script-pane-placeholder{color:var(--ink-soft);font-style:italic;}
+body.is-review-listening .part-view .wrap-wide{max-width:min(1900px,98vw);}
+body.is-review-listening .split-layout{display:grid;grid-template-columns:1fr 1.4fr;max-width:min(1900px,98vw);margin:0 auto;gap:24px;}
+body.is-review-listening .left-pane{width:auto;}
+@media (max-width:980px){
+ body.is-review-listening .split-layout{grid-template-columns:1fr;max-width:1200px;}
+ body.is-review-listening .right-pane.script-pane{position:static;top:auto;max-height:60vh;margin-top:20px;}
+}
+
+/* ---- Map (Q15-20): map left, A-I grid right | Matching (Q25-30): novels left, topics right ---- */
+.map-layout{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:22px;align-items:start;margin:6px 0 10px}
+.map-figure{margin:0;border:1.5px solid var(--table-border);border-radius:12px;padding:10px;background:#fff;position:sticky;top:200px}
+.map-figure img{display:block;width:100%;height:auto}
+.map-table-wrap{overflow-x:auto}
+table.map-grid{width:100%;border-collapse:collapse;font-size:15px;border-top:1.5px solid var(--ink)}
+table.map-grid th{text-align:center;font-weight:700;font-size:14px;padding:8px 2px;border-bottom:2px solid var(--ink);border-left:1px solid var(--ink)}
+table.map-grid th:first-child{border-left:none;border-bottom:none}
+table.map-grid th:nth-child(2){border-left:2px solid var(--ink)}
+table.map-grid td.mg-question{padding:10px 8px 10px 2px;border-top:1px solid var(--ink);line-height:1.35;vertical-align:middle;min-width:150px}
+table.map-grid td.mg-question .mc-num{display:inline-flex;vertical-align:middle;margin-right:8px}
+table.map-grid td.mg-question .mc-stem{display:inline;font-size:15.5px;padding:0}
+table.map-grid td.mg-cell.mc-option{display:table-cell;position:static;padding:0;height:52px;min-height:0;min-width:30px;text-align:center;vertical-align:middle;border:0;border-radius:0;border-top:1px solid var(--ink);border-left:1px solid var(--ink);background:transparent}
+table.map-grid td.mg-cell.mc-option:nth-child(2){border-left:2px solid var(--ink)}
+table.map-grid td.mg-cell label{display:flex;align-items:center;justify-content:center;width:100%;height:100%;min-height:52px;margin:0;cursor:pointer}
+table.map-grid tbody tr:last-child td{border-bottom:1px solid var(--ink)}
+table.map-grid td.mg-cell.mc-option:has(input:checked){background:var(--primary-tint-strong)}
+table.map-grid td.mg-cell.mc-option.opt-correct{background:var(--primary-tint);border-top-color:var(--ink);border-left-color:var(--ink)}
+table.map-grid td.mg-cell.mc-option.opt-wrong{background:var(--danger-bg);border-top-color:var(--ink);border-left-color:var(--ink)}
+tr.mc-block.map-row,tr.mc-block.map-row.is-review-correct,tr.mc-block.map-row.is-review-wrong{border:0;padding:0;margin:0;border-radius:0;box-shadow:none;cursor:default}
+tr.map-row.is-review-correct td.mg-question{background:var(--primary-tint)}
+tr.map-row.is-review-wrong td.mg-question{background:var(--danger-bg)}
+
+.match-layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:20px;align-items:start;margin:6px 0 10px}
+.match-rows .mc-block{margin-bottom:12px;padding:14px 16px;cursor:default}
+.match-rows .mc-head{align-items:center;margin-bottom:10px}
+.match-rows .mc-stem{font-size:17px}
+.match-radios{display:none!important}
+.match-slot{margin-left:38px;min-height:48px;border:1.5px dashed var(--ink-faint);border-radius:9px;background:var(--bg);display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 10px;color:var(--ink-faint);font-size:14.5px;transition:border-color .12s,background .12s}
+.match-slot.is-over{border-color:var(--primary);background:var(--primary-tint);box-shadow:0 0 0 3px var(--primary-tint-strong)}
+body.has-picked-topic .match-slot:not(.is-filled){border-color:var(--primary);cursor:pointer}
+.match-slot.is-filled{border-style:solid;border-color:var(--primary);background:var(--primary-tint-strong);color:var(--ink)}
+.match-chip-in{display:inline-flex;align-items:center;gap:10px;font-size:16px;font-weight:600;cursor:grab;touch-action:none;user-select:none}
+.match-chip-in b,.topic-chip b{width:23px;height:23px;flex:0 0 auto;border-radius:50%;border:1.5px solid var(--primary);color:var(--primary-dark);display:flex;align-items:center;justify-content:center;font-size:13px}
+.match-clear{border:0;background:transparent;font-size:22px;line-height:1;color:var(--ink-soft);cursor:pointer;padding:0 6px}
+.topic-bank{border:1.5px solid var(--table-border);border-radius:12px;padding:14px 16px 8px;background:var(--primary-tint);position:sticky;top:200px}
+.topic-bank .notes-title{margin-bottom:10px}
+.topic-hint{font-weight:400;font-size:13px;color:var(--ink-soft)}
+.topic-chip{display:flex;align-items:center;gap:10px;padding:10px 12px;margin:0 0 8px;border:1.5px solid var(--table-border);border-radius:9px;background:var(--surface);font-size:16px;cursor:grab;touch-action:none;user-select:none;min-height:44px}
+.topic-chip.is-used{opacity:.4;border-style:dashed;cursor:not-allowed}
+.topic-chip.is-picked{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-tint-strong)}
+.topic-chip.is-dragging,.match-chip-in.is-dragging{opacity:.35}
+.match-ghost{position:fixed;left:0;top:0;pointer-events:none;z-index:9999;background:var(--surface);border:1.5px solid var(--primary);border-radius:9px;padding:8px 14px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.18);white-space:pre}
+body.is-match-dragging{cursor:grabbing;user-select:none}
+.match-row.is-review-correct .match-slot{border-color:var(--primary);background:var(--primary-tint)}
+.match-row.is-review-wrong .match-slot{border-color:var(--danger);background:var(--danger-bg)}
+.match-correct-hint{margin:8px 0 0 38px;font-size:13.5px;font-weight:700;color:var(--primary-dark)}
+body.is-review-listening .match-slot,body.is-review-listening .topic-chip{pointer-events:none}
+body.is-review-listening .topic-chip{opacity:.7}
+body.is-review-listening .map-layout,body.is-review-listening .match-layout{grid-template-columns:1fr}
+body.is-review-listening .map-figure,body.is-review-listening .topic-bank{position:static}
+#saveGate{position:fixed;inset:0;z-index:100000;background:rgba(255,255,255,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:flex;align-items:center;justify-content:center;padding:20px}
+#saveGate[hidden],#saveBanner[hidden]{display:none}
+#saveGate .sg-card{max-width:520px;width:100%;background:#fff;border:2px solid var(--primary);border-radius:18px;padding:28px 26px;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.14)}
+#saveGate h3{margin:14px 0 8px;font-size:21px;line-height:1.3}
+#saveGate p{margin:0 0 6px;font-size:15.5px;line-height:1.5;overflow-wrap:anywhere}
+#saveGate .sg-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+#sgSpin{width:44px;height:44px;margin:0 auto;border:5px solid var(--primary-tint-strong);border-top-color:var(--primary);border-radius:50%;animation:sgspin 1s linear infinite}
+#sgSpin[hidden]{display:none}
+@keyframes sgspin{to{transform:rotate(360deg)}}
+#saveBanner{position:fixed;top:8px;left:50%;transform:translateX(-50%);z-index:99999;background:#b91c1c;color:#fff;font:700 14px var(--font);padding:8px 16px;border-radius:999px;box-shadow:0 4px 16px rgba(0,0,0,.25);max-width:94vw;text-align:center}
+body.save-pending #result .score-row{filter:none}
+
+@media(max-width:900px){.map-layout,.match-layout{grid-template-columns:1fr}.map-figure,.topic-bank{position:static}.topic-bank{order:-1}}
+</style></head>
+<body>
+
+<header class="page-header">
+  <div class="wrap wrap-wide">
+    
+    <h1 class="page-title">IELTS Listening Full Test</h1>
+    <p class="header-meta"><strong>Cambridge IELTS 15 – Test 3</strong></p>
+    <p class="header-scope" id="headerScope">Part 1 | Questions 1–10</p>
+    <button type="button" id="rvBackBtn">← Xem kết quả &amp; hướng dẫn</button>
+    <p class="tagline">40 questions · One continuous recording · 2 minutes to review</p>
+  </div>
+</header>
+
+<section id="startScreen" class="exam-card">
+<div id="entry-step-info">
+<h2>Sẵn sàng bắt đầu?</h2>
+<p class="instructions">Bài Nghe gồm 4 phần (Part 1–4) với 40 câu hỏi. Hãy đeo tai nghe và kiểm tra âm lượng thiết bị trước khi bắt đầu — audio chỉ được phát duy nhất 1 lần trong lúc làm bài.</p>
+<div class="entry-section-title">Lưu ý trước khi làm bài</div>
+<div class="notice-box"><ul><li>Audio chỉ được phát 1 lần duy nhất trong lúc làm bài — không thể dừng, tua hoặc nghe lại.</li><li>Sau khi audio kết thúc, bạn có 2 phút để kiểm tra và chỉnh sửa đáp án trước khi bài tự động nộp.</li><li>Mỗi bài chỉ được làm và nộp một lần.</li><li>Hãy đeo tai nghe, kiểm tra âm lượng và đảm bảo kết nối mạng ổn định trước khi bắt đầu.</li><li>Hãy kiểm tra kỹ họ tên và dấu tiếng Việt trước khi bắt đầu.</li></ul></div>
+<div class="review-callout"><p class="review-callout-title">🔁 Đã làm bài này trước đó?</p><p class="review-callout-body">Hãy nhập đúng họ tên đã dùng khi làm bài, sau đó chọn <strong>"Xem lại bài đã làm"</strong> ở bước cuối. Phần xem lại có đầy đủ audio để bạn tự tua và nghe lại không giới hạn số lần, giúp đối chiếu đáp án.</p></div>
+<div class="entry-section-title">Lưu ý về trình duyệt</div>
+<div class="notice-box"><ul><li>Vui lòng sử dụng một trình duyệt duy nhất trong suốt quá trình làm bài và xem lại bài: Chrome, Safari hoặc Cốc Cốc.</li><li>Nếu muốn xem lại bài sau khi đóng tab, hãy mở lại bằng đúng trình duyệt và đúng thiết bị đã sử dụng khi làm bài.</li><li>Không sử dụng tab ẩn danh hoặc chế độ duyệt web riêng tư.</li><li>Không xóa dữ liệu trình duyệt trước khi xem lại bài.</li></ul></div>
+<div class="notice-box warning">⚠️ Để có thể xem lại bài sau này, hãy sử dụng đúng một trình duyệt và không sử dụng chế độ ẩn danh.</div>
+<p class="help">Giữ nguyên trang này trong suốt quá trình làm bài. Nếu tải lại trang, hãy nhập đúng họ tên đã dùng trước đó: đồng hồ vẫn tiếp tục chạy và phần audio đã bỏ lỡ sẽ không được phát lại.</p>
+<div class="entry-section-title">Thông tin học viên</div>
+<label for="studentName">Họ và tên</label><input id="studentName" maxlength="120" autocomplete="name" placeholder="Nhập đầy đủ họ và tên có dấu tiếng Việt"><ul class="field-hint-list"><li>Nhập đầy đủ họ và tên có dấu tiếng Việt</li><li>Không viết tắt, không bỏ dấu</li><li>Ví dụ: <strong>Phạm Thị Hương</strong></li></ul>
+<input type="hidden" id="cycleId" value="C15-T3">
+<div class="field-error" id="infoError"></div>
+<div class="entry-actions-row"><button type="button" class="exam-button" id="infoContinueBtn">Tiếp tục</button></div>
+</div>
+<div id="entry-step-confirm" hidden>
+<p class="instructions">Bạn chắc chắn đã điền đúng họ tên và Chu kỳ ôn thi chưa?</p>
+<div class="confirm-name-box" id="confirmInfoBox"></div>
+<label class="checkbox-row"><input type="checkbox" id="confirmCheckbox"><span>Tôi đã kiểm tra và xác nhận thông tin của mình.</span></label>
+<div class="entry-actions-row"><button type="button" class="exam-button secondary" id="confirmBackBtn">Quay lại</button><button type="button" class="exam-button" id="confirmContinueBtn" disabled>Tiếp tục</button></div>
+</div>
+<form id="startForm">
+<div id="entry-step-actions" hidden>
+<div class="entry-status-message" id="entryStatusMessage" hidden></div>
+<p id="audioReady" class="help">Đang tải audio…</p>
+<p id="startError" class="alert" role="alert"></p>
+<div class="entry-actions-row"><button id="startButton" class="exam-button" disabled>Bắt đầu làm bài Nghe</button><button type="button" class="exam-button secondary" id="reviewButton" hidden>Xem lại bài đã làm</button></div>
+<p class="field-hint" id="reviewHint" hidden>Phần xem lại có đầy đủ audio để bạn tự tua và nghe lại không giới hạn số lần.</p>
+<button type="button" class="btn-text" id="actionsBackBtn">Quay lại</button>
+</div>
+</form>
+</section>
+<div id="saveGate" role="alertdialog" aria-live="assertive" hidden><div class="sg-card"><div id="sgSpin"></div><h3 id="sgTitle"></h3><p id="sgMsg"></p><div id="sgActions" class="sg-actions" hidden><button id="sgRetry" class="exam-button" type="button">Thử lưu lại</button><button id="sgDownload" class="exam-button secondary" type="button">Tải kết quả (.json)</button><button id="sgShow" class="exam-button secondary" type="button">Xem điểm (chưa lưu)</button></div></div></div><div id="saveBanner" role="status" hidden></div>
+<section id="result" class="exam-card" hidden aria-live="polite"><h2>KẾT QUẢ BÀI LÀM</h2><p id="resultName"></p><div class="score-row"><div class="metric">Raw score<strong id="rawScore"></strong></div><div class="metric">Estimated IELTS band<strong id="bandScore"></strong></div><div class="metric">Time used<strong id="timeUsed"></strong></div></div><div class="part-score-grid" id="partScores"></div><p id="attemptNote"></p><p id="saveStatus" role="status"></p><button id="retrySave" class="exam-button">Retry saving result</button> <button id="downloadResult" class="exam-button secondary">Download result</button>
+<div class="guide-wrap">
+<h3 class="guide-title">HƯỚNG DẪN &amp; LỰA CHỌN CHỮA BÀI</h3>
+<p class="guide-sub">Làm theo 3 bước để cải thiện kỹ năng nghe.</p>
+<div class="guide-grid">
+<div class="guide-card g-green"><div class="g-tag">ĐỌC HIỂU</div><div class="g-head">Hiểu nội dung</div><ul><li>Đọc và dịch script.</li><li>Tra từ mới.</li><li>Tìm nguyên nhân sai.</li></ul></div>
+<div class="guide-card g-blue"><div class="g-tag">NHẬN DIỆN</div><div class="g-head">Luyện nghe âm</div><ul><li>Vừa nghe vừa đọc script.</li><li>Chú ý từ khó nghe.</li><li>Nghe lại không nhìn script.</li></ul></div>
+<div class="guide-card g-purple"><div class="g-tag">NGHE HIỂU</div><div class="g-head">Nghe trực tiếp</div><ul><li>Nghe toàn bộ bài.</li><li>Tập trung vào ý nghĩa.</li><li>Nghe liền mạch, không dừng.</li></ul></div>
+</div>
+<div class="option-box">
+<div class="option-row"><div class="option-text">OPTION 1 — Chữa bài ngay: Nhấn nút “Ấn vào đây để chữa bài” để chuyển sang trang chữa bài.</div><button type="button" class="exam-button" id="startReviewBtn">Ấn vào đây để chữa bài</button></div>
+<div class="option-row"><div class="option-text">OPTION 2 — Chữa bài sau: Nếu chưa chữa được ngay và đã đóng tab, hãy đăng nhập lại bằng đúng họ tên của bạn và chọn “Xem lại bài”.</div></div>
+</div>
+</div></section><div id="exam" hidden>
+<div class="control-stack" id="controlStack">
+  <section class="player-bar">
+    <div class="exam-status"><div><div id="candidate"></div><div id="phaseLabel">Ready</div><p id="audioStatus">Audio plays once. Playback controls are disabled.</p><button id="resumeAudio" class="exam-button secondary" hidden>Continue at current position</button></div><div><div id="timer" role="timer">00:00</div><div id="answered">0 / 40 answered</div></div></div><audio id="audio" preload="metadata" controlslist="nodownload noplaybackrate" disableRemotePlayback src="audio.mp3"
+  </section>
+
+  <nav class="qnav">
+    <div class="qnav-inner" id="qnavInner"></div>
+  </nav>
+</div>
+
+<main class="content">
+  <div class="part-view" id="part1View">
+  <div class="wrap wrap-wide">
+    <div class="split-layout">
+
+      <section class="left-pane">
+        <h2 class="section-heading">Employment Agency: Possible Jobs</h2>
+        <p class="pane-sub pane-sub-strong">Questions 1&ndash;10 · Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.</p>
+        <p class="notes-title">First Job</p>
+        <ul class="notes">
+          <li>Administrative assistant in a company that produces <span class="qchip" data-q="1"><span class="qchip-num" data-q="1">1</span><input class="answer-input" data-q="1" aria-label="Answer 1" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> (North London)</li>
+        </ul>
+        <p class="notes-title" style="margin-top:14px;">Responsibilities</p>
+        <ul class="notes">
+          <li>data entry</li>
+          <li>go to <span class="qchip" data-q="2"><span class="qchip-num" data-q="2">2</span><input class="answer-input" data-q="2" aria-label="Answer 2" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> and take notes</li>
+          <li>general admin</li>
+          <li>management of <span class="qchip" data-q="3"><span class="qchip-num" data-q="3">3</span><input class="answer-input" data-q="3" aria-label="Answer 3" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span></li>
+        </ul>
+        <p class="notes-title" style="margin-top:14px;">Requirements</p>
+        <ul class="notes">
+          <li>good computer skills including spreadsheets</li>
+          <li>good interpersonal skills</li>
+          <li>attention to <span class="qchip" data-q="4"><span class="qchip-num" data-q="4">4</span><input class="answer-input" data-q="4" aria-label="Answer 4" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span></li>
+        </ul>
+        <p class="notes-title" style="margin-top:14px;">Experience</p>
+        <ul class="notes">
+          <li>need a minimum of <span class="qchip" data-q="5"><span class="qchip-num" data-q="5">5</span><input class="answer-input" data-q="5" aria-label="Answer 5" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> of experience of teleconferencing</li>
+        </ul>
+
+        <p class="notes-title" style="margin-top:22px;">Second Job</p>
+        <p style="margin:0 0 8px;color:var(--ink);font-size:15px;">Warehouse assistant in South London</p>
+        <p class="notes-title">Responsibilities</p>
+        <ul class="notes">
+          <li>stock management</li>
+          <li>managing <span class="qchip" data-q="6"><span class="qchip-num" data-q="6">6</span><input class="answer-input" data-q="6" aria-label="Answer 6" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span></li>
+        </ul>
+        <p class="notes-title" style="margin-top:14px;">Requirements</p>
+        <ul class="notes">
+          <li>ability to work with numbers</li>
+          <li>good computer skills</li>
+          <li>very organised and <span class="qchip" data-q="7"><span class="qchip-num" data-q="7">7</span><input class="answer-input" data-q="7" aria-label="Answer 7" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span></li>
+          <li>good communication skills</li>
+          <li>used to working in a <span class="qchip" data-q="8"><span class="qchip-num" data-q="8">8</span><input class="answer-input" data-q="8" aria-label="Answer 8" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span></li>
+          <li>able to cope with items that are <span class="qchip" data-q="9"><span class="qchip-num" data-q="9">9</span><input class="answer-input" data-q="9" aria-label="Answer 9" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span></li>
+        </ul>
+        <p class="notes-title" style="margin-top:14px;">Need experience of</p>
+        <ul class="notes">
+          <li>driving in London</li>
+          <li>warehouse work</li>
+          <li><span class="qchip" data-q="10"><span class="qchip-num" data-q="10">10</span><input class="answer-input" data-q="10" aria-label="Answer 10" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> service</li>
+        </ul>
+      </section>
+
+      <aside class="right-pane script-pane" id="scriptPanePart1" hidden aria-label="Script Part 1">
+  <div class="script-pane-head"><span class="script-pane-title">🎧 Script &mdash; Part 1</span></div>
+  <div class="script-pane-body" id="scriptBodyPart1"><p class="script-pane-placeholder">Script cho Part 1 se duoc cap nhat sau.</p></div>
+      </aside>
+
+    </div>
+  </div>
+  </div>
+
+  <div class="part-view" id="part2View" hidden>
+  <div class="wrap wrap-wide">
+    <div class="split-layout">
+
+      <section class="left-pane">
+        <h2 class="section-heading">Street Play Scheme</h2>
+        <p class="pane-sub pane-sub-strong">Questions 11&ndash;16 · Choose the correct letter, A, B or C.</p>
+          <div class="mc-block" data-q="11">
+            <div class="mc-head"><p class="mc-num">11</p><p class="mc-stem">When did the Street Play Scheme first take place?</p></div>
+            <div class="mc-options">
+              <label class="mc-option" data-letter="A"><input type="radio" name="q11" value="A" aria-label="Question 11, option A"><span class="mc-option-letter">A</span><span>two years ago</span></label>
+              <label class="mc-option" data-letter="B"><input type="radio" name="q11" value="B" aria-label="Question 11, option B"><span class="mc-option-letter">B</span><span>three years ago</span></label>
+              <label class="mc-option" data-letter="C"><input type="radio" name="q11" value="C" aria-label="Question 11, option C"><span class="mc-option-letter">C</span><span>six years ago</span></label>
+            </div>
+          </div>
+          <div class="mc-block" data-q="12">
+            <div class="mc-head"><p class="mc-num">12</p><p class="mc-stem">How often is Beechwood Road closed to traffic now?</p></div>
+            <div class="mc-options">
+              <label class="mc-option" data-letter="A"><input type="radio" name="q12" value="A" aria-label="Question 12, option A"><span class="mc-option-letter">A</span><span>once a week</span></label>
+              <label class="mc-option" data-letter="B"><input type="radio" name="q12" value="B" aria-label="Question 12, option B"><span class="mc-option-letter">B</span><span>on Saturdays and Sundays</span></label>
+              <label class="mc-option" data-letter="C"><input type="radio" name="q12" value="C" aria-label="Question 12, option C"><span class="mc-option-letter">C</span><span>once a month</span></label>
+            </div>
+          </div>
+          <div class="mc-block" data-q="13">
+            <div class="mc-head"><p class="mc-num">13</p><p class="mc-stem">Who is responsible for closing the road?</p></div>
+            <div class="mc-options">
+              <label class="mc-option" data-letter="A"><input type="radio" name="q13" value="A" aria-label="Question 13, option A"><span class="mc-option-letter">A</span><span>a council official</span></label>
+              <label class="mc-option" data-letter="B"><input type="radio" name="q13" value="B" aria-label="Question 13, option B"><span class="mc-option-letter">B</span><span>the police</span></label>
+              <label class="mc-option" data-letter="C"><input type="radio" name="q13" value="C" aria-label="Question 13, option C"><span class="mc-option-letter">C</span><span>local wardens</span></label>
+            </div>
+          </div>
+          <div class="mc-block" data-q="14">
+            <div class="mc-head"><p class="mc-num">14</p><p class="mc-stem">Residents who want to use their cars</p></div>
+            <div class="mc-options">
+              <label class="mc-option" data-letter="A"><input type="radio" name="q14" value="A" aria-label="Question 14, option A"><span class="mc-option-letter">A</span><span>have to park in another street.</span></label>
+              <label class="mc-option" data-letter="B"><input type="radio" name="q14" value="B" aria-label="Question 14, option B"><span class="mc-option-letter">B</span><span>must drive very slowly.</span></label>
+              <label class="mc-option" data-letter="C"><input type="radio" name="q14" value="C" aria-label="Question 14, option C"><span class="mc-option-letter">C</span><span>need permission from a warden.</span></label>
+            </div>
+          </div>
+          <div class="mc-block" data-q="15">
+            <div class="mc-head"><p class="mc-num">15</p><p class="mc-stem">Alice says that Street Play Schemes are most needed in</p></div>
+            <div class="mc-options">
+              <label class="mc-option" data-letter="A"><input type="radio" name="q15" value="A" aria-label="Question 15, option A"><span class="mc-option-letter">A</span><span>wealthy areas.</span></label>
+              <label class="mc-option" data-letter="B"><input type="radio" name="q15" value="B" aria-label="Question 15, option B"><span class="mc-option-letter">B</span><span>quiet suburban areas.</span></label>
+              <label class="mc-option" data-letter="C"><input type="radio" name="q15" value="C" aria-label="Question 15, option C"><span class="mc-option-letter">C</span><span>areas with heavy traffic.</span></label>
+            </div>
+          </div>
+          <div class="mc-block" data-q="16">
+            <div class="mc-head"><p class="mc-num">16</p><p class="mc-stem">What has been the reaction of residents who are not parents?</p></div>
+            <div class="mc-options">
+              <label class="mc-option" data-letter="A"><input type="radio" name="q16" value="A" aria-label="Question 16, option A"><span class="mc-option-letter">A</span><span>Many of them were unhappy at first.</span></label>
+              <label class="mc-option" data-letter="B"><input type="radio" name="q16" value="B" aria-label="Question 16, option B"><span class="mc-option-letter">B</span><span>They like seeing children play in the street.</span></label>
+              <label class="mc-option" data-letter="C"><input type="radio" name="q16" value="C" aria-label="Question 16, option C"><span class="mc-option-letter">C</span><span>They are surprised by the lack of noise.</span></label>
+            </div>
+          </div>
+
+        <p class="pane-sub pane-sub-strong" style="margin-top:22px;">Questions 17 and 18 · Choose TWO letters, A&ndash;E.</p>
+          <div class="mc-block" data-q="17-18">
+            <div class="mc-head"><p class="mc-num">17-18</p><p class="mc-stem">Which TWO benefits for children does Alice think are the most important?</p></div>
+            <div class="mc-options">
+              <label class="mc-option" data-letter="A"><input type="checkbox" name="q17-18" value="A" aria-label="Question 17-18, option A"><span class="mc-option-letter">A</span><span>increased physical activity</span></label>
+              <label class="mc-option" data-letter="B"><input type="checkbox" name="q17-18" value="B" aria-label="Question 17-18, option B"><span class="mc-option-letter">B</span><span>increased sense of independence</span></label>
+              <label class="mc-option" data-letter="C"><input type="checkbox" name="q17-18" value="C" aria-label="Question 17-18, option C"><span class="mc-option-letter">C</span><span>opportunity to learn new games</span></label>
+              <label class="mc-option" data-letter="D"><input type="checkbox" name="q17-18" value="D" aria-label="Question 17-18, option D"><span class="mc-option-letter">D</span><span>opportunity to be part of a community</span></label>
+              <label class="mc-option" data-letter="E"><input type="checkbox" name="q17-18" value="E" aria-label="Question 17-18, option E"><span class="mc-option-letter">E</span><span>opportunity to make new friends</span></label>
+            </div>
+          </div>
+
+        <p class="pane-sub pane-sub-strong" style="margin-top:22px;">Questions 19 and 20 · Choose TWO letters, A&ndash;E.</p>
+          <div class="mc-block" data-q="19-20">
+            <div class="mc-head"><p class="mc-num">19-20</p><p class="mc-stem">Which TWO results of the King Street experiment surprised Alice?</p></div>
+            <div class="mc-options">
+              <label class="mc-option" data-letter="A"><input type="checkbox" name="q19-20" value="A" aria-label="Question 19-20, option A"><span class="mc-option-letter">A</span><span>more shoppers</span></label>
+              <label class="mc-option" data-letter="B"><input type="checkbox" name="q19-20" value="B" aria-label="Question 19-20, option B"><span class="mc-option-letter">B</span><span>improved safety</span></label>
+              <label class="mc-option" data-letter="C"><input type="checkbox" name="q19-20" value="C" aria-label="Question 19-20, option C"><span class="mc-option-letter">C</span><span>less air pollution</span></label>
+              <label class="mc-option" data-letter="D"><input type="checkbox" name="q19-20" value="D" aria-label="Question 19-20, option D"><span class="mc-option-letter">D</span><span>more relaxed atmosphere</span></label>
+              <label class="mc-option" data-letter="E"><input type="checkbox" name="q19-20" value="E" aria-label="Question 19-20, option E"><span class="mc-option-letter">E</span><span>less noise pollution</span></label>
+            </div>
+          </div>
+      </section>
+
+      <aside class="right-pane script-pane" id="scriptPanePart2" hidden aria-label="Script Part 2">
+  <div class="script-pane-head"><span class="script-pane-title">🎧 Script &mdash; Part 2</span></div>
+  <div class="script-pane-body" id="scriptBodyPart2"><p class="script-pane-placeholder">Script cho Part 2 se duoc cap nhat sau.</p></div>
+      </aside>
+
+    </div>
+  </div>
+  </div>
+
+  <div class="part-view" id="part3View" hidden>
+  <div class="wrap wrap-wide">
+    <div class="split-layout">
+
+      <section class="left-pane">
+        <h2 class="section-heading">Hazel's Media Studies assignment</h2>
+        <p class="pane-sub pane-sub-strong">Questions 21&ndash;26 · Complete the notes below. Write ONE WORD ONLY for each answer.</p>
+        <p class="notes-title">What Hazel should analyse about items in newspapers</p>
+        <ul class="notes">
+          <li>what <span class="qchip" data-q="21"><span class="qchip-num" data-q="21">21</span><input class="answer-input" data-q="21" aria-label="Answer 21" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> the item is on</li>
+          <li>the <span class="qchip" data-q="22"><span class="qchip-num" data-q="22">22</span><input class="answer-input" data-q="22" aria-label="Answer 22" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> of the item, including the headline</li>
+          <li>any <span class="qchip" data-q="23"><span class="qchip-num" data-q="23">23</span><input class="answer-input" data-q="23" aria-label="Answer 23" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> accompanying the item</li>
+          <li>the <span class="qchip" data-q="24"><span class="qchip-num" data-q="24">24</span><input class="answer-input" data-q="24" aria-label="Answer 24" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> of the item, e.g. what's made prominent</li>
+          <li>the writer's main <span class="qchip" data-q="25"><span class="qchip-num" data-q="25">25</span><input class="answer-input" data-q="25" aria-label="Answer 25" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span></li>
+          <li>the <span class="qchip" data-q="26"><span class="qchip-num" data-q="26">26</span><input class="answer-input" data-q="26" aria-label="Answer 26" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> the writer may make about the reader</li>
+        </ul>
+
+        <p class="pane-sub pane-sub-strong" style="margin-top:22px;">Questions 27&ndash;30 · What does Hazel decide to do about each of the following types of articles? Choose the correct letter, A, B or C.</p>
+        <div class="notice-box" style="margin-bottom:14px;"><strong>A</strong> She will definitely look for a suitable article. &nbsp; <strong>B</strong> She may look for a suitable article. &nbsp; <strong>C</strong> She definitely won't look for an article.</div>
+          <div class="mc-block" data-q="27">
+            <div class="mc-head"><p class="mc-num">27</p><p class="mc-stem">national news item</p></div>
+            <div class="mc-options">
+              <label class="mc-option" data-letter="A"><input type="radio" name="q27" value="A" aria-label="Question 27, option A"><span class="mc-option-letter">A</span></label>
+              <label class="mc-option" data-letter="B"><input type="radio" name="q27" value="B" aria-label="Question 27, option B"><span class="mc-option-letter">B</span></label>
+              <label class="mc-option" data-letter="C"><input type="radio" name="q27" value="C" aria-label="Question 27, option C"><span class="mc-option-letter">C</span></label>
+            </div>
+          </div>
+          <div class="mc-block" data-q="28">
+            <div class="mc-head"><p class="mc-num">28</p><p class="mc-stem">editorial</p></div>
+            <div class="mc-options">
+              <label class="mc-option" data-letter="A"><input type="radio" name="q28" value="A" aria-label="Question 28, option A"><span class="mc-option-letter">A</span></label>
+              <label class="mc-option" data-letter="B"><input type="radio" name="q28" value="B" aria-label="Question 28, option B"><span class="mc-option-letter">B</span></label>
+              <label class="mc-option" data-letter="C"><input type="radio" name="q28" value="C" aria-label="Question 28, option C"><span class="mc-option-letter">C</span></label>
+            </div>
+          </div>
+          <div class="mc-block" data-q="29">
+            <div class="mc-head"><p class="mc-num">29</p><p class="mc-stem">human interest</p></div>
+            <div class="mc-options">
+              <label class="mc-option" data-letter="A"><input type="radio" name="q29" value="A" aria-label="Question 29, option A"><span class="mc-option-letter">A</span></label>
+              <label class="mc-option" data-letter="B"><input type="radio" name="q29" value="B" aria-label="Question 29, option B"><span class="mc-option-letter">B</span></label>
+              <label class="mc-option" data-letter="C"><input type="radio" name="q29" value="C" aria-label="Question 29, option C"><span class="mc-option-letter">C</span></label>
+            </div>
+          </div>
+          <div class="mc-block" data-q="30">
+            <div class="mc-head"><p class="mc-num">30</p><p class="mc-stem">arts</p></div>
+            <div class="mc-options">
+              <label class="mc-option" data-letter="A"><input type="radio" name="q30" value="A" aria-label="Question 30, option A"><span class="mc-option-letter">A</span></label>
+              <label class="mc-option" data-letter="B"><input type="radio" name="q30" value="B" aria-label="Question 30, option B"><span class="mc-option-letter">B</span></label>
+              <label class="mc-option" data-letter="C"><input type="radio" name="q30" value="C" aria-label="Question 30, option C"><span class="mc-option-letter">C</span></label>
+            </div>
+          </div>
+      </section>
+
+      <aside class="right-pane script-pane" id="scriptPanePart3" hidden aria-label="Script Part 3">
+  <div class="script-pane-head"><span class="script-pane-title">🎧 Script &mdash; Part 3</span></div>
+  <div class="script-pane-body" id="scriptBodyPart3"><p class="script-pane-placeholder">Script cho Part 3 se duoc cap nhat sau.</p></div>
+      </aside>
+
+    </div>
+  </div>
+  </div>
+
+  <div class="part-view" id="part4View" hidden>
+  <div class="wrap wrap-wide">
+    <div class="split-layout">
+
+      <section class="left-pane">
+        <h2 class="section-heading">Early history of keeping clean</h2>
+        <p class="pane-sub pane-sub-strong">Questions 31&ndash;40 · Complete the notes below. Write ONE WORD ONLY for each answer.</p>
+
+        <p class="notes-title">Prehistoric times:</p>
+        <ul class="notes">
+          <li>water was used to wash off <span class="qchip" data-q="31"><span class="qchip-num" data-q="31">31</span><input class="answer-input" data-q="31" aria-label="Answer 31" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span></li>
+        </ul>
+
+        <p class="notes-title" style="margin-top:16px;">Ancient Babylon:</p>
+        <ul class="notes">
+          <li>soap-like material found in <span class="qchip" data-q="32"><span class="qchip-num" data-q="32">32</span><input class="answer-input" data-q="32" aria-label="Answer 32" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> cylinders</li>
+        </ul>
+
+        <p class="notes-title" style="margin-top:16px;">Ancient Greece:</p>
+        <ul class="notes">
+          <li>people cleaned themselves with sand and other substances</li>
+          <li>used a strigil &ndash; scraper made of <span class="qchip" data-q="33"><span class="qchip-num" data-q="33">33</span><input class="answer-input" data-q="33" aria-label="Answer 33" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span></li>
+          <li>washed clothes in streams</li>
+        </ul>
+
+        <p class="notes-title" style="margin-top:16px;">Ancient Germany and Gaul:</p>
+        <ul class="notes">
+          <li>used soap to colour their <span class="qchip" data-q="34"><span class="qchip-num" data-q="34">34</span><input class="answer-input" data-q="34" aria-label="Answer 34" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span></li>
+        </ul>
+
+        <p class="notes-title" style="margin-top:16px;">Ancient Rome:</p>
+        <ul class="notes">
+          <li>animal fat, ashes and clay mixed through action of rain, used for washing clothes</li>
+          <li>from about 312 BC, water carried to Roman <span class="qchip" data-q="35"><span class="qchip-num" data-q="35">35</span><input class="answer-input" data-q="35" aria-label="Answer 35" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> by aqueducts</li>
+        </ul>
+
+        <p class="notes-title" style="margin-top:16px;">Europe in Middle Ages:</p>
+        <ul class="notes">
+          <li>decline in bathing contributed to occurrence of <span class="qchip" data-q="36"><span class="qchip-num" data-q="36">36</span><input class="answer-input" data-q="36" aria-label="Answer 36" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span></li>
+          <li><span class="qchip" data-q="37"><span class="qchip-num" data-q="37">37</span><input class="answer-input" data-q="37" aria-label="Answer 37" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> began to be added to soap</li>
+        </ul>
+
+        <p class="notes-title" style="margin-top:16px;">Europe from 17th century:</p>
+        <ul class="notes">
+          <li>1600s: cleanliness and bathing started becoming usual</li>
+          <li>1791: Leblanc invented a way of making soda ash from <span class="qchip" data-q="38"><span class="qchip-num" data-q="38">38</span><input class="answer-input" data-q="38" aria-label="Answer 38" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span></li>
+          <li>early 1800s: Chevreul turned soapmaking into a <span class="qchip" data-q="39"><span class="qchip-num" data-q="39">39</span><input class="answer-input" data-q="39" aria-label="Answer 39" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span></li>
+          <li>from 1800s, there was no longer a <span class="qchip" data-q="40"><span class="qchip-num" data-q="40">40</span><input class="answer-input" data-q="40" aria-label="Answer 40" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> on soap</li>
+        </ul>
+      </section>
+
+      <aside class="right-pane script-pane" id="scriptPanePart4" hidden aria-label="Script Part 4">
+  <div class="script-pane-head"><span class="script-pane-title">🎧 Script &mdash; Part 4</span></div>
+  <div class="script-pane-body" id="scriptBodyPart4"><p class="script-pane-placeholder">Script cho Part 4 se duoc cap nhat sau.</p></div>
+      </aside>
+
+    </div>
+  </div>
+  </div>
+<footer class="site-footer">Cambridge IELTS 15 · Test 3 · Listening · 40 questions</footer>
+
+</div><nav class="part-nav" id="partNav" hidden>
+  <button class="part-nav-btn active" data-part="1">Part 1</button>
+  <button class="part-nav-btn" data-part="2">Part 2</button>
+  <button class="part-nav-btn" data-part="3">Part 3</button>
+  <button class="part-nav-btn" data-part="4">Part 4</button>
+</nav>
+
+<div id="teacherPanel" class="teacher-panel" hidden>
+  <p class="teacher-panel-head">Teacher Test Mode</p>
+  <button id="teacherSkip" type="button" class="exam-button secondary">Skip to Review</button>
+  <button id="teacherSubmit" type="button" class="exam-button">Submit Now</button>
+  <button id="teacherExit" type="button" class="exam-button secondary">Exit Teacher Mode</button>
+  <p id="teacherStatus" class="teacher-status" role="status"></p>
+</div>
+
+<div class="review-player-bar" id="reviewPlayerBar" hidden>
+<div class="review-player-inner">
+<span class="review-player-label">🎧 Nghe lại</span>
+<button type="button" class="review-skip-btn" id="reviewSkipBack" aria-label="Tua lùi 10 giây" title="Lùi 10 giây">&minus;10s</button>
+<button type="button" class="play-btn" id="reviewPlayBtn" aria-label="Phát hoặc tạm dừng"><svg id="reviewPlayIcon" viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M8 5v14l11-7z"/></svg></button>
+<button type="button" class="review-skip-btn" id="reviewSkipFwd" aria-label="Tua tới 10 giây" title="Tới 10 giây">+10s</button>
+<div class="progress-wrap"><div class="progress-track" id="reviewProgressTrack"><div class="progress-fill" id="reviewProgressFill"></div></div></div>
+<div class="time-display" id="reviewTimeDisplay">00:00 / 00:00</div>
+</div>
+<audio id="reviewAudio" preload="none"></audio>
+</div>
+
+<script>const TEST_CONFIG={"testId": "C15-L-T3", "book": "Cam 15", "test": "Test 3", "endpoint": "https://script.google.com/macros/s/AKfycbx0D3k0wJQ9fHtR0kVWDZw0qsvSbrj7WA6AqIJh8F4t5_ZvPs-Mx5X3QVXueko68fKS/exec"};
+const TEST_QUESTIONS=[{"id": "1", "part": 1, "type": "blank", "answer": "FURNITURE"}, {"id": "2", "part": 1, "type": "blank", "answer": "MEETINGS"}, {"id": "3", "part": 1, "type": "blank", "answer": "DIARY"}, {"id": "4", "part": 1, "type": "blank", "answer": ["DETAIL", "DETAILS"]}, {"id": "5", "part": 1, "type": "blank", "answer": ["1 YEAR", "ONE YEAR"]}, {"id": "6", "part": 1, "type": "blank", "answer": "DELIVERIES"}, {"id": "7", "part": 1, "type": "blank", "answer": "TIDY"}, {"id": "8", "part": 1, "type": "blank", "answer": "TEAM"}, {"id": "9", "part": 1, "type": "blank", "answer": "HEAVY"}, {"id": "10", "part": 1, "type": "blank", "answer": "CUSTOMER"}, {"id": "11", "part": 2, "type": "mc", "answer": "B", "options": [{"letter": "A", "text": "two years ago"}, {"letter": "B", "text": "three years ago"}, {"letter": "C", "text": "six years ago"}]}, {"id": "12", "part": 2, "type": "mc", "answer": "A", "options": [{"letter": "A", "text": "once a week"}, {"letter": "B", "text": "on Saturdays and Sundays"}, {"letter": "C", "text": "once a month"}]}, {"id": "13", "part": 2, "type": "mc", "answer": "C", "options": [{"letter": "A", "text": "a council official"}, {"letter": "B", "text": "the police"}, {"letter": "C", "text": "local wardens"}]}, {"id": "14", "part": 2, "type": "mc", "answer": "B", "options": [{"letter": "A", "text": "have to park in another street."}, {"letter": "B", "text": "must drive very slowly."}, {"letter": "C", "text": "need permission from a warden."}]}, {"id": "15", "part": 2, "type": "mc", "answer": "C", "options": [{"letter": "A", "text": "wealthy areas."}, {"letter": "B", "text": "quiet suburban areas."}, {"letter": "C", "text": "areas with heavy traffic."}]}, {"id": "16", "part": 2, "type": "mc", "answer": "B", "options": [{"letter": "A", "text": "Many of them were unhappy at first."}, {"letter": "B", "text": "They like seeing children play in the street."}, {"letter": "C", "text": "They are surprised by the lack of noise."}]}, {"id": "17-18", "part": 2, "type": "choose-two", "answer": ["B", "D"], "options": [{"letter": "A", "text": "increased physical activity"}, {"letter": "B", "text": "increased sense of independence"}, {"letter": "C", "text": "opportunity to learn new games"}, {"letter": "D", "text": "opportunity to be part of a community"}, {"letter": "E", "text": "opportunity to make new friends"}]}, {"id": "19-20", "part": 2, "type": "choose-two", "answer": ["A", "E"], "options": [{"letter": "A", "text": "more shoppers"}, {"letter": "B", "text": "improved safety"}, {"letter": "C", "text": "less air pollution"}, {"letter": "D", "text": "more relaxed atmosphere"}, {"letter": "E", "text": "less noise pollution"}]}, {"id": "21", "part": 3, "type": "blank", "answer": "PAGE"}, {"id": "22", "part": 3, "type": "blank", "answer": "SIZE"}, {"id": "23", "part": 3, "type": "blank", "answer": ["GRAPHICS", "GRAPHIC"]}, {"id": "24", "part": 3, "type": "blank", "answer": "STRUCTURE"}, {"id": "25", "part": 3, "type": "blank", "answer": "PURPOSE"}, {"id": "26", "part": 3, "type": "blank", "answer": ["ASSUMPTIONS", "ASSUMPTION"]}, {"id": "27", "part": 3, "type": "mc", "answer": "A", "options": [{"letter": "A", "text": "She will definitely look for a suitable article."}, {"letter": "B", "text": "She may look for a suitable article."}, {"letter": "C", "text": "She definitely won't look for an article."}]}, {"id": "28", "part": 3, "type": "mc", "answer": "C", "options": [{"letter": "A", "text": "She will definitely look for a suitable article."}, {"letter": "B", "text": "She may look for a suitable article."}, {"letter": "C", "text": "She definitely won't look for an article."}]}, {"id": "29", "part": 3, "type": "mc", "answer": "C", "options": [{"letter": "A", "text": "She will definitely look for a suitable article."}, {"letter": "B", "text": "She may look for a suitable article."}, {"letter": "C", "text": "She definitely won't look for an article."}]}, {"id": "30", "part": 3, "type": "mc", "answer": "B", "options": [{"letter": "A", "text": "She will definitely look for a suitable article."}, {"letter": "B", "text": "She may look for a suitable article."}, {"letter": "C", "text": "She definitely won't look for an article."}]}, {"id": "31", "part": 4, "type": "blank", "answer": "MUD"}, {"id": "32", "part": 4, "type": "blank", "answer": "CLAY"}, {"id": "33", "part": 4, "type": "blank", "answer": "METAL"}, {"id": "34", "part": 4, "type": "blank", "answer": "HAIR"}, {"id": "35", "part": 4, "type": "blank", "answer": ["BATHS", "BATH"]}, {"id": "36", "part": 4, "type": "blank", "answer": ["DISEASE", "DISEASES"]}, {"id": "37", "part": 4, "type": "blank", "answer": "PERFUME"}, {"id": "38", "part": 4, "type": "blank", "answer": "SALT"}, {"id": "39", "part": 4, "type": "blank", "answer": "SCIENCE"}, {"id": "40", "part": 4, "type": "blank", "answer": "TAX"}];
+/* Shared, dependency-free scoring and time rules. Also loaded by Apps Script. */
+(function(root){
+'use strict';
+const listeningBands=[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[11,4],[8,3.5],[6,3],[4,2.5],[0,0]];
+// Academic Reading has its own table; never infer it from Listening.
+const readingBands=[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5],[0,0]];
+function band(raw,skill){
+ if(!Number.isInteger(raw)||raw<0||raw>40)throw Error('Raw score must be an integer from 0 to 40.');
+ if(!['Listening','Reading'].includes(skill))throw Error('Unknown skill.');
+ return (skill==='Listening'?listeningBands:readingBands).find(x=>raw>=x[0])[1];
+}
+function normalize(s){return String(s||'').trim().toUpperCase().replace(/\s+/g,' ');}
+function score(questions,answers){
+ const parts=[0,0,0,0],details=[];
+ for(const q of questions){
+  let points=0;
+  if(q.type==='choose-two'){
+   const selected=Array.isArray(answers[q.id])?[...new Set(answers[q.id].map(normalize))]:[];
+   if(selected.length<=2)points=selected.filter(x=>q.answer.includes(x)).length;
+  }else{const accepted=Array.isArray(q.answer)?q.answer.map(normalize):[normalize(q.answer)];points=Number(accepted.includes(normalize(answers[q.id])));}
+  parts[q.part-1]+=points;const total=q.type==='choose-two'?2:1;details.push({id:q.id,points,total,part:q.part,isCorrect:points===total});
+ }
+ const raw=parts.reduce((a,b)=>a+b,0);return {raw,band:band(raw,'Listening'),parts,details};
+}
+function validate(p){
+ if(!p||typeof p.studentName!=='string'||!p.studentName.trim()||p.studentName.length>120)throw Error('Student name is required (up to 120 characters).');
+ if(!/^Cam \d+$/.test(p.book)||!/^Test [1-4]$/.test(p.test)||!['Listening','Reading'].includes(p.skill))throw Error('Invalid test identification.');
+ if(typeof p.cycleId!=='string'||!p.cycleId.trim()||p.cycleId.length>80)throw Error('Cycle ID is required.');
+ if(p.totalQuestions!==40||!Number.isInteger(p.score)||p.score<0||p.score>40||p.band!==band(p.score,p.skill))throw Error('Invalid score or band.');
+ const expectedId='C'+p.book.slice(4)+'-'+(p.skill==='Listening'?'L':'R')+'-T'+p.test.slice(5);
+ if(p.testId!==expectedId)throw Error('Test ID does not match Book, Test and Skill.');
+ const max=p.skill==='Listening'?[10,10,10,10]:(p.testId==='C15-R-T1'?[13,13,14]:[40,40,40]);
+ if(!Array.isArray(p.parts)||p.parts.length!==max.length||p.parts.some((v,i)=>!Number.isInteger(v)||v<0||v>max[i])||p.parts.reduce((a,b)=>a+b,0)!==p.score)throw Error('Part scores must match the raw score.');
+ if(!Number.isFinite(p.timeUsed)||p.timeUsed<0||p.timeUsed>86400)throw Error('Invalid time used.');
+ if(!/^att_[0-9a-z]+_[0-9a-z]+$/i.test(p.attemptId||''))throw Error('Invalid attempt ID.');
+ return p;
+}
+function phase(attempt,now){
+ if(attempt.phase==='submitted')return 'submitted';
+ if(now>=attempt.reviewEndsAt)return 'submitted';
+ if(now>=attempt.audioEndsAt)return 'review';
+ return 'listening';
+}
+const api={band,normalize,score,validate,phase,listeningBands,readingBands};
+if(typeof module!=='undefined')module.exports=api;root.TestCore=api;
+})(typeof globalThis!=='undefined'?globalThis:this);
+
+/* POST carries private result data. Read-only JSONP returns only protocol/receipt status. */
+window.Tracking=(function(){
+ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+ function query(url,params,ms){return new Promise((resolve,reject)=>{
+  const cb='tracking_'+crypto.randomUUID().replace(/-/g,'');
+  const el=document.createElement('script');let done=false;
+  const cleanup=()=>{clearTimeout(timer);el.remove();delete window[cb];};
+  const timer=setTimeout(()=>{if(!done){done=true;cleanup();reject(Error('timeout'));}},ms||20000);
+  window[cb]=data=>{if(!done){done=true;cleanup();resolve(data);}};
+  el.onerror=()=>{if(!done){done=true;cleanup();reject(Error('unreachable'));}};
+  el.src=url+'?'+new URLSearchParams({...params,callback:cb,_:Date.now()});document.head.appendChild(el);
+ });}
+ // A slow / failed receipt lookup is NOT a failed save: it just means "not confirmed yet".
+ // Two independent read-only paths run in parallel (JSONP script tag + plain CORS fetch), so a
+ // network / browser that blocks one of them can still confirm through the other.
+ async function receipt(url,id){
+  const viaJsonp=query(url,{action:'receipt',attemptId:id},20000).catch(()=>null);
+  const viaFetch=fetch(url+'?'+new URLSearchParams({action:'receipt',attemptId:id,_:Date.now()}),{redirect:'follow',signal:AbortSignal.timeout(20000)}).then(r=>r.text()).then(t=>JSON.parse(t)).catch(()=>null);
+  const rs=await Promise.all([viaJsonp,viaFetch]);
+  return rs.find(r=>r&&r.ok)||rs.find(r=>r&&r.error)||null;
+ }
+ // Try a CORS-readable POST first: Apps Script answers {status:"ok"} after the row is written, which is
+ // itself the confirmation. If the browser blocks reading the reply, the POST may still have been
+ // delivered, so the caller falls back to receipt polling.
+ async function post(url,payload){
+  try{
+   const res=await fetch(url,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload),redirect:'follow',signal:AbortSignal.timeout(45000)});
+   const t=await res.text();try{return JSON.parse(t);}catch(e){return null;}
+  }catch(e){return null;}
+ }
+ /* No blocking health pre-check any more: a slow health reply used to abort the whole save before
+    the POST was ever sent. The receipt is checked first, so a retry never re-sends a saved result. */
+ async function send(url,payload,onProgress){
+  if(!/^https:\/\/script.google.com\/macros\/s\/[\w-]+\/exec$/.test(url))throw Error('Chưa cấu hình hệ thống lưu điểm. Hãy tải kết quả và gửi cho giáo viên.');
+  let r=await receipt(url,payload.attemptId);
+  if(r&&r.ok)return r;
+  if(r&&r.error)throw Error(r.error);
+  for(let round=1;round<=3;round++){
+   if(onProgress)onProgress(round);
+   const reply=await post(url,payload);
+   if(reply&&reply.status==='ok')return {ok:true};
+   if(reply&&reply.status==='error')throw Error(reply.message||'Hệ thống lưu điểm báo lỗi.');
+   const deadline=Date.now()+30000;
+   while(Date.now()<deadline){
+    await sleep(2500);
+    r=await receipt(url,payload.attemptId);
+    if(r&&r.ok)return r;
+    if(r&&r.error)throw Error(r.error);
+   }
+  }
+  throw Error('Chưa nhận được xác nhận từ hệ thống lưu điểm.');
+ }
+ return {send};
+})();
+
+(function(){
+'use strict';
+const config=TEST_CONFIG, questions=TEST_QUESTIONS, $=id=>document.getElementById(id);
+const audio=$('audio');let attempt=null,key='',timerHandle,busy=false,owned=false,releaseLock,deviceSaved=true;
+// Captured once, at script init, before stopAudio() ever runs (stopAudio() strips
+// #audio's src). Used only to lazily feed the independent #reviewAudio player on
+// the result screen further below — never re-assigned to #audio, never touches
+// any exam-phase audio logic.
+const reviewAudioSrc=audio.src;
+let anchorWall=Date.now(),anchorMono=performance.now(),lastSave=0,allowedSeek=null,lastAudio=0;
+const fmt=s=>{const n=Math.ceil(Math.max(0,s));return `${String(Math.floor(n/60)).padStart(2,'0')}:${String(n%60).padStart(2,'0')}`;};
+// ---------- STUDENT NAME VALIDATION (Vietnamese, with diacritics) ----------
+// Shared standard with the Reading engine: full name required, must contain
+// Vietnamese diacritics (never inferred/added), only case is normalized.
+const VN_DIACRITIC_CHARS="àáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđÀÁẢÃẠĂẰẮẲẴẶÂẦẤẨẪẬÈÉẺẼẸÊỀẾỂỄỆÌÍỈĨỊÒÓỎÕỌÔỒỐỔỖỘƠỜỚỞỠỢÙÚỦŨỤƯỪỨỬỮỰỲÝỶỸỴĐ";
+const VN_DIACRITIC_REGEX=new RegExp("["+VN_DIACRITIC_CHARS+"]");
+const ALLOWED_NAME_CHARS_REGEX=new RegExp("^[A-Za-z"+VN_DIACRITIC_CHARS+"\\s]+$");
+function toVietnameseTitleCase(name){
+ return name.split(" ").filter(Boolean).map(word=>{const lower=word.toLowerCase();return lower.charAt(0).toUpperCase()+lower.slice(1);}).join(" ");
+}
+function validateStudentName(rawName){
+ const trimmed=(rawName||"").toString().replace(/\s+/g," ").trim();
+ if(!trimmed)return{valid:false,error:"Vui lòng nhập họ và tên của bạn."};
+ const words=trimmed.split(" ");
+ if(words.length<2)return{valid:false,error:"Vui lòng nhập đầy đủ họ và tên (ví dụ: Phạm Thị Hương)."};
+ if(!ALLOWED_NAME_CHARS_REGEX.test(trimmed))return{valid:false,error:"Họ tên chỉ được chứa chữ cái và khoảng trắng, không chứa số hoặc ký tự đặc biệt."};
+ if(!VN_DIACRITIC_REGEX.test(trimmed))return{valid:false,error:"Vui lòng nhập họ tên có đầy đủ dấu tiếng Việt (ví dụ: Phạm Thị Hương, không phải Pham Thi Huong)."};
+ return{valid:true,normalized:toVietnameseTitleCase(trimmed)};
+}
+// Reading's existing Attempt ID format, reused as-is so both engines share one scheme.
+function makeAttemptId(){return "att_"+Date.now().toString(36)+"_"+Math.random().toString(36).slice(2,9);}
+function now(){return Math.max(Date.now(),anchorWall+performance.now()-anchorMono,attempt?.lastNow||0);}
+function persist(){if(!attempt)return;attempt.lastNow=now();try{localStorage.setItem(key,JSON.stringify(attempt));deviceSaved=true;}catch(e){deviceSaved=false;$('audioStatus').textContent='Device storage failed. Keep this page open and download your result after submission.';}}
+function editable(){if(!attempt||!owned)return false;tick();return ['listening','review'].includes(attempt.phase);}
+function showPart(part){
+ document.querySelectorAll('.part-view').forEach((el,i)=>el.hidden=i!==part-1);
+ document.querySelectorAll('.part-nav-btn').forEach(el=>el.classList.toggle('active',Number(el.dataset.part)===part));
+ $('headerScope').textContent=`Part ${part} | Questions ${(part-1)*10+1}–${part*10}`;
+ $('qnavInner').replaceChildren();
+ for(let n=(part-1)*10+1;n<=part*10;n++){
+  const q=questions.find(q=>q.id.split('-').map(Number).includes(n));
+  const button=document.createElement('button');button.className='qnav-pill';button.textContent=n;button.dataset.q=q.id;
+  button.setAttribute('aria-label',`Go to question ${n}`);
+  button.onclick=()=>{const el=document.querySelector(`.qchip[data-q="${q.id}"],.mc-block[data-q="${q.id}"]`);el.scrollIntoView({block:'center',behavior:'smooth'});el.querySelector('input')?.focus({preventScroll:true});};
+  $('qnavInner').append(button);
+ }
+ updateProgress();
+}
+function updateProgress(){
+ let count=0;
+ questions.forEach(q=>{const a=attempt?.answers[q.id];count+=q.type==='choose-two'?(a||[]).length:(a&&String(a).trim()?1:0);});
+ $('answered').textContent=`${count} / 40 answered`;
+ document.querySelectorAll('.qnav-pill').forEach(el=>{let a=attempt?.answers[el.dataset.q];el.classList.toggle('answered',Array.isArray(a)?a.length>0:!!String(a||'').trim());});
+}
+function restoreAnswers(){
+ document.querySelectorAll('.answer-input').forEach(el=>el.value=attempt.answers[el.dataset.q]||'');
+ document.querySelectorAll('.mc-block').forEach(block=>{
+  const q=questions.find(q=>q.id===block.dataset.q),a=attempt.answers[q.id];
+  block.querySelectorAll('input').forEach(input=>{input.checked=q.type==='choose-two'?(a||[]).includes(input.value):a===input.value;input.disabled=attempt.phase==='submitted'||(q.type==='choose-two'&&(a||[]).length>=2&&!input.checked);});
+ });updateProgress();if(typeof syncMatchingUI==='function')syncMatchingUI();
+}
+function stopAudio(){audio.pause();audio.removeAttribute('src');audio.load();$('resumeAudio').hidden=true;}
+// Wrong-question numbers per Part (1-4), derived strictly from TestCore.score()'s
+// own details[] (no new/duplicate scoring logic; raw score and Band are untouched).
+function computeWrongQuestionsByPart(results){
+ const wrong={1:[],2:[],3:[],4:[]};
+ results.details.forEach(d=>{if(!d.isCorrect)wrong[d.part].push(d.id);});
+ return wrong;
+}
+function payload(){
+ const r=TestCore.score(questions,attempt.answers);
+ const wrongByPart=computeWrongQuestionsByPart(r);
+ return TestCore.validate({protocol:2,attemptId:attempt.id,studentName:attempt.name,cycleId:attempt.cycleId,book:config.book,test:config.test,skill:'Listening',testId:config.testId,score:r.raw,band:r.band,totalQuestions:40,parts:r.parts,part1:r.parts[0],part2:r.parts[1],part3:r.parts[2],part4:r.parts[3],p1Wrong:wrongByPart[1].join(', '),p2Wrong:wrongByPart[2].join(', '),p3Wrong:wrongByPart[3].join(', '),p4Wrong:wrongByPart[4].join(', '),answers:attempt.answers,timeUsed:Math.round((attempt.reviewEndsAt-attempt.startedAt)/1000),timestamp:new Date(attempt.reviewEndsAt).toISOString(),status:attempt.interrupted?'Interrupted':'Completed'});
+}
+// Sau khi nộp (chỉ hiển thị, gọi SAU displayResult() gốc): trang KẾT QUẢ + HƯỚNG DẪN, rồi trang CHỮA BÀI.
+function setReviewView(v){
+ document.body.classList.toggle('rv-result',v==='result');document.body.classList.toggle('rv-review',v==='review');
+ window.scrollTo(0,0);
+ try{if(typeof syncPartNavOffset==='function')syncPartNavOffset();}catch(e){}
+}
+$('startReviewBtn').onclick=()=>{try{history.pushState({rv:1},'');}catch(e){}setReviewView('review');};
+$('rvBackBtn').onclick=()=>setReviewView('result');
+window.addEventListener('popstate',e=>{
+ if(document.body.classList.contains('rv-result')||document.body.classList.contains('rv-review'))setReviewView(e.state&&e.state.rv?'review':'result');
+});
+function displayResult(){
+ // Luôn hiển trang KẾT QUẢ + HƯỚNG DẪN trước (cả khi vừa nộp bài lẫn khi mở lại tab để chữa bài): học viên phải xem lại thẻ hướng dẫn rồi bấm Option 1 mới sang trang chữa bài.
+ displayResultCore();
+ try{setReviewView('result');}catch(e){}
+}
+function displayResultCore(){
+ const p=attempt.payload;$('result').hidden=false;$('resultName').textContent=attempt.name;
+ $('rawScore').textContent=`${p.score} / 40`;$('bandScore').textContent=p.band.toFixed(1);$('timeUsed').textContent=fmt(p.timeUsed);
+ $('partScores').replaceChildren();p.parts.forEach((v,i)=>{const el=document.createElement('p');el.textContent=`Part ${i+1}`;const n=document.createElement('strong');n.textContent=`${v} / 10`;el.append(n);$('partScores').append(el);});
+ $('attemptNote').textContent=attempt.interrupted?'Playback was interrupted or the page was reloaded. This result is flagged for your teacher.':'The test is complete. Answers are locked.';
+ $('saveStatus').textContent=attempt.saved?'Đã lưu kết quả về cho giáo viên ✓ Bạn có thể đóng tab.': (deviceSaved?'Kết quả đã lưu trên thiết bị này. Đang chờ xác nhận từ hệ thống giáo viên — đừng đóng tab.':'Không lưu được trên thiết bị. Hãy tải kết quả xuống trước khi đóng trang.');
+ $('retrySave').hidden=!!attempt.saved;
+ setGate('saving');
+}
+function submit(){
+ if(!attempt||attempt.phase==='submitted')return;
+ attempt.phase='submitted';attempt.payload=payload();persist();stopAudio();
+ document.querySelectorAll('main input').forEach(el=>el.disabled=true);
+ $('phaseLabel').textContent='Test submitted';$('timer').textContent='00:00';
+ displayResult();$('result').scrollIntoView({block:'start',behavior:'smooth'});send();
+}
+let autoRetryTimer=null,gateDismissed=false;
+function setGate(state,msg){
+ const g=$('saveGate'),bn=$('saveBanner');
+ if(!attempt||attempt.phase!=='submitted'||attempt.saved){g.hidden=true;bn.hidden=true;document.body.classList.remove('save-pending');return;}
+ document.body.classList.add('save-pending');
+ const failed=state==='failed';
+ $('sgSpin').hidden=failed;
+ $('sgTitle').textContent=failed?'Chưa lưu được kết quả — đừng đóng tab!':'Đang lưu kết quả về cho giáo viên…';
+ $('sgMsg').textContent=failed?((msg||'')+' Hệ thống sẽ tự thử lại. Giữ nguyên tab này (không đóng, không tải lại) hoặc bấm “Thử lưu lại”.'):'Vui lòng KHÔNG đóng tab hoặc tải lại trang. Điểm sẽ hiện ngay khi lưu xong (thường vài giây).';
+ $('sgActions').hidden=!failed;
+ g.hidden=gateDismissed;
+ bn.hidden=!gateDismissed;
+ bn.textContent=failed?'⚠ Kết quả CHƯA được lưu — đừng đóng tab (đang tự thử lại)':'⏳ Đang lưu kết quả — đừng đóng tab';
+}
+function markSaved(){
+ attempt.saved=true;persist();clearTimeout(autoRetryTimer);
+ $('saveStatus').textContent='Đã lưu kết quả về cho giáo viên ✓ Bạn có thể đóng tab.';$('retrySave').hidden=true;
+ setGate();
+}
+async function send(){
+ if(busy||attempt.saved)return;busy=true;$('retrySave').disabled=true;$('sgRetry').disabled=true;
+ $('saveStatus').textContent='Đang gửi kết quả — chờ xác nhận…';setGate('saving');
+ try{await Tracking.send(config.endpoint,attempt.payload,n=>{if(n>1)$('saveStatus').textContent='Đang gửi lại lần '+n+' — chờ xác nhận…';});markSaved();}
+ catch(e){
+  $('saveStatus').textContent=e.message+' Đang tự thử lại. Bạn cũng có thể tải kết quả xuống.';$('retrySave').hidden=false;setGate('failed',e.message);
+  clearTimeout(autoRetryTimer);autoRetryTimer=setTimeout(()=>{if(attempt&&attempt.phase==='submitted'&&!attempt.saved)send();},8000);
+ }
+ finally{busy=false;$('retrySave').disabled=false;$('sgRetry').disabled=false;}
+}
+function tick(){
+ if(!attempt||!owned||attempt.phase==='submitted')return;
+ const t=now(),p=TestCore.phase(attempt,t);
+ if(p==='submitted'){submit();return;}
+ if(p==='review'&&attempt.phase!=='review'){
+  if(!audio.ended&&audio.currentTime<audio.duration-1)attempt.interrupted=true;
+  attempt.phase='review';stopAudio();persist();$('audioStatus').textContent=attempt.interrupted?'The listening period has ended. Playback was interrupted and is flagged for your teacher. Check your answers now.':'Audio finished. Check your answers; the test submits automatically.';
+ }
+ if(p==='review'){$('phaseLabel').textContent='Review your answers';$('timer').textContent=fmt((attempt.reviewEndsAt-t)/1000);}
+ else{$('phaseLabel').textContent='Listening in progress';$('timer').textContent=fmt((attempt.audioEndsAt-t)/1000);}
+ if(t-lastSave>1000){lastSave=t;persist();}
+}
+function seekInternal(position){allowedSeek=position;audio.currentTime=position;lastAudio=position;}
+async function continueAudio(){
+ tick();if(!attempt||attempt.phase!=='listening')return;
+ const position=Math.min(audio.duration-.05,Math.max(lastAudio,(now()-attempt.startedAt)/1000));
+ if(!Number.isFinite(position))return;
+ seekInternal(position);
+ try{await audio.play();$('resumeAudio').hidden=true;$('audioStatus').textContent='Audio plays once. Playback controls are disabled.';}
+ catch(e){$('resumeAudio').hidden=false;$('audioStatus').textContent='Playback needs your click. Time continues; missed audio will not replay.';}
+}
+async function start(){
+ const rawName=$('studentName').value.trim(),cycle=$('cycleId').value.trim();
+ if(!rawName||!cycle){$('startError').textContent='Vui lòng nhập họ tên và chọn Chu kỳ ôn thi.';return;}
+ const nameCheck=validateStudentName(rawName);
+ if(!nameCheck.valid){$('startError').textContent=nameCheck.error;return;}
+ const name=nameCheck.normalized;
+ if(!Number.isFinite(audio.duration)||audio.duration<1800){$('startError').textContent='Audio chưa tải xong. Vui lòng đợi trong giây lát.';return;}
+ if(!navigator.locks){$('startError').textContent='Vui lòng dùng trình duyệt Chrome, Edge hoặc Safari bản mới nhất, có hỗ trợ lưu trữ trên thiết bị.';return;}
+ key=`ielts:v2:${config.testId}:${TestCore.normalize(name)}:${TestCore.normalize(cycle)}`;
+ try{localStorage.setItem(key+':check','1');localStorage.removeItem(key+':check');}catch(e){$('startError').textContent='Vui lòng bật tính năng lưu trữ trên thiết bị trước khi bắt đầu làm bài.';return;}
+ $('startButton').disabled=true;
+ navigator.locks.request(key,{ifAvailable:true},async lock=>{
+  if(!lock){$('startError').textContent='Bài làm này đang mở ở một tab khác. Hãy tiếp tục ở tab đó hoặc đóng tab đó lại trước.';$('startButton').disabled=false;return;}
+  owned=true;
+  try{
+   const saved=localStorage.getItem(key);attempt=saved?JSON.parse(saved):null;
+   if(attempt&&(!attempt.id||!Number.isFinite(attempt.reviewEndsAt)||!attempt.answers))throw Error('Dữ liệu bài làm đã lưu bị lỗi. Vui lòng liên hệ giáo viên; không tự làm lại.');
+   if(!attempt){
+    const t=now();attempt={id:makeAttemptId(),name,cycleId:cycle,phase:'listening',answers:{},startedAt:t,audioEndsAt:t+audio.duration*1000,reviewEndsAt:t+audio.duration*1000+120000,lastNow:t,interrupted:false};
+   }else if(attempt.phase==='listening')attempt.interrupted=true;
+   anchorWall=Math.max(Date.now(),attempt.lastNow);anchorMono=performance.now();persist();
+   $('startScreen').hidden=true;$('exam').hidden=false;$('partNav').hidden=false;$('candidate').textContent=`${attempt.name} · ${attempt.cycleId}`;
+   restoreAnswers();showPart(1);
+   if(attempt.phase==='submitted'){stopAudio();displayResult();document.querySelectorAll('main input').forEach(el=>el.disabled=true);$('phaseLabel').textContent='Test submitted';if(!attempt.saved)send();}
+   else{tick();if(attempt.phase==='review')stopAudio();if(attempt.phase==='listening')await continueAudio();timerHandle=setInterval(tick,200);}
+   await new Promise(resolve=>releaseLock=resolve);
+  }catch(e){$('startError').textContent=e.message;$('startButton').disabled=false;owned=false;}
+ });
+}
+// Native controls are absent. Guard script/media-key seeking and playback rate too.
+audio.addEventListener('seeking',()=>{
+ if(!attempt||attempt.phase!=='listening'){audio.pause();return;}
+ if(allowedSeek!==null&&Math.abs(audio.currentTime-allowedSeek)<.15){allowedSeek=null;return;}
+ seekInternal(lastAudio);
+});
+audio.addEventListener('timeupdate',()=>{if(!audio.seeking&&attempt?.phase==='listening')lastAudio=Math.max(lastAudio,audio.currentTime);});
+audio.addEventListener('ratechange',()=>{if(audio.playbackRate!==1)audio.playbackRate=1;});
+audio.addEventListener('play',()=>{if(!owned||attempt?.phase!=='listening')audio.pause();});
+audio.addEventListener('pause',()=>{
+ if(attempt?.phase==='listening'&&!audio.ended){attempt.interrupted=true;persist();$('resumeAudio').hidden=false;$('audioStatus').textContent='Audio was interrupted. Continue at the current test position; time has not paused.';}
+});
+audio.addEventListener('ended',()=>{
+ if(attempt?.phase!=='listening')return;
+ if(lastAudio<audio.duration-2){attempt.interrupted=true;return;}
+ // Keep the existing absolute cap; delayed events must never extend review time.
+ attempt.audioEndsAt=Math.min(attempt.audioEndsAt,now());attempt.reviewEndsAt=Math.min(attempt.reviewEndsAt,attempt.audioEndsAt+120000);persist();tick();
+});
+audio.addEventListener('error',()=>{if(attempt?.phase==='listening'){attempt.interrupted=true;persist();$('audioStatus').textContent='Audio could not play. Tell your teacher. The test clock continues and this result will be flagged.';}else if(!attempt){$('startError').textContent='Không tải được audio. Vui lòng mở lại đúng file bài test gốc.';}});
+audio.addEventListener('loadedmetadata',()=>{$('audioReady').textContent=`Audio đã sẵn sàng · ${fmt(audio.duration)} + 02:00 kiểm tra lại`;$('startButton').disabled=false;});
+if(Number.isFinite(audio.duration)){$('audioReady').textContent=`Audio đã sẵn sàng · ${fmt(audio.duration)} + 02:00 kiểm tra lại`;$('startButton').disabled=false;}
+$('startForm').onsubmit=e=>{e.preventDefault();start();};
+$('resumeAudio').onclick=continueAudio;$('retrySave').onclick=send;$('sgRetry').onclick=send;
+$('sgDownload').onclick=()=>$('downloadResult').click();
+$('sgShow').onclick=()=>{gateDismissed=true;setGate($('sgSpin').hidden?'failed':'saving',$('sgSpin').hidden?'':'');};
+window.addEventListener('beforeunload',e=>{if(attempt&&attempt.phase==='submitted'&&!attempt.saved){e.preventDefault();e.returnValue='Kết quả của bạn chưa được lưu về cho giáo viên. Bạn có chắc muốn thoát?';return e.returnValue;}});
+$('downloadResult').onclick=()=>{const blob=new Blob([JSON.stringify(attempt.payload,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`${config.testId}-${attempt.id}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
+document.querySelectorAll('.part-nav-btn').forEach(el=>el.onclick=()=>showPart(Number(el.dataset.part)));
+document.querySelectorAll('.answer-input').forEach(el=>el.addEventListener('input',()=>{if(!editable()){restoreAnswers();return;}attempt.answers[el.dataset.q]=el.value;persist();updateProgress();}));
+document.querySelectorAll('.mc-block input').forEach(el=>el.addEventListener('change',()=>{
+ if(!editable()){restoreAnswers();return;}
+ const block=el.closest('.mc-block'),q=questions.find(q=>q.id===block.dataset.q);
+ const checked=[...block.querySelectorAll('input:checked')];
+ if(q.type==='choose-two'){
+  if(checked.length>2){el.checked=false;return;}
+  attempt.answers[q.id]=checked.map(x=>x.value);
+ }else attempt.answers[q.id]=el.value;
+ persist();restoreAnswers();
+}));
+window.addEventListener('pagehide',persist);window.addEventListener('online',()=>{if(attempt?.phase==='submitted'&&!attempt.saved)send();});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){tick();if(attempt?.phase==='listening'&&audio.paused)$('resumeAudio').hidden=false;}});
+if(navigator.mediaSession){for(const action of ['play','pause','seekbackward','seekforward','seekto','previoustrack','nexttrack'])try{navigator.mediaSession.setActionHandler(action,()=>{});}catch(e){}}
+const params=new URLSearchParams(location.search);if(params.get('cycle'))$('cycleId').value=params.get('cycle');
+/* Teacher Test Mode hook. Exposes read-only phase + the exact existing tick()/submit()
+   functions so a separate script can drive them from a keyboard shortcut. Adds no new
+   audio, scoring, timer or Google Sheets logic — it only calls what already exists. */
+window.__teacherAPI={
+ getPhase(){return attempt?attempt.phase:null;},
+ skipToReview(){
+  if(!attempt||attempt.phase!=='listening')return false;
+  attempt.audioEndsAt=Math.min(attempt.audioEndsAt,now());
+  attempt.reviewEndsAt=Math.min(attempt.reviewEndsAt,attempt.audioEndsAt+120000);
+  persist();tick();
+  return true;
+ },
+ submitNow(){
+  if(!attempt||attempt.phase==='submitted')return false;
+  submit();
+  return true;
+ }
+};
+
+// ---------------------------------------------------------------------------
+// Entry flow (device prep / confirm name / review) — ported UX pattern from
+// the Reading engine (C15), adapted to Listening's existing single-attempt-
+// per-key storage model. Purely additive: does not modify start(), submit(),
+// tick(), persist(), payload(), send(), TestCore, window.Tracking, the audio
+// event listeners, or window.__teacherAPI above. The Start button keeps its
+// original id/classes and is still driven only by the unmodified audio
+// readiness listeners and the unmodified $('startForm').onsubmit wiring.
+function showEntryStep(stepId){
+ $('entry-step-info').hidden=(stepId!=='entry-step-info');
+ $('entry-step-confirm').hidden=(stepId!=='entry-step-confirm');
+ $('entry-step-actions').hidden=(stepId!=='entry-step-actions');
+}
+// Read-only peek at any previously saved attempt for the current name+cycle.
+// Never writes, never touches the live `attempt`/`key` variables used by
+// start()/submit()/tick() above — only used to decide what the actions step
+// shows the student.
+function peekSavedAttempt(){
+ try{
+  const rawName=$('studentName').value.trim(),cycle=$('cycleId').value.trim();
+  if(!rawName||!cycle)return null;
+  const nameCheck=validateStudentName(rawName);
+  if(!nameCheck.valid)return null;
+  const k=`ielts:v2:${config.testId}:${TestCore.normalize(nameCheck.normalized)}:${TestCore.normalize(cycle)}`;
+  const saved=localStorage.getItem(k);
+  if(!saved)return null;
+  const parsed=JSON.parse(saved);
+  return (parsed&&parsed.phase)?parsed:null;
+ }catch(e){return null;}
+}
+function renderActionsStep(){
+ const existing=peekSavedAttempt();
+ const statusEl=$('entryStatusMessage'),reviewBtn=$('reviewButton'),reviewHint=$('reviewHint');
+ if(existing){
+  reviewBtn.hidden=false;reviewHint.hidden=false;
+  if(existing.phase==='submitted'){
+   statusEl.textContent='Bạn đã nộp bài này. Nhấn "Xem lại bài đã làm" để xem kết quả.';
+   reviewBtn.textContent='Xem lại bài đã làm';
+  }else{
+   statusEl.textContent='Bạn có một bài làm đang dở cho họ tên và chu kỳ này. Nhấn "Tiếp tục làm bài" để tiếp tục, hoặc "Bắt đầu làm bài Nghe" cũng sẽ tiếp tục đúng bài đang dở.';
+   reviewBtn.textContent='Tiếp tục làm bài';
+  }
+  statusEl.hidden=false;
+ }else{
+  reviewBtn.hidden=true;reviewHint.hidden=true;
+  statusEl.hidden=true;
+  statusEl.textContent='';
+ }
+}
+$('infoContinueBtn').onclick=()=>{
+ const rawName=$('studentName').value.trim(),cycle=$('cycleId').value.trim();
+ const infoError=$('infoError');
+ infoError.textContent='';
+ if(!rawName||!cycle){infoError.textContent='Vui lòng nhập họ tên và chọn Chu kỳ ôn thi.';return;}
+ const nameCheck=validateStudentName(rawName);
+ if(!nameCheck.valid){infoError.textContent=nameCheck.error;return;}
+ $('confirmInfoBox').innerHTML='';
+ const strong=document.createElement('strong');strong.textContent=nameCheck.normalized;
+ const cycleLine=document.createTextNode('Chu kỳ ôn thi: '+cycle);
+ $('confirmInfoBox').append(strong,cycleLine);
+ $('confirmCheckbox').checked=false;
+ $('confirmContinueBtn').disabled=true;
+ showEntryStep('entry-step-confirm');
+};
+$('studentName').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('infoContinueBtn').click();}});
+$('confirmBackBtn').onclick=()=>showEntryStep('entry-step-info');
+$('confirmCheckbox').addEventListener('change',()=>{$('confirmContinueBtn').disabled=!$('confirmCheckbox').checked;});
+$('confirmContinueBtn').onclick=()=>{
+ if($('confirmContinueBtn').disabled)return;
+ renderActionsStep();
+ showEntryStep('entry-step-actions');
+};
+$('actionsBackBtn').onclick=()=>showEntryStep('entry-step-confirm');
+// Reuses the exact same start() used by the Start button: Listening's own
+// storage model already resumes an in-progress attempt or re-displays a
+// submitted result when one exists, so "review" and "start" are the same
+// call here — only the button the student sees differs.
+$('reviewButton').onclick=e=>{e.preventDefault();start();};
+showEntryStep('entry-step-info');
+// Lazily feeds the read-only #reviewAudio player on the result screen once it
+// becomes visible (phase 'submitted', shown by the untouched submit()/start()).
+// #reviewAudio is a brand-new, independent <audio> element with no listeners of
+// its own — it never reuses #audio or its play/seeking/ended listeners, so the
+// exam's single-play/no-seek audio lock during the live test is completely
+// unaffected. Native controls give free seek/replay, which is the point here.
+function initReviewPlayer(){
+ const rAudio=$('reviewAudio'),playBtn=$('reviewPlayBtn'),playIcon=$('reviewPlayIcon'),track=$('reviewProgressTrack'),fill=$('reviewProgressFill'),timeEl=$('reviewTimeDisplay');
+ const PLAY_ICON='<path d="M8 5v14l11-7z"/>',PAUSE_ICON='<path d="M6 5h4v14H6zM14 5h4v14h-4z"/>';
+ function seekToRatio(ratio){
+  if(!Number.isFinite(rAudio.duration)||!rAudio.duration)return;
+  rAudio.currentTime=Math.min(rAudio.duration,Math.max(0,ratio))*rAudio.duration;
+ }
+ function ratioFromEvent(e){
+  const rect=track.getBoundingClientRect(),x=(e.touches?e.touches[0].clientX:e.clientX)-rect.left;
+  return rect.width?x/rect.width:0;
+ }
+ playBtn.onclick=()=>{if(rAudio.paused)rAudio.play();else rAudio.pause();};
+ rAudio.addEventListener('play',()=>{playIcon.innerHTML=PAUSE_ICON;});
+ rAudio.addEventListener('pause',()=>{playIcon.innerHTML=PLAY_ICON;});
+ rAudio.addEventListener('ended',()=>{playIcon.innerHTML=PLAY_ICON;});
+ rAudio.addEventListener('timeupdate',()=>{
+  if(!Number.isFinite(rAudio.duration)||!rAudio.duration)return;
+  fill.style.width=(rAudio.currentTime/rAudio.duration*100)+'%';
+  timeEl.textContent=fmt(rAudio.currentTime)+' / '+fmt(rAudio.duration);
+ });
+ rAudio.addEventListener('loadedmetadata',()=>{timeEl.textContent=fmt(0)+' / '+fmt(rAudio.duration);});
+ $('reviewSkipBack').onclick=()=>{rAudio.currentTime=Math.max(0,rAudio.currentTime-10);};
+ $('reviewSkipFwd').onclick=()=>{if(Number.isFinite(rAudio.duration))rAudio.currentTime=Math.min(rAudio.duration,rAudio.currentTime+10);};
+ let dragging=false;
+ track.addEventListener('pointerdown',e=>{dragging=true;track.setPointerCapture(e.pointerId);seekToRatio(ratioFromEvent(e));});
+ track.addEventListener('pointermove',e=>{if(dragging)seekToRatio(ratioFromEvent(e));});
+ track.addEventListener('pointerup',e=>{dragging=false;try{track.releasePointerCapture(e.pointerId);}catch(err){}});
+ track.addEventListener('pointercancel',()=>{dragging=false;});
+}
+initReviewPlayer();
+function syncPartNavOffset(){
+ const bar=$('reviewPlayerBar'),nav=$('partNav');
+ if(bar.hidden){nav.style.removeProperty('bottom');return;}
+ nav.style.bottom=(bar.offsetHeight+14)+'px';
+}
+window.addEventListener('resize',syncPartNavOffset);
+
+// ---------------------------------------------------------------------------
+// Listening Review: per-question correct/wrong annotations + a 2-panel
+// (Questions | Script) layout, added only once #result becomes visible (i.e.
+// only in review, never during the live test). Purely additive: reads
+// attempt.answers/questions/TestCore.score() (all already used elsewhere,
+// e.g. by payload()) and only ever APPENDS new elements / toggles new CSS
+// classes it defines itself \u2014 never edits start()/submit()/tick()/persist()/
+// payload()/send()/TestCore/window.Tracking/window.__teacherAPI or any
+// existing input/answer markup.
+// ---------------------------------------------------------------------------
+function escapeHtml(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+// Populate with the real Cambridge 15 Test 3 Listening script text per Part
+// once supplied; each Part shows a clear placeholder until then instead of a
+// blank/broken panel. A value may be a single string (blank-line-separated
+// paragraphs) or an array of paragraph strings.
+const TRANSCRIPTS={1:["SALLY: Good morning. Thanks for coming in to see us here at the agency, Joe. I’m one of the agency representatives, and my name’s Sally Baker.", "JOE: Hi Sally. I think we spoke on the phone, didn’t we?", "SALLY: That’s right, we did. So thank you for sending in your CV. We’ve had quite a careful look at it and I think we have two jobs that might be suitable for you.", "JOE: OK.", "SALLY: The first one is in a company based in North London. They’re looking for an administrative assistant.", "JOE: OK. What sort of company is it?", "SALLY: They’re called Home Solutions and they design and make furniture.", "JOE: Oh, I don’t know much about that, but it sounds interesting.", "SALLY: Yes, well as I said, they want someone in their office, and looking at your past experience it does look as if you fit quite a few of the requirements. So on your CV it appears you’ve done some data entry?", "JOE: Yes.", "SALLY: So that’s one skill they want. Then they expect the person they appoint to attend meetings and take notes there ...", "JOE: OK. I’ve done that before, yes.", "SALLY: And you’d need to be able to cope with general admin.", "JOE: Filling, and keeping records and so on? That should be OK. And in my last job I also had to manage the diary.", "SALLY: Excellent. That’s something they want here too. I’d suggest you add it to your CV – I don’t think you mentioned that, did you?", "JOE: No.", "SALLY: So as far as the requirements go, they want good computer skills, of course, and they particularly mention spreadsheets.", "JOE: That should be fine.", "SALLY: And interpersonal skills – which would be something they’d check with your references.", "JOE: I think that should be OK, yes.", "SALLY: Then they mention that they want someone who is careful and takes care with details – just looking at your CV, I’d say you’re probably alright there.", "JOE: I think so, yes. Do they want any special experience?", "SALLY: I think they wanted some experience of teleconferencing.", "JOE: I’ve got three years’ experience of that.", "SALLY: let’s see, yes, good. In fact they’re only asking for at least one year , so that’s great. So is that something that might interest you?", "JOE: It is, yes. The only thing is, you said they were in North London so it would be quite a long commute for me.", "SALLY: OK.", "SALLY: So the second position might suit you better as far as the location goes; that’s for a warehouse assistant and that’s in South London.", "JOE: Yes, that would be a lot closer.", "SALLY: And you’ve worked in a warehouse before, haven’t you?", "JOE: Yes.", "SALLY: So as far as the responsibilities for this position go, they want someone who can manage the stock, obviously, and also deliveries.", "JOE: That should be OK. You’ve got to keep track of stuff, but I’ve always been quite good with numbers.", "SALLY: Good, that’s their first requirement. And they want someone who’s computer literate, which we know you are.", "JOE: Sure.", "SALLY: Then they mention organisational skills. They want someone who’s well organised.", "JOE: Yes, I think I am.", "SALLY: And tidy?", "JOE: Yes, they go together really, don’t they?", "SALLY: Sure. Then the usual stuff; they want someone who can communicate well both orally and in writing.", "JOE: OK. And for the last warehouse job I had, one of the things I enjoyed most was being part of a team . I found that was really essential for the job.", "SALLY: Excellent. Yes, they do mention that they want someone who’s used to that, yes. Now when you were working in a warehouse last time, what sorts of items were you dealing with?", "JOE: It was mostly bathroom and kitchen equipment, sinks and stoves and fridges.", "SALLY: So you’re OK moving heavy things?", "JOE: Sure. I’m quite strong, and I’ve had the training.", "SALLY: Good. Now as far as experience goes, they mention they want someone with a licence, and that you have experience of driving in London – so you can cope with the traffic and so on.", "JOE: Yes, no problem.", "SALLY: And you’ve got experience of warehouse work ... and the final thing they mention is customer service. I think looking at your CV you’ve OK there.", "JOE: Right. So what about pay? Can you tell me a bit more about that, please ..."],2:["PRESENTER: My guest on the show today is Alice Riches who started the Street Play Scheme where she lives in Beechwood Road. For those of you that don’t already know – Street Play involves local residents closing off their street for a few hours so that children have a chance to play in the street safely. She started it in her own street, Beechwood Road, and the idea caught on, and there are now Street Play Schemes all over the city. So when did you actually start the scheme, Alice?", "ALICE: Well, I first had the idea when my oldest child was still a toddler, so that’s about six years ago now – but it took at least two years of campaigning before we were actually able to make it happen. So the scheme’s been up and running for three years now . We’d love to be able to close our road for longer – for the whole weekend, from Saturday morning until Sunday evening, for example. At the moment it’s just once a week . But when we started it was only once a month. But we’re working on it.", "PRESENTER: So what actually happens when Beechwood Road is closed?", "ALICE: We have volunteer wardens, mostly parents but some elderly residents too, who block off our road at either end . The council have provided special signs but there’s always a volunteer there to explain what’s happening to any motorists. Generally, they’re fine about it – we’ve only had to get the police involved once or twice.", "Now I should explain that the road isn’t completely closed to cars. But only residents’ cars are allowed. If people really need to get in or out of Beechwood Road, it’s not a problem – as long as they drive at under 20 kilometres per hour . But most people just decide not to use their cars during this time, or they park in another street. The wardens are only there to stop through traffic.", "PRESENTER: So can anyone apply to get involved in Street Play?", "ALICE: Absolutely – we want to include all kids in the city – especially those who live on busy roads . It’s here that demand is greatest. Obviously, there isn’t such demand in wealthier areas where the children have access to parks or large gardens – or in the suburbs where there are usually more places for children to play outside.", "I’d recommend that anyone listening who likes the idea should just give it a go. We’ve been surprised by the positive reaction of residents all over the city. And that’s not just parents. There are always a few who complain but they’re a tiny minority. On the whole everyone is very supportive and say they’re very happy to see children out on the street – even if it does get quite noisy.", "ALICE: There have been so many benefits of Street Play for the kids. Parents really like the fact that the kids are getting fresh air instead of sitting staring at a computer screen, even if they’re not doing anything particularly energetic. And of course it’s great that kids can play with their friends outside without being supervised by their parents – but for me the biggest advantage is that kids develop confidence in themselves to be outside without their parents . The other really fantastic thing is that children get to know the adults in the street – it’s like having a big extended family .", "PRESENTER: It certainly does have a lot of benefits. I want to move on now and ask you about a related project in King Street.", "ALICE: Right. Well this was an experiment I was involved in where local residents decided to try and reduce the traffic along King Street, which is the busiest main road in our area, by persuading people not to use their cars for one day. We thought about making people pay more for parking – but we decided that would be really unpopular – so instead we just stopped people from parking on King Street but left the other car parks open.", "It was surprising how much of a difference all this made. As we’d predicted, air quality was significantly better but what I hadn’t expected was how much quieter it would be – even with the buses still running. Of course everyone said they felt safer but we were actually amazed that sales in the shops went up considerably that day – we thought there’d be fewer people out shopping – not more.", "PRESENTER: That’s really interesting so the fact that ..."],3:["HAZEL: Tom, could I ask you for some advice, please?", "TOM: Yes of course, if you think I can help. What’s it about?", "HAZEL: It’s my first media studies assignment, and I’m not sure how to go about it. You must have done it last year.", "TOM: Is that the one comparing the coverage of a particular story in a range of newspapers?", "HAZEL: That’s right.", "TOM: Oh yes, I really enjoyed writing it.", "HAZEL: So what sort of things do I need to compare?", "TOM: Well, there are several things. For example, there’s the question of which page of the newspaper the item appears on.", "HAZEL: You mean, because there’s a big difference between having it on the front page and the bottom of page ten, for instance?", "TOM: Exactly. And that shows how important the editor thinks the story is. Then there’s the size – how many column inches the story is given, how many columns it spreads over.", "HAZEL: And I suppose that includes the headline.", "TOM: It certainly does. It’s all part of attracting the reader’s attention.", "HAZEL: What about graphics – whether there’s anything visual in addition to the text?", "TOM: Yes, you need to consider those, too, because they can have a big effect on the reader’s understanding of the story – sometimes a bigger effect than the text itself. Then you’ll need to look at how the item is put together: what structure is it given? Bear in mind that not many people read beyond the first paragraph, so what has the journalist put at the beginning? And if, say, three are conflicting opinions about something, does one appear near the end, where people probably won’t read it?", "HAZEL: And newspapers sometimes give wrong or misleading information, don’t they?", "Either deliberately or by accident. Should I be looking at that, too?", "TOM: Yes, if you can. Compare what’s in different versions, and as far as possible, try and work out what’s true and what isn’t. And that relates to a very important point: what’s the writer’s purpose , or at least the most important one, if they have several. It may seem to be to inform the public, but often it’s that they want to create fear, or controversy, or to make somebody look ridiculous.", "HAZEL: Gosh, I see what you mean. And I suppose the writer may make assumptions about the reader.", "TOM: That’s right – about their knowledge of the subject, their attitudes, and their level of education, which means writing so that the readers understand without feeling patronised. All of that will make a difference to how story is presented.", "HAZEL: Does it matter what type of story I write about?", "TOM: No – national or international politics, the arts ... Anything, as long as it’s covered in two or three newspaper. Though of course it’ll be easier and more fun if it’s something you’re interested in and know something about.", "HAZEL: And on that basis a national news item would be worth analysing – I’m quite keen on politics, so I’ll try and find a suitable topic . What did you choose for your analysis, Tom?", "TOM: I was interested in how newspapers express their opinions explicitly, so I wanted to compare editorials in different papers, but when I started looking. I couldn’t find two on the same topic that I felt like analysing.", "HAZEL: In that case, I won’t even bother to look .", "TOM: So in the end I chose a human interest story – a terribly emotional story about a young girl who was very ill, and lots of other people – mostly strangers – raised money so she could go abroad for treatment. Actually, I was surprised – some papers just wrote about how wonderful everyone was, but others considered the broader picture, like why treatment wasn’t available here.", "HAZEL: Hmm, I usually find stories like that raise quite strong feelings in me! I’ll avoid that . Perhaps I’ll choose an arts topic , like different reviews of a film, or something about funding for the arts – I’ll think about that.", "TOM: Yes, that might be interesting.", "HAZEL: OK, well thanks a lot for your help, Tom. It’s been really useful.", "TOM: You’re welcome. Good luck with the assignment, Hazel."],4:["Nowadays, we use different products for personal cleanliness, laundry, dishwashing and household cleaning, but this is very much a 20th-century development.", "The origins of cleanliness date back to prehistoric times. Since water is essential for life, the earliest people lived near water and knew something about its cleansing properties – at least that it rinsed mud off their hands.", "During the excavation of ancient Babylon, evidence was found that soapmaking was known as early as 2800 BC. Archaeologists discovered cylinders made of clay , with inscriptions on them saying that fats were boiled with askes. This is a method of making soap, though there’s no reference to the purpose of this material.", "The early Greeks bathed for aesthetic reasons and apparently didn’t use soap. Instead, they cleaned their bodies with blocks of sand, pumice and ashes, then anointed themselves with oil, and scraped off the oil and dirt with a metal instrument known as a strigil . They also used oil mixed with ashes. Clothes were washed without soap in streams.", "The ancient Germans and Gauls are also credited with discovering how to make a substance called ‘soap’, made of melted animal fat and ashes. They used this mixture to tint their hair red .", "Soap got its name, according to an ancient Roman legend, from Mount Sapo, where animals were sacrificed, leaving deposits of animal fat. Rain washed these deposits, along with wood ashes, down into the clay soil along the River Tiber. Women found that this mixture greatly reduced the effort required to wash their clothes.", "As Roman civilisation advance, so did bathing. The first of the famous Roman baths, supplied with water from their aqueducts , was built around 312 BC. The baths were luxurious, and bathing became very popular. And by the second century AD, the Greek physician Galen recommended soap for both medicinal and cleaning purposes.", "After the fall of Rome in 467 AD and the resulting decline in bathing habits, much of Europe felt the impact of filth on public health. This lack of personal cleanliness and related unsanitary living conditions were major factors in the outbreaks of disease in the Middle Ages, and especially the Black Death of the 14th century.", "Nevertheless, soapmaking became an established craft in Europe, and associations of soapmakers guarded their trade secrets closely. Vegetable and animal oils were used with ashes of plants, along with perfume, apparently for the first time . Gradually more varieties of soap became available for shaving and shampooing, as well as bathing and laundering.", "A major step toward large-scale commercial soapmaking occurred in 1791, when a French chemist, Nicholas Leblanc, patented a process for turning salt into soda ash , or sodium carbonate. Soda ash is the alkali obtained from ashes that combines with fat to form soap. The Leblanc process yielded quantities of good-quality, inexpensive soda ash.", "Modern soapmaking was born some 20 years later, in the early 19th century, with the discovery by Michel Eugène Chevreul, another French chemist, of the chemical nature and relationship of fats, glycerine and fatty acids. His studies established the basis for both fat and soap chemistry, and soapmaking became a science . Further developments during the 19th century made it easier and cheaper to manufacture soap.", "Until the 19th century, soap was regarded as a luxury item, and was heavily taxed in several countries. As it became more readily available, it became an everyday necessity, a development that was reinforced when the high tax was removed . Soap was then something ordinary people could afford, and cleanliness standards improved.", "With this widespread use came the development of milder soaps for bathing and soaps for use in the washing machines that were available to consumers by the turn of the 20th century."]};;
+function renderScriptPane(part){
+ const body=$('scriptBodyPart'+part);
+ if(!body)return;
+ const raw=TRANSCRIPTS[part];
+ if(!raw){body.innerHTML='<p class="script-pane-placeholder">Script cho Part '+part+' s\u1ebd \u0111\u01b0\u1ee3c c\u1eadp nh\u1eadt sau.</p>';return;}
+ const paras=Array.isArray(raw)?raw:String(raw).split(/\n{2,}/);
+ body.innerHTML=paras.map(p=>'<p>'+escapeHtml(p).replace(/\n/g,'<br>')+'</p>').join('');
+}
+[1,2,3,4].forEach(renderScriptPane);
+function annotateReviewQuestion(q,info){
+ const studentRaw=attempt.answers[q.id];
+ if(q.type==='blank'){
+  const chip=document.querySelector('.qchip[data-q="'+q.id+'"]');
+  if(!chip)return;
+  chip.classList.add(info.isCorrect?'is-correct':'is-wrong');
+  const icon=document.createElement('span');
+  icon.className='qchip-feedback-icon';icon.setAttribute('aria-hidden','true');
+  icon.textContent=info.isCorrect?'\u2713':'\u2717';
+  chip.appendChild(icon);
+  const sr=document.createElement('span');sr.className='sr-only';
+  sr.textContent=info.isCorrect?'\u0110\u00fang':'Sai';
+  chip.appendChild(sr);
+  if(!info.isCorrect){
+   const empty=!studentRaw||!String(studentRaw).trim();
+   const fb=document.createElement('span');fb.className='qchip-correct-answer';
+   fb.textContent=(empty?'Ch\u01b0a tr\u1ea3 l\u1eddi \u2014 ':'')+'\u0110\u00e1p \u00e1n \u0111\u00fang: '+(Array.isArray(q.answer)?q.answer.join(' / '):q.answer);
+   chip.insertAdjacentElement('afterend',fb);
+  }
+  return;
+ }
+ const block=document.querySelector('.mc-block[data-q="'+q.id+'"]');
+ if(!block)return;
+ const selected=q.type==='choose-two'?(Array.isArray(studentRaw)?studentRaw:[]):(studentRaw?[studentRaw]:[]);
+ const correctSet=q.type==='choose-two'?q.answer:[q.answer];
+ block.querySelectorAll('.mc-option').forEach(opt=>{
+  const letter=opt.dataset.letter;
+  if(correctSet.includes(letter))opt.classList.add('opt-correct');
+  else if(selected.includes(letter))opt.classList.add('opt-wrong');
+ });
+ const empty=selected.length===0;
+ block.classList.add(info.isCorrect?'is-review-correct':'is-review-wrong');
+ const badge=document.createElement('span');
+ badge.className='review-status-badge '+(empty?'is-unanswered':(info.isCorrect?'is-correct':'is-wrong'));
+ badge.textContent=empty?'\u25cb Ch\u01b0a tr\u1ea3 l\u1eddi':(info.isCorrect?'\u2713 \u0110\u00fang':'\u2717 Sai');
+ const stem=block.querySelector('.mc-stem');
+ if(stem){stem.appendChild(document.createTextNode(' '));stem.appendChild(badge);}
+}
+function annotateReviewPills(){
+ if(!attempt||attempt.phase!=='submitted')return;
+ const results=TestCore.score(questions,attempt.answers);
+ const byId={};results.details.forEach(d=>byId[d.id]=d);
+ document.querySelectorAll('.qnav-pill').forEach(pill=>{
+  const info=byId[pill.dataset.q];if(!info)return;
+  pill.classList.remove('is-review-correct','is-review-wrong');
+  pill.classList.add(info.isCorrect?'is-review-correct':'is-review-wrong');
+ });
+}
+let reviewAnnotated=false;
+function renderReviewAnnotations(){
+ if(reviewAnnotated)return;reviewAnnotated=true;
+ const results=TestCore.score(questions,attempt.answers);
+ const byId={};results.details.forEach(d=>byId[d.id]=d);
+ questions.forEach(q=>{const info=byId[q.id];if(info)annotateReviewQuestion(q,info);});
+ annotateReviewPills();
+ document.body.classList.add('is-review-listening');
+ document.querySelectorAll('.right-pane.script-pane').forEach(p=>p.hidden=false);
+}
+new MutationObserver(annotateReviewPills).observe($('qnavInner'),{childList:true});
+new MutationObserver(()=>{
+ if(!$('result').hidden){
+  $('reviewPlayerBar').hidden=false;
+  if(!$('reviewAudio').src)$('reviewAudio').src=reviewAudioSrc;
+  requestAnimationFrame(syncPartNavOffset);
+  renderReviewAnnotations();
+ }
+}).observe($('result'),{attributes:true,attributeFilter:['hidden']});
+
+// ---------------------------------------------------------------------------
+// Matching (Q25-30): drag a topic from the right panel into the slot next to a
+// novel on the left (or tap a topic, then tap a slot). The hidden radio inputs
+// inside each .mc-block stay the single source of truth, so answers are stored,
+// persisted, scored and submitted through the existing handlers unchanged.
+// ---------------------------------------------------------------------------
+var MATCH_TOPICS={A:'poverty',B:'education',C:"Dickens's travels",D:'entertainment',E:'crime and the law',F:'wealth',G:'medicine',H:"a woman's life"};
+function syncMatchingUI(){
+ if(!MATCH_TOPICS)return;
+ const used=new Set();
+ document.querySelectorAll('.match-row').forEach(row=>{
+  const a=(typeof attempt!=='undefined'&&attempt&&attempt.answers[row.dataset.q])||'';
+  const slot=row.querySelector('.match-slot');if(!slot)return;
+  slot.classList.toggle('is-filled',!!a);
+  slot.innerHTML=(a&&MATCH_TOPICS[a])
+   ?'<span class="match-chip-in" data-letter="'+a+'"><b>'+a+'</b><span>'+escapeHtml(MATCH_TOPICS[a])+'</span></span><button type="button" class="match-clear" aria-label="Remove answer for question '+row.dataset.q+'">×</button>'
+   :'<span class="match-ph">'+((typeof attempt!=='undefined'&&attempt&&attempt.phase==='submitted')?'Chưa trả lời':'Kéo đáp án vào đây')+'</span>';
+  if(a)used.add(a);
+ });
+ document.querySelectorAll('.topic-chip').forEach(ch=>ch.classList.toggle('is-used',used.has(ch.dataset.letter)));
+}
+function setMatchAnswer(qid,letter){
+ if(!editable())return;
+ const row=document.querySelector('.match-row[data-q="'+qid+'"]');if(!row)return;
+ if(!letter){attempt.answers[qid]='';persist();restoreAnswers();return;}
+ // each topic is used once: free it from any other novel first
+ document.querySelectorAll('.match-row').forEach(r=>{if(r.dataset.q!==qid&&attempt.answers[r.dataset.q]===letter)attempt.answers[r.dataset.q]='';});
+ const input=row.querySelector('input[value="'+letter+'"]');if(!input)return;
+ input.checked=true;input.dispatchEvent(new Event('change',{bubbles:true}));
+}
+let mdrag=null,pickedLetter=null,suppressClick=false;
+function markPicked(){document.querySelectorAll('.topic-chip').forEach(c=>c.classList.toggle('is-picked',c.dataset.letter===pickedLetter));document.body.classList.toggle('has-picked-topic',!!pickedLetter);}
+function slotAt(x,y){const el=document.elementFromPoint(x,y);return el&&el.closest?el.closest('.match-slot'):null;}
+document.addEventListener('pointerdown',e=>{
+ const src=e.target.closest&&e.target.closest('.topic-chip,.match-chip-in');
+ if(!src||!editable()||(e.pointerType==='mouse'&&e.button!==0)||src.classList.contains('is-used'))return;
+ const row=src.closest('.match-row');
+ mdrag={letter:src.dataset.letter,from:row?row.dataset.q:null,x:e.clientX,y:e.clientY,active:false,ghost:null,id:e.pointerId,src};
+});
+document.addEventListener('pointermove',e=>{
+ if(!mdrag||e.pointerId!==mdrag.id)return;
+ if(!mdrag.active){
+  if(Math.hypot(e.clientX-mdrag.x,e.clientY-mdrag.y)<6)return;
+  mdrag.active=true;
+  const g=document.createElement('div');g.className='match-ghost';g.textContent=mdrag.letter+'  '+MATCH_TOPICS[mdrag.letter];document.body.appendChild(g);mdrag.ghost=g;
+  mdrag.src.classList.add('is-dragging');document.body.classList.add('is-match-dragging');
+ }
+ mdrag.ghost.style.transform='translate('+(e.clientX+12)+'px,'+(e.clientY+12)+'px)';
+ document.querySelectorAll('.match-slot.is-over').forEach(s=>s.classList.remove('is-over'));
+ const s=slotAt(e.clientX,e.clientY);if(s)s.classList.add('is-over');
+ e.preventDefault();
+},{passive:false});
+function endMatchDrag(e,cancel){
+ if(!mdrag||e.pointerId!==mdrag.id)return;
+ const d=mdrag;mdrag=null;
+ if(!d.active)return;
+ d.ghost.remove();d.src.classList.remove('is-dragging');document.body.classList.remove('is-match-dragging');
+ document.querySelectorAll('.match-slot.is-over').forEach(s=>s.classList.remove('is-over'));
+ suppressClick=true;setTimeout(()=>{suppressClick=false;},60);
+ if(cancel)return;
+ const s=slotAt(e.clientX,e.clientY);
+ if(s){setMatchAnswer(s.closest('.match-row').dataset.q,d.letter);pickedLetter=null;markPicked();}
+ else if(d.from){const el=document.elementFromPoint(e.clientX,e.clientY);if(el&&el.closest&&el.closest('.topic-bank'))setMatchAnswer(d.from,'');}
+}
+document.addEventListener('pointerup',e=>endMatchDrag(e,false));
+document.addEventListener('pointercancel',e=>endMatchDrag(e,true));
+document.addEventListener('click',e=>{
+ if(suppressClick||!e.target.closest)return;
+ const clear=e.target.closest('.match-clear');
+ if(clear){setMatchAnswer(clear.closest('.match-row').dataset.q,'');return;}
+ const chip=e.target.closest('.topic-chip');
+ if(chip){if(!editable()||chip.classList.contains('is-used'))return;pickedLetter=(pickedLetter===chip.dataset.letter)?null:chip.dataset.letter;markPicked();return;}
+ const slot=e.target.closest('.match-slot');
+ if(slot&&pickedLetter&&editable()){setMatchAnswer(slot.closest('.match-row').dataset.q,pickedLetter);pickedLetter=null;markPicked();}
+});
+document.addEventListener('keydown',e=>{
+ if((e.key==='Enter'||e.key===' ')&&e.target.classList&&(e.target.classList.contains('match-slot')||e.target.classList.contains('topic-chip'))){e.preventDefault();e.target.click();}
+});
+function decorateMatchReview(row){
+ if(row.querySelector('.match-correct-hint')||!row.classList.contains('is-review-wrong'))return;
+ const opt=row.querySelector('.mc-option.opt-correct');if(!opt)return;
+ const L=opt.dataset.letter,h=document.createElement('div');h.className='match-correct-hint';
+ h.innerHTML='Đáp án đúng: <b>'+L+'</b> '+escapeHtml(MATCH_TOPICS[L]||'');row.appendChild(h);
+}
+document.querySelectorAll('.match-row').forEach(row=>new MutationObserver(()=>decorateMatchReview(row)).observe(row,{attributes:true,attributeFilter:['class']}));
+syncMatchingUI();
+})();
+</script>
+<script>
+/* Question-text highlighter. Fully independent of scoring/timer/submission/Sheets.
+   Selecting text inside a question pane wraps it in <mark class="user-hl">;
+   clicking an existing highlight removes it. Never touches attempt state or inputs' values. */
+(function(){
+'use strict';
+const HL='user-hl';
+function inNoHighlightZone(node){
+ if(!node)return true;
+ const el=node.nodeType===1?node:node.parentElement;
+ return !!(el&&el.closest('input,button,select,textarea,.qchip-play,.play-btn,.progress-track,.part-nav,.qnav,.exam-status'));
+}
+function clearSelection(){const s=window.getSelection();if(s)s.removeAllRanges();}
+function applyHighlight(range){
+ const mark=document.createElement('mark');
+ mark.className=HL;
+ try{
+  range.surroundContents(mark);
+  return true;
+ }catch(e){
+  try{
+   const frag=range.extractContents();
+   mark.appendChild(frag);
+   range.insertNode(mark);
+   return true;
+  }catch(e2){return false;}
+ }
+}
+function removeHighlight(mark){
+ const parent=mark.parentNode;if(!parent)return;
+ while(mark.firstChild)parent.insertBefore(mark.firstChild,mark);
+ parent.removeChild(mark);
+ parent.normalize();
+}
+function handleSelection(pane){
+ const sel=window.getSelection();
+ if(!sel||sel.isCollapsed||sel.rangeCount===0)return;
+ const range=sel.getRangeAt(0);
+ if(range.collapsed)return;
+ if(!pane.contains(range.commonAncestorContainer))return;
+ if(inNoHighlightZone(range.startContainer)||inNoHighlightZone(range.endContainer))return;
+ if(!range.toString().trim())return;
+ try{applyHighlight(range.cloneRange());}catch(e){}
+ clearSelection();
+}
+document.querySelectorAll('.left-pane').forEach(pane=>{
+ pane.addEventListener('mouseup',()=>handleSelection(pane));
+ pane.addEventListener('touchend',()=>{setTimeout(()=>handleSelection(pane),10);});
+ pane.addEventListener('click',e=>{
+  const mark=e.target.closest('mark.'+HL);
+  if(mark&&window.getSelection().isCollapsed)removeHighlight(mark);
+ });
+});
+})();
+</script>
+<script>
+/* Teacher Test Mode panel. Hidden from the normal student UI at all times; only a
+   keyboard shortcut reveals it. Never touches audio/scoring/timer/Sheets logic directly —
+   it only calls the exact existing tick()/submit() functions via window.__teacherAPI. */
+(function(){
+'use strict';
+const panel=document.getElementById('teacherPanel');
+const statusEl=document.getElementById('teacherStatus');
+if(!panel)return;
+function setStatus(msg){if(statusEl)statusEl.textContent=msg;}
+function refreshStatus(){
+ const api=window.__teacherAPI;
+ if(!api){setStatus('Teacher API not ready yet.');return;}
+ const phase=api.getPhase();
+ setStatus(phase?`Current phase: ${phase}`:'No active attempt yet. Start the test first.');
+}
+function togglePanel(){
+ panel.hidden=!panel.hidden;
+ if(!panel.hidden)refreshStatus();
+}
+document.addEventListener('keydown',e=>{
+ const key=(e.key||'').toLowerCase();
+ const isY=key==='y'||e.code==='KeyY';
+ if((e.ctrlKey||e.metaKey)&&e.shiftKey&&isY){
+  e.preventDefault();
+  togglePanel();
+ }
+});
+document.getElementById('teacherSkip').addEventListener('click',()=>{
+ const ok=window.__teacherAPI&&window.__teacherAPI.skipToReview();
+ setStatus(ok?'Skipped to review.':'Cannot skip: no active listening phase.');
+});
+document.getElementById('teacherSubmit').addEventListener('click',()=>{
+ const ok=window.__teacherAPI&&window.__teacherAPI.submitNow();
+ setStatus(ok?'Submitted.':'Cannot submit: already submitted or no attempt.');
+});
+document.getElementById('teacherExit').addEventListener('click',()=>{panel.hidden=true;});
+})();
+</script>
+</body>
+</html>
