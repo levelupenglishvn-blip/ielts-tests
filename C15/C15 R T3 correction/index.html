@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>C15 R T3 Correction</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --font-heading:'Plus Jakarta Sans',Arial,Helvetica,sans-serif;
+  --brand:#15934E;--brand-dark:#119446;--brand-tint:#ECF6F1;
+  --bg:#f5f6f5;--card:#ffffff;--text:#202020;--muted:#6f7771;--line:#dce0dc;--soft:#f4f5f3;--edge:#b2ada3;--focus:#8a7534;
+  --gold:#ffe563;--goldtext:#000000;
+  --ref:#2563EB;--ref-strong:#1D4ED8;--ref-bg:#2563eb1f;
+  --ctx-bg:#fbe4e1;--ctx-border:#000000;
+  --shadow:0 8px 28px #24312a12;
+  --correct-bg:#e3f4ea;--wrong-bg:#fdecea;--wrong:#c0392b;
+}
+[data-theme=dark]{
+  color-scheme:dark;
+  --brand:#34D399;--brand-dark:#10B981;--brand-tint:#113124;
+  --bg:#191b1a;--card:#222523;--text:#eeeeee;--muted:#afb7b0;--line:#404640;--soft:#292d29;--edge:#867f73;--focus:#d2b960;
+  --ctx-bg:#4b2a28;--ctx-border:#e6e6e6;
+  --ref:#60A5FA;--ref-bg:#3b82f633;
+  --shadow:0 8px 28px #0006;
+  --correct-bg:#173a29;--wrong-bg:#3a1f20;--wrong:#ef5350;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font:15px/1.65 Inter,Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+button{font:inherit;cursor:pointer;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 14px}
+button:hover{border-color:var(--edge)}
+button:focus-visible,[tabindex]:focus-visible,summary:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+
+/* ---------- header ---------- */
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:84px;padding:12px 26px;background:var(--card);border-bottom:1px solid var(--line)}
+.logo{font-size:10.5px;letter-spacing:.16em;font-weight:700;color:var(--brand)}
+h1{margin:2px 0 0;font:700 21px/1.25 var(--font-heading)}
+header small{color:var(--muted);font-size:12.5px}
+.toolbar{display:flex;gap:10px}
+
+/* ---------- pages / panes ---------- */
+.page{display:none}
+.page.active{display:block}
+.workspace{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:18px;padding:18px 22px 108px;height:calc(100vh - 84px)}
+.pane{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow-y:auto;padding:22px 26px;min-height:0}
+.eyebrow{font-size:11px;letter-spacing:.16em;font-weight:700;color:var(--brand)}
+.passage-title{margin:4px 0 8px;font:700 24px/1.3 var(--font-heading)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin:0 0 16px;font-size:12.5px;color:var(--muted);align-items:center}
+.legend .lg-box{display:inline-block;width:18px;height:12px;vertical-align:-1px;margin-right:6px;background:var(--ctx-bg);border:1px solid var(--ctx-border);border-radius:3px}
+.legend mark.answer-hl{padding:0 4px}
+
+/* ---------- passage paragraphs ---------- */
+.passage-p{margin:0 0 14px;padding:10px 12px 8px;border-radius:12px;border-left:3px solid transparent;scroll-margin-top:12px}
+.passage-p.active-context{border-left-color:var(--brand);background:var(--soft)}
+.paragraph-text{font-size:17.5px;line-height:1.85;text-align:left;color:var(--text)}
+
+/* Paragraph labels — SAME values as the Test file (size / weight / shape / colour) */
+.para-label{
+  display:flex;align-items:center;width:fit-content;
+  font-family:var(--font-heading);font-size:16px;font-weight:700;letter-spacing:.02em;line-height:1.3;
+  color:var(--brand-dark);background:var(--brand-tint);border:1px solid var(--brand);border-radius:999px;
+  padding:4px 14px;margin:4px 0 10px 0;text-align:left;-webkit-user-select:none;user-select:none;
+}
+
+/* Layer 1: Context Box — thin black rectangle, light-red fill, around the whole context.
+   Layer 2: Answer Highlight — yellow, black text, only the decisive words. Both show together. */
+.context-box{
+  display:block;margin:8px 0;padding:9px 14px;
+  background:var(--ctx-bg);border:1px solid var(--ctx-border);border-radius:6px;
+}
+mark.answer-hl{background:var(--gold);color:var(--goldtext);border-radius:4px;padding:1px 3px;font-weight:700;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+/* Layer 3 (Matching Names only): person / reference chain — medium blue, never green, never louder than the yellow */
+.ref-name{color:var(--ref);background:var(--ref-bg);border-bottom:2px solid var(--ref);border-radius:3px;padding:0 2px;font-weight:700}
+mark.answer-hl .ref-name{color:var(--ref-strong);background:transparent}
+[data-theme=dark] mark.answer-hl .ref-name{color:#1D4ED8}
+.legend .ref-name{font-weight:700}
+
+/* ---------- question pane ---------- */
+.hint{font-size:12.5px;color:var(--muted);margin:0 0 14px}
+.section-title{font:700 18px/1.4 var(--font-heading);border-bottom:1px solid var(--line);border-left:3px solid var(--brand);padding:6px 0 6px 10px;margin:22px 0 6px}
+.section-title:first-of-type{margin-top:6px}
+.q-instr{font-size:13.5px;color:var(--muted);margin:0 0 12px}
+.word-box{margin:10px 0 14px;border:1px solid var(--edge);border-radius:8px;overflow:hidden;background:var(--soft)}
+.word-box-title{padding:8px 12px;border-bottom:1px solid var(--line);font-size:11px;letter-spacing:1.4px;font-weight:700}
+.word-options{border-collapse:collapse;width:100%;table-layout:fixed;font-size:14px}
+.word-options td{width:50%;border-bottom:1px solid var(--line);padding:8px 10px;vertical-align:top;overflow-wrap:anywhere}
+.word-options td+td{border-left:1px solid var(--line)}
+.word-options tr:last-child td{border-bottom:0}
+.option-letter{display:inline-block;font-size:12px;font-weight:700;min-width:22px;color:var(--focus)}
+
+.question-block{border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:0 0 12px;background:var(--card);transition:border-color .18s,box-shadow .18s}
+.question-block:hover{border-color:var(--edge)}
+.question-block.active-question{border:1.5px solid var(--brand);box-shadow:0 0 0 5px #15934e0f}
+.question-block p{margin:0 0 8px}
+.question-number{display:inline-block;background:#202020;color:#fff;border-radius:6px;padding:1px 8px;margin-right:6px;font-weight:700;line-height:1.6}
+[data-theme=dark] .question-number{background:#e7e7e7;color:#202020}
+.q-label{font-size:12.5px;color:var(--muted)}
+.btn-answer{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:600;padding:5px 14px;border-radius:8px;font-size:13.5px}
+[data-theme=dark] .btn-answer{color:#0b1a12}
+.btn-answer:hover{filter:brightness(1.1);border-color:var(--brand)}
+.explanation-box{display:none;margin-top:10px;padding:10px 14px;background:var(--soft);border-left:3px solid var(--brand);border-radius:8px;font-size:14.5px}
+.explanation-box.show{display:block}
+.explanation-box .ans{font-weight:700}
+.explanation-box p{margin:6px 0 0}
+
+/* MCQ */
+.choice-item{border:1px solid var(--line);border-radius:10px;padding:9px 12px;margin:7px 0;cursor:pointer;font-size:14.5px;display:flex;gap:9px;align-items:flex-start;flex-wrap:wrap}
+.choice-item:hover{border-color:var(--edge)}
+.choice-item .cl{display:inline-flex;align-items:center;justify-content:center;flex:0 0 26px;width:26px;height:26px;border:1.5px solid var(--edge);border-radius:50%;font-weight:600;font-size:12.5px;color:var(--muted)}
+.choice-item .ct{flex:1 1 200px}
+.choice-item.selected{border-color:var(--brand);box-shadow:0 0 0 2px #15934e14}
+.choice-item.is-correct{border-color:var(--brand);background:var(--correct-bg)}
+.choice-item.is-correct .cl{background:var(--brand);border-color:var(--brand);color:#fff}
+.choice-item.is-wrong{border-color:var(--wrong);background:var(--wrong-bg)}
+.mcq-info-box{display:none;flex-basis:100%;margin:4px 0 0 35px;padding:7px 10px;border-left:2px solid var(--edge);background:var(--soft);border-radius:6px;font-size:13.5px}
+.mcq-info-box.show{display:block}
+
+/* summary with gaps — inline correction */
+.gap-wrap{white-space:nowrap}
+.ans-btn{display:inline;font-size:11.5px;font-weight:700;line-height:1.5;padding:0 7px;margin-left:3px;border-radius:6px;color:var(--brand-dark);background:var(--brand-tint);border:1px solid var(--brand);vertical-align:baseline}
+.ans-btn:hover{filter:brightness(.96);border-color:var(--brand)}
+.ans-btn[aria-expanded=true]{background:var(--brand);color:#fff}
+[data-theme=dark] .ans-btn[aria-expanded=true]{color:#08130d}
+.inline-exp{display:block;margin:8px 0 12px;padding:10px 14px;background:var(--soft);border:1px solid var(--line);border-left:3px solid var(--brand);border-radius:8px;font-size:14.5px;line-height:1.65;white-space:normal}
+.inline-exp .ie-head{display:block;font:700 12px/1.4 var(--font-heading);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.inline-exp .ie-ans{display:block;font-weight:700;margin-bottom:4px}
+.inline-exp .ie-quote{display:block;margin:2px 0 4px}
+.inline-exp .ie-loc{font-size:12px;font-weight:700;color:var(--brand-dark);margin-right:6px}
+.inline-exp .ie-body{display:block;margin-top:4px}
+/* summary with gaps */
+.summary-group{border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:6px 0 16px;background:var(--card)}
+.summary-prose{padding:14px 16px;font-size:15px;line-height:1.95}
+.summary-prose h3{font:700 17px/1.5 var(--font-heading);margin:0 0 8px}
+.summary-prose p{margin:0 0 12px}
+.summary-gap{display:inline;border:0;border-bottom:1px solid var(--edge);border-radius:3px;padding:1px 4px;font:inherit;line-height:inherit;background:transparent;color:inherit}
+.summary-gap strong{font-size:12px;margin-right:3px}
+.summary-gap:hover,.summary-gap.active-gap{background:var(--soft);border-bottom-color:var(--brand)}
+.summary-gap.filled{color:var(--brand-dark);font-weight:700;border-bottom-color:var(--brand)}
+.summary-gap.filled .blank-space{font-weight:700}
+.pending-note{font-size:12.5px;color:var(--muted);margin:0 0 8px}
+/* notes completion: section headings + bullet lines, same card as a summary */
+.summary-prose p.notes-h{font:700 15px/1.5 var(--font-heading);color:var(--brand-dark);margin:14px 0 2px}
+.summary-prose p.notes-h:first-of-type{margin-top:2px}
+.summary-prose p.notes-li{position:relative;margin:0 0 6px;padding-left:20px}
+.summary-prose p.notes-li::before{content:'•';position:absolute;left:5px;color:var(--muted)}
+/* matching headings: the dashed box at the head of each section shows the correct heading */
+.head-box{display:flex;flex-wrap:wrap;justify-content:center;align-items:baseline;gap:4px 10px;width:100%;box-sizing:border-box;margin:0 0 10px;padding:8px 12px;border:1.5px dashed var(--brand);border-radius:8px;background:var(--brand-tint);color:var(--text);font:inherit;cursor:pointer;text-align:center}
+.head-box:hover{filter:brightness(.97)}
+.head-box.active{border-style:solid;box-shadow:0 0 0 4px #15934e1f}
+.head-box .hb-n{font:800 16px var(--font-heading)}
+.head-box .hb-sec{font-size:12.5px;font-weight:600;color:var(--muted)}
+.head-box .hb-ans{font-weight:700;color:var(--brand-dark)}
+.option-letter.lbl{min-width:34px}
+
+/* ---------- vocabulary pages ---------- */
+.vocab-wrap{max-width:900px;margin:0 auto;padding:22px 22px 120px}
+.vocab-head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin:6px 0 14px}
+.vocab-head h2{margin:0;font:700 22px var(--font-heading)}
+.vocab-head p{margin:2px 0 0;color:var(--muted);font-size:13px}
+.vocab-list details{border:1px solid var(--line);border-radius:12px;background:var(--card);margin:0 0 8px;padding:0}
+.vocab-list summary{list-style:none;cursor:pointer;padding:11px 14px;font-weight:600;display:flex;justify-content:space-between;gap:10px}
+.vocab-list summary::-webkit-details-marker{display:none}
+.vocab-list summary .pos{font-weight:400;color:var(--muted);font-size:13px}
+.vocab-list details[open]{border-color:var(--brand)}
+.vocab-list .vbody{padding:0 14px 12px;font-size:14.5px}
+.vocab-list .vbody p{margin:4px 0}
+.vocab-list .ex{color:var(--muted)}
+
+/* ---------- dock ---------- */
+.dock{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:50;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:5px;width:780px;max-width:calc(100% - 24px);padding:7px;background:#202020;border-radius:999px;box-shadow:0 10px 28px #0003}
+.dock button{background:transparent;border:0;color:#c6c6c6;border-radius:999px;padding:10px 8px;font-weight:600;font-size:13px}
+.dock button:hover{background:#303030;color:#fff}
+.dock button[aria-current=page]{background:var(--brand);color:#fff}
+[data-theme=dark] .dock button[aria-current=page]{color:#08130d}
+
+/* ---------- vocabulary pop-up (centre of screen) ---------- */
+.vmodal{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;background:rgba(20,27,46,.5);padding:16px}
+.vmodal[hidden]{display:none}
+.vcard{position:relative;width:100%;max-width:440px;background:var(--card);color:var(--text);border-radius:16px;box-shadow:0 18px 50px #0005;padding:24px 24px 18px;border-top:5px solid var(--brand)}
+.vclose{position:absolute;right:10px;top:10px;width:34px;height:34px;padding:0;border-radius:50%;font-size:20px;line-height:1;background:transparent}
+.vword{font:700 26px/1.25 var(--font-heading);margin:0 34px 10px 0;overflow-wrap:anywhere}
+.vexample{font-size:16px;line-height:1.6;margin:0 0 14px}
+.vexample .k{color:var(--muted);font-weight:600;margin-right:4px}
+.vexample strong{background:var(--gold);color:var(--goldtext);border-radius:3px;padding:0 3px}
+.vmeaning{font-size:16px;line-height:1.6;margin:0 0 14px;padding:10px 12px;background:var(--soft);border-left:3px solid var(--brand);border-radius:8px}
+.vmeaning .k{font-weight:700;margin-right:4px}
+.vnone{font-size:15px;color:var(--muted);margin:0 0 12px}
+.vactions{display:flex;justify-content:flex-end;gap:8px}
+.btn-reveal{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:600}
+[data-theme=dark] .btn-reveal{color:#08130d}
+
+/* ---------- responsive / print ---------- */
+@media(max-width:900px){
+  header{padding:12px 16px}
+  h1{font-size:17px}
+  .workspace{display:block;height:auto;padding:12px 12px 108px}
+  .pane{overflow:visible;margin-bottom:14px;padding:16px}
+  .paragraph-text{font-size:16.5px}
+  .dock{width:380px;grid-template-columns:repeat(3,minmax(0,1fr));border-radius:24px}
+  .dock button{padding:8px;font-size:12px}
+}
+@media print{
+  header,.dock,.btn-answer,.vmodal{display:none!important}
+  .page.active{display:block}
+  .workspace{display:block;height:auto}
+  .pane{overflow:visible;border:0;box-shadow:none}
+}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="logo">LEVEL UP · READING STUDIO</div>
+    <h1>Cambridge 15 · Reading Test 3</h1>
+    <small id="subtitle">Reading correction · 3 passages / 40 questions</small>
+  </div>
+  <div class="toolbar">
+    <button id="reset" type="button">Ẩn lời giải</button>
+    <button id="theme" type="button" aria-pressed="false">◐ Dark mode</button>
+  </div>
+</header>
+<main id="app"></main>
+<nav class="dock" aria-label="Điều hướng bài đọc và từ vựng"></nav>
+
+<div class="vmodal" id="vmodal" hidden role="dialog" aria-modal="true" aria-labelledby="vm-word">
+  <div class="vcard">
+    <button type="button" class="vclose" id="vm-close" aria-label="Đóng">×</button>
+    <div class="vword" id="vm-word"></div>
+    <div class="vexample" id="vm-example"></div>
+    <div class="vmeaning" id="vm-meaning" hidden></div>
+    <div class="vnone" id="vm-none" hidden></div>
+    <div class="vactions"><button type="button" class="btn-reveal" id="vm-reveal">Reveal meaning</button></div>
+  </div>
+</div>
+
+<script>
+const DATA={"parts": [{"title": "Henry Moore (1898-1986)", "subtitle": "The British sculptor Henry Moore was a leading figure in the 20th-century art world", "paras": [{"label": null, "text": "Henry Moore was born in Castleford, a small town near Leeds in the north of England. He was the seventh child of Raymond Moore and his wife Mary Baker. He studied at Castleford Grammar School from 1909 to 1915, where his early interest in art was encouraged by his teacher Alice Gostick. After leaving school, Moore hoped to become a sculptor, but instead he complied with his father’s wish that he train as a schoolteacher. He had to abandon his training in 1917 when he was sent to France to fight in the First World War."}, {"label": null, "text": "After the war, Moore enrolled at the Leeds School of Art, where he studied for two years. In his first year, he spent most of his time drawing. Although he wanted to study sculpture, no teacher was appointed until his second year. At the end of that year, he passed the sculpture examination and was awarded a scholarship to the Royal College of Art in London. In September 1921, he moved to London and began three years of advanced study in sculpture."}, {"label": null, "text": "Alongside the instruction he received at the Royal College, Moore visited many of the London museums, particularly the British Museum, which had a wide-ranging collection of ancient sculpture. During these visits, he discovered the power and beauty of ancient Egyptian and African sculpture. As he became increasingly interested in these ‘primitive’ forms of art, he turned away from European sculptural traditions."}, {"label": null, "text": "After graduating, Moore spent the first six months of 1925 travelling in France. When he visited the Trocadero Museum in Paris, he was impressed by a cast of a Mayan* sculpture of the rain spirit. It was a male reclining figure with its knees drawn up together, and its head at a right angle to its body. Moore became fascinated with this stone sculpture, which he thought had a power and originality that no other stone sculpture possessed. He himself started carving a variety of subjects in stone, including depiction of reclining women, mother-and-child groups, and masks."}, {"label": null, "text": "Moore’s exceptional talent soon gained recognition, and in 1926 he started work as a sculpture instructor at the Royal College. In 1933, he became a member of a group of young artists called Unit One. The aim of the group was to convince the English public of the merits of the emerging international movement in modern art and architecture."}, {"label": null, "text": "Around this time, Moore moved away from the human figure to experiment with abstract shapes. In 1931, he held an exhibition at the Leicester Galleries in London. His work was enthusiastically welcomed by fellow sculptors, but the reviews in the press were extremely negative and turned Moore into a notorious figure. There were calls for his resignation from the Royal College, and the following year, when his contract expired, he left to start a sculpture department at the Chelsea School of Art in London."}, {"label": null, "text": "Throughout the 1930s, Moore did not show any inclination to please the British public. He became interested in the paintings of the Spanish artist Pablo Picasso, whose work inspired him to distort the human body in a radical way. At times, he seemed to abandon the human figure altogether. The pages of his sketchbooks from this period show his ideas for abstract sculptures that bore little resemblance to the human form."}, {"label": null, "text": "In 1940, during the Second World War, Moore stopped teaching at the Chelsea School and moved to a farmhouse about 20 miles north of London. A shortage of materials forced him to focus on drawing. He did numerous small sketches of Londoners, later turning these ideas into large coloured drawings in his studio. In 1942, he returned to Castleford to make a series of sketches of the miners who worked there."}, {"label": null, "text": "In 1944, Harlow, a town near London, offered Moore a commission for a sculpture depicting a family. The resulting work signifies a dramatic change in Moore’s style, away from the experimentation of the 1930s towards a more natural and humanistic subject matter. He did dozens of studies in clay for the sculpture, and these were cast in bronze and issued in editions of seven to nine copies each. In this way, Moore’s work became available to collectors all over the world. The boost to his income enabled him to take on ambitious projects and start working on the scale he felt his sculpture demanded."}, {"label": null, "text": "Critics who had begun to think that Moore had become less revolutionary were proven wrong by the appearance, in 1950, of the first of Moore’s series of standing figures in bronze, with their harsh and angular pierced forms and distinct impression of menace. Moore also varied his subject matter in the 1950s with such works as Warrior with Shield and Falling Warrior. These were rare examples of Moore’s use of the male figure and owe something to his visit to Greece in 1951, when he had the opportunity to study ancient works of art."}, {"label": null, "text": "In his final years, Moore created the Henry Moore Foundation to promote art appreciation and to display his work. Moore was the first modern English sculptor to achieve international critical acclaim and he is still regarded as one of the most important sculptors of the 20th century."}], "groups": [{"kind": "tfng", "title": "Questions 1–7", "instr": "Do the following statements agree with the claims of the writer in Reading Passage 1? TRUE if the statement agrees with the information · FALSE if the statement contradicts the information · NOT GIVEN if there is no information on this.", "qs": [1, 2, 3, 4, 5, 6, 7]}, {"kind": "summary", "title": "Questions 8–13", "instr": "Complete the notes below. Choose ONE WORD ONLY from the passage for each answer.", "qs": [8, 9, 10, 11, 12, 13], "summary": {"title": "Moore’s career as an artist", "paras": ["1930s", "Moore’s exhibition at the Leicester Galleries is criticised by the press", "Moore is urged to offer his {8} and leave the Royal College.", "1940s", "Moore turns to drawing because {9} for sculpting are not readily available", "While visiting his hometown, Moore does some drawings of {10}", "Moore is employed to produce a sculpture of a {11}", "{12} start to buy Moore’s work", "Moore’s increased {13} makes it possible for him to do more ambitious sculptures", "1950s", "Moore’s series of bronze figures marks a further change in his style"], "styles": ["h", "li", "li", "h", "li", "li", "li", "li", "li", "h", "li"]}}]}, {"title": "The Desolenator: producing clean water", "subtitle": null, "paras": [{"label": null, "sec": "A", "hq": 14, "text": "Travelling around Thailand in the 1990s, William Janssen was impressed with the basic rooftop solar heating systems that were on many homes, where energy from the sun was absorbed by a plate and then used to heat water for domestic use. Two decades later Janssen developed that basic idea he saw in Southeast Asia into a portable device that uses the power from the sun to purify water."}, {"label": null, "sec": "B", "hq": 15, "text": "The Desolenator operates as a mobile desalination unit that can take water from different places, such as the sea, rivers, boreholes and rain, and purify it for human consumption. It is particularly valuable in regions where natural groundwater reserves have been polluted, or where seawater is the only water source available."}, {"label": null, "sec": "B", "hq": null, "text": "Janssen saw that there was a need for a sustainable way to clean water in both the developing and the developed countries when he moved to the United Arab Emirates and saw large-scale water processing. ‘I was confronted with the enormous carbon footprint that the Gulf nations have because of all of the desalination that they do,’ he says."}, {"label": null, "sec": "C", "hq": 16, "text": "The Desolenator can produce 15 litres of drinking water per day, enough to sustain a family for cooking and drinking. Its main selling point is that unlike standard desalination techniques, it doesn’t require a generated power supply: just sunlight. It measures 120 cm by 90 cm, and it is easy to transport, thanks to its two wheels. Water enters through a pipe, and flows as a thin film between a sheet of double glazing and the surface of a solar panel, where it is heated by the sun. The warm water flows into a small boiler (heated by a solar-powered battery) where it is converted to steam. When the steam cools, it becomes distilled water. The device has a very simple filter to trap particles, and this can easily be shaken to remove them. There are two tubes for liquid coming out: one for the waste – salt from seawater, fluoride, etc. – and another for the distilled water. The performance of the unit is shown on an LCD screen and transmitted to the company which provides servicing when necessary."}, {"label": null, "sec": "D", "hq": 17, "text": "A recent analysis found that at least two-thirds of the world’s population lives with severe water scarcity for at least a month every year. Janssen says that by 2030 half of the world’s population will be living with water stress – where the demand exceeds the supply over a certain period of time. ‘It is really important that a sustainable solution is brought to the market that is able to help these people,’ he says. Many countries ‘don’t have the money for desalination plants, which are very expensive to build. They don’t have the money to operate them, they are very maintenance intensive, and they don’t have the money to buy the diesel to run the desalination plants, so it is a really bad situation.’"}, {"label": null, "sec": "E", "hq": 18, "text": "The device is aimed at a wide variety of users – from homeowners in the developing world who do not have a constant supply of water to people living off the grid in rural parts of the US. The first commercial versions of the Desolenator are expected to be in operation in India early next year, after field tests are carried out. The market for the self-sufficient devices in developing countries is twofold – those who cannot afford the money for the device outright and pay through microfinance, and middle-income homes that can lease their own equipment. ‘People in India don’t pay for a fridge outright; they pay for it over six months. They would put the Desolenator on their roof and hook it up to their municipal supply and they would get very reliable drinking water on a daily basis,’ Janssen says. In the developed world, it is aimed at niche markets where tap water is unavailable – for camping, on boats, or for the military, for instance."}, {"label": null, "sec": "F", "hq": 19, "text": "Prices will vary according to where it is bought. In the developing world, the price will depend on what deal aid organisations can negotiate. In developed countries, it is likely to come in at $1,000 (£685) a unit, said Janssen. ‘We are a venture with a social mission. We are aware that the product we have envisioned is mainly finding application in the developing world and humanitarian sector and that this is the way we will proceed. We do realise, though, that to be a viable company there is a bottom line to keep in mind,’ he says."}, {"label": null, "sec": "G", "hq": 20, "text": "The company itself is based at Imperial College London, although Janssen, its chief executive, still lives in the UAE. It has raised £340,000 in funding so far. Within two years, he says, the company aims to be selling 1,000 units a month, mainly in the humanitarian field. They are expected to be sold in areas such as Australia, northern Chile, Peru, Texas and California."}], "groups": [{"kind": "match", "title": "Questions 14–20", "instr": "Reading Passage 2 has seven sections, A–G. Choose the correct heading for each section from the list of headings below. Write the correct number, i–x. Mỗi ô nét đứt ở đầu đoạn hiển thị heading đúng; bấm vào ô để xem giải thích.", "qs": [14, 15, 16, 17, 18, 19, 20], "bank": {"title": "List of Headings", "items": ["Getting the finance for production", "An unexpected benefit", "From initial inspiration to new product", "The range of potential customers for the device", "What makes the device different from alternatives", "Cleaning water from a range of sources", "Overcoming production difficulties", "Profit not the primary goal", "A warm welcome for the device", "The number of people affected by water shortages"], "labels": ["i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix", "x"]}}, {"kind": "summary", "title": "Questions 21–26", "instr": "Complete the summary below. Choose ONE WORD ONLY from the passage for each answer.", "qs": [21, 22, 23, 24, 25, 26], "summary": {"title": "How the Desolenator works", "paras": ["The energy required to operate the Desolenator comes from sunlight. The device can be used in different locations, as it has {21}. Water is fed into a pipe, and a {22} of water flows over a solar panel. The water then enters a boiler, where it turns into steam. Any particles in the water are caught in a {23}. The purified water comes out through one tube, and all types of {24} come out through another. A screen displays the {25} of the device, and transmits the information to the company so that they know when the Desolenator requires {26}."]}}]}, {"title": "Why fairy tales are really scary tales", "subtitle": "Some people think that fairy tales are just stories to amuse children, but their universal and enduring appeal may be due to more serious reasons", "paras": [{"label": null, "text": "People of every culture tell each other fairy tales but the same story often takes a variety of forms in different parts of the world. In the story of Little Red Riding Hood that European children are familiar with, a young girl on the way to see her grandmother meets a wolf and tells him where she is going. The wolf runs on ahead and disposes of the grandmother, then gets into bed dressed in the grandmother’s clothes to wait for Little Red Riding Hood. You may think you know the story – but which version? In some versions, the wolf swallows up the grandmother, while in others it locks her in a cupboard. In some stories Red Riding Hood gets the better of the wolf on her own, while in others a hunter or a woodcutter hears her cries and comes to her rescue."}, {"label": null, "text": "The universal appeal of these tales is frequently attributed to the idea that they contain cautionary messages: in the case of Little Red Riding Hood, to listen to your mother, and avoid talking to strangers. ‘It might be what we find interesting about this story is that it’s got this survival-relevant information in it,’ says anthropologist Jamie Tehrani at Durham University in the UK. But his research suggests otherwise. ‘We have this huge gap in our knowledge about the history and prehistory of storytelling, despite the fact that we know this genre is an incredibly ancient one,’ he says. That hasn’t stopped anthropologists, folklorists* and other academics devising theories to explain the importance of fairy tales in human society. Now Tehrani has found a way to test these ideas, borrowing a technique from evolutionary biologists."}, {"label": null, "text": "To work out the evolutionary history, development and relationships among groups of organisms, biologists compare the characteristics of living species in a process called ‘phylogenetic analysis’. Tehrani has used the same approach to compare related versions of fairy tales to discover how they have evolved and which elements have survived longest."}, {"label": null, "text": "Tehrani’s analysis focused on Little Red Riding Hood in its many forms, which include another Western fairy tale known as The Wolf and the Kids. Checking for variants of these two tales and similar stories from Africa, East Asia and other regions, he ended up with 58 stories recorded from oral traditions. Once his phylogenetic analysis had established that they were indeed related, he used the same methods to explore how they have developed and altered over time."}, {"label": null, "text": "First he tested some assumptions about which aspects of the story alter least as it evolves, indicating their importance. Folklorists believe that what happens in a story is more central to the story than the characters in it – that visiting a relative, only to be met by a scary animal in disguise, is more fundamental than whether the visitor is a little girl or three siblings, or the animal is a tiger instead of a wolf."}, {"label": null, "text": "However, Tehrani found no significant difference in the rate of evolution of incidents compared with that of characters. ‘Certain episodes are very stable because they are crucial to the story, but there are lots of other details that can evolve quite freely,’ he says. Neither did his analysis support the theory that the central section of a story is the most conserved part. He found no significant difference in the flexibility of events there compared with the beginning or the end."}, {"label": null, "text": "But the really big surprise came when he looked at the cautionary elements of the story. ‘Studies on hunter-gatherer folk tales suggest that these narratives include really important information about the environment and the possible dangers that may be faced there – stuff that’s relevant to survival,’ he says. Yet in his analysis such elements were just as flexible as seemingly trivial details. What, then, is important enough to be reproduced from generation to generation?"}, {"label": null, "text": "The answer, it would appear, is fear – blood-thirsty and gruesome aspects of the story, such as the eating of the grandmother by the wolf, turned out to be the best preserved of all. Why are these details retained by generations of storytellers, when other features are not? Tehrani has an idea: ‘In an oral context, a story won’t survive because of one great teller. It also needs to be interesting when it’s told by someone who’s not necessarily a great storyteller.’ Maybe being swallowed whole by a wolf, then cut out of its stomach alive is so gripping that it helps the story remain popular, no matter how badly it’s told."}, {"label": null, "text": "Jack Zipes at the University of Minnesota, Minneapolis, is unconvinced by Tehrani’s views on fairy tales. ‘Even if they’re gruesome, they won’t stick unless they matter,’ he says. He believes the perennial theme of women as victims in stories like Little Red Riding Hood explains why they continue to feel relevant. But Tehrani points out that although this is often the case in Western versions, it is not always true elsewhere. In Chinese and Japanese versions, often known as The Tiger Grandmother, the villain is a woman, and in both Iran and Nigeria, the victim is a boy."}, {"label": null, "text": "Mathias Clasen at Aarhus University in Denmark isn’t surprised by Tehrani’s findings. ‘Habits and morals change, but the things that scare us, and the fact that we seek out entertainment that’s designed to scare us – those are constant,’ he says. Clasen believes that scary stories teach us what it feels like to be afraid without having to experience real danger, and so build up resistance to negative emotions."}, {"label": null, "text": "*Folklorists: those who study traditional stories"}], "groups": [{"kind": "match", "title": "Questions 27–31", "instr": "Complete each sentence with the correct ending, A–F, below. Write the correct letter, A–F.", "qs": [27, 28, 29, 30, 31], "bank": {"title": "List of Endings", "items": ["may be provided through methods used in biological research.", "are the reason for their survival.", "show considerable global variation.", "contain animals which transform to become humans.", "were originally spoken rather than written.", "have been developed without factual basis."]}}, {"kind": "wordlist", "title": "Questions 32–36", "instr": "Complete the summary using the list of words, A–I, below. Write the correct letter, A–I.", "qs": [32, 33, 34, 35, 36], "summary": {"title": "Phylogenetic analysis of Little Red Riding Hood", "paras": ["Tehrani used techniques from evolutionary biology to find out if {32} existed among 58 stories from around the world. He also wanted to know which aspects of the stories had fewest {33}, as he believed these aspects would be the most important ones. Contrary to other beliefs, he found that some {34} that were included in a story tended to change over time, and that the middle of a story seemed no more important than the other parts. He was also surprised that parts of a story which seemed to provide some sort of {35} were unimportant. The aspect that he found most important in a story’s survival was {36}."]}, "bank": {"title": "List of Words", "items": ["ending", "events", "warning", "links", "records", "variations", "horror", "people", "plot"]}}, {"kind": "mcq", "title": "Questions 37–40", "instr": "Choose the correct letter, A, B, C or D.", "qs": [37, 38, 39, 40]}]}], "questions": {"1": {"exp": "Paragraph 1: “After leaving school, Moore hoped to become a sculptor, but instead he complied with his father’s wish that he train as a schoolteacher” → On leaving school ≈ After leaving school; did what his father wanted him to do ≈ complied with his father’s wish. Thông tin khớp với câu hỏi → TRUE.", "ev": [{"p": 0, "s": 288, "e": 424, "hl": [[288, 308], [356, 423]], "blue": []}], "ansShow": "TRUE", "text": "On leaving school, Moore did what his father wanted him to do.", "qhl": [[0, 17], [25, 61]]}, "2": {"exp": "Paragraph 2: “In his first year, he spent most of his time drawing. Although he wanted to study sculpture, no teacher was appointed until his second year” → Moore chưa được học điêu khắc ở năm đầu (không có giáo viên), trái với câu hỏi (began studying sculpture in his first term) → FALSE.", "ev": [{"p": 1, "s": 90, "e": 230, "hl": [[90, 142], [183, 229]], "blue": []}], "ansShow": "FALSE", "text": "Moore began studying sculpture in his first term at the Leeds School of Art.", "qhl": [[6, 30], [31, 48]]}, "3": {"exp": "Paragraph 2 chỉ nói Moore “was awarded a scholarship to the Royal College of Art in London” và bắt đầu ba năm học điêu khắc nâng cao ở đó. Bài không nói gì về danh tiếng của trường trong việc dạy điêu khắc (its reputation for teaching sculpture was excellent) → NOT GIVEN.", "ev": [{"p": 1, "s": 231, "e": 452, "hl": [[296, 359]], "blue": []}], "ansShow": "NOT GIVEN", "text": "When Moore started at the Royal College of Art, its reputation for teaching sculpture was excellent.", "qhl": [[48, 99]]}, "4": {"exp": "Paragraph 3: “Moore visited many of the London museums … During these visits, he discovered the power and beauty of ancient Egyptian and African sculpture” → became aware of ancient sculpture ≈ discovered … ancient … sculpture; as a result of visiting London museums ≈ During these visits. Thông tin khớp → TRUE.", "ev": [{"p": 2, "s": 60, "e": 291, "hl": [[60, 100], [214, 290]], "blue": []}], "ansShow": "TRUE", "text": "Moore became aware of ancient sculpture as a result of visiting London Museums.", "qhl": [[6, 39], [55, 78]]}, "5": {"exp": "Paragraph 4 chỉ nói Moore “was impressed by a cast of a Mayan sculpture” và “became fascinated” với nó – tức là phản ứng của riêng Moore. Bài không đề cập công chúng có quan tâm đến tác phẩm này hay không (attracted a lot of public interest) → NOT GIVEN.", "ev": [{"p": 3, "s": 81, "e": 441, "hl": [[128, 176], [305, 354]], "blue": []}], "ansShow": "NOT GIVEN", "text": "The Trocadero Museum’s Mayan sculpture attracted a lot of public interest.", "qhl": [[39, 73]]}, "6": {"exp": "Paragraph 4: Moore nghĩ bức tượng Maya “had a power and originality that no other stone sculpture possessed” → không có tác phẩm đá nào khác có được sức mạnh và sự độc đáo ấy, trái với câu hỏi (was similar in certain respects to other stone sculptures) → FALSE.", "ev": [{"p": 3, "s": 305, "e": 441, "hl": [[377, 440]], "blue": []}], "ansShow": "FALSE", "text": "Moore thought the Mayan sculpture was similar in certain respects to other stone sculptures.", "qhl": [[38, 91]]}, "7": {"exp": "Paragraph 5: “The aim of the group was to convince the English public of the merits of the emerging international movement in modern art and architecture” → wanted to make modern art and architecture more popular ≈ convince the English public of the merits of modern art and architecture (thuyết phục công chúng đón nhận). Thông tin khớp → TRUE.", "ev": [{"p": 4, "s": 128, "e": 341, "hl": [[201, 340]], "blue": []}], "ansShow": "TRUE", "text": "The artists who belonged to Unit One wanted to make modern art and architecture more popular.", "qhl": [[37, 92]]}, "8": {"exp": "Paragraph 6: “There were calls for his resignation from the Royal College” → is urged to offer his {8} and leave the Royal College ≈ calls for his resignation from the Royal College. Chỗ trống cần một danh từ sau “his” → resignation.", "ev": [{"p": 5, "s": 226, "e": 376, "hl": [[226, 274], [317, 376]], "blue": []}], "ansShow": "resignation", "gapShow": "resignation", "qp": 2, "qhl": [[6, 27], [32, 59]]}, "9": {"exp": "Paragraph 8: “A shortage of materials forced him to focus on drawing” → turns to drawing because {9} for sculpting are not readily available ≈ a shortage of materials forced him to focus on drawing. Danh từ số nhiều đi với “are” → materials.", "ev": [{"p": 7, "s": 140, "e": 195, "hl": [[140, 194]], "blue": []}], "ansShow": "materials", "gapShow": "materials", "qp": 4, "qhl": [[0, 30], [49, 74]]}, "10": {"exp": "Paragraph 8: “In 1942, he returned to Castleford to make a series of sketches of the miners who worked there” → While visiting his hometown ≈ returned to Castleford (quê của Moore – đã nêu ở đoạn 1: “born in Castleford”); does some drawings of {10} ≈ make … sketches of the miners.", "ev": [{"p": 7, "s": 311, "e": 406, "hl": [[320, 405]], "blue": []}], "ansShow": "miners", "gapShow": "miners", "qp": 5, "qhl": [[0, 27], [35, 56]]}, "11": {"exp": "Paragraph 9: “In 1944, Harlow, a town near London, offered Moore a commission for a sculpture depicting a family” → is employed to produce a sculpture of a {11} ≈ offered … a commission for a sculpture depicting a family.", "ev": [{"p": 8, "s": 0, "e": 99, "hl": [[37, 98]], "blue": []}], "ansShow": "family", "gapShow": "family", "qp": 6, "qhl": [[6, 45]]}, "12": {"exp": "Paragraph 9: các mẫu đất sét được đúc đồng và phát hành, “Moore’s work became available to collectors all over the world” → {12} start to buy Moore’s work ≈ collectors … (people who buy works of art) can get his work. Chỗ trống cần danh từ số nhiều làm chủ ngữ → collectors.", "ev": [{"p": 8, "s": 318, "e": 473, "hl": [[410, 472]], "blue": []}], "ansShow": "collectors", "gapShow": "collectors", "qp": 7, "qhl": [[5, 30]]}, "13": {"exp": "Paragraph 9: “The boost to his income enabled him to take on ambitious projects” → Moore’s increased {13} makes it possible for him to do more ambitious sculptures ≈ the boost to his income enabled him to take on ambitious projects (increased ≈ boost).", "ev": [{"p": 8, "s": 474, "e": 602, "hl": [[474, 539]], "blue": []}], "ansShow": "income", "gapShow": "income", "qp": 8, "qhl": [[8, 17], [23, 80]]}, "14": {"exp": "Section A kể về nguồn cảm hứng ban đầu: Janssen ấn tượng với hệ thống sưởi nước bằng năng lượng mặt trời trên mái nhà ở Thái Lan (initial inspiration), rồi hai thập kỷ sau phát triển ý tưởng đó thành một thiết bị lọc nước di động (new product) → iii. From initial inspiration to new product. Không có ý nào về lợi ích bất ngờ (ii) hay khó khăn khi sản xuất (vii).", "ev": [{"p": 0, "s": 0, "e": 386, "hl": [[41, 115], [237, 336]], "blue": []}], "ansShow": "iii — From initial inspiration to new product", "hdText": "iii. From initial inspiration to new product", "text": "Section A", "qhl": []}, "15": {"exp": "Section B: “The Desolenator operates as a mobile desalination unit that can take water from different places, such as the sea, rivers, boreholes and rain, and purify it for human consumption” → thiết bị lấy nước từ nhiều nguồn khác nhau rồi làm sạch ≈ vi. Cleaning water from a range of sources. Phần sau của đoạn chỉ nêu lý do Janssen muốn có giải pháp bền vững.", "ev": [{"p": 1, "s": 0, "e": 327, "hl": [[60, 178]], "blue": []}], "ansShow": "vi — Cleaning water from a range of sources", "hdText": "vi. Cleaning water from a range of sources", "text": "Section B", "qhl": []}, "16": {"exp": "Section C: “Its main selling point is that unlike standard desalination techniques, it doesn’t require a generated power supply: just sunlight” → điểm khác biệt so với các phương pháp khử mặn thông thường ≈ v. What makes the device different from alternatives. Phần còn lại mô tả cấu tạo và cách máy hoạt động để làm rõ điểm khác biệt đó.", "ev": [{"p": 3, "s": 118, "e": 249, "hl": [[118, 248]], "blue": []}], "ansShow": "v — What makes the device different from alternatives", "hdText": "v. What makes the device different from alternatives", "text": "Section C", "qhl": []}, "17": {"exp": "Section D: “at least two-thirds of the world’s population lives with severe water scarcity for at least a month every year … by 2030 half of the world’s population will be living with water stress” → số lượng người bị ảnh hưởng bởi thiếu nước ≈ x. The number of people affected by water shortages.", "ev": [{"p": 4, "s": 0, "e": 299, "hl": [[29, 139], [167, 230]], "blue": []}], "ansShow": "x — The number of people affected by water shortages", "hdText": "x. The number of people affected by water shortages", "text": "Section D", "qhl": []}, "18": {"exp": "Section E: “The device is aimed at a wide variety of users – from homeowners in the developing world … to people living off the grid in rural parts of the US”; “In the developed world, it is aimed at niche markets” → các nhóm khách hàng tiềm năng đa dạng ≈ iv. The range of potential customers for the device.", "ev": [{"p": 5, "s": 0, "e": 951, "hl": [[0, 46], [808, 860]], "blue": []}], "ansShow": "iv — The range of potential customers for the device", "hdText": "iv. The range of potential customers for the device", "text": "Section E", "qhl": []}, "19": {"exp": "Section F: “We are a venture with a social mission … the product … is mainly finding application in the developing world and humanitarian sector … to be a viable company there is a bottom line to keep in mind” → mục tiêu xã hội được đặt lên trước, lợi nhuận chỉ là điều kiện để công ty tồn tại ≈ viii. Profit not the primary goal.", "ev": [{"p": 6, "s": 231, "e": 530, "hl": [[231, 269], [323, 397], [491, 529]], "blue": []}], "ansShow": "viii — Profit not the primary goal", "hdText": "viii. Profit not the primary goal", "text": "Section F", "qhl": []}, "20": {"exp": "Section G: “It has raised £340,000 in funding so far. Within two years, he says, the company aims to be selling 1,000 units a month” → công ty đã huy động vốn và đặt mục tiêu sản lượng bán ≈ i. Getting the finance for production. Đoạn không nói đến khó khăn trong sản xuất (vii).", "ev": [{"p": 7, "s": 119, "e": 273, "hl": [[119, 159], [188, 238]], "blue": []}], "ansShow": "i — Getting the finance for production", "hdText": "i. Getting the finance for production", "text": "Section G", "qhl": []}, "21": {"exp": "Section C: “it is easy to transport, thanks to its two wheels” → The device can be used in different locations, as it has {21} ≈ it is easy to transport (di chuyển được) thanks to its two wheels. Chỗ trống cần danh từ số nhiều sau “has” → wheels.", "ev": [{"p": 3, "s": 250, "e": 333, "hl": [[283, 332]], "blue": []}], "ansShow": "wheels", "gapShow": "wheels", "qp": 0, "qhl": [[79, 113]]}, "22": {"exp": "Section C: “Water enters through a pipe, and flows as a thin film between a sheet of double glazing and the surface of a solar panel” → Water is fed into a pipe ≈ Water enters through a pipe; a {22} of water flows over a solar panel ≈ flows as a thin film … the surface of a solar panel → film.", "ev": [{"p": 3, "s": 334, "e": 455, "hl": [[334, 454]], "blue": []}], "ansShow": "film", "gapShow": "film", "qp": 0, "qhl": [[131, 155], [168, 201]]}, "23": {"exp": "Section C: “The device has a very simple filter to trap particles” → Any particles in the water are caught in a {23} ≈ a filter to trap particles (trap ≈ caught) → filter.", "ev": [{"p": 3, "s": 646, "e": 746, "hl": [[646, 699]], "blue": []}], "ansShow": "filter", "gapShow": "filter", "qp": 0, "qhl": [[262, 304]]}, "24": {"exp": "Section C: “There are two tubes for liquid coming out: one for the waste – salt from seawater, fluoride, etc. – and another for the distilled water” → The purified water comes out through one tube ≈ another for the distilled water; all types of {24} come out through another ≈ one for the waste (salt, fluoride, etc. = all types) → waste.", "ev": [{"p": 3, "s": 747, "e": 883, "hl": [[747, 882]], "blue": []}], "ansShow": "waste", "gapShow": "waste", "qp": 0, "qhl": [[311, 356], [362, 374]]}, "25": {"exp": "Section C: “The performance of the unit is shown on an LCD screen” → A screen displays the {25} of the device ≈ the performance of the unit is shown on an LCD screen → performance.", "ev": [{"p": 3, "s": 884, "e": 1009, "hl": [[884, 937]], "blue": []}], "ansShow": "performance", "gapShow": "performance", "qp": 0, "qhl": [[406, 427]]}, "26": {"exp": "Section C: “transmitted to the company which provides servicing when necessary” → transmits the information to the company so that they know when the Desolenator requires {26} ≈ the company … provides servicing when necessary → servicing.", "ev": [{"p": 3, "s": 884, "e": 1009, "hl": [[942, 1008]], "blue": []}], "ansShow": "servicing", "gapShow": "servicing", "qp": 0, "qhl": [[452, 540]]}, "27": {"exp": "Paragraph 1: “the same story often takes a variety of forms in different parts of the world. … In some versions, the wolf swallows up the grandmother, while in others it locks her in a cupboard” → các chi tiết trong cốt truyện khác nhau tùy phiên bản/vùng ≈ show considerable global variation. (D sai: con sói chỉ giả dạng bà ngoại, không “biến thành người”.)", "ev": [{"p": 0, "s": 0, "e": 765, "hl": [[56, 133], [512, 610], [690, 764]], "blue": []}], "ansShow": "C — show considerable global variation.", "text": "In fairy tales, details of the plot", "qhl": [[16, 35]]}, "28": {"exp": "Paragraph 2: người ta cho rằng sức hấp dẫn của truyện nằm ở “cautionary messages”, nhưng “his research suggests otherwise”; Paragraph 7: các yếu tố cảnh báo “were just as flexible as seemingly trivial details” → Tehrani bác bỏ ý cho rằng những bài học hữu ích cho cuộc sống là lý do truyện được lưu truyền (are the reason for their survival).", "ev": [{"p": 1, "s": 0, "e": 426, "hl": [[0, 110], [390, 425]], "blue": []}, {"p": 6, "s": 0, "e": 398, "hl": [[41, 87], [333, 397]], "blue": []}], "ansShow": "B — are the reason for their survival.", "text": "Tehrani rejects the idea that the useful lessons for life in fairy tales", "qhl": [[0, 29], [30, 57]]}, "29": {"exp": "Paragraph 2: “We have this huge gap in our knowledge about the history and prehistory of storytelling … That hasn’t stopped anthropologists, folklorists and other academics devising theories to explain the importance of fairy tales in human society” → các lý thuyết được đưa ra dù thiếu hiểu biết/dữ kiện ≈ have been developed without factual basis.", "ev": [{"p": 1, "s": 428, "e": 744, "hl": [[428, 515], [598, 743]], "blue": []}], "ansShow": "F — have been developed without factual basis.", "text": "Various theories about the social significance of fairy tales", "qhl": [[0, 61]]}, "30": {"exp": "Paragraph 2: “Now Tehrani has found a way to test these ideas, borrowing a technique from evolutionary biologists”; Paragraph 3: “Tehrani has used the same approach to compare related versions of fairy tales to discover how they have evolved” → hiểu về sự phát triển của truyện cổ tích nhờ phương pháp của sinh học ≈ may be provided through methods used in biological research.", "ev": [{"p": 1, "s": 745, "e": 845, "hl": [[745, 844]], "blue": []}, {"p": 2, "s": 197, "e": 350, "hl": [[197, 308]], "blue": []}], "ansShow": "A — may be provided through methods used in biological research.", "text": "Insights into the development of fairy tales", "qhl": [[0, 44]]}, "31": {"exp": "Paragraph 4: “Checking for variants of these two tales and similar stories from Africa, East Asia and other regions, he ended up with 58 stories recorded from oral traditions” → tất cả truyện Tehrani phân tích đều lưu truyền bằng miệng ≈ were originally spoken rather than written.", "ev": [{"p": 3, "s": 145, "e": 306, "hl": [[248, 305]], "blue": []}], "ansShow": "E — were originally spoken rather than written.", "text": "All the fairy tales analysed by Tehrani", "qhl": [[0, 39]]}, "32": {"exp": "Paragraph 4: “he ended up with 58 stories … Once his phylogenetic analysis had established that they were indeed related” → find out if {32} existed among 58 stories ≈ whether the stories were related (có mối liên hệ). Chỗ trống cần danh từ số nhiều: D. links.", "ev": [{"p": 3, "s": 248, "e": 467, "hl": [[248, 305], [338, 383]], "blue": []}], "ansShow": "D (links)", "gapShow": "D · links", "qp": 0, "qhl": [[50, 64], [70, 94]]}, "33": {"exp": "Paragraph 5: “First he tested some assumptions about which aspects of the story alter least as it evolves, indicating their importance” → had fewest {33} ≈ alter least (thay đổi ít nhất = ít biến thể nhất) → F. variations.", "ev": [{"p": 4, "s": 0, "e": 121, "hl": [[39, 120]], "blue": []}], "ansShow": "F (variations)", "gapShow": "F · variations", "qp": 0, "qhl": [[141, 180], [187, 248]]}, "34": {"exp": "Paragraph 6: “Tehrani found no significant difference in the rate of evolution of incidents compared with that of characters … lots of other details that can evolve quite freely. Neither did his analysis support the theory that the central section of a story is the most conserved part” → some {34} … tended to change over time ≈ incidents/episodes thay đổi tự do; the middle seemed no more important ≈ central section is not the most conserved → B. events.", "ev": [{"p": 5, "s": 0, "e": 487, "hl": [[9, 119], [198, 258], [270, 376]], "blue": []}], "ansShow": "B (events)", "gapShow": "B · events", "qp": 0, "qhl": [[250, 275], [301, 357], [368, 435]]}, "35": {"exp": "Paragraph 7: “the really big surprise came when he looked at the cautionary elements of the story … such elements were just as flexible as seemingly trivial details” → parts … which seemed to provide some sort of {35} ≈ cautionary elements (yếu tố mang tính cảnh báo); were unimportant ≈ just as flexible as trivial details → C. warning.", "ev": [{"p": 6, "s": 0, "e": 398, "hl": [[41, 87], [333, 397]], "blue": []}], "ansShow": "C (warning)", "gapShow": "C · warning", "qp": 0, "qhl": [[464, 517], [523, 539]]}, "36": {"exp": "Paragraph 8: “The answer, it would appear, is fear – blood-thirsty and gruesome aspects of the story … turned out to be the best preserved of all” → the aspect … most important in a story’s survival ≈ best preserved; horror ≈ fear / blood-thirsty and gruesome aspects → G. horror.", "ev": [{"p": 7, "s": 0, "e": 182, "hl": [[0, 86], [139, 181]], "blue": []}], "ansShow": "G (horror)", "gapShow": "G · horror", "qp": 0, "qhl": [[541, 606]]}, "37": {"exp": "Paragraph 4: “Tehrani’s analysis focused on Little Red Riding Hood in its many forms … he ended up with 58 stories recorded from oral traditions” → ông so sánh nhiều dạng khác nhau của cùng một câu chuyện cơ bản (B).", "ev": [{"p": 3, "s": 0, "e": 306, "hl": [[0, 70], [248, 305]], "blue": []}], "ansShow": "B — He looked at many different forms of the same basic story.", "text": "What method did Jamie Tehrani use to test his ideas about fairy tales?", "opts": ["He compared oral and written forms of the same stories.", "He looked at many different forms of the same basic story.", "He looked at unrelated stories from many different countries.", "He contrasted the development of fairy tales with that of living creatures."], "optExp": ["Sai: cả 58 truyện đều được ghi lại từ truyền miệng (oral traditions); bài không nói ông so sánh dạng nói với dạng viết.", "Đúng: ông phân tích Little Red Riding Hood “in its many forms” cùng các biến thể của nó (many different forms of the same basic story).", "Sai: các truyện phải được chứng minh là có liên quan với nhau (“indeed related”) – không phải truyện không liên quan.", "Sai: ông chỉ mượn kỹ thuật phân tích của sinh học tiến hóa để so sánh các phiên bản truyện, chứ không đối chiếu sự phát triển của truyện với sinh vật sống."], "correctIdx": 1, "qhl": [], "ohl": [13, 57]}, "38": {"exp": "Paragraph 9: Jack Zipes nói “Even if they’re gruesome, they won’t stick unless they matter” → một yếu tố của truyện chỉ tồn tại nếu nó có ý nghĩa sâu xa hơn (D).", "ev": [{"p": 8, "s": 0, "e": 179, "hl": [[107, 168]], "blue": []}], "ansShow": "D — features of stories only survive if they have a deeper significance.", "text": "When discussing Tehrani’s views, Jack Zipes suggests that", "opts": ["Tehrani ignores key changes in the role of women.", "stories which are too horrific are not always taken seriously.", "Tehrani overemphasises the importance of violence in stories.", "features of stories only survive if they have a deeper significance."], "optExp": ["Sai: Zipes nhắc đến “women as victims” như một chủ đề lâu đời giúp truyện còn phù hợp, chứ không nói Tehrani bỏ qua thay đổi vai trò của phụ nữ.", "Sai: Zipes không nói truyện quá kinh dị thì không được coi trọng.", "Sai: Zipes không nói Tehrani phóng đại vai trò của bạo lực; ông chỉ cho rằng chi tiết ghê rợn cũng phải “matter” mới tồn tại.", "Đúng: “Even if they’re gruesome, they won’t stick unless they matter” ≈ features of stories only survive if they have a deeper significance."], "correctIdx": 3, "qhl": [], "ohl": [20, 67]}, "39": {"exp": "Paragraph 9: Zipes cho rằng chủ đề phụ nữ là nạn nhân giải thích sức sống của truyện; Tehrani phản bác: “although this is often the case in Western versions, it is not always true elsewhere”, ở Trung Quốc, Nhật Bản kẻ xấu là phụ nữ, ở Iran và Nigeria nạn nhân là bé trai → chỉ ra lý thuyết của Zipes không đúng (A).", "ev": [{"p": 8, "s": 316, "e": 576, "hl": [[344, 428], [430, 575]], "blue": []}], "ansShow": "A — to indicate that Jack Zipes’ theory is incorrect", "text": "Why does Tehrani refer to Chinese and Japanese fairy tales?", "opts": ["to indicate that Jack Zipes’ theory is incorrect", "to suggest that crime is a global problem", "to imply that all fairy tales have a similar meaning", "to add more evidence for Jack Zipes’ ideas"], "optExp": ["Đúng: Tehrani dùng các phiên bản Trung Quốc, Nhật Bản để chứng minh quan điểm của Zipes (phụ nữ luôn là nạn nhân) không đúng ở mọi nơi.", "Sai: bài không nói gì về tội phạm như một vấn đề toàn cầu.", "Sai: ví dụ này cho thấy các phiên bản khác nhau về nạn nhân/kẻ xấu, không cho thấy mọi truyện cổ tích có cùng một ý nghĩa.", "Sai: các ví dụ này phản bác, chứ không củng cố, ý kiến của Zipes."], "correctIdx": 0, "qhl": [], "ohl": [17, 48]}, "40": {"exp": "Paragraph 10: “Clasen believes that scary stories teach us what it feels like to be afraid without having to experience real danger, and so build up resistance to negative emotions” → truyện cổ tích là cách an toàn để học cách đối phó với nỗi sợ (A).", "ev": [{"p": 9, "s": 247, "e": 413, "hl": [[268, 363], [372, 412]], "blue": []}], "ansShow": "A — They are a safe way of learning to deal with fear.", "text": "What does Mathias Clasen believe about fairy tales?", "opts": ["They are a safe way of learning to deal with fear.", "They are a type of entertainment that some people avoid.", "They reflect the changing values of our society.", "They reduce our ability to deal with real-world problems."], "optExp": ["Đúng: “without having to experience real danger” ≈ safe; “build up resistance to negative emotions” ≈ learning to deal with fear.", "Sai: Clasen nói con người chủ động “seek out” những giải trí đáng sợ, không phải tránh chúng.", "Sai: Clasen nói điều khiến ta sợ là “constant”, còn thói quen và đạo đức mới thay đổi – không phải truyện phản ánh giá trị thay đổi.", "Sai: ông cho rằng truyện giúp tăng khả năng chống chịu cảm xúc tiêu cực, không làm giảm khả năng xử lý vấn đề thực tế."], "correctIdx": 0, "qhl": [], "ohl": [9, 49]}}};
+const VOCAB=[{"part": 0, "hw": "comply with", "pos": "v", "f": ["complied", "comply", "complies", "complying"], "vn": "tuân theo, làm theo (yêu cầu, mong muốn)", "ex": "All visitors must comply with the safety rules.", "core": true}, {"part": 0, "hw": "abandon", "pos": "v", "f": ["abandon", "abandoned"], "vn": "từ bỏ, bỏ dở", "ex": "The team had to abandon the project when the money ran out.", "core": true}, {"part": 0, "hw": "notorious", "pos": "adj", "f": ["notorious"], "vn": "khét tiếng, nổi tiếng theo nghĩa xấu", "ex": "The town was notorious for its terrible traffic.", "core": true}, {"part": 0, "hw": "resignation", "pos": "n", "f": ["resignation"], "vn": "sự từ chức, đơn từ chức", "ex": "After the scandal, there were calls for the minister's resignation.", "core": true}, {"part": 0, "hw": "inclination", "pos": "n", "f": ["inclination"], "vn": "xu hướng, ý muốn làm gì", "ex": "He showed no inclination to change his plans.", "core": true}, {"part": 0, "hw": "distort", "pos": "v", "f": ["distort", "distorted"], "vn": "bóp méo, làm méo mó", "ex": "The old mirror distorted her reflection.", "core": true}, {"part": 0, "hw": "abstract", "pos": "adj", "f": ["abstract"], "vn": "trừu tượng", "ex": "She prefers abstract paintings to realistic portraits.", "core": true}, {"part": 0, "hw": "bear little resemblance to", "pos": "phr", "f": ["resemblance", "bore", "bear", "bears"], "vn": "hầu như không giống với", "ex": "The final building bears little resemblance to the first design.", "core": true}, {"part": 0, "hw": "commission", "pos": "n/v", "f": ["commission", "commissioned"], "vn": "sự đặt hàng, hợp đồng thực hiện một công trình nghệ thuật", "ex": "The sculptor received a commission to make a statue for the park.", "core": true}, {"part": 0, "hw": "cast", "pos": "v", "f": ["cast"], "vn": "đúc (kim loại vào khuôn)", "ex": "The statue was cast in bronze.", "core": true}, {"part": 0, "hw": "ambitious", "pos": "adj", "f": ["ambitious"], "vn": "đầy tham vọng, quy mô lớn", "ex": "The company has an ambitious plan to open fifty new shops.", "core": true}, {"part": 0, "hw": "merit", "pos": "n", "f": ["merits", "merit"], "vn": "giá trị, ưu điểm", "ex": "The judges discussed the merits of each design.", "core": true}, {"part": 0, "hw": "acclaim", "pos": "n", "f": ["acclaim", "acclaimed"], "vn": "sự ca ngợi, tán dương", "ex": "The film won international critical acclaim.", "core": true}, {"part": 0, "hw": "sculptor", "pos": "n", "f": ["sculptor", "sculptors"], "vn": "nhà điêu khắc", "ex": "The sculptor worked on the statue for two years.", "core": false}, {"part": 0, "hw": "sculpture", "pos": "n", "f": ["sculpture", "sculptures", "sculpting"], "vn": "tác phẩm điêu khắc; nghệ thuật điêu khắc", "ex": "There is a large sculpture in front of the museum.", "core": false}, {"part": 0, "hw": "enrol", "pos": "v", "f": ["enrolled", "enrol", "enroll"], "vn": "đăng ký học, nhập học", "ex": "She enrolled at the university in September.", "core": false}, {"part": 0, "hw": "appoint", "pos": "v", "f": ["appointed", "appoint"], "vn": "bổ nhiệm, chỉ định", "ex": "The school appointed a new head teacher.", "core": false}, {"part": 0, "hw": "scholarship", "pos": "n", "f": ["scholarship"], "vn": "học bổng", "ex": "He won a scholarship to study in London.", "core": false}, {"part": 0, "hw": "reclining", "pos": "adj", "f": ["reclining"], "vn": "nằm dài, ngả người", "ex": "The museum has a famous reclining figure carved in stone.", "core": false}, {"part": 0, "hw": "carve", "pos": "v", "f": ["carving", "carve", "carved"], "vn": "chạm, khắc (đá, gỗ)", "ex": "He carved a small bird out of wood.", "core": false}, {"part": 0, "hw": "instructor", "pos": "n", "f": ["instructor"], "vn": "người hướng dẫn, giảng viên", "ex": "Her driving instructor was very patient.", "core": false}, {"part": 0, "hw": "expire", "pos": "v", "f": ["expired", "expire"], "vn": "hết hạn", "ex": "My contract expires at the end of the month.", "core": false}, {"part": 0, "hw": "radical", "pos": "adj", "f": ["radical"], "vn": "triệt để, mang tính cải cách mạnh", "ex": "The school introduced a radical change to the timetable.", "core": false}, {"part": 0, "hw": "menace", "pos": "n", "f": ["menace"], "vn": "sự đe dọa, vẻ đe dọa", "ex": "There was a sense of menace in the dark street.", "core": false}, {"part": 0, "hw": "pierced", "pos": "adj", "f": ["pierced"], "vn": "bị khoét lỗ, xuyên thủng", "ex": "The sculpture has a pierced surface with holes through it.", "core": false}, {"part": 0, "hw": "edition", "pos": "n", "f": ["editions", "edition"], "vn": "bản in/bản đúc (một phiên bản giới hạn)", "ex": "The artist made only ten copies in each edition.", "core": false}, {"part": 0, "hw": "collector", "pos": "n", "f": ["collectors", "collector"], "vn": "nhà sưu tầm", "ex": "A collector paid a high price for the painting.", "core": false}, {"part": 0, "hw": "critic", "pos": "n", "f": ["critics", "critic"], "vn": "nhà phê bình", "ex": "Critics praised the exhibition.", "core": false}, {"part": 0, "hw": "humanistic", "pos": "adj", "f": ["humanistic"], "vn": "mang tính nhân văn, hướng về con người", "ex": "The artist moved to a more humanistic style.", "core": false}, {"part": 0, "hw": "depict", "pos": "v", "f": ["depicting", "depiction", "depictions", "depict"], "vn": "miêu tả, khắc họa", "ex": "The painting depicts a village in winter.", "core": false}, {"part": 1, "hw": "desalination", "pos": "n", "f": ["desalination"], "vn": "quá trình khử muối (làm nước mặn thành nước ngọt)", "ex": "Desalination turns sea water into drinking water.", "core": true}, {"part": 1, "hw": "purify", "pos": "v", "f": ["purify", "purified"], "vn": "làm sạch, tinh lọc", "ex": "This machine can purify river water.", "core": true}, {"part": 1, "hw": "sustainable", "pos": "adj", "f": ["sustainable"], "vn": "bền vững", "ex": "The company is looking for a more sustainable way to make plastic.", "core": true}, {"part": 1, "hw": "borehole", "pos": "n", "f": ["boreholes", "borehole"], "vn": "giếng khoan (lấy nước ngầm)", "ex": "The village gets its water from a borehole.", "core": true}, {"part": 1, "hw": "scarcity", "pos": "n", "f": ["scarcity", "scarce"], "vn": "sự khan hiếm, thiếu hụt", "ex": "Water scarcity is a serious problem in dry regions.", "core": true}, {"part": 1, "hw": "water stress", "pos": "phr", "f": ["stress"], "vn": "tình trạng căng thẳng nguồn nước (nhu cầu vượt quá nguồn cung)", "ex": "Many countries face water stress in the summer months.", "core": true}, {"part": 1, "hw": "off the grid", "pos": "phr", "f": ["grid"], "vn": "không kết nối với lưới điện/nước chung", "ex": "They live off the grid in a cabin in the mountains.", "core": true}, {"part": 1, "hw": "microfinance", "pos": "n", "f": ["microfinance"], "vn": "tài chính vi mô (khoản vay/trả góp nhỏ cho người thu nhập thấp)", "ex": "Microfinance helps poor families buy useful equipment.", "core": true}, {"part": 1, "hw": "lease", "pos": "v", "f": ["lease"], "vn": "thuê dài hạn", "ex": "The family leases the land from the local council.", "core": true}, {"part": 1, "hw": "niche market", "pos": "phr", "f": ["niche"], "vn": "thị trường ngách (nhóm khách hàng nhỏ, chuyên biệt)", "ex": "The shop sells to a niche market of rock climbers.", "core": true}, {"part": 1, "hw": "humanitarian", "pos": "adj", "f": ["humanitarian"], "vn": "nhân đạo, cứu trợ", "ex": "Humanitarian groups delivered food to the flooded area.", "core": true}, {"part": 1, "hw": "venture", "pos": "n", "f": ["venture"], "vn": "dự án kinh doanh, công ty mới thành lập", "ex": "She started a new venture selling solar lamps.", "core": true}, {"part": 1, "hw": "viable", "pos": "adj", "f": ["viable"], "vn": "khả thi, có thể tồn tại", "ex": "The plan is not viable without more money.", "core": true}, {"part": 1, "hw": "bottom line", "pos": "phr", "f": ["bottom"], "vn": "điều cốt lõi về lợi nhuận/tài chính", "ex": "The bottom line is that we cannot lose money.", "core": true}, {"part": 1, "hw": "carbon footprint", "pos": "phr", "f": ["footprint"], "vn": "lượng khí thải carbon (tác động đến môi trường)", "ex": "Flying has a large carbon footprint.", "core": false}, {"part": 1, "hw": "groundwater", "pos": "n", "f": ["groundwater"], "vn": "nước ngầm", "ex": "Farmers pump groundwater to irrigate their fields.", "core": false}, {"part": 1, "hw": "polluted", "pos": "adj", "f": ["polluted", "pollute"], "vn": "bị ô nhiễm", "ex": "The river is too polluted for swimming.", "core": false}, {"part": 1, "hw": "distilled", "pos": "adj", "f": ["distilled", "distillation"], "vn": "được chưng cất (nước tinh khiết)", "ex": "Distilled water contains almost no minerals.", "core": false}, {"part": 1, "hw": "boiler", "pos": "n", "f": ["boiler"], "vn": "nồi hơi, bình đun nước", "ex": "The boiler heats the water for the whole house.", "core": false}, {"part": 1, "hw": "double glazing", "pos": "phr", "f": ["glazing"], "vn": "kính hai lớp", "ex": "Double glazing keeps the house warm in winter.", "core": false}, {"part": 1, "hw": "filter", "pos": "n", "f": ["filter"], "vn": "bộ lọc", "ex": "Change the filter every six months.", "core": false}, {"part": 1, "hw": "trap", "pos": "v", "f": ["trap", "trapped"], "vn": "giữ lại, chặn lại", "ex": "The net traps small particles.", "core": false}, {"part": 1, "hw": "fluoride", "pos": "n", "f": ["fluoride"], "vn": "chất fluoride (khoáng chất trong nước)", "ex": "Too much fluoride in water can be harmful.", "core": false}, {"part": 1, "hw": "servicing", "pos": "n", "f": ["servicing", "service"], "vn": "việc bảo dưỡng, sửa chữa định kỳ", "ex": "The car is due for servicing next week.", "core": false}, {"part": 1, "hw": "municipal", "pos": "adj", "f": ["municipal"], "vn": "thuộc thành phố, của chính quyền địa phương", "ex": "The town has a municipal water supply.", "core": false}, {"part": 1, "hw": "self-sufficient", "pos": "adj", "f": ["self-sufficient"], "vn": "tự cung tự cấp", "ex": "The village is almost self-sufficient in food.", "core": false}, {"part": 1, "hw": "maintenance", "pos": "n", "f": ["maintenance"], "vn": "việc bảo trì", "ex": "Regular maintenance keeps the machines running smoothly.", "core": false}, {"part": 1, "hw": "intensive", "pos": "adj", "f": ["intensive"], "vn": "đòi hỏi nhiều (công sức, tài nguyên)", "ex": "Growing rice is very labour intensive.", "core": false}, {"part": 1, "hw": "aid", "pos": "n", "f": ["aid"], "vn": "viện trợ, sự giúp đỡ", "ex": "The country received aid after the earthquake.", "core": false}, {"part": 1, "hw": "unit", "pos": "n", "f": ["unit", "units"], "vn": "thiết bị, bộ phận máy", "ex": "Each unit can supply enough water for one family.", "core": false}, {"part": 2, "hw": "cautionary", "pos": "adj", "f": ["cautionary"], "vn": "mang tính cảnh báo, răn đe", "ex": "The film is a cautionary tale about greed.", "core": true}, {"part": 2, "hw": "enduring", "pos": "adj", "f": ["enduring"], "vn": "lâu dài, bền bỉ", "ex": "The song has enjoyed enduring popularity.", "core": true}, {"part": 2, "hw": "anthropologist", "pos": "n", "f": ["anthropologist", "anthropologists"], "vn": "nhà nhân chủng học", "ex": "An anthropologist spent a year living with the tribe.", "core": true}, {"part": 2, "hw": "phylogenetic analysis", "pos": "phr", "f": ["phylogenetic"], "vn": "phân tích phát sinh loài (so sánh để lần ra quan hệ tiến hóa)", "ex": "Phylogenetic analysis shows how the two species are related.", "core": true}, {"part": 2, "hw": "variant", "pos": "n", "f": ["variants", "variant"], "vn": "biến thể, phiên bản khác", "ex": "This story has many variants around the world.", "core": true}, {"part": 2, "hw": "episode", "pos": "n", "f": ["episodes", "episode"], "vn": "tình tiết, đoạn (trong câu chuyện)", "ex": "The best episode in the book is the storm at sea.", "core": true}, {"part": 2, "hw": "trivial", "pos": "adj", "f": ["trivial"], "vn": "nhỏ nhặt, không quan trọng", "ex": "They argued over a trivial matter.", "core": true}, {"part": 2, "hw": "gruesome", "pos": "adj", "f": ["gruesome"], "vn": "ghê rợn, khủng khiếp", "ex": "The film contains some gruesome scenes.", "core": true}, {"part": 2, "hw": "perennial", "pos": "adj", "f": ["perennial"], "vn": "lâu năm, luôn tái diễn", "ex": "Money is a perennial topic of conversation.", "core": true}, {"part": 2, "hw": "villain", "pos": "n", "f": ["villain"], "vn": "nhân vật phản diện, kẻ xấu", "ex": "The villain in the story is a clever fox.", "core": true}, {"part": 2, "hw": "gripping", "pos": "adj", "f": ["gripping"], "vn": "lôi cuốn, hấp dẫn", "ex": "It was a gripping story and I could not stop reading.", "core": true}, {"part": 2, "hw": "resistance", "pos": "n", "f": ["resistance"], "vn": "sức đề kháng, khả năng chống chịu", "ex": "Exercise builds up resistance to illness.", "core": true}, {"part": 2, "hw": "conserved", "pos": "adj", "f": ["conserved", "conserve"], "vn": "được giữ nguyên, bảo tồn (không thay đổi)", "ex": "Some parts of the old tradition have been conserved.", "core": true}, {"part": 2, "hw": "universal", "pos": "adj", "f": ["universal"], "vn": "phổ biến, mang tính toàn cầu", "ex": "Music has a universal appeal.", "core": false}, {"part": 2, "hw": "appeal", "pos": "n", "f": ["appeal"], "vn": "sức hấp dẫn", "ex": "The show has a wide appeal for young people.", "core": false}, {"part": 2, "hw": "attribute", "pos": "v", "f": ["attributed", "attribute"], "vn": "cho là do, quy cho", "ex": "He attributed his success to hard work.", "core": false}, {"part": 2, "hw": "prehistory", "pos": "n", "f": ["prehistory"], "vn": "thời tiền sử", "ex": "Little is known about human prehistory.", "core": false}, {"part": 2, "hw": "folklorist", "pos": "n", "f": ["folklorists", "folklorist"], "vn": "nhà nghiên cứu văn hóa dân gian", "ex": "A folklorist collects old stories and songs.", "core": false}, {"part": 2, "hw": "oral tradition", "pos": "phr", "f": ["oral", "traditions", "tradition"], "vn": "truyền thống truyền miệng", "ex": "Many legends survived through oral tradition.", "core": false}, {"part": 2, "hw": "hunter-gatherer", "pos": "n", "f": ["hunter-gatherer"], "vn": "người săn bắt hái lượm", "ex": "Hunter-gatherer societies lived by hunting and collecting wild plants.", "core": false}, {"part": 2, "hw": "disguise", "pos": "n", "f": ["disguise"], "vn": "sự cải trang, giả dạng", "ex": "The spy entered the building in disguise.", "core": false}, {"part": 2, "hw": "dispose of", "pos": "phr", "f": ["disposes", "dispose", "disposed"], "vn": "loại bỏ, tiêu diệt, vứt bỏ", "ex": "The villain tried to dispose of the evidence.", "core": false}, {"part": 2, "hw": "swallow", "pos": "v", "f": ["swallows", "swallow", "swallowed"], "vn": "nuốt", "ex": "The snake swallowed the egg whole.", "core": false}, {"part": 2, "hw": "cupboard", "pos": "n", "f": ["cupboard"], "vn": "tủ (đựng đồ)", "ex": "She locked the key in the kitchen cupboard.", "core": false}, {"part": 2, "hw": "stable", "pos": "adj", "f": ["stable"], "vn": "ổn định, không thay đổi", "ex": "The price has stayed stable for years.", "core": false}, {"part": 2, "hw": "blood-thirsty", "pos": "adj", "f": ["blood-thirsty"], "vn": "khát máu, đẫm máu", "ex": "The story is full of blood-thirsty battles.", "core": false}, {"part": 2, "hw": "unconvinced", "pos": "adj", "f": ["unconvinced"], "vn": "không bị thuyết phục", "ex": "I am unconvinced by his explanation.", "core": false}, {"part": 2, "hw": "victim", "pos": "n", "f": ["victim"], "vn": "nạn nhân", "ex": "The victim of the crime was a young boy.", "core": false}, {"part": 2, "hw": "preserved", "pos": "adj", "f": ["preserved", "preserve"], "vn": "được giữ gìn, bảo tồn", "ex": "The ancient manuscript is well preserved.", "core": false}, {"part": 2, "hw": "rate of evolution", "pos": "phr", "f": ["evolution", "evolve", "evolved", "evolutionary"], "vn": "tốc độ tiến hóa/thay đổi theo thời gian", "ex": "Different languages change at different rates of evolution.", "core": false}];
+</script>
+<script>
+"use strict";
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const Q=DATA.questions;                      // n -> question object
+const PART_OF={};DATA.parts.forEach((p,i)=>p.groups.forEach(g=>g.qs.forEach(q=>PART_OF[q]=i)));
+
+/* ------------------------------------------------------------------ passage rendering: Context Box + Answer Highlight */
+function renderParagraph(text,ev){
+  if(!ev) return esc(text);
+  const blue=ev.blue||[];
+  const seg=(a,b)=>{                      // text[a,b) with the blue person/reference spans
+    let out='',last=a;
+    blue.forEach(([bs,be])=>{const s0=Math.max(bs,a),e0=Math.min(be,b);if(s0<e0){out+=esc(text.slice(last,s0))+'<span class="ref-name">'+esc(text.slice(s0,e0))+'</span>';last=e0}});
+    return out+esc(text.slice(last,b));
+  };
+  let inner='',last=ev.s;
+  [...ev.hl].sort((a,b)=>a[0]-b[0]).forEach(([hs,he])=>{inner+=seg(last,hs)+'<mark class="answer-hl">'+seg(hs,he)+'</mark>';last=he});
+  inner+=seg(last,ev.e);
+  return esc(text.slice(0,ev.s))+'<span class="context-box">'+inner+'</span>'+esc(text.slice(ev.e));
+}
+// question side: yellow + bold on the phrases that map to the passage evidence
+function markRanges(text,ranges){
+  let out='',last=0;
+  [...(ranges||[])].sort((a,b)=>a[0]-b[0]).forEach(([s0,e0])=>{out+=esc(text.slice(last,s0))+'<mark class="answer-hl">'+esc(text.slice(s0,e0))+'</mark>';last=e0});
+  return out+esc(text.slice(last));
+}
+let ACTIVE=null;                           // question currently selected
+const OPEN_ANS=new Set();                  // summary gaps whose inline answer is open
+function clearPassage(part){
+  $$('.passage-p',$('#r'+part)).forEach((el,i)=>{el.classList.remove('active-context');$('.paragraph-text',el).innerHTML=esc(DATA.parts[part].paras[i].text)});
+}
+
+/* ------------------------------------------------------------------ page construction */
+function paragraphsHTML(part){
+  return DATA.parts[part].paras.map((p,i)=>
+    '<div class="passage-p" id="para-'+part+'-'+i+'" data-part="'+part+'" data-idx="'+i+'">'+
+    (p.hq?'<button type="button" class="head-box" data-q="'+p.hq+'" aria-label="Heading '+p.hq+' – xem giải thích"><span class="hb-n">'+p.hq+'</span><span class="hb-sec">Section '+esc(p.sec)+'</span><span class="hb-ans">'+esc(Q[p.hq].hdText)+'</span></button>':p.label?'<div class="para-label">Paragraph '+esc(p.label)+'</div>':'')+
+    '<div class="paragraph-text">'+esc(p.text)+'</div></div>').join('');
+}
+const GROUP_OF={};DATA.parts.forEach(p=>p.groups.forEach(g=>g.qs.forEach(q=>GROUP_OF[q]=g)));
+const isSummaryGroup=g=>g.kind==='summary'||g.kind==='wordlist';
+function evidenceQuotes(q){
+  const part=PART_OF[q];
+  return Q[q].ev.map(e=>{
+    const par=DATA.parts[part].paras[e.p],t=par.text;
+    const label=par.sec?('Section '+par.sec):par.label?('Paragraph '+par.label):('Paragraph '+(e.p+1));
+    return [...e.hl].sort((a,b)=>a[0]-b[0]).map(([s0,e0])=>'<span class="ie-quote"><span class="ie-loc">'+esc(label)+'</span>“<mark class="answer-hl">'+esc(t.slice(s0,e0))+'</mark>”</span>').join('');
+  }).join('');
+}
+function inlineExp(q){
+  return '<span class="inline-exp" id="ans'+q+'"><span class="ie-head">Evidence / Explanation</span><span class="ie-ans">Đáp án: '+esc(Q[q].ansShow)+'</span>'+evidenceQuotes(q)+'<span class="ie-body">'+esc(Q[q].exp)+'</span></span>';
+}
+function gapHTML(q){
+  const open=OPEN_ANS.has(q);
+  return '<span class="gap-wrap" data-q="'+q+'"><button type="button" class="summary-gap'+(open?' filled':'')+(ACTIVE===q?' active-gap':'')+'" data-q="'+q+'" aria-label="Question '+q+': xem bằng chứng"><strong>'+q+'</strong> <span class="blank-space" id="b'+q+'">'+(open?esc(Q[q].gapShow):'__________')+'</span></button> <button type="button" class="ans-btn" data-q="'+q+'" aria-expanded="'+open+'" aria-label="Answer '+q+'">(Ans)</button></span>'+(open?inlineExp(q):'');
+}
+function summaryParaHTML(g,pi){
+  const text=g.summary.paras[pi];
+  const act=(ACTIVE&&g.qs.includes(ACTIVE)&&Q[ACTIVE].qp===pi)?Q[ACTIVE].qhl:[];
+  let out='',last=0;
+  const re=/\{(\d+)\}/g;let m;
+  const chunk=(a,b)=>{                    // text[a,b) with the yellow ranges that fall inside it
+    const rs=act.map(([s0,e0])=>[Math.max(s0,a)-a,Math.min(e0,b)-a]).filter(([s0,e0])=>s0<e0);
+    return markRanges(text.slice(a,b),rs);
+  };
+  while((m=re.exec(text))){out+=chunk(last,m.index)+gapHTML(+m[1]);last=m.index+m[0].length}
+  return out+chunk(last,text.length);
+}
+function summaryInnerHTML(g){
+  const st=g.summary.styles||[];
+  return '<div class="summary-prose"><h3>'+esc(g.summary.title)+'</h3>'+g.summary.paras.map((_,pi)=>'<p'+(st[pi]==='h'?' class="notes-h"':st[pi]==='li'?' class="notes-li"':'')+'>'+summaryParaHTML(g,pi)+'</p>').join('')+'</div>';
+}
+function summaryHTML(g){return '<div class="summary-group" data-g="'+g.qs[0]+'">'+summaryInnerHTML(g)+'</div>'}
+function refreshSummary(g,focusQ){
+  const el=$('.summary-group[data-g="'+g.qs[0]+'"]');if(!el)return;
+  el.innerHTML=summaryInnerHTML(g);
+  if(focusQ){const b=$('.ans-btn[data-q="'+focusQ+'"]',el);if(b)b.focus({preventScroll:true})}
+}
+function answerBlock(q){
+  const d=Q[q];
+  return '<div class="explanation-box" id="ans'+q+'"><span class="ans">Đáp án: '+esc(d.ansShow)+'</span><p><em>Giải thích:</em> '+esc(d.exp)+'</p></div>';
+}
+function cardHTML(q,g){
+  const d=Q[q];
+  let body='';
+  if(g.kind==='mcq'){
+    body='<p><strong class="question-number">'+q+'</strong><span class="q-text" data-q="'+q+'">'+esc(d.text)+'</span></p>'+d.opts.map((o,k)=>
+      '<div class="choice-item" tabindex="0" data-k="'+k+'" role="button"><span class="cl">'+'ABCD'[k]+'</span><span class="ct">'+esc(o)+'</span><div class="mcq-info-box">'+esc(d.optExp[k])+'</div></div>').join('');
+  }else{
+    body='<p><strong class="question-number">'+q+'</strong><span class="q-text" data-q="'+q+'">'+esc(d.text)+'</span></p>';
+  }
+  return '<div class="question-block" data-q="'+q+'" tabindex="0" aria-label="Câu '+q+' — định vị ngữ cảnh">'+body+
+    '<button class="btn-answer" type="button" aria-expanded="false">Answer</button>'+answerBlock(q)+'</div>';
+}
+function refreshCard(q){
+  const d=Q[q],block=$('.question-block[data-q="'+q+'"]');if(!block)return;
+  const t=$('.q-text',block);if(t)t.innerHTML=markRanges(d.text,ACTIVE===q?d.qhl:[]);
+  if(d.opts){
+    const shown=ACTIVE===q&&$('.explanation-box',block).classList.contains('show')&&d.ohl;
+    $$('.choice-item',block).forEach((c,k)=>{$('.ct',c).innerHTML=markRanges(d.opts[k],shown&&k===d.correctIdx?[d.ohl]:[])});
+  }
+}
+function groupHTML(g){
+  let h='<div class="section-title" role="heading" aria-level="3">'+esc(g.title)+'</div><p class="q-instr">'+esc(g.instr)+'</p>';
+  if(g.bank){
+    h+='<div class="word-box"><div class="word-box-title">'+esc(g.bank.title.toUpperCase())+'</div><table class="word-options"><tbody>'+
+      Array.from({length:Math.ceil(g.bank.items.length/2)},(_,j)=>'<tr>'+g.bank.items.slice(j*2,j*2+2).map((w,k)=>'<td><span class="option-letter'+(g.bank.labels?' lbl':'')+'">'+(g.bank.labels?g.bank.labels[j*2+k]:String.fromCharCode(65+j*2+k))+'</span>'+esc(w)+'</td>').join('')+(g.bank.items.slice(j*2,j*2+2).length<2?'<td></td>':'')+'</tr>').join('')+'</tbody></table></div>';
+  }
+  if(g.summary) h+=summaryHTML(g);
+  if(!isSummaryGroup(g)) h+=g.qs.map(q=>cardHTML(q,g)).join('');   // summary questions are corrected inline, next to their blank
+  return h;
+}
+DATA.parts.forEach((p,i)=>{
+  const hasBlue=p.groups.some(g=>g.qs.some(q=>Q[q].ev.some(e=>e.blue&&e.blue.length)));
+  const reading=document.createElement('section');reading.id='r'+i;reading.className='page';
+  reading.innerHTML='<div class="workspace"><article class="pane reading"><div class="eyebrow">PASSAGE '+(i+1)+'</div><h2 class="passage-title">'+esc(p.title)+'</h2>'+
+    (p.subtitle?'<p class="hint"><em>'+esc(p.subtitle)+'</em></p>':'')+
+    '<div class="legend"><span><span class="lg-box"></span>Khung đỏ nhạt: ngữ cảnh chứa đáp án</span><span><mark class="answer-hl">Vàng đậm</mark> thông tin được hỏi: câu hỏi ↔ passage</span>'+(hasBlue?'<span><span class="ref-name">Xanh dương</span> tên người / đại từ chỉ người</span>':'')+'<span>Nhấp đúp vào một từ để tra từ vựng</span></div>'+
+    paragraphsHTML(i)+'</article><aside class="pane questions"><p class="hint">Chọn câu hỏi → passage hiện khung ngữ cảnh + highlight vàng đậm (và phần tương ứng trong câu hỏi) → bấm Answer / (Ans) để mở lời giải.</p>'+
+    p.groups.map(groupHTML).join('')+'</aside></div>';
+  $('#app').append(reading);
+
+  const vocab=document.createElement('section');vocab.id='v'+i;vocab.className='page';
+  const core=VOCAB.filter(e=>e.part===i&&e.core);
+  vocab.innerHTML='<div class="vocab-wrap"><div class="eyebrow">VOCABULARY '+(i+1)+' · '+esc(p.title)+'</div><div class="vocab-head"><div><h2>Core Vocabulary Spine</h2><p>'+core.length+' từ / cụm từ trọng tâm · Học theo ngữ cảnh bài đọc</p></div><button class="all-meanings" type="button">Hiện tất cả nghĩa</button></div><div class="vocab-list">'+
+    core.map(e=>'<details><summary><span>'+esc(e.hw)+' <span class="pos">('+esc(e.pos)+')</span></span></summary><div class="vbody"><p><strong>Nghĩa:</strong> '+esc(e.vn)+'</p><p class="ex"><em>Example:</em> '+esc(e.ex)+'</p></div></details>').join('')+'</div></div>';
+  $('#app').append(vocab);
+  $('.all-meanings',vocab).onclick=e=>{const show=!$$('details',vocab).every(x=>x.open);$$('details',vocab).forEach(x=>x.open=show);e.target.textContent=show?'Ẩn tất cả nghĩa':'Hiện tất cả nghĩa'};
+});
+for(const type of ['v','r'])for(let i=0;i<3;i++){const b=document.createElement('button');b.dataset.view=type+i;b.textContent=(type==='v'?'Vocabulary ':'Part ')+(i+1);b.onclick=()=>selectView(type+i);$('.dock').append(b)}
+
+/* ------------------------------------------------------------------ navigation */
+let activeView='r0';
+function selectView(id){
+  activeView=id;const part=+id.slice(1);
+  $$('.page').forEach(p=>p.classList.toggle('active',p.id===id));
+  $$('.dock button').forEach(b=>b.setAttribute('aria-current',b.dataset.view===id?'page':'false'));
+  $('#subtitle').textContent=(id[0]==='v'?'Vocabulary ':'Part ')+(part+1)+' · '+DATA.parts[part].title;
+  try{localStorage.setItem('c15r3-view',id)}catch(e){}
+  window.scrollTo(0,0);
+}
+
+/* ------------------------------------------------------------------ selecting a question */
+function jump(part,i){
+  const el=$('#para-'+part+'-'+i),pane=el.closest('.pane');
+  if(matchMedia('(max-width:900px)').matches)el.scrollIntoView({behavior:'smooth',block:'start'});
+  else pane.scrollTo({top:el.getBoundingClientRect().top-pane.getBoundingClientRect().top+pane.scrollTop-14,behavior:'smooth'});
+}
+function selectQuestion(q){
+  q=+q;const part=PART_OF[q],d=Q[q],prev=ACTIVE;ACTIVE=q;
+  $$('.active-question').forEach(x=>x.classList.remove('active-question'));
+  const block=$('#r'+part+' .question-block[data-q="'+q+'"]');if(block)block.classList.add('active-question');
+  $$('.head-box').forEach(h=>h.classList.toggle('active',+h.dataset.q===q));
+  if(prev&&prev!==q){const pg=GROUP_OF[prev];isSummaryGroup(pg)?refreshSummary(pg):refreshCard(prev)}
+  const g=GROUP_OF[q];isSummaryGroup(g)?refreshSummary(g):refreshCard(q);
+  const byPara={};d.ev.forEach(e=>{byPara[e.p]=e});
+  $$('.passage-p',$('#r'+part)).forEach((el,i)=>{
+    el.classList.toggle('active-context',!!byPara[i]);
+    $('.paragraph-text',el).innerHTML=renderParagraph(DATA.parts[part].paras[i].text,byPara[i]);
+  });
+  if(d.ev.length)jump(part,d.ev[0].p);
+}
+function toggleAnswer(block){
+  const q=+block.dataset.q;
+  if(!block.classList.contains('active-question'))selectQuestion(q);
+  const box=$('.explanation-box',block),show=!box.classList.contains('show');
+  box.classList.toggle('show',show);
+  $('.btn-answer',block).setAttribute('aria-expanded',show);
+  if(Q[q].opts){
+    $$('.choice-item',block).forEach((c,k)=>{c.classList.toggle('is-correct',show&&k===Q[q].correctIdx);c.classList.toggle('is-wrong',show&&c.classList.contains('selected')&&k!==Q[q].correctIdx)});
+    refreshCard(q);
+  }
+}
+function toggleGap(q){                       // inline (Ans) for summary blanks
+  q=+q;const g=GROUP_OF[q];
+  OPEN_ANS.has(q)?OPEN_ANS.delete(q):OPEN_ANS.add(q);
+  selectQuestion(q);                          // also re-renders the summary with the new state
+  refreshSummary(g,q);
+}
+$('#app').addEventListener('click',e=>{
+  const hb=e.target.closest('.head-box');
+  if(hb){const q=+hb.dataset.q;selectQuestion(q);const blk=$('#r'+PART_OF[q]+' .question-block[data-q="'+q+'"]');
+    if(blk){if(!$('.explanation-box',blk).classList.contains('show'))toggleAnswer(blk);blk.scrollIntoView({behavior:'smooth',block:'nearest'})}return}
+  const ansBtn=e.target.closest('.ans-btn');
+  if(ansBtn){e.stopPropagation();toggleGap(ansBtn.dataset.q);return}
+  const answerBtn=e.target.closest('.btn-answer');
+  if(answerBtn){e.stopPropagation();toggleAnswer(answerBtn.closest('.question-block'));return}
+  const choice=e.target.closest('.choice-item');
+  if(choice){
+    const block=choice.closest('.question-block');selectQuestion(block.dataset.q);
+    $$('.choice-item',block).forEach(c=>{c.classList.remove('selected');$('.mcq-info-box',c).classList.remove('show');c.classList.remove('is-wrong')});
+    choice.classList.add('selected');$('.mcq-info-box',choice).classList.add('show');
+    if($('.explanation-box',block).classList.contains('show')){const k=+choice.dataset.k;choice.classList.toggle('is-wrong',k!==Q[+block.dataset.q].correctIdx)}
+    return;
+  }
+  const gap=e.target.closest('.summary-gap');
+  if(gap){selectQuestion(gap.dataset.q);return}
+  const block=e.target.closest('.question-block');
+  if(block)selectQuestion(block.dataset.q);
+});
+$('#app').addEventListener('keydown',e=>{
+  if(!['Enter',' '].includes(e.key))return;
+  const choice=e.target.closest&&e.target.closest('.choice-item');
+  if(choice){e.preventDefault();choice.click();return}
+  if(e.target.classList&&e.target.classList.contains('question-block')){e.preventDefault();selectQuestion(e.target.dataset.q)}
+});
+
+/* ------------------------------------------------------------------ theme / reset */
+function setTheme(dark){document.documentElement.dataset.theme=dark?'dark':'light';$('#theme').textContent=dark?'☀ Light mode':'◐ Dark mode';$('#theme').setAttribute('aria-pressed',dark);try{localStorage.setItem('c15r3-theme',dark?'dark':'light')}catch(e){}}
+let theme,savedView;try{theme=localStorage.getItem('c15r3-theme');savedView=localStorage.getItem('c15r3-view')}catch(e){}
+setTheme(theme?theme==='dark':matchMedia('(prefers-color-scheme:dark)').matches);
+$('#theme').onclick=()=>setTheme(document.documentElement.dataset.theme!=='dark');
+$('#reset').onclick=()=>{
+  ACTIVE=null;OPEN_ANS.clear();
+  $$('.explanation-box.show').forEach(x=>x.classList.remove('show'));
+  $$('.btn-answer').forEach(x=>x.setAttribute('aria-expanded','false'));
+  DATA.parts.forEach(p=>p.groups.forEach(g=>{if(isSummaryGroup(g))refreshSummary(g);else g.qs.forEach(refreshCard)}));
+  $$('.choice-item').forEach(c=>{c.classList.remove('selected','is-correct','is-wrong');$('.mcq-info-box',c).classList.remove('show')});
+  $$('.active-question').forEach(x=>x.classList.remove('active-question'));
+  $$('.head-box.active').forEach(x=>x.classList.remove('active'));
+  DATA.parts.forEach((_,i)=>clearPassage(i));
+  closeVocab();
+};
+
+/* ------------------------------------------------------------------ vocabulary look-up (offline; two steps) */
+const LOOKUP=DATA.parts.map(()=>({}));
+VOCAB.forEach(e=>e.f.forEach(f=>{if(!LOOKUP[e.part][f])LOOKUP[e.part][f]=e}));
+const WORD_CH=/[\p{L}\p{M}’'\-]/u;
+function cleanWord(raw){return (raw||'').normalize('NFC').replace(/^[^\p{L}]+|[^\p{L}]+$/gu,'').replace(/[’']s$/i,'')}
+function findEntry(part,word){
+  const w=word.toLowerCase(),map=LOOKUP[part];
+  const c=[w,w.replace(/ies$/,'y'),w.replace(/(es|s)$/,''),w.replace(/(ed|d)$/,''),w.replace(/ing$/,''),w.replace(/ing$/,'e'),w.replace(/ly$/,''),w.replace(/ment$/,'')];
+  for(const k of c)if(k&&map[k])return map[k];
+  return null;
+}
+function wordAtPoint(x,y){
+  let node,off;
+  if(document.caretPositionFromPoint){const p=document.caretPositionFromPoint(x,y);if(p){node=p.offsetNode;off=p.offset}}
+  else if(document.caretRangeFromPoint){const r=document.caretRangeFromPoint(x,y);if(r){node=r.startContainer;off=r.startOffset}}
+  if(!node||node.nodeType!==3)return '';
+  const t=node.textContent;let s=Math.min(off,t.length),e=s;
+  while(s>0&&WORD_CH.test(t[s-1]))s--;
+  while(e<t.length&&WORD_CH.test(t[e]))e++;
+  return t.slice(s,e);
+}
+let vocabOpener=null,vocabEntry=null;
+function openVocab(part,rawWord){
+  const word=cleanWord(rawWord);if(!word)return;
+  vocabEntry=findEntry(part,word);
+  vocabOpener=document.activeElement;
+  $('#vm-word').textContent=word;
+  const ex=$('#vm-example'),mean=$('#vm-meaning'),none=$('#vm-none'),btn=$('#vm-reveal');
+  mean.hidden=true;btn.textContent='Reveal meaning';
+  if(vocabEntry){
+    // step 1: the selected word + one natural English example — NO Vietnamese yet
+    let exHtml=esc(vocabEntry.ex);
+    for(const f of [...vocabEntry.f].sort((a,b)=>b.length-a.length)){
+      const re=new RegExp('\\b'+f.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\b','i');
+      if(re.test(vocabEntry.ex)){exHtml=esc(vocabEntry.ex).replace(re,m=>'<strong>'+m+'</strong>');break}
+    }
+    ex.innerHTML='<span class="k">Example:</span>'+exHtml;ex.hidden=false;none.hidden=true;btn.hidden=false;
+  }else{
+    // no reliable data for this word in this passage: say so, never invent a meaning or example
+    ex.hidden=true;none.hidden=false;btn.hidden=true;
+    none.textContent='Chưa có dữ liệu từ vựng cho từ này trong bài đọc. (Bạn có thể nhờ giáo viên bổ sung.)';
+  }
+  $('#vmodal').hidden=false;
+  (vocabEntry?btn:$('#vm-close')).focus();
+}
+function closeVocab(){
+  if($('#vmodal').hidden)return;
+  $('#vmodal').hidden=true;
+  try{getSelection().removeAllRanges()}catch(e){}
+  if(vocabOpener&&vocabOpener.focus){try{vocabOpener.focus({preventScroll:true})}catch(e){}}
+  vocabOpener=null;
+}
+$('#vm-reveal').onclick=()=>{
+  const mean=$('#vm-meaning');
+  if(mean.hidden&&vocabEntry){mean.innerHTML='<span class="k">Meaning:</span>'+esc(vocabEntry.vn);mean.hidden=false;$('#vm-reveal').textContent='Hide meaning'}
+  else{mean.hidden=true;$('#vm-reveal').textContent='Reveal meaning'}
+};
+$('#vm-close').onclick=closeVocab;
+$('#vmodal').addEventListener('click',e=>{if(e.target.id==='vmodal')closeVocab()});
+document.addEventListener('keydown',e=>{
+  if($('#vmodal').hidden)return;
+  if(e.key==='Escape'){e.preventDefault();closeVocab();return}
+  if(e.key==='Tab'){  // keep focus inside the pop-up
+    const f=$$('#vmodal button').filter(b=>!b.hidden&&b.offsetParent!==null);
+    if(!f.length)return;const i=f.indexOf(document.activeElement);
+    if(e.shiftKey&&i<=0){e.preventDefault();f[f.length-1].focus()}
+    else if(!e.shiftKey&&i===f.length-1){e.preventDefault();f[0].focus()}
+  }
+});
+function partOfEl(el){const pg=el.closest('.page');return pg?+pg.id.slice(1):0}
+$('#app').addEventListener('dblclick',e=>{
+  const pt=e.target.closest&&e.target.closest('.paragraph-text');if(!pt)return;
+  let w=wordAtPoint(e.clientX,e.clientY);
+  if(!cleanWord(w))w=String(getSelection()||'');
+  openVocab(partOfEl(pt),w);
+});
+// long-press (touch devices)
+let lpTimer=null,lpX=0,lpY=0;
+$('#app').addEventListener('touchstart',e=>{
+  const pt=e.target.closest&&e.target.closest('.paragraph-text');if(!pt||e.touches.length!==1)return;
+  const t=e.touches[0];lpX=t.clientX;lpY=t.clientY;
+  clearTimeout(lpTimer);
+  lpTimer=setTimeout(()=>{const w=wordAtPoint(lpX,lpY);if(cleanWord(w))openVocab(partOfEl(pt),w)},550);
+},{passive:true});
+['touchmove','touchend','touchcancel'].forEach(ev=>$('#app').addEventListener(ev,e=>{
+  if(ev==='touchmove'&&e.touches[0]&&Math.hypot(e.touches[0].clientX-lpX,e.touches[0].clientY-lpY)<10)return;
+  clearTimeout(lpTimer);
+},{passive:true}));
+
+selectView(/^[rv][012]$/.test(savedView||'')?savedView:'r0');
+</script>
+</body>
+</html>

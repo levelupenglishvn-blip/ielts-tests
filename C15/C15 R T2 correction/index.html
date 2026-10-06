@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>C15 R T2 Correction</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --font-heading:'Plus Jakarta Sans',Arial,Helvetica,sans-serif;
+  --brand:#15934E;--brand-dark:#119446;--brand-tint:#ECF6F1;
+  --bg:#f5f6f5;--card:#ffffff;--text:#202020;--muted:#6f7771;--line:#dce0dc;--soft:#f4f5f3;--edge:#b2ada3;--focus:#8a7534;
+  --gold:#ffe563;--goldtext:#000000;
+  --ref:#2563EB;--ref-strong:#1D4ED8;--ref-bg:#2563eb1f;
+  --ctx-bg:#fbe4e1;--ctx-border:#000000;
+  --shadow:0 8px 28px #24312a12;
+  --correct-bg:#e3f4ea;--wrong-bg:#fdecea;--wrong:#c0392b;
+}
+[data-theme=dark]{
+  color-scheme:dark;
+  --brand:#34D399;--brand-dark:#10B981;--brand-tint:#113124;
+  --bg:#191b1a;--card:#222523;--text:#eeeeee;--muted:#afb7b0;--line:#404640;--soft:#292d29;--edge:#867f73;--focus:#d2b960;
+  --ctx-bg:#4b2a28;--ctx-border:#e6e6e6;
+  --ref:#60A5FA;--ref-bg:#3b82f633;
+  --shadow:0 8px 28px #0006;
+  --correct-bg:#173a29;--wrong-bg:#3a1f20;--wrong:#ef5350;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font:15px/1.65 Inter,Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+button{font:inherit;cursor:pointer;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 14px}
+button:hover{border-color:var(--edge)}
+button:focus-visible,[tabindex]:focus-visible,summary:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+
+/* ---------- header ---------- */
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:84px;padding:12px 26px;background:var(--card);border-bottom:1px solid var(--line)}
+.logo{font-size:10.5px;letter-spacing:.16em;font-weight:700;color:var(--brand)}
+h1{margin:2px 0 0;font:700 21px/1.25 var(--font-heading)}
+header small{color:var(--muted);font-size:12.5px}
+.toolbar{display:flex;gap:10px}
+
+/* ---------- pages / panes ---------- */
+.page{display:none}
+.page.active{display:block}
+.workspace{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:18px;padding:18px 22px 108px;height:calc(100vh - 84px)}
+.pane{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow-y:auto;padding:22px 26px;min-height:0}
+.eyebrow{font-size:11px;letter-spacing:.16em;font-weight:700;color:var(--brand)}
+.passage-title{margin:4px 0 8px;font:700 24px/1.3 var(--font-heading)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin:0 0 16px;font-size:12.5px;color:var(--muted);align-items:center}
+.legend .lg-box{display:inline-block;width:18px;height:12px;vertical-align:-1px;margin-right:6px;background:var(--ctx-bg);border:1px solid var(--ctx-border);border-radius:3px}
+.legend mark.answer-hl{padding:0 4px}
+
+/* ---------- passage paragraphs ---------- */
+.passage-p{margin:0 0 14px;padding:10px 12px 8px;border-radius:12px;border-left:3px solid transparent;scroll-margin-top:12px}
+.passage-p.active-context{border-left-color:var(--brand);background:var(--soft)}
+.paragraph-text{font-size:17.5px;line-height:1.85;text-align:left;color:var(--text)}
+
+/* Paragraph labels — SAME values as the Test file (size / weight / shape / colour) */
+.para-label{
+  display:flex;align-items:center;width:fit-content;
+  font-family:var(--font-heading);font-size:16px;font-weight:700;letter-spacing:.02em;line-height:1.3;
+  color:var(--brand-dark);background:var(--brand-tint);border:1px solid var(--brand);border-radius:999px;
+  padding:4px 14px;margin:4px 0 10px 0;text-align:left;-webkit-user-select:none;user-select:none;
+}
+
+/* Layer 1: Context Box — thin black rectangle, light-red fill, around the whole context.
+   Layer 2: Answer Highlight — yellow, black text, only the decisive words. Both show together. */
+.context-box{
+  display:block;margin:8px 0;padding:9px 14px;
+  background:var(--ctx-bg);border:1px solid var(--ctx-border);border-radius:6px;
+}
+mark.answer-hl{background:var(--gold);color:var(--goldtext);border-radius:4px;padding:1px 3px;font-weight:700;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+/* Layer 3 (Matching Names only): person / reference chain — medium blue, never green, never louder than the yellow */
+.ref-name{color:var(--ref);background:var(--ref-bg);border-bottom:2px solid var(--ref);border-radius:3px;padding:0 2px;font-weight:700}
+mark.answer-hl .ref-name{color:var(--ref-strong);background:transparent}
+[data-theme=dark] mark.answer-hl .ref-name{color:#1D4ED8}
+.legend .ref-name{font-weight:700}
+
+/* ---------- question pane ---------- */
+.hint{font-size:12.5px;color:var(--muted);margin:0 0 14px}
+.section-title{font:700 18px/1.4 var(--font-heading);border-bottom:1px solid var(--line);border-left:3px solid var(--brand);padding:6px 0 6px 10px;margin:22px 0 6px}
+.section-title:first-of-type{margin-top:6px}
+.q-instr{font-size:13.5px;color:var(--muted);margin:0 0 12px}
+.word-box{margin:10px 0 14px;border:1px solid var(--edge);border-radius:8px;overflow:hidden;background:var(--soft)}
+.word-box-title{padding:8px 12px;border-bottom:1px solid var(--line);font-size:11px;letter-spacing:1.4px;font-weight:700}
+.word-options{border-collapse:collapse;width:100%;table-layout:fixed;font-size:14px}
+.word-options td{width:50%;border-bottom:1px solid var(--line);padding:8px 10px;vertical-align:top;overflow-wrap:anywhere}
+.word-options td+td{border-left:1px solid var(--line)}
+.word-options tr:last-child td{border-bottom:0}
+.option-letter{display:inline-block;font-size:12px;font-weight:700;min-width:22px;color:var(--focus)}
+
+.question-block{border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:0 0 12px;background:var(--card);transition:border-color .18s,box-shadow .18s}
+.question-block:hover{border-color:var(--edge)}
+.question-block.active-question{border:1.5px solid var(--brand);box-shadow:0 0 0 5px #15934e0f}
+.question-block p{margin:0 0 8px}
+.question-number{display:inline-block;background:#202020;color:#fff;border-radius:6px;padding:1px 8px;margin-right:6px;font-weight:700;line-height:1.6}
+[data-theme=dark] .question-number{background:#e7e7e7;color:#202020}
+.q-label{font-size:12.5px;color:var(--muted)}
+.btn-answer{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:600;padding:5px 14px;border-radius:8px;font-size:13.5px}
+[data-theme=dark] .btn-answer{color:#0b1a12}
+.btn-answer:hover{filter:brightness(1.1);border-color:var(--brand)}
+.explanation-box{display:none;margin-top:10px;padding:10px 14px;background:var(--soft);border-left:3px solid var(--brand);border-radius:8px;font-size:14.5px}
+.explanation-box.show{display:block}
+.explanation-box .ans{font-weight:700}
+.explanation-box p{margin:6px 0 0}
+
+/* MCQ */
+.choice-item{border:1px solid var(--line);border-radius:10px;padding:9px 12px;margin:7px 0;cursor:pointer;font-size:14.5px;display:flex;gap:9px;align-items:flex-start;flex-wrap:wrap}
+.choice-item:hover{border-color:var(--edge)}
+.choice-item .cl{display:inline-flex;align-items:center;justify-content:center;flex:0 0 26px;width:26px;height:26px;border:1.5px solid var(--edge);border-radius:50%;font-weight:600;font-size:12.5px;color:var(--muted)}
+.choice-item .ct{flex:1 1 200px}
+.choice-item.selected{border-color:var(--brand);box-shadow:0 0 0 2px #15934e14}
+.choice-item.is-correct{border-color:var(--brand);background:var(--correct-bg)}
+.choice-item.is-correct .cl{background:var(--brand);border-color:var(--brand);color:#fff}
+.choice-item.is-wrong{border-color:var(--wrong);background:var(--wrong-bg)}
+.mcq-info-box{display:none;flex-basis:100%;margin:4px 0 0 35px;padding:7px 10px;border-left:2px solid var(--edge);background:var(--soft);border-radius:6px;font-size:13.5px}
+.mcq-info-box.show{display:block}
+
+/* summary with gaps — inline correction */
+.gap-wrap{white-space:nowrap}
+.ans-btn{display:inline;font-size:11.5px;font-weight:700;line-height:1.5;padding:0 7px;margin-left:3px;border-radius:6px;color:var(--brand-dark);background:var(--brand-tint);border:1px solid var(--brand);vertical-align:baseline}
+.ans-btn:hover{filter:brightness(.96);border-color:var(--brand)}
+.ans-btn[aria-expanded=true]{background:var(--brand);color:#fff}
+[data-theme=dark] .ans-btn[aria-expanded=true]{color:#08130d}
+.inline-exp{display:block;margin:8px 0 12px;padding:10px 14px;background:var(--soft);border:1px solid var(--line);border-left:3px solid var(--brand);border-radius:8px;font-size:14.5px;line-height:1.65;white-space:normal}
+.inline-exp .ie-head{display:block;font:700 12px/1.4 var(--font-heading);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.inline-exp .ie-ans{display:block;font-weight:700;margin-bottom:4px}
+.inline-exp .ie-quote{display:block;margin:2px 0 4px}
+.inline-exp .ie-loc{font-size:12px;font-weight:700;color:var(--brand-dark);margin-right:6px}
+.inline-exp .ie-body{display:block;margin-top:4px}
+/* summary with gaps */
+.summary-group{border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:6px 0 16px;background:var(--card)}
+.summary-prose{padding:14px 16px;font-size:15px;line-height:1.95}
+.summary-prose h3{font:700 17px/1.5 var(--font-heading);margin:0 0 8px}
+.summary-prose p{margin:0 0 12px}
+.summary-gap{display:inline;border:0;border-bottom:1px solid var(--edge);border-radius:3px;padding:1px 4px;font:inherit;line-height:inherit;background:transparent;color:inherit}
+.summary-gap strong{font-size:12px;margin-right:3px}
+.summary-gap:hover,.summary-gap.active-gap{background:var(--soft);border-bottom-color:var(--brand)}
+.summary-gap.filled{color:var(--brand-dark);font-weight:700;border-bottom-color:var(--brand)}
+.summary-gap.filled .blank-space{font-weight:700}
+.pending-note{font-size:12.5px;color:var(--muted);margin:0 0 8px}
+
+/* ---------- vocabulary pages ---------- */
+.vocab-wrap{max-width:900px;margin:0 auto;padding:22px 22px 120px}
+.vocab-head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin:6px 0 14px}
+.vocab-head h2{margin:0;font:700 22px var(--font-heading)}
+.vocab-head p{margin:2px 0 0;color:var(--muted);font-size:13px}
+.vocab-list details{border:1px solid var(--line);border-radius:12px;background:var(--card);margin:0 0 8px;padding:0}
+.vocab-list summary{list-style:none;cursor:pointer;padding:11px 14px;font-weight:600;display:flex;justify-content:space-between;gap:10px}
+.vocab-list summary::-webkit-details-marker{display:none}
+.vocab-list summary .pos{font-weight:400;color:var(--muted);font-size:13px}
+.vocab-list details[open]{border-color:var(--brand)}
+.vocab-list .vbody{padding:0 14px 12px;font-size:14.5px}
+.vocab-list .vbody p{margin:4px 0}
+.vocab-list .ex{color:var(--muted)}
+
+/* ---------- dock ---------- */
+.dock{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:50;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:5px;width:780px;max-width:calc(100% - 24px);padding:7px;background:#202020;border-radius:999px;box-shadow:0 10px 28px #0003}
+.dock button{background:transparent;border:0;color:#c6c6c6;border-radius:999px;padding:10px 8px;font-weight:600;font-size:13px}
+.dock button:hover{background:#303030;color:#fff}
+.dock button[aria-current=page]{background:var(--brand);color:#fff}
+[data-theme=dark] .dock button[aria-current=page]{color:#08130d}
+
+/* ---------- vocabulary pop-up (centre of screen) ---------- */
+.vmodal{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;background:rgba(20,27,46,.5);padding:16px}
+.vmodal[hidden]{display:none}
+.vcard{position:relative;width:100%;max-width:440px;background:var(--card);color:var(--text);border-radius:16px;box-shadow:0 18px 50px #0005;padding:24px 24px 18px;border-top:5px solid var(--brand)}
+.vclose{position:absolute;right:10px;top:10px;width:34px;height:34px;padding:0;border-radius:50%;font-size:20px;line-height:1;background:transparent}
+.vword{font:700 26px/1.25 var(--font-heading);margin:0 34px 10px 0;overflow-wrap:anywhere}
+.vexample{font-size:16px;line-height:1.6;margin:0 0 14px}
+.vexample .k{color:var(--muted);font-weight:600;margin-right:4px}
+.vexample strong{background:var(--gold);color:var(--goldtext);border-radius:3px;padding:0 3px}
+.vmeaning{font-size:16px;line-height:1.6;margin:0 0 14px;padding:10px 12px;background:var(--soft);border-left:3px solid var(--brand);border-radius:8px}
+.vmeaning .k{font-weight:700;margin-right:4px}
+.vnone{font-size:15px;color:var(--muted);margin:0 0 12px}
+.vactions{display:flex;justify-content:flex-end;gap:8px}
+.btn-reveal{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:600}
+[data-theme=dark] .btn-reveal{color:#08130d}
+
+/* ---------- responsive / print ---------- */
+@media(max-width:900px){
+  header{padding:12px 16px}
+  h1{font-size:17px}
+  .workspace{display:block;height:auto;padding:12px 12px 108px}
+  .pane{overflow:visible;margin-bottom:14px;padding:16px}
+  .paragraph-text{font-size:16.5px}
+  .dock{width:380px;grid-template-columns:repeat(3,minmax(0,1fr));border-radius:24px}
+  .dock button{padding:8px;font-size:12px}
+}
+@media print{
+  header,.dock,.btn-answer,.vmodal{display:none!important}
+  .page.active{display:block}
+  .workspace{display:block;height:auto}
+  .pane{overflow:visible;border:0;box-shadow:none}
+}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="logo">LEVEL UP · READING STUDIO</div>
+    <h1>Cambridge 15 · Reading Test 2</h1>
+    <small id="subtitle">Reading correction · 3 passages / 40 questions</small>
+  </div>
+  <div class="toolbar">
+    <button id="reset" type="button">Ẩn lời giải</button>
+    <button id="theme" type="button" aria-pressed="false">◐ Dark mode</button>
+  </div>
+</header>
+<main id="app"></main>
+<nav class="dock" aria-label="Điều hướng bài đọc và từ vựng"></nav>
+
+<div class="vmodal" id="vmodal" hidden role="dialog" aria-modal="true" aria-labelledby="vm-word">
+  <div class="vcard">
+    <button type="button" class="vclose" id="vm-close" aria-label="Đóng">×</button>
+    <div class="vword" id="vm-word"></div>
+    <div class="vexample" id="vm-example"></div>
+    <div class="vmeaning" id="vm-meaning" hidden></div>
+    <div class="vnone" id="vm-none" hidden></div>
+    <div class="vactions"><button type="button" class="btn-reveal" id="vm-reveal">Reveal meaning</button></div>
+  </div>
+</div>
+
+<script>
+const DATA={"parts": [{"title": "Could urban engineers learn from dance?", "subtitle": null, "paras": [{"label": "A", "text": "The way we travel around cities has a major impact on whether they are sustainable. Transportation is estimated to account for 30% of energy consumption in most of the world’s most developed nations, so lowering the need for energy-using vehicles is essential for decreasing the environmental impact of mobility. But as more and more people move to cities, it is important to think about other kinds of sustainable travel too. The ways we travel affect our physical and mental health, our social lives, our access to work and culture, and the air we breathe. Engineers are tasked with changing how we travel round cities through urban design, but the engineering industry still works on the assumptions that led to the creation of the energy-consuming transport systems we have now: the emphasis placed solely on efficiency, speed, and quantitative data. We need radical changes, to make it healthier, more enjoyable, and less environmentally damaging to travel around cities."}, {"label": "B", "text": "Dance might hold some of the answers. That is not to suggest everyone should dance their way to work, however healthy and happy it might make us, but rather that the techniques used by choreographers to experiment with and design movement in dance could provide engineers with tools to stimulate new ideas in city-making. Richard Sennett, an influential urbanist and sociologist who has transformed ideas about the way cities are made, argues that urban design has suffered from a separation between mind and body since the introduction of the architectural blueprint."}, {"label": "C", "text": "Whereas medieval builders improvised and adapted construction through their intimate knowledge of materials and personal experience of the conditions on a site, building designs are now conceived and stored in media technologies that detach the designer from the physical and social realities they are creating. While the design practices created by these new technologies are essential for managing the technical complexity of the modern city, they have the drawback of simplifying reality in the process."}, {"label": "D", "text": "To illustrate, Sennett discusses the Peachtree Center in Atlanta, USA, a development typical of the modernist approach to urban planning prevalent in the 1970s. Peachtree created a grid of streets and towers intended as a new pedestrian-friendly downtown for Atlanta. According to Sennett, this failed because its designers had invested too much faith in computer-aided design to tell them how it would operate. They failed to take into account that purpose-built street cafés could not operate in the hot sun without the protective awnings common in older buildings, and would need energy-consuming air conditioning instead, or that its giant car park would feel so unwelcoming that it would put people off getting out of their cars. What seems entirely predictable and controllable on screen has unexpected results when translated into reality."}, {"label": "E", "text": "The same is true in transport engineering, which uses models to predict and shape the way people move through the city. Again, these models are necessary, but they are built on specific world views in which certain forms of efficiency and safety are considered and other experience of the city ignored. Designs that seem logical in models appear counter-intuitive in the actual experience of their users. The guard rails that will be familiar to anyone who has attempted to cross a British road, for example, were an engineering solution to pedestrian safety based on models that prioritise the smooth flow of traffic. On wide major roads, they often guide pedestrians to specific crossing points and slow down their progress across the road by using staggered access points divide the crossing into two – one for each carriageway. In doing so they make crossings feel longer, introducing psychological barriers greatly impacting those that are the least mobile, and encouraging others to make dangerous crossings to get around the guard rails. These barriers don’t just make it harder to cross the road: they divide communities and decrease opportunities for healthy transport. As a result, many are now being removed, causing disruption, cost, and waste."}, {"label": "F", "text": "If their designers had had the tools to think with their bodies – like dancers – and imagine how these barriers would feel, there might have been a better solution. In order to bring about fundamental changes to the ways we use our cities, engineering will need to develop a richer understanding of why people move in certain ways, and how this movement affects them. Choreography may not seem an obvious choice for tackling this problem. Yet it shares with engineering the aim of designing patterns of movement within limitations of space. It is an art form developed almost entirely by trying out ideas with the body, and gaining instant feedback on how the results feel. Choreographers have deep understanding of the psychological, aesthetic, and physical implications of different ways of moving."}, {"label": "G", "text": "Observing the choreographer Wayne McGregor, cognitive scientist David Kirsh described how he ‘thinks with the body’, Kirsh argues that by using the body to simulate outcomes, McGregor is able to imagine solutions that would not be possible using purely abstract thought. This kind of physical knowledge is valued in many areas of expertise, but currently has no place in formal engineering design processes. A suggested method for transport engineers is to improvise design solutions and instant feedback about how they would work from their own experience of them, or model designs at full scale in the way choreographers experiment with groups of dancers. Above all, perhaps, they might learn to design for emotional as well as functional effects."}], "groups": [{"kind": "match", "title": "Questions 1–6", "instr": "Reading Passage 1 has seven paragraphs, A–G. Which paragraph contains the following information? Write the correct letter, A–G.", "qs": [1, 2, 3, 4, 5, 6]}, {"kind": "summary", "title": "Questions 7–13", "instr": "Complete the summary below. Choose ONE WORD ONLY from the passage for each answer.", "qs": [7, 8, 9, 10, 11, 12, 13], "summary": {"title": "Guard rails", "paras": ["Guard rails were introduced on British roads to improve the {7} of pedestrians, while ensuring that the movement of {8} is not disrupted. Pedestrians are led to access points, and encouraged to cross one {9} at a time.", "An unintended effect is to create psychological difficulties in crossing the road, particularly for less {10} people. Another result is that some people cross the road in a {11} way. The guard rails separate {12}, and make it more difficult to introduce forms of transport that are {13}."]}}]}, {"title": "Should we try to bring extinct species back to life?", "subtitle": null, "paras": [{"label": "A", "text": "The passenger pigeon was a legendary species. Flying in vast numbers across North America, with potentially many millions within a single flock, their migration was once one of nature’s great spectacles. Sadly, the passenger pigeon’s existence came to an end on 1 September 1914, when the last living specimen died at Cincinnati Zoo. Geneticist Ben Novak is lead researcher on an ambitious project which now aims to bring the bird back to life through a process known as ‘de-extinction’. The basic premise involves using cloning technology to turn the DNA of extinct animals into a fertilised embryo, which is carried by the nearest relative still in existence – in this case, the abundant band-tailed pigeon – before being born as a living, breathing animal. Passenger pigeons are one of the pioneering species in this field, but they are far from the only ones on which this cutting-edge technology is being trialled."}, {"label": "B", "text": "In Australia, the thylacine, more commonly known as the Tasmanian tiger, is another extinct creature which genetic scientists are striving to bring back to life. ‘There is no carnivore now in Tasmania that fills the niche which thylacines once occupied,’ explains Michael Archer of the University of New South Wales. He points out that in the decades since the thylacine went extinct, there has been a spread in a ‘dangerously debilitating’ facial tumour syndrome which threatens the existence of the Tasmanian devils, the island’s other notorious resident. Thylacines would have prevented this spread because they would have killed significant numbers of Tasmanian devils. ‘If that contagious cancer had popped up previously, it would have burned out in whatever region it started. The return of thylacines to Tasmania could help to ensure that devils are never again subjected to risks of this kind.’"}, {"label": "C", "text": "If extinct species can be brought back to life, can humanity begin to correct the damage it has caused to the natural world over the past few millennia? ‘The idea of de-extinction is that we can reverse this process, bringing species that no longer exist back to life,’ says Beth Shapiro of University of California Santa Cruz’s Genomics Institute. ‘I don’t think that we can do this. There is no way to bring back something that is 100 per cent identical to a species that went extinct a long time ago.’ A more practical approach for long-extinct species is to take the DNA of existing species as a template, ready for the insertion of strands of extinct animal DNA to create something new; a hybrid, based on the living species, but which looks and/or acts like the animal which died out."}, {"label": "D", "text": "This complicated process and questionable outcome begs the question: what is the actual point of this technology? ‘For us, the goal has always been replacing the extinct species with a suitable replacement,’ explains Novak. ‘When it comes to breeding, band-tailed pigeons scatter and make maybe one or two nests per hectare, whereas passenger pigeons were very social and would make 10,000 or more nests in one hectare.’ Since the disappearance of this key species, ecosystems in the eastern US have suffered, as the lack of disturbance caused by thousands of passenger pigeons wrecking trees and branches means there has been minimal need for regrowth. This has left forests stagnant and therefore unwelcoming to the plants and animals which evolved to help regenerate the forest after a disturbance. According to Novak, a hybridized band-tailed pigeon, with the added nesting habits of a passenger pigeon, could, in theory, re-establish that forest disturbance, thereby creating a habitat necessary for a great many other native species to thrive."}, {"label": "E", "text": "Another popular candidate for this technology is the woolly mammoth. George Church, professor at Harvard Medical School and leader of the Woolly Mammoth Revival Project, has been focusing on cold resistance, the main way in which the extinct woolly mammoth and its nearest living relative, the Asian elephant, differ. By pinpointing which genetic traits made it possible for mammoths to survive the icy climate of the tundra, the project’s goal is to return mammoths, or a mammoth-like species, to the area. ‘My highest priority would be preserving the endangered Asian elephant,’ says Church, ‘expanding their range to the huge ecosystem of the tundra. Necessary adaptations would include smaller ears, thicker hair, and extra insulating fat, all for the purpose of reducing heat loss in the tundra, and all traits found in the now extinct woolly mammoth.’ This repopulation of the tundra and boreal forests of Eurasia and North America with large mammals could also be a useful factor in reducing carbon emissions – elephants punch holes through snow and knock down trees, which encourages grass growth. This grass growth would reduce temperature, and mitigate emissions from melting permafrost."}, {"label": "F", "text": "While the prospect of bringing extinct animals back to life might capture imaginations, it is, of course, far easier to try to save an existing species which is merely threatened with extinction. ‘Many of the technologies that people have in mind when they think about de-extinction can be used as a form of “genetic rescue”,’ explains Shapiro. She prefers to focus the debate on how this emerging technology could be used to fully understand why various species went extinct in the first place, and therefore how we could use it to make genetic modifications which could prevent mass extinctions in the future. ‘I would also say there’s an incredible moral hazard to not do anything at all,’ she continues. ‘We know that what we are doing today is not enough, and we have to be willing to take some calculated and measured risks.’"}], "groups": [{"kind": "match", "title": "Questions 14–17", "instr": "Reading Passage 2 has six paragraphs, A–F. Which paragraph contains the following information? Write the correct letter, A–F. NB You may use any letter more than once.", "qs": [14, 15, 16, 17]}, {"kind": "summary", "title": "Questions 18–22", "instr": "Complete the summary below. Choose NO MORE THAN TWO WORDS from the passage for each answer.", "qs": [18, 19, 20, 21, 22], "summary": {"title": "The woolly mammoth revival project", "paras": ["Professor George Church and his team are trying to identify the {18} which enabled mammoths to live in the tundra. The findings could help preserve the mammoth’s close relative, the endangered Asian elephant.", "According to Church, introducing Asian elephants to the tundra would involve certain physical adaptations to minimise {19}. To survive in the tundra, the species would need to have the mammoth-like features of thicker hair, {20} of a reduced size and more {21}.", "Repopulating the tundra with mammoths or Asian elephant/mammoth hybrids would also have an impact on the environment, which could help to reduce temperatures and decrease {22}"]}}, {"kind": "match", "title": "Questions 23–26", "instr": "Look at the following statements (Questions 23–26) and the list of people below. Match each statement with the correct person, A, B or C. NB You may use any letter more than once.", "qs": [23, 24, 25, 26], "bank": {"title": "List of People", "items": ["Ben Novak", "Michael Archer", "Beth Shapiro"]}}]}, {"title": "Having a laugh", "subtitle": "The findings of psychological scientists reveal the importance of humour", "paras": [{"label": "1", "text": "Humans start developing a sense of humour as early as six weeks old, when babies begin to laugh and smile in response to stimuli. Laughter is universal across all human cultures and even exists in some form in rats, chimps, and bonobos. Like other human emotions and expressions, laughter and humour psychological scientists with rich resources for studying human psychology, ranging from the development of language to the neuroscience of social perception."}, {"label": "2", "text": "Theories focusing on the evolution of laughter point to it as an important adaptation for social communication. Take, for example, the recorded laughter in TV comedy shows. Back in 1950, US sound engineer Charley Douglass hated dealing with the unpredictable laughter of live audiences, so started recording his own ‘laugh tracks’. These were intended to help people at home feel like they were in a social situation, such as a crowded theatre. Douglass even recorded various types of laughter, as well as mixtures of laugher from men, women, and children. In doing so, he picked up on a quality of laughter that is now interesting researchers: a simple ‘haha’ communicates a remarkable amount of socially relevant information."}, {"label": "3", "text": "In one study conducted in 2016, samples of laughter from pairs of English-speaking students were recorded at the University of California, Santa Cruz. A team made up of more than 30 psychological scientists, anthropologists, and biologists then played these recording to listeners from 24 diverse societies, from indigenous tribes in New Guinea to city-dwellers in India and Europe. Participants were asked whether they thought the people laughing were friends or strangers. On average, the results were remarkably consistent: worldwide, people’s guesses were correct approximately 60% of the time."}, {"label": "4", "text": "Researchers have also found that different types of laughter serve as codes to complex human social hierarchies. A team led by Christopher Oveis from the University of California, San Diego, found that high-status individuals had different laughs from low-status individuals, and that strangers’ judgements of an individual’s social status were influenced by the dominant or submissive quality of their laughter. In their study, 48 male college students were randomly assigned to groups of four, with each group composed of two low-status members, who had just joined their college fraternity group, and two high-status members, older student took a turn at being teased by the others, involving the use of mildly insulting nicknames. Analysis revealed that, as expected, high-status individuals produced more dominant laughs and fewer submissive laughs relative to the low-status individuals. Meanwhile, low-status individuals were more likely to change their laughter based on their position of power; that is, the newcomers produced more dominant laughs when they were in the ‘powerful’ role of teasers. Dominant laughter was higher in pitch, louder, and more variable in tone than submissive laughter."}, {"label": "5", "text": "A random group of volunteers then listened to an equal number of dominant and submissive laughs from both the high- and low-status individuals, and were asked to estimate the social status of the laughter. In line with predictions, laughers producing dominant laughs were perceived to be significantly higher in status than laughers producing submissive laughs. ‘This was particularly true for low-status individuals, who were rated as significantly higher in status when displaying a dominant versus submissive laugh,’ Oveis and colleagues note. ‘Thus, by strategically displaying more dominant laughter when the context allows, low-status individuals may achieve higher status in the eyes of others.’ However, high-status individuals were rated as high-status whether they produced their natural dominant laugh or tried to do a submissive one."}, {"label": "6", "text": "Another study, conducted by David Cheng and Lu Wang of Australian National University, was based on the hypothesis that humour might provide a respite from tedious situations in the workplace. This ‘mental break’ might facilitate the replenishment of mental resources. To test this theory, the researchers recruited 74 business students, ostensibly for an experiment on perception. First, the students performed a tedious task in which they had to cross out every instance of the letter ‘e’ over two pages of text. The students then were randomly assigned to watch a video clip eliciting either humour, contentment, or neutral feelings. Some watched a clip of the BBC comedy Mr. Bean, others a relaxing scene with dolphins swimming in the ocean, and others a factual video about the management profession."}, {"label": "7", "text": "The students then completed a task requiring persistence in which they were asked to guess the potential performance of employees based on provided profiles, and were told that making 10 correct assessments in a row would lead to a win. However, the software was programmed such that is was nearly impossible to achieve 10 consecutive correct answers. Participants were allowed to quit the task at any point. Students who had watched the Mr. Bean video ended up spending significantly more time working on the task, making twice as many predictions as the other two groups."}, {"label": "8", "text": "Cheng and Wang then replicated these results in a second study, during which they had participants complete long multiplication questions by hand. Again, participants who watched the humorous video spent significantly more time working on this tedious task and completed more questions correctly than did the students in either of the other groups."}, {"label": "9", "text": "‘Although humour has been found to help relieve stress and facilitate social relationships, traditional view of task performance implies that individuals should avoid things such as humour that may distract them from the accomplishment of task goals,’ Cheng and Wang conclude. ‘We suggest that humour is not only enjoyable but more importantly, energising.’"}], "groups": [{"kind": "mcq", "title": "Questions 27–31", "instr": "Choose the correct letter, A, B, C or D.", "qs": [27, 28, 29, 30, 31]}, {"kind": "wordlist", "title": "Questions 32–36", "instr": "Complete the summary using the list of words, A–H, below.", "qs": [32, 33, 34, 35, 36], "summary": {"title": "The benefits of humour", "paras": ["In one study at Australian National University, randomly chosen groups of participants were shown one of three videos, each designed to generate a different kind of {32} . When all participants were then given a deliberately frustrating task to do, it was found that those who had watched the {33} video persisted with the task for longer and tried harder to accomplish the task than either of the other two groups.", "A second study in which participants were asked to perform a particularly {34} task produced similar results. According to researchers David Cheng and Lu Wang, these findings suggest that humour not only reduces {35} and helps build social connections but it may also have a {36} Effect on the body and mind."]}, "bank": {"title": "List of words", "items": ["laughter", "relaxing", "boring", "anxiety", "stimulating", "emotion", "enjoyment", "amusing"]}}, {"kind": "tfng", "title": "Questions 37–40", "instr": "Do the following statements agree with the information given in Reading Passage 3? YES if the statement agrees with the claims of the writer · NO if the statement contradicts the claims of the writer · NOT GIVEN if it is impossible to say what the writer thinks about this.", "qs": [37, 38, 39, 40]}]}], "questions": {"1": {"exp": "Paragraph B viết: “That is not to suggest everyone should dance their way to work, however healthy and happy it might make us”. Tác giả thừa nhận việc nhảy múa có thể khiến ta khoẻ mạnh và vui vẻ (một cách dùng khiêu vũ khá hấp dẫn) nhưng nói rõ mình KHÔNG đề xuất điều đó. Ý thật sự của tác giả: dùng kỹ thuật của biên đạo múa để gợi ý tưởng khi thiết kế thành phố.", "ev": [{"p": 1, "s": 38, "e": 321, "hl": [[38, 100], [102, 144]], "blue": []}], "ansShow": "B", "text": "reference to an appealing way of using dance that the writer is not proposing", "qhl": [[13, 44], [50, 77]]}, "2": {"exp": "Paragraph C mở đầu bằng cấu trúc đối lập “Whereas … now …”: thợ xây thời trung cổ (medieval builders) ứng biến và điều chỉnh công trình nhờ hiểu biết trực tiếp về vật liệu và công trường, trong khi ngày nay (now) bản thiết kế được tạo và lưu trong các phương tiện công nghệ khiến người thiết kế tách rời thực tế. Đây là ví dụ đối chiếu giữa cách làm quá khứ và hiện tại.", "ev": [{"p": 2, "s": 0, "e": 311, "hl": [[0, 61], [161, 228]], "blue": []}], "ansShow": "C", "text": "an example of a contrast between past and present approaches to building", "qhl": [[14, 72]]}, "3": {"exp": "Paragraph F: dù múa không phải lựa chọn hiển nhiên, “Yet it shares with engineering the aim of designing patterns of movement within limitations of space”. Múa và kỹ thuật (engineering) có chung mục tiêu: thiết kế các mẫu chuyển động trong giới hạn không gian. “aim” = objective.", "ev": [{"p": 5, "s": 368, "e": 540, "hl": [[446, 539]], "blue": []}], "ansShow": "F", "text": "mention of an objective of both dance and engineering", "qhl": [[11, 53]]}, "4": {"exp": "Paragraph D: dự án Peachtree Center thất bại vì các nhà thiết kế “failed to take into account that purpose-built street cafés could not operate in the hot sun without the protective awnings”. Họ bỏ qua khí hậu (nắng nóng) nên quán cà phê ngoài trời cần mái che hoặc phải dùng máy lạnh tốn năng lượng — vấn đề không lường trước. Chi tiết bãi đỗ xe không liên quan đến khí hậu.", "ev": [{"p": 3, "s": 268, "e": 734, "hl": [[417, 444], [477, 509]], "blue": []}], "ansShow": "D", "text": "reference to an unforeseen problem arising from ignoring the climate", "qhl": [[16, 34], [48, 68]]}, "5": {"exp": "Paragraph E: lan can chắn (guard rails) làm việc băng qua đường khó hơn — “they divide communities and decrease opportunities for healthy transport” — và câu kết luận nêu hậu quả: “As a result, many are now being removed”. Vậy biện pháp vốn nhằm giúp người đi bộ đang bị gỡ bỏ vì gây ra những tác động ngược.", "ev": [{"p": 4, "s": 405, "e": 1256, "hl": [[514, 558], [1045, 1103], [1192, 1218]], "blue": []}], "ansShow": "E", "text": "why some measures intended to help people are being reversed", "qhl": [[9, 41], [46, 60]]}, "6": {"exp": "Paragraph A: “The ways we travel affect our physical and mental health, our social lives, our access to work and culture, and the air we breathe.” Cách di chuyển ảnh hưởng đến sức khoẻ, đời sống xã hội, cơ hội tiếp cận việc làm và văn hoá — tức là giao thông tác động đến đời sống con người.", "ev": [{"p": 0, "s": 313, "e": 558, "hl": [[427, 557]], "blue": []}], "ansShow": "A", "text": "reference to how transport has an impact on human lives", "qhl": [[13, 55]]}, "7": {"exp": "“an engineering solution to pedestrian safety” → “improve the safety of pedestrians” (pedestrian safety → safety of pedestrians).", "ev": [{"p": 4, "s": 405, "e": 618, "hl": [[517, 558]], "blue": []}], "ansShow": "safety", "gapShow": "safety", "qp": 0, "qhl": [[45, 78]]}, "8": {"exp": "Các mô hình “prioritise the smooth flow of traffic” → “ensuring that the movement of traffic is not disrupted”. smooth flow ≈ movement is not disrupted.", "ev": [{"p": 4, "s": 405, "e": 618, "hl": [[580, 617]], "blue": []}], "ansShow": "traffic", "gapShow": "traffic", "qp": 0, "qhl": [[86, 136]]}, "9": {"exp": "“staggered access points divide the crossing into two – one for each carriageway” → người đi bộ được khuyến khích băng qua từng làn xe (one carriageway at a time).", "ev": [{"p": 4, "s": 619, "e": 831, "hl": [[651, 696], [775, 830]], "blue": []}], "ansShow": "carriageway", "gapShow": "carriageway", "qp": 0, "qhl": [[138, 217]]}, "10": {"exp": "“those that are the least mobile” → “less mobile people”: người kém linh hoạt khi di chuyển chịu tác động tâm lý lớn nhất.", "ev": [{"p": 4, "s": 832, "e": 1044, "hl": [[889, 961]], "blue": []}], "ansShow": "mobile", "gapShow": "mobile", "qp": 1, "qhl": [[34, 116]]}, "11": {"exp": "“encouraging others to make dangerous crossings to get around the guard rails” → “cross the road in a dangerous way”.", "ev": [{"p": 4, "s": 832, "e": 1044, "hl": [[967, 1013]], "blue": []}], "ansShow": "dangerous", "gapShow": "dangerous", "qp": 1, "qhl": [[141, 181]]}, "12": {"exp": "“they divide communities” → “The guard rails separate communities” (divide ≈ separate).", "ev": [{"p": 4, "s": 1045, "e": 1178, "hl": [[1105, 1128]], "blue": []}], "ansShow": "communities", "gapShow": "communities", "qp": 1, "qhl": [[183, 212]]}, "13": {"exp": "“decrease opportunities for healthy transport” → “forms of transport that are healthy”. Chỗ trống cần một tính từ bổ nghĩa cho transport: healthy.", "ev": [{"p": 4, "s": 1045, "e": 1178, "hl": [[1133, 1177]], "blue": []}], "ansShow": "healthy", "gapShow": "healthy", "qp": 1, "qhl": [[218, 286]]}, "14": {"exp": "Paragraph F: Shapiro muốn dùng công nghệ để hiểu vì sao các loài tuyệt chủng, từ đó “make genetic modifications which could prevent mass extinctions in the future”. Đây chính là cách ngăn việc nhiều loài tiếp tục biến mất (further disappearance of multiple species = mass extinctions).", "ev": [{"p": 5, "s": 345, "e": 611, "hl": [[533, 610]], "blue": []}], "ansShow": "F", "text": "a reference to how further disappearance of multiple species could be avoided.", "qhl": [[19, 77]]}, "15": {"exp": "Paragraph A mô tả quy trình dùng chính DNA của loài đã tuyệt chủng: “using cloning technology to turn the DNA of extinct animals into a fertilised embryo”, rồi để họ hàng gần nhất mang thai. Ngược lại, Paragraph C nói về con lai tạo từ DNA của loài còn sống — không thoả điều kiện “DNA of only that species”.", "ev": [{"p": 0, "s": 488, "e": 759, "hl": [[515, 599]], "blue": []}], "ansShow": "A", "text": "explanation of a way of reproducing an extinct animal using the DNA of only that species", "qhl": [[24, 88]]}, "16": {"exp": "Paragraph D: từ khi bồ câu viễn khách biến mất, “ecosystems in the eastern US have suffered” — rừng bị “stagnant” (trì trệ) vì thiếu sự xáo trộn do đàn chim gây ra. Đây là môi trường sống chịu hậu quả sau khi một loài tuyệt chủng.", "ev": [{"p": 3, "s": 421, "e": 801, "hl": [[431, 464], [466, 508]], "blue": []}], "ansShow": "D", "text": "reference to a habitat which has suffered following the extinction of a species", "qhl": [[13, 41], [52, 79]]}, "17": {"exp": "Paragraph A nêu thời điểm chính xác: “on 1 September 1914, when the last living specimen died at Cincinnati Zoo”.", "ev": [{"p": 0, "s": 204, "e": 333, "hl": [[259, 314]], "blue": []}], "ansShow": "A", "text": "mention of the exact point at which a particular species became extinct", "qhl": [[11, 71]]}, "18": {"exp": "Paragraph E: dự án tìm ra “which genetic traits made it possible for mammoths to survive the icy climate of the tundra” → identify the genetic traits which enabled mammoths to live in the tundra.", "ev": [{"p": 4, "s": 318, "e": 507, "hl": [[321, 424]], "blue": []}], "ansShow": "genetic traits", "gapShow": "genetic traits", "qp": 0, "qhl": [[51, 113]]}, "19": {"exp": "Church liệt kê các thích nghi cần thiết “all for the purpose of reducing heat loss in the tundra” → physical adaptations to minimise heat loss (reduce ≈ minimise).", "ev": [{"p": 4, "s": 508, "e": 857, "hl": [[654, 675], [767, 799]], "blue": []}], "ansShow": "heat loss", "gapShow": "heat loss", "qp": 1, "qhl": [[85, 122]]}, "20": {"exp": "“smaller ears, thicker hair, and extra insulating fat” → “thicker hair, ears of a reduced size” (smaller ≈ of a reduced size).", "ev": [{"p": 4, "s": 508, "e": 857, "hl": [[690, 716]], "blue": []}], "ansShow": "ears", "gapShow": "ears", "qp": 1, "qhl": [[210, 246]]}, "21": {"exp": "“extra insulating fat” → “more … fat”. Chấp nhận “fat” hoặc “insulating fat” (đều không quá hai từ).", "ev": [{"p": 4, "s": 508, "e": 857, "hl": [[722, 742]], "blue": []}], "ansShow": "(insulating) fat", "gapShow": "(insulating) fat", "qp": 1, "qhl": [[247, 260]]}, "22": {"exp": "Paragraph E: “reducing carbon emissions … mitigate emissions from melting permafrost” → decrease emissions. Chấp nhận “emissions” hoặc “carbon emissions”.", "ev": [{"p": 4, "s": 858, "e": 1197, "hl": [[990, 1015], [1130, 1196]], "blue": []}], "ansShow": "(carbon) emissions", "gapShow": "(carbon) emissions", "qp": 2, "qhl": [[138, 175]]}, "23": {"exp": "Paragraph B: Michael Archer nói sự trở lại của thylacine ở Tasmania “could help to ensure that devils are never again subjected to risks of this kind” — giúp quỷ Tasmania (một loài đang sống ở đó) tránh bệnh ung thư mặt lây lan. Tức là cải thiện tình trạng của một loài khác trong cùng môi trường.", "ev": [{"p": 1, "s": 162, "e": 902, "hl": [[783, 819], [826, 900]], "blue": [[264, 278], [317, 319]]}], "ansShow": "B", "text": "Reintroducing an extinct species to its original habitat could improve the health of a particular species living there.", "qhl": [[0, 56], [63, 118]]}, "24": {"exp": "Paragraph F: Beth Shapiro muốn tập trung vào việc dùng công nghệ để hiểu đầy đủ vì sao các loài tuyệt chủng (“fully understand why various species went extinct in the first place”) → concentrate on the causes of extinction.", "ev": [{"p": 5, "s": 327, "e": 611, "hl": [[360, 379], [426, 494]], "blue": [[336, 343], [345, 348]]}], "ansShow": "C", "text": "It is important to concentrate on the causes of an animal’s extinction.", "qhl": [[19, 33], [34, 70]]}, "25": {"exp": "Paragraph D: Ben Novak cho rằng một con bồ câu lai có tập tính làm tổ của bồ câu viễn khách sẽ “re-establish that forest disturbance”, giúp rừng tái sinh và tạo môi trường sống cho nhiều loài bản địa — tác động tích cực lên thảm thực vật (cây, rừng) của môi trường sống. (George Church cũng nói về cỏ nhưng ông không nằm trong danh sách người của dạng bài này.)", "ev": [{"p": 3, "s": 802, "e": 1049, "hl": [[926, 962], [964, 1048]], "blue": [[815, 820]]}], "ansShow": "A", "text": "A species brought back from extinction could have an important beneficial impact on the vegetation of its habitat.", "qhl": [[53, 80], [88, 113]]}, "26": {"exp": "Paragraph F: Shapiro nói “We know that what we are doing today is not enough” — những nỗ lực hiện nay (current efforts) trong việc bảo tồn là chưa đủ.", "ev": [{"p": 5, "s": 327, "e": 831, "hl": [[722, 759]], "blue": [[336, 343], [345, 348], [693, 696]]}], "ansShow": "C", "text": "Our current efforts at preserving biodiversity are insufficient.", "qhl": [[0, 19], [51, 63]]}, "27": {"exp": "Ngay ở đoạn mở đầu, tiếng cười và sự hài hước được nói là mang lại “rich resources for studying human psychology” — tức giá trị đối với nghiên cứu khoa học (tâm lý học). Ngôn ngữ, động vật chỉ được nhắc như ví dụ đi kèm.", "ev": [{"p": 0, "s": 237, "e": 458, "hl": [[300, 374]], "blue": []}], "ansShow": "C — its value to scientific research.", "text": "When referring to laughter in the first paragraphs, the writer emphasises", "opts": ["its impact on language.", "its function in human culture.", "its value to scientific research.", "its universality in animal societies."], "optExp": ["Sai: “the development of language” chỉ là một ví dụ về lĩnh vực nghiên cứu, bài không nói tiếng cười tác động lên ngôn ngữ.", "Sai: bài nói tiếng cười phổ biến ở mọi nền văn hoá nhưng không nhấn mạnh chức năng văn hoá của nó.", "Đúng: “rich resources for studying human psychology” — giá trị đối với nghiên cứu khoa học.", "Sai: bài chỉ nói tiếng cười tồn tại “in some form” ở chuột, tinh tinh, bonobo — không nhấn mạnh tính phổ quát ở xã hội động vật."], "correctIdx": 2, "qhl": [], "ohl": [0, 32]}, "28": {"exp": "Douglass thu tiếng cười sẵn để người xem ở nhà “feel like they were in a social situation, such as a crowded theatre” — tức ông hiểu rằng niềm vui/hài hước cảm nhận rõ hơn khi ở trong một nhóm đông người.", "ev": [{"p": 1, "s": 173, "e": 444, "hl": [[205, 221], [375, 443]], "blue": []}], "ansShow": "A — He understood the importance of enjoying humour in a group setting.", "text": "What does the writer suggest about Charley Douglass?", "opts": ["He understood the importance of enjoying humour in a group setting.", "He believed that TV viewers at home needed to be told when to laugh.", "He wanted his shows to appeal to audiences across the social spectrum.", "He preferred shows where audiences were present in the recording studio."], "optExp": ["Đúng: “a social situation, such as a crowded theatre” → niềm vui hài hước gắn với bối cảnh nhóm.", "Sai: bài không nói khán giả cần được “bảo” khi nào cười; chỉ nói tiếng cười thu sẵn tạo cảm giác đang ở đám đông.", "Sai: không có thông tin về việc thu hút khán giả mọi tầng lớp xã hội.", "Sai: ngược lại, Douglass “hated dealing with the unpredictable laughter of live audiences”."], "correctIdx": 0, "qhl": [[35, 51]], "ohl": [32, 66]}, "29": {"exp": "Sau khi nghe tiếng cười từ 24 xã hội rất khác nhau, “the results were remarkably consistent: worldwide, people’s guesses were correct approximately 60% of the time”. Điều làm nghiên cứu đáng chú ý là kết quả tương tự ở nhiều nền văn hoá.", "ev": [{"p": 2, "s": 151, "e": 598, "hl": [[271, 306], [487, 525]], "blue": []}], "ansShow": "B — the similar results produced by a wide range of cultures", "text": "What makes the Santa Cruz study particularly significant?", "opts": ["the various different types of laughter that were studied", "the similar results produced by a wide range of cultures", "the number of different academic disciplines involved", "the many kinds of people whose laughter was recorded"], "optExp": ["Sai: bài nói mẫu tiếng cười lấy từ các cặp sinh viên; không nhấn mạnh nhiều kiểu cười khác nhau được nghiên cứu.", "Đúng: kết quả “remarkably consistent” ở 24 xã hội rất khác nhau.", "Sai: có nhiều ngành tham gia (tâm lý, nhân học, sinh học) nhưng đó không phải điều làm nghiên cứu đặc biệt đáng chú ý.", "Sai: tiếng cười được ghi âm từ sinh viên nói tiếng Anh; sự đa dạng nằm ở người NGHE, không phải người cười."], "correctIdx": 1, "qhl": [[32, 56]], "ohl": [4, 56]}, "30": {"exp": "Trong nghiên cứu ở San Diego, mỗi sinh viên lần lượt bị trêu (“took a turn at being teased by the others”), và người mới vào nhóm cũng đảm nhận vai người trêu (“the ‘powerful’ role of teasers”) — tức người tham gia đổi vai cho nhau.", "ev": [{"p": 3, "s": 413, "e": 1106, "hl": [[643, 684], [1072, 1105]], "blue": []}], "ansShow": "B — Participants exchanged roles.", "text": "Which of the following happened in the San Diego study?", "opts": ["Some participants became very upset.", "Participants exchanged roles.", "Participants who had not met before became friends.", "Some participants were unable to laugh."], "optExp": ["Sai: sinh viên chỉ bị trêu bằng biệt danh “mildly insulting”; không có ai bị nói là buồn bã.", "Đúng: mỗi người lần lượt bị trêu (“took a turn”) và người mới vào nhóm cũng ở vai người trêu.", "Sai: bài không nói những người chưa quen trở thành bạn bè.", "Sai: không có thông tin nào nói có người không thể cười."], "correctIdx": 1, "qhl": [], "ohl": [13, 28]}, "31": {"exp": "Cuối đoạn 5: “high-status individuals were rated as high-status whether they produced their natural dominant laugh or tried to do a submissive one” — người có địa vị cao luôn được nhận ra là địa vị cao dù họ cười theo kiểu nào.", "ev": [{"p": 4, "s": 703, "e": 845, "hl": [[741, 844]], "blue": []}], "ansShow": "D — High-status individuals can always be identified by their way of laughing.", "text": "In the fifth paragraph, what did the results of the San Diego study suggest?", "opts": ["It is clear whether a dominant laugh is produced by a high- or low-status person.", "Low-status individuals in a position of power will still produce submissive laughs.", "The submissive laughs of low- and high-status individuals are surprisingly similar.", "High-status individuals can always be identified by their way of laughing."], "optExp": ["Sai: người địa vị thấp cũng tạo ra tiếng cười dominant khi ở vị trí quyền lực, nên chưa thể “clear” ai tạo ra tiếng cười nào.", "Sai: khi ở vai người trêu, người mới vào nhóm tạo NHIỀU tiếng cười dominant hơn, không phải submissive.", "Sai: bài không nói tiếng cười submissive của hai nhóm giống nhau.", "Đúng: người địa vị cao luôn được đánh giá là địa vị cao dù cười dominant hay submissive."], "correctIdx": 3, "qhl": [], "ohl": [24, 73]}, "32": {"exp": "Paragraph 6: sinh viên xem video gợi lên “humour, contentment, or neutral feelings” — ba loại cảm xúc khác nhau → “a different kind of emotion” (feelings ≈ emotion).", "ev": [{"p": 5, "s": 515, "e": 805, "hl": [[578, 635]], "blue": []}], "ansShow": "F (emotion)", "gapShow": "F · emotion", "qp": 0, "qhl": [[119, 169]]}, "33": {"exp": "Nhóm xem clip hài Mr. Bean (video gây cười) “ended up spending significantly more time working on the task” — video gây cười = amusing video.", "ev": [{"p": 6, "s": 409, "e": 573, "hl": [[426, 514]], "blue": []}, {"p": 5, "s": 637, "e": 805, "hl": [[650, 683]], "blue": []}], "ansShow": "H (amusing)", "gapShow": "H · amusing", "qp": 0, "qhl": [[267, 338]]}, "34": {"exp": "Ở nghiên cứu thứ hai, sinh viên làm các phép nhân dài bằng tay; bài gọi đây là “this tedious task”. tedious ≈ boring.", "ev": [{"p": 7, "s": 0, "e": 348, "hl": [[108, 145], [239, 256]], "blue": []}], "ansShow": "C (boring)", "gapShow": "C · boring", "qp": 1, "qhl": [[0, 83]]}, "35": {"exp": "Cheng và Wang nói hài hước “help relieve stress and facilitate social relationships” → reduces anxiety and helps build social connections (stress ≈ anxiety).", "ev": [{"p": 8, "s": 0, "e": 276, "hl": [[35, 90]], "blue": []}], "ansShow": "D (anxiety)", "gapShow": "D · anxiety", "qp": 1, "qhl": [[188, 251]]}, "36": {"exp": "“humour is not only enjoyable but more importantly, energising” → a stimulating effect on the body and mind (energising ≈ stimulating). Lưu ý: bản đề gốc viết hoa “Effect”.", "ev": [{"p": 8, "s": 277, "e": 357, "hl": [[304, 355]], "blue": []}], "ansShow": "E (stimulating)", "gapShow": "E · stimulating", "qp": 1, "qhl": [[259, 286]]}, "37": {"exp": "Paragraph 3: người nghe đoán xem hai người cười là bạn hay người lạ và đúng khoảng 60% — nhưng bài không so sánh độ chính xác khi nhận ra bạn bè với người lạ. Không có thông tin để kết luận.", "ev": [{"p": 2, "s": 383, "e": 598, "hl": [[407, 473], [538, 597]], "blue": []}], "ansShow": "NOT GIVEN", "text": "Participants in the Santa Cruz study were more accurate at identifying the laughs of friends than those of strangers.", "qhl": [[42, 116]]}, "38": {"exp": "Paragraph 4: “as expected, high-status individuals produced more dominant laughs and fewer submissive laughs” — kết quả đúng như dự đoán của nhóm nghiên cứu.", "ev": [{"p": 3, "s": 735, "e": 893, "hl": [[759, 853]], "blue": []}], "ansShow": "YES", "text": "The researchers in the San Diego study were correct in their predictions regarding the behaviour of the high-status individuals.", "qhl": [[39, 72], [83, 127]]}, "39": {"exp": "Paragraph 7: “Participants were allowed to quit the task at any point” — không có thời lượng cố định; sinh viên tự quyết định lúc dừng.", "ev": [{"p": 6, "s": 0, "e": 408, "hl": [[85, 156], [370, 407]], "blue": []}], "ansShow": "NO", "text": "The participants in the Australian National University study were given a fixed amount of time to complete the task focusing on employee profiles.", "qhl": [[72, 94], [107, 145]]}, "40": {"exp": "Paragraph 9: quan điểm truyền thống cho rằng nên tránh những thứ như hài hước vì gây xao nhãng, trong khi Cheng và Wang cho rằng hài hước “energising” — kết luận của họ đi ngược lại quan niệm quen thuộc.", "ev": [{"p": 8, "s": 0, "e": 357, "hl": [[92, 188], [304, 355]], "blue": []}], "ansShow": "NO", "text": "Cheng and Wang’s conclusions were in line with established notions regarding task performance.", "qhl": [[0, 28], [47, 93]]}}};
+const VOCAB=[{"part": 0, "hw": "sustainable", "pos": "adj", "f": ["sustainable"], "vn": "bền vững — có thể duy trì lâu dài mà không gây hại cho môi trường", "ex": "Cycling is a more sustainable way to travel than driving.", "core": true}, {"part": 0, "hw": "mobility", "pos": "n", "f": ["mobility"], "vn": "khả năng di chuyển, việc đi lại (trong thành phố)", "ex": "Good public transport improves mobility for older people.", "core": true}, {"part": 0, "hw": "radical", "pos": "adj", "f": ["radical"], "vn": "triệt để, mang tính căn bản (thay đổi lớn)", "ex": "The school made radical changes to the way it teaches maths.", "core": true}, {"part": 0, "hw": "choreographer", "pos": "n", "f": ["choreographer", "choreographers"], "vn": "biên đạo múa — người sáng tạo và thiết kế các động tác", "ex": "The choreographer spent months planning the new show.", "core": true}, {"part": 0, "hw": "choreography", "pos": "n", "f": ["choreography"], "vn": "nghệ thuật biên đạo múa", "ex": "The choreography of the dance was simple but beautiful.", "core": false}, {"part": 0, "hw": "stimulate", "pos": "v", "f": ["stimulate", "stimulates", "stimulated"], "vn": "kích thích, thúc đẩy (ý tưởng mới)", "ex": "The museum wants to stimulate children's interest in science.", "core": true}, {"part": 0, "hw": "urbanist", "pos": "n", "f": ["urbanist"], "vn": "nhà nghiên cứu/quy hoạch đô thị", "ex": "The urbanist argued that cities should be designed for people, not cars.", "core": false}, {"part": 0, "hw": "sociologist", "pos": "n", "f": ["sociologist"], "vn": "nhà xã hội học", "ex": "The sociologist studied how neighbours talk to each other.", "core": false}, {"part": 0, "hw": "blueprint", "pos": "n", "f": ["blueprint"], "vn": "bản thiết kế chi tiết (của công trình)", "ex": "The architect showed us the blueprint of the new library.", "core": true}, {"part": 0, "hw": "improvise", "pos": "v", "f": ["improvise", "improvised"], "vn": "ứng biến — làm ngay mà không chuẩn bị trước", "ex": "When the power went out, we had to improvise dinner by candlelight.", "core": true}, {"part": 0, "hw": "detach", "pos": "v", "f": ["detach", "detached"], "vn": "tách rời, khiến mất gắn kết với thực tế", "ex": "It is hard to detach yourself from work when you work from home.", "core": false}, {"part": 0, "hw": "drawback", "pos": "n", "f": ["drawback"], "vn": "nhược điểm, điểm bất lợi", "ex": "The main drawback of the plan is its high cost.", "core": true}, {"part": 0, "hw": "prevalent", "pos": "adj", "f": ["prevalent"], "vn": "phổ biến, thịnh hành (vào một thời kỳ)", "ex": "Working from home became prevalent after 2020.", "core": false}, {"part": 0, "hw": "pedestrian", "pos": "n", "f": ["pedestrian", "pedestrians"], "vn": "người đi bộ", "ex": "The street is closed to traffic and open only to pedestrians.", "core": true}, {"part": 0, "hw": "awning", "pos": "n", "f": ["awning", "awnings"], "vn": "mái hiên che nắng, che mưa", "ex": "We sat under the awning to escape the hot sun.", "core": false}, {"part": 0, "hw": "unwelcoming", "pos": "adj", "f": ["unwelcoming"], "vn": "không tạo cảm giác thân thiện, khó gần", "ex": "The empty car park felt cold and unwelcoming.", "core": false}, {"part": 0, "hw": "counter-intuitive", "pos": "adj", "f": ["counter-intuitive"], "vn": "trái với trực giác, nghe ngược với suy nghĩ thông thường", "ex": "It sounds counter-intuitive, but resting can improve your performance.", "core": true}, {"part": 0, "hw": "prioritise", "pos": "v", "f": ["prioritise", "prioritize"], "vn": "ưu tiên — đặt lên hàng đầu", "ex": "Doctors must prioritise the most urgent cases.", "core": true}, {"part": 0, "hw": "staggered", "pos": "adj", "f": ["staggered"], "vn": "so le, bố trí lệch nhau (không thẳng hàng)", "ex": "The company uses staggered start times to reduce traffic.", "core": false}, {"part": 0, "hw": "carriageway", "pos": "n", "f": ["carriageway"], "vn": "làn xe chạy (một chiều của đường lớn)", "ex": "Cross the first carriageway and wait in the middle before crossing the second.", "core": false}, {"part": 0, "hw": "psychological", "pos": "adj", "f": ["psychological"], "vn": "thuộc về tâm lý", "ex": "Fear of failure can be a strong psychological barrier.", "core": false}, {"part": 0, "hw": "barrier", "pos": "n", "f": ["barrier", "barriers"], "vn": "rào cản, vật cản (cả nghĩa đen và nghĩa bóng)", "ex": "Language can be a barrier for people who move to a new country.", "core": false}, {"part": 0, "hw": "mobile", "pos": "adj", "f": ["mobile"], "vn": "có khả năng đi lại, vận động thuận lợi", "ex": "My grandfather is less mobile since his knee operation.", "core": true}, {"part": 0, "hw": "disruption", "pos": "n", "f": ["disruption"], "vn": "sự gián đoạn, sự xáo trộn", "ex": "Road works caused major disruption to the morning journey.", "core": false}, {"part": 0, "hw": "aesthetic", "pos": "adj", "f": ["aesthetic"], "vn": "thuộc về thẩm mỹ", "ex": "The building has great aesthetic appeal.", "core": false}, {"part": 0, "hw": "implication", "pos": "n", "f": ["implication", "implications"], "vn": "hệ quả, tác động (thường mang tính hàm ý)", "ex": "The findings have important implications for city planners.", "core": false}, {"part": 0, "hw": "simulate", "pos": "v", "f": ["simulate", "simulates"], "vn": "mô phỏng — tái tạo lại một tình huống để thử", "ex": "Pilots train on machines that simulate real flying conditions.", "core": false}, {"part": 0, "hw": "abstract", "pos": "adj", "f": ["abstract"], "vn": "trừu tượng, không cụ thể", "ex": "Abstract ideas are often harder to explain than real objects.", "core": false}, {"part": 0, "hw": "functional", "pos": "adj", "f": ["functional"], "vn": "thiết thực, đáp ứng chức năng sử dụng", "ex": "The furniture is simple and functional.", "core": false}, {"part": 0, "hw": "quantitative", "pos": "adj", "f": ["quantitative"], "vn": "mang tính định lượng, dựa trên số liệu", "ex": "The study used quantitative data such as survey numbers.", "core": false}, {"part": 0, "hw": "assumption", "pos": "n", "f": ["assumption", "assumptions"], "vn": "giả định, điều được coi là đúng mà chưa kiểm chứng", "ex": "Don't make assumptions before you know all the facts.", "core": false}, {"part": 0, "hw": "efficiency", "pos": "n", "f": ["efficiency"], "vn": "hiệu quả, năng suất (làm nhiều với ít nguồn lực)", "ex": "The new software has improved efficiency in the office.", "core": true}, {"part": 0, "hw": "tasked", "pos": "adj", "f": ["tasked"], "vn": "được giao nhiệm vụ — “be tasked with” việc gì", "ex": "She was tasked with organising the conference.", "core": false}, {"part": 0, "hw": "instant", "pos": "adj", "f": ["instant"], "vn": "tức thì, ngay lập tức", "ex": "The app gives you instant feedback on your answers.", "core": false}, {"part": 0, "hw": "guard rail", "pos": "n", "f": ["guard", "rail", "rails"], "vn": "lan can chắn (đặt bên đường để hướng người đi bộ)", "ex": "A guard rail stopped the car from rolling down the hill.", "core": false}, {"part": 0, "hw": "engineering", "pos": "n", "f": ["engineering"], "vn": "ngành kỹ thuật, công việc thiết kế và xây dựng", "ex": "She studies civil engineering at university.", "core": false}, {"part": 0, "hw": "emphasis", "pos": "n", "f": ["emphasis"], "vn": "sự nhấn mạnh, sự chú trọng", "ex": "The school places great emphasis on reading.", "core": false}, {"part": 0, "hw": "medieval", "pos": "adj", "f": ["medieval"], "vn": "thuộc thời trung cổ", "ex": "We visited a medieval castle on our trip.", "core": false}, {"part": 0, "hw": "intimate", "pos": "adj", "f": ["intimate"], "vn": "sâu sắc, thân thuộc (hiểu biết rất kỹ)", "ex": "He has an intimate knowledge of the local streets.", "core": false}, {"part": 0, "hw": "predictable", "pos": "adj", "f": ["predictable"], "vn": "có thể đoán trước được", "ex": "The ending of the film was completely predictable.", "core": false}, {"part": 1, "hw": "legendary", "pos": "adj", "f": ["legendary"], "vn": "huyền thoại, nổi tiếng đến mức được truyền tụng", "ex": "The legendary singer gave her last concert last night.", "core": true}, {"part": 1, "hw": "spectacle", "pos": "n", "f": ["spectacle", "spectacles"], "vn": "cảnh tượng ngoạn mục", "ex": "The fireworks were a wonderful spectacle.", "core": false}, {"part": 1, "hw": "specimen", "pos": "n", "f": ["specimen"], "vn": "mẫu vật, cá thể (dùng để nghiên cứu)", "ex": "The museum has a rare specimen of the butterfly.", "core": true}, {"part": 1, "hw": "ambitious", "pos": "adj", "f": ["ambitious"], "vn": "đầy tham vọng, quy mô lớn", "ex": "It is an ambitious plan to plant a million trees.", "core": false}, {"part": 1, "hw": "premise", "pos": "n", "f": ["premise"], "vn": "tiền đề, ý tưởng cơ sở của một kế hoạch", "ex": "The basic premise of the film is that dinosaurs return to life.", "core": true}, {"part": 1, "hw": "embryo", "pos": "n", "f": ["embryo"], "vn": "phôi (giai đoạn đầu của sự sống)", "ex": "The embryo grows inside the mother's body.", "core": false}, {"part": 1, "hw": "cloning", "pos": "n", "f": ["cloning"], "vn": "nhân bản vô tính", "ex": "Cloning has raised many ethical questions.", "core": true}, {"part": 1, "hw": "pioneering", "pos": "adj", "f": ["pioneering"], "vn": "tiên phong, đi đầu", "ex": "She did pioneering work in the field of genetics.", "core": false}, {"part": 1, "hw": "cutting-edge", "pos": "adj", "f": ["cutting-edge"], "vn": "tiên tiến nhất, hiện đại nhất", "ex": "The lab uses cutting-edge technology.", "core": false}, {"part": 1, "hw": "trial", "pos": "v", "f": ["trialled", "trialed", "trial"], "vn": "thử nghiệm (một phương pháp/công nghệ mới)", "ex": "The company trialled a new app in three offices last year.", "core": false}, {"part": 1, "hw": "carnivore", "pos": "n", "f": ["carnivore"], "vn": "động vật ăn thịt", "ex": "The lion is a large carnivore.", "core": false}, {"part": 1, "hw": "niche", "pos": "n", "f": ["niche"], "vn": "vị trí/vai trò riêng của một loài trong hệ sinh thái", "ex": "Each animal has its own niche in the ecosystem.", "core": false}, {"part": 1, "hw": "debilitating", "pos": "adj", "f": ["debilitating"], "vn": "làm suy yếu nghiêm trọng", "ex": "He suffered from a debilitating illness for years.", "core": false}, {"part": 1, "hw": "tumour", "pos": "n", "f": ["tumour", "tumor"], "vn": "khối u", "ex": "The doctors removed a small tumour.", "core": false}, {"part": 1, "hw": "notorious", "pos": "adj", "f": ["notorious"], "vn": "khét tiếng (theo nghĩa xấu)", "ex": "The area is notorious for its bad weather.", "core": false}, {"part": 1, "hw": "contagious", "pos": "adj", "f": ["contagious"], "vn": "dễ lây lan", "ex": "The flu is highly contagious.", "core": true}, {"part": 1, "hw": "subjected", "pos": "v", "f": ["subjected"], "vn": "phải chịu (điều không tốt) — “be subjected to”", "ex": "The workers were subjected to very long hours.", "core": false}, {"part": 1, "hw": "correct", "pos": "v", "f": ["correct"], "vn": "khắc phục, sửa chữa (sai lầm/thiệt hại)", "ex": "We must correct the damage we have done to nature.", "core": false}, {"part": 1, "hw": "millennia", "pos": "n", "f": ["millennia"], "vn": "hàng nghìn năm (số nhiều của millennium)", "ex": "People have lived in this valley for millennia.", "core": false}, {"part": 1, "hw": "identical", "pos": "adj", "f": ["identical"], "vn": "giống hệt nhau", "ex": "The twins look almost identical.", "core": false}, {"part": 1, "hw": "template", "pos": "n", "f": ["template"], "vn": "khuôn mẫu, mẫu dùng để tạo ra thứ khác", "ex": "Use this letter as a template for your own.", "core": false}, {"part": 1, "hw": "hybrid", "pos": "n", "f": ["hybrid", "hybridized", "hybridised", "hybrids"], "vn": "con lai / giống lai (kết hợp đặc điểm của hai loài)", "ex": "A mule is a hybrid of a horse and a donkey.", "core": true}, {"part": 1, "hw": "scatter", "pos": "v", "f": ["scatter"], "vn": "phân tán, rải rác (không tập trung)", "ex": "The birds scatter when a cat comes near.", "core": false}, {"part": 1, "hw": "stagnant", "pos": "adj", "f": ["stagnant"], "vn": "trì trệ, ứ đọng, không thay đổi", "ex": "The pond water was stagnant and smelled bad.", "core": true}, {"part": 1, "hw": "regenerate", "pos": "v", "f": ["regenerate"], "vn": "tái sinh, mọc lại", "ex": "Some lizards can regenerate their tails.", "core": false}, {"part": 1, "hw": "regrowth", "pos": "n", "f": ["regrowth"], "vn": "sự mọc lại, tái sinh (của cây cối)", "ex": "Rain helped the regrowth of the forest after the fire.", "core": false}, {"part": 1, "hw": "disturbance", "pos": "n", "f": ["disturbance"], "vn": "sự xáo trộn, sự tác động làm thay đổi môi trường", "ex": "Fire is a natural disturbance in many forests.", "core": true}, {"part": 1, "hw": "re-establish", "pos": "v", "f": ["re-establish"], "vn": "tái lập, thiết lập lại", "ex": "The team hopes to re-establish the bird in the wild.", "core": false}, {"part": 1, "hw": "thrive", "pos": "v", "f": ["thrive"], "vn": "phát triển mạnh, sinh sôi thuận lợi", "ex": "Plants thrive in warm, wet weather.", "core": true}, {"part": 1, "hw": "adaptation", "pos": "n", "f": ["adaptation", "adaptations"], "vn": "sự thích nghi, đặc điểm thích nghi với môi trường", "ex": "The camel's hump is an adaptation to desert life.", "core": true}, {"part": 1, "hw": "insulating", "pos": "adj", "f": ["insulating"], "vn": "cách nhiệt, giữ nhiệt", "ex": "Thick fur is a good insulating layer.", "core": false}, {"part": 1, "hw": "tundra", "pos": "n", "f": ["tundra"], "vn": "lãnh nguyên (vùng lạnh giá, ít cây)", "ex": "Few trees grow on the tundra.", "core": false}, {"part": 1, "hw": "permafrost", "pos": "n", "f": ["permafrost"], "vn": "băng vĩnh cửu (lớp đất đóng băng quanh năm)", "ex": "The permafrost is melting as the climate warms.", "core": false}, {"part": 1, "hw": "mitigate", "pos": "v", "f": ["mitigate"], "vn": "giảm nhẹ, làm dịu bớt tác hại", "ex": "Planting trees can mitigate the effects of pollution.", "core": true}, {"part": 1, "hw": "emissions", "pos": "n", "f": ["emissions"], "vn": "khí thải", "ex": "The city wants to cut carbon emissions.", "core": true}, {"part": 1, "hw": "repopulation", "pos": "n", "f": ["repopulation"], "vn": "việc đưa động vật/dân cư trở lại một vùng", "ex": "The repopulation of the park with wolves took ten years.", "core": false}, {"part": 1, "hw": "extinct", "pos": "adj", "f": ["extinct"], "vn": "đã tuyệt chủng", "ex": "The dodo has been extinct for centuries.", "core": false}, {"part": 1, "hw": "extinction", "pos": "n", "f": ["extinction", "extinctions"], "vn": "sự tuyệt chủng", "ex": "Many species face extinction because of habitat loss.", "core": false}, {"part": 1, "hw": "de-extinction", "pos": "n", "f": ["de-extinction"], "vn": "việc hồi sinh loài đã tuyệt chủng", "ex": "De-extinction aims to bring lost species back to life.", "core": false}, {"part": 1, "hw": "abundant", "pos": "adj", "f": ["abundant"], "vn": "dồi dào, có số lượng lớn", "ex": "Food is abundant here in the summer.", "core": false}, {"part": 1, "hw": "endangered", "pos": "adj", "f": ["endangered"], "vn": "có nguy cơ tuyệt chủng", "ex": "The tiger is an endangered species.", "core": false}, {"part": 1, "hw": "moral hazard", "pos": "n", "f": ["moral", "hazard"], "vn": "hệ quả/rủi ro về mặt đạo đức (khi không hành động)", "ex": "Some people see a moral hazard in ignoring climate change.", "core": false}, {"part": 1, "hw": "calculated", "pos": "adj", "f": ["calculated"], "vn": "có tính toán kỹ, cân nhắc trước", "ex": "Starting a business is a calculated risk.", "core": false}, {"part": 1, "hw": "candidate", "pos": "n", "f": ["candidate"], "vn": "ứng viên, đối tượng phù hợp (cho một kỹ thuật)", "ex": "She is a strong candidate for the job.", "core": false}, {"part": 2, "hw": "stimulus", "pos": "n", "f": ["stimulus", "stimuli"], "vn": "tác nhân kích thích (khiến cơ thể/phản ứng xuất hiện)", "ex": "A loud noise is a strong stimulus for a baby.", "core": true}, {"part": 2, "hw": "universal", "pos": "adj", "f": ["universal"], "vn": "phổ quát, có ở mọi nơi", "ex": "Music is a universal language.", "core": true}, {"part": 2, "hw": "evolution", "pos": "n", "f": ["evolution"], "vn": "sự tiến hoá", "ex": "The evolution of birds took millions of years.", "core": false}, {"part": 2, "hw": "hierarchy", "pos": "n", "f": ["hierarchy", "hierarchies"], "vn": "hệ thống thứ bậc, cấp bậc trong xã hội/tổ chức", "ex": "There is a clear hierarchy in the company.", "core": true}, {"part": 2, "hw": "dominant", "pos": "adj", "f": ["dominant"], "vn": "thống trị, áp đảo, thể hiện quyền lực", "ex": "The dominant male leads the group.", "core": true}, {"part": 2, "hw": "submissive", "pos": "adj", "f": ["submissive"], "vn": "phục tùng, nhún nhường", "ex": "The dog looked submissive when its owner shouted.", "core": true}, {"part": 2, "hw": "status", "pos": "n", "f": ["status"], "vn": "địa vị (xã hội)", "ex": "Doctors often have a high social status.", "core": true}, {"part": 2, "hw": "fraternity", "pos": "n", "f": ["fraternity"], "vn": "hội nam sinh viên (ở các trường đại học Mỹ)", "ex": "He joined a fraternity in his first year at college.", "core": false}, {"part": 2, "hw": "tease", "pos": "v", "f": ["tease", "teased", "teasers"], "vn": "trêu chọc", "ex": "His brothers used to tease him about his hair.", "core": false}, {"part": 2, "hw": "nickname", "pos": "n", "f": ["nicknames", "nickname"], "vn": "biệt danh", "ex": "Everyone knows him by his nickname.", "core": false}, {"part": 2, "hw": "insulting", "pos": "adj", "f": ["insulting"], "vn": "xúc phạm, lăng mạ", "ex": "That was a very insulting remark.", "core": false}, {"part": 2, "hw": "pitch", "pos": "n", "f": ["pitch"], "vn": "cao độ (độ cao thấp của âm thanh)", "ex": "Her voice has a very high pitch.", "core": false}, {"part": 2, "hw": "variable", "pos": "adj", "f": ["variable"], "vn": "thay đổi, không cố định", "ex": "The weather here is highly variable.", "core": false}, {"part": 2, "hw": "perceived", "pos": "v", "f": ["perceived"], "vn": "được nhìn nhận, được cảm nhận là — “be perceived as”", "ex": "He is perceived as a strong leader.", "core": true}, {"part": 2, "hw": "strategically", "pos": "adv", "f": ["strategically"], "vn": "một cách có chiến lược, có tính toán", "ex": "She strategically put her best idea at the start of the talk.", "core": false}, {"part": 2, "hw": "respite", "pos": "n", "f": ["respite"], "vn": "khoảng nghỉ, sự thư giãn tạm thời", "ex": "The garden offered a respite from the noise of the city.", "core": true}, {"part": 2, "hw": "tedious", "pos": "adj", "f": ["tedious"], "vn": "tẻ nhạt, nhàm chán", "ex": "Filling in the forms was a tedious job.", "core": true}, {"part": 2, "hw": "replenishment", "pos": "n", "f": ["replenishment"], "vn": "sự bổ sung, hồi phục lại (nguồn lực)", "ex": "A good night's sleep allows the replenishment of energy.", "core": false}, {"part": 2, "hw": "elicit", "pos": "v", "f": ["eliciting", "elicit", "elicits", "elicited"], "vn": "gợi ra, khơi dậy (cảm xúc/phản ứng)", "ex": "Good teachers know how to elicit ideas from their students.", "core": false}, {"part": 2, "hw": "contentment", "pos": "n", "f": ["contentment"], "vn": "sự mãn nguyện, hài lòng", "ex": "She felt deep contentment after a quiet weekend.", "core": false}, {"part": 2, "hw": "neutral", "pos": "adj", "f": ["neutral"], "vn": "trung tính, không nghiêng về cảm xúc nào", "ex": "He kept a neutral expression during the meeting.", "core": false}, {"part": 2, "hw": "persistence", "pos": "n", "f": ["persistence"], "vn": "sự kiên trì, bền bỉ", "ex": "Persistence is the key to learning a language.", "core": true}, {"part": 2, "hw": "ostensibly", "pos": "adv", "f": ["ostensibly"], "vn": "bề ngoài là, được cho là (nhưng thực ra có thể khác)", "ex": "He went to the city ostensibly to study.", "core": false}, {"part": 2, "hw": "consecutive", "pos": "adj", "f": ["consecutive"], "vn": "liên tiếp, nối tiếp nhau", "ex": "She won three consecutive games.", "core": false}, {"part": 2, "hw": "profile", "pos": "n", "f": ["profiles", "profile"], "vn": "hồ sơ, bản mô tả thông tin về một người", "ex": "The manager read each candidate's profile before the interview.", "core": false}, {"part": 2, "hw": "replicate", "pos": "v", "f": ["replicated", "replicate"], "vn": "lặp lại (một thí nghiệm) để kiểm chứng kết quả", "ex": "Other scientists tried to replicate the experiment.", "core": true}, {"part": 2, "hw": "facilitate", "pos": "v", "f": ["facilitate"], "vn": "tạo điều kiện thuận lợi, giúp cho dễ dàng hơn", "ex": "Good software can facilitate teamwork.", "core": true}, {"part": 2, "hw": "distract", "pos": "v", "f": ["distract"], "vn": "làm xao nhãng, làm mất tập trung", "ex": "Noise can distract students during an exam.", "core": false}, {"part": 2, "hw": "energising", "pos": "adj", "f": ["energising", "energizing"], "vn": "tiếp thêm năng lượng, làm tràn đầy sức sống", "ex": "A short walk in the morning is very energising.", "core": true}, {"part": 2, "hw": "assigned", "pos": "v", "f": ["assigned"], "vn": "được phân công, xếp (ngẫu nhiên) vào nhóm", "ex": "The students were assigned to two groups.", "core": false}, {"part": 2, "hw": "unpredictable", "pos": "adj", "f": ["unpredictable"], "vn": "khó lường, không đoán trước được", "ex": "The weather in spring is unpredictable.", "core": false}, {"part": 2, "hw": "diverse", "pos": "adj", "f": ["diverse"], "vn": "đa dạng", "ex": "The city has a diverse population.", "core": false}, {"part": 2, "hw": "indigenous", "pos": "adj", "f": ["indigenous"], "vn": "bản địa (thuộc về cư dân lâu đời của một vùng)", "ex": "Indigenous peoples lived there long before the settlers came.", "core": false}, {"part": 2, "hw": "resources", "pos": "n", "f": ["resources"], "vn": "nguồn tư liệu, nguồn lực", "ex": "The library has rich resources for language learners.", "core": false}, {"part": 2, "hw": "hypothesis", "pos": "n", "f": ["hypothesis"], "vn": "giả thuyết (được đưa ra để kiểm chứng)", "ex": "The scientists tested their hypothesis in two experiments.", "core": false}, {"part": 2, "hw": "laugh track", "pos": "n", "f": ["laugh", "tracks"], "vn": "tiếng cười thu sẵn chèn vào chương trình hài", "ex": "Some old comedy shows use a laugh track.", "core": false}, {"part": 2, "hw": "adaptation", "pos": "n", "f": ["adaptation"], "vn": "sự thích nghi — đặc điểm giúp sinh vật/con người tồn tại và sinh sống tốt hơn", "ex": "Thick fur is an adaptation that keeps animals warm in winter.", "core": false}];
+</script>
+<script>
+"use strict";
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const Q=DATA.questions;                      // n -> question object
+const PART_OF={};DATA.parts.forEach((p,i)=>p.groups.forEach(g=>g.qs.forEach(q=>PART_OF[q]=i)));
+
+/* ------------------------------------------------------------------ passage rendering: Context Box + Answer Highlight */
+function renderParagraph(text,ev){
+  if(!ev) return esc(text);
+  const blue=ev.blue||[];
+  const seg=(a,b)=>{                      // text[a,b) with the blue person/reference spans
+    let out='',last=a;
+    blue.forEach(([bs,be])=>{const s0=Math.max(bs,a),e0=Math.min(be,b);if(s0<e0){out+=esc(text.slice(last,s0))+'<span class="ref-name">'+esc(text.slice(s0,e0))+'</span>';last=e0}});
+    return out+esc(text.slice(last,b));
+  };
+  let inner='',last=ev.s;
+  [...ev.hl].sort((a,b)=>a[0]-b[0]).forEach(([hs,he])=>{inner+=seg(last,hs)+'<mark class="answer-hl">'+seg(hs,he)+'</mark>';last=he});
+  inner+=seg(last,ev.e);
+  return esc(text.slice(0,ev.s))+'<span class="context-box">'+inner+'</span>'+esc(text.slice(ev.e));
+}
+// question side: yellow + bold on the phrases that map to the passage evidence
+function markRanges(text,ranges){
+  let out='',last=0;
+  [...(ranges||[])].sort((a,b)=>a[0]-b[0]).forEach(([s0,e0])=>{out+=esc(text.slice(last,s0))+'<mark class="answer-hl">'+esc(text.slice(s0,e0))+'</mark>';last=e0});
+  return out+esc(text.slice(last));
+}
+let ACTIVE=null;                           // question currently selected
+const OPEN_ANS=new Set();                  // summary gaps whose inline answer is open
+function clearPassage(part){
+  $$('.passage-p',$('#r'+part)).forEach((el,i)=>{el.classList.remove('active-context');$('.paragraph-text',el).innerHTML=esc(DATA.parts[part].paras[i].text)});
+}
+
+/* ------------------------------------------------------------------ page construction */
+function paragraphsHTML(part){
+  return DATA.parts[part].paras.map((p,i)=>
+    '<div class="passage-p" id="para-'+part+'-'+i+'" data-part="'+part+'" data-idx="'+i+'">'+
+    (p.label?'<div class="para-label">Paragraph '+esc(p.label)+'</div>':'')+
+    '<div class="paragraph-text">'+esc(p.text)+'</div></div>').join('');
+}
+const GROUP_OF={};DATA.parts.forEach(p=>p.groups.forEach(g=>g.qs.forEach(q=>GROUP_OF[q]=g)));
+const isSummaryGroup=g=>g.kind==='summary'||g.kind==='wordlist';
+function evidenceQuotes(q){
+  const part=PART_OF[q];
+  return Q[q].ev.map(e=>{
+    const par=DATA.parts[part].paras[e.p],t=par.text;
+    const label=par.label?('Paragraph '+par.label):'';
+    return [...e.hl].sort((a,b)=>a[0]-b[0]).map(([s0,e0])=>'<span class="ie-quote"><span class="ie-loc">'+esc(label)+'</span>“<mark class="answer-hl">'+esc(t.slice(s0,e0))+'</mark>”</span>').join('');
+  }).join('');
+}
+function inlineExp(q){
+  return '<span class="inline-exp" id="ans'+q+'"><span class="ie-head">Evidence / Explanation</span><span class="ie-ans">Đáp án: '+esc(Q[q].ansShow)+'</span>'+evidenceQuotes(q)+'<span class="ie-body">'+esc(Q[q].exp)+'</span></span>';
+}
+function gapHTML(q){
+  const open=OPEN_ANS.has(q);
+  return '<span class="gap-wrap" data-q="'+q+'"><button type="button" class="summary-gap'+(open?' filled':'')+(ACTIVE===q?' active-gap':'')+'" data-q="'+q+'" aria-label="Question '+q+': xem bằng chứng"><strong>'+q+'</strong> <span class="blank-space" id="b'+q+'">'+(open?esc(Q[q].gapShow):'__________')+'</span></button> <button type="button" class="ans-btn" data-q="'+q+'" aria-expanded="'+open+'" aria-label="Answer '+q+'">(Ans)</button></span>'+(open?inlineExp(q):'');
+}
+function summaryParaHTML(g,pi){
+  const text=g.summary.paras[pi];
+  const act=(ACTIVE&&g.qs.includes(ACTIVE)&&Q[ACTIVE].qp===pi)?Q[ACTIVE].qhl:[];
+  let out='',last=0;
+  const re=/\{(\d+)\}/g;let m;
+  const chunk=(a,b)=>{                    // text[a,b) with the yellow ranges that fall inside it
+    const rs=act.map(([s0,e0])=>[Math.max(s0,a)-a,Math.min(e0,b)-a]).filter(([s0,e0])=>s0<e0);
+    return markRanges(text.slice(a,b),rs);
+  };
+  while((m=re.exec(text))){out+=chunk(last,m.index)+gapHTML(+m[1]);last=m.index+m[0].length}
+  return out+chunk(last,text.length);
+}
+function summaryInnerHTML(g){
+  return '<div class="summary-prose"><h3>'+esc(g.summary.title)+'</h3>'+g.summary.paras.map((_,pi)=>'<p>'+summaryParaHTML(g,pi)+'</p>').join('')+'</div>';
+}
+function summaryHTML(g){return '<div class="summary-group" data-g="'+g.qs[0]+'">'+summaryInnerHTML(g)+'</div>'}
+function refreshSummary(g,focusQ){
+  const el=$('.summary-group[data-g="'+g.qs[0]+'"]');if(!el)return;
+  el.innerHTML=summaryInnerHTML(g);
+  if(focusQ){const b=$('.ans-btn[data-q="'+focusQ+'"]',el);if(b)b.focus({preventScroll:true})}
+}
+function answerBlock(q){
+  const d=Q[q];
+  return '<div class="explanation-box" id="ans'+q+'"><span class="ans">Đáp án: '+esc(d.ansShow)+'</span><p><em>Giải thích:</em> '+esc(d.exp)+'</p></div>';
+}
+function cardHTML(q,g){
+  const d=Q[q];
+  let body='';
+  if(g.kind==='mcq'){
+    body='<p><strong class="question-number">'+q+'</strong><span class="q-text" data-q="'+q+'">'+esc(d.text)+'</span></p>'+d.opts.map((o,k)=>
+      '<div class="choice-item" tabindex="0" data-k="'+k+'" role="button"><span class="cl">'+'ABCD'[k]+'</span><span class="ct">'+esc(o)+'</span><div class="mcq-info-box">'+esc(d.optExp[k])+'</div></div>').join('');
+  }else{
+    body='<p><strong class="question-number">'+q+'</strong><span class="q-text" data-q="'+q+'">'+esc(d.text)+'</span></p>';
+  }
+  return '<div class="question-block" data-q="'+q+'" tabindex="0" aria-label="Câu '+q+' — định vị ngữ cảnh">'+body+
+    '<button class="btn-answer" type="button" aria-expanded="false">Answer</button>'+answerBlock(q)+'</div>';
+}
+function refreshCard(q){
+  const d=Q[q],block=$('.question-block[data-q="'+q+'"]');if(!block)return;
+  const t=$('.q-text',block);if(t)t.innerHTML=markRanges(d.text,ACTIVE===q?d.qhl:[]);
+  if(d.opts){
+    const shown=ACTIVE===q&&$('.explanation-box',block).classList.contains('show')&&d.ohl;
+    $$('.choice-item',block).forEach((c,k)=>{$('.ct',c).innerHTML=markRanges(d.opts[k],shown&&k===d.correctIdx?[d.ohl]:[])});
+  }
+}
+function groupHTML(g){
+  let h='<div class="section-title" role="heading" aria-level="3">'+esc(g.title)+'</div><p class="q-instr">'+esc(g.instr)+'</p>';
+  if(g.bank){
+    h+='<div class="word-box"><div class="word-box-title">'+esc(g.bank.title.toUpperCase())+'</div><table class="word-options"><tbody>'+
+      Array.from({length:Math.ceil(g.bank.items.length/2)},(_,j)=>'<tr>'+g.bank.items.slice(j*2,j*2+2).map((w,k)=>'<td><span class="option-letter">'+String.fromCharCode(65+j*2+k)+'</span>'+esc(w)+'</td>').join('')+(g.bank.items.slice(j*2,j*2+2).length<2?'<td></td>':'')+'</tr>').join('')+'</tbody></table></div>';
+  }
+  if(g.summary) h+=summaryHTML(g);
+  if(!isSummaryGroup(g)) h+=g.qs.map(q=>cardHTML(q,g)).join('');   // summary questions are corrected inline, next to their blank
+  return h;
+}
+DATA.parts.forEach((p,i)=>{
+  const hasBlue=p.groups.some(g=>g.qs.some(q=>Q[q].ev.some(e=>e.blue&&e.blue.length)));
+  const reading=document.createElement('section');reading.id='r'+i;reading.className='page';
+  reading.innerHTML='<div class="workspace"><article class="pane reading"><div class="eyebrow">PASSAGE '+(i+1)+'</div><h2 class="passage-title">'+esc(p.title)+'</h2>'+
+    (p.subtitle?'<p class="hint"><em>'+esc(p.subtitle)+'</em></p>':'')+
+    '<div class="legend"><span><span class="lg-box"></span>Khung đỏ nhạt: ngữ cảnh chứa đáp án</span><span><mark class="answer-hl">Vàng đậm</mark> thông tin được hỏi: câu hỏi ↔ passage</span>'+(hasBlue?'<span><span class="ref-name">Xanh dương</span> tên người / đại từ chỉ người</span>':'')+'<span>Nhấp đúp vào một từ để tra từ vựng</span></div>'+
+    paragraphsHTML(i)+'</article><aside class="pane questions"><p class="hint">Chọn câu hỏi → passage hiện khung ngữ cảnh + highlight vàng đậm (và phần tương ứng trong câu hỏi) → bấm Answer / (Ans) để mở lời giải.</p>'+
+    p.groups.map(groupHTML).join('')+'</aside></div>';
+  $('#app').append(reading);
+
+  const vocab=document.createElement('section');vocab.id='v'+i;vocab.className='page';
+  const core=VOCAB.filter(e=>e.part===i&&e.core);
+  vocab.innerHTML='<div class="vocab-wrap"><div class="eyebrow">VOCABULARY '+(i+1)+' · '+esc(p.title)+'</div><div class="vocab-head"><div><h2>Core Vocabulary Spine</h2><p>'+core.length+' từ / cụm từ trọng tâm · Học theo ngữ cảnh bài đọc</p></div><button class="all-meanings" type="button">Hiện tất cả nghĩa</button></div><div class="vocab-list">'+
+    core.map(e=>'<details><summary><span>'+esc(e.hw)+' <span class="pos">('+esc(e.pos)+')</span></span></summary><div class="vbody"><p><strong>Nghĩa:</strong> '+esc(e.vn)+'</p><p class="ex"><em>Example:</em> '+esc(e.ex)+'</p></div></details>').join('')+'</div></div>';
+  $('#app').append(vocab);
+  $('.all-meanings',vocab).onclick=e=>{const show=!$$('details',vocab).every(x=>x.open);$$('details',vocab).forEach(x=>x.open=show);e.target.textContent=show?'Ẩn tất cả nghĩa':'Hiện tất cả nghĩa'};
+});
+for(const type of ['v','r'])for(let i=0;i<3;i++){const b=document.createElement('button');b.dataset.view=type+i;b.textContent=(type==='v'?'Vocabulary ':'Part ')+(i+1);b.onclick=()=>selectView(type+i);$('.dock').append(b)}
+
+/* ------------------------------------------------------------------ navigation */
+let activeView='r0';
+function selectView(id){
+  activeView=id;const part=+id.slice(1);
+  $$('.page').forEach(p=>p.classList.toggle('active',p.id===id));
+  $$('.dock button').forEach(b=>b.setAttribute('aria-current',b.dataset.view===id?'page':'false'));
+  $('#subtitle').textContent=(id[0]==='v'?'Vocabulary ':'Part ')+(part+1)+' · '+DATA.parts[part].title;
+  try{localStorage.setItem('c15r2-view',id)}catch(e){}
+  window.scrollTo(0,0);
+}
+
+/* ------------------------------------------------------------------ selecting a question */
+function jump(part,i){
+  const el=$('#para-'+part+'-'+i),pane=el.closest('.pane');
+  if(matchMedia('(max-width:900px)').matches)el.scrollIntoView({behavior:'smooth',block:'start'});
+  else pane.scrollTo({top:el.getBoundingClientRect().top-pane.getBoundingClientRect().top+pane.scrollTop-14,behavior:'smooth'});
+}
+function selectQuestion(q){
+  q=+q;const part=PART_OF[q],d=Q[q],prev=ACTIVE;ACTIVE=q;
+  $$('.active-question').forEach(x=>x.classList.remove('active-question'));
+  const block=$('#r'+part+' .question-block[data-q="'+q+'"]');if(block)block.classList.add('active-question');
+  if(prev&&prev!==q){const pg=GROUP_OF[prev];isSummaryGroup(pg)?refreshSummary(pg):refreshCard(prev)}
+  const g=GROUP_OF[q];isSummaryGroup(g)?refreshSummary(g):refreshCard(q);
+  const byPara={};d.ev.forEach(e=>{byPara[e.p]=e});
+  $$('.passage-p',$('#r'+part)).forEach((el,i)=>{
+    el.classList.toggle('active-context',!!byPara[i]);
+    $('.paragraph-text',el).innerHTML=renderParagraph(DATA.parts[part].paras[i].text,byPara[i]);
+  });
+  if(d.ev.length)jump(part,d.ev[0].p);
+}
+function toggleAnswer(block){
+  const q=+block.dataset.q;
+  if(!block.classList.contains('active-question'))selectQuestion(q);
+  const box=$('.explanation-box',block),show=!box.classList.contains('show');
+  box.classList.toggle('show',show);
+  $('.btn-answer',block).setAttribute('aria-expanded',show);
+  if(Q[q].opts){
+    $$('.choice-item',block).forEach((c,k)=>{c.classList.toggle('is-correct',show&&k===Q[q].correctIdx);c.classList.toggle('is-wrong',show&&c.classList.contains('selected')&&k!==Q[q].correctIdx)});
+    refreshCard(q);
+  }
+}
+function toggleGap(q){                       // inline (Ans) for summary blanks
+  q=+q;const g=GROUP_OF[q];
+  OPEN_ANS.has(q)?OPEN_ANS.delete(q):OPEN_ANS.add(q);
+  selectQuestion(q);                          // also re-renders the summary with the new state
+  refreshSummary(g,q);
+}
+$('#app').addEventListener('click',e=>{
+  const ansBtn=e.target.closest('.ans-btn');
+  if(ansBtn){e.stopPropagation();toggleGap(ansBtn.dataset.q);return}
+  const answerBtn=e.target.closest('.btn-answer');
+  if(answerBtn){e.stopPropagation();toggleAnswer(answerBtn.closest('.question-block'));return}
+  const choice=e.target.closest('.choice-item');
+  if(choice){
+    const block=choice.closest('.question-block');selectQuestion(block.dataset.q);
+    $$('.choice-item',block).forEach(c=>{c.classList.remove('selected');$('.mcq-info-box',c).classList.remove('show');c.classList.remove('is-wrong')});
+    choice.classList.add('selected');$('.mcq-info-box',choice).classList.add('show');
+    if($('.explanation-box',block).classList.contains('show')){const k=+choice.dataset.k;choice.classList.toggle('is-wrong',k!==Q[+block.dataset.q].correctIdx)}
+    return;
+  }
+  const gap=e.target.closest('.summary-gap');
+  if(gap){selectQuestion(gap.dataset.q);return}
+  const block=e.target.closest('.question-block');
+  if(block)selectQuestion(block.dataset.q);
+});
+$('#app').addEventListener('keydown',e=>{
+  if(!['Enter',' '].includes(e.key))return;
+  const choice=e.target.closest&&e.target.closest('.choice-item');
+  if(choice){e.preventDefault();choice.click();return}
+  if(e.target.classList&&e.target.classList.contains('question-block')){e.preventDefault();selectQuestion(e.target.dataset.q)}
+});
+
+/* ------------------------------------------------------------------ theme / reset */
+function setTheme(dark){document.documentElement.dataset.theme=dark?'dark':'light';$('#theme').textContent=dark?'☀ Light mode':'◐ Dark mode';$('#theme').setAttribute('aria-pressed',dark);try{localStorage.setItem('c15r2-theme',dark?'dark':'light')}catch(e){}}
+let theme,savedView;try{theme=localStorage.getItem('c15r2-theme');savedView=localStorage.getItem('c15r2-view')}catch(e){}
+setTheme(theme?theme==='dark':matchMedia('(prefers-color-scheme:dark)').matches);
+$('#theme').onclick=()=>setTheme(document.documentElement.dataset.theme!=='dark');
+$('#reset').onclick=()=>{
+  ACTIVE=null;OPEN_ANS.clear();
+  $$('.explanation-box.show').forEach(x=>x.classList.remove('show'));
+  $$('.btn-answer').forEach(x=>x.setAttribute('aria-expanded','false'));
+  DATA.parts.forEach(p=>p.groups.forEach(g=>{if(isSummaryGroup(g))refreshSummary(g);else g.qs.forEach(refreshCard)}));
+  $$('.choice-item').forEach(c=>{c.classList.remove('selected','is-correct','is-wrong');$('.mcq-info-box',c).classList.remove('show')});
+  $$('.active-question').forEach(x=>x.classList.remove('active-question'));
+  DATA.parts.forEach((_,i)=>clearPassage(i));
+  closeVocab();
+};
+
+/* ------------------------------------------------------------------ vocabulary look-up (offline; two steps) */
+const LOOKUP=DATA.parts.map(()=>({}));
+VOCAB.forEach(e=>e.f.forEach(f=>{if(!LOOKUP[e.part][f])LOOKUP[e.part][f]=e}));
+const WORD_CH=/[\p{L}\p{M}’'\-]/u;
+function cleanWord(raw){return (raw||'').normalize('NFC').replace(/^[^\p{L}]+|[^\p{L}]+$/gu,'').replace(/[’']s$/i,'')}
+function findEntry(part,word){
+  const w=word.toLowerCase(),map=LOOKUP[part];
+  const c=[w,w.replace(/ies$/,'y'),w.replace(/(es|s)$/,''),w.replace(/(ed|d)$/,''),w.replace(/ing$/,''),w.replace(/ing$/,'e'),w.replace(/ly$/,''),w.replace(/ment$/,'')];
+  for(const k of c)if(k&&map[k])return map[k];
+  return null;
+}
+function wordAtPoint(x,y){
+  let node,off;
+  if(document.caretPositionFromPoint){const p=document.caretPositionFromPoint(x,y);if(p){node=p.offsetNode;off=p.offset}}
+  else if(document.caretRangeFromPoint){const r=document.caretRangeFromPoint(x,y);if(r){node=r.startContainer;off=r.startOffset}}
+  if(!node||node.nodeType!==3)return '';
+  const t=node.textContent;let s=Math.min(off,t.length),e=s;
+  while(s>0&&WORD_CH.test(t[s-1]))s--;
+  while(e<t.length&&WORD_CH.test(t[e]))e++;
+  return t.slice(s,e);
+}
+let vocabOpener=null,vocabEntry=null;
+function openVocab(part,rawWord){
+  const word=cleanWord(rawWord);if(!word)return;
+  vocabEntry=findEntry(part,word);
+  vocabOpener=document.activeElement;
+  $('#vm-word').textContent=word;
+  const ex=$('#vm-example'),mean=$('#vm-meaning'),none=$('#vm-none'),btn=$('#vm-reveal');
+  mean.hidden=true;btn.textContent='Reveal meaning';
+  if(vocabEntry){
+    // step 1: the selected word + one natural English example — NO Vietnamese yet
+    let exHtml=esc(vocabEntry.ex);
+    for(const f of [...vocabEntry.f].sort((a,b)=>b.length-a.length)){
+      const re=new RegExp('\\b'+f.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\b','i');
+      if(re.test(vocabEntry.ex)){exHtml=esc(vocabEntry.ex).replace(re,m=>'<strong>'+m+'</strong>');break}
+    }
+    ex.innerHTML='<span class="k">Example:</span>'+exHtml;ex.hidden=false;none.hidden=true;btn.hidden=false;
+  }else{
+    // no reliable data for this word in this passage: say so, never invent a meaning or example
+    ex.hidden=true;none.hidden=false;btn.hidden=true;
+    none.textContent='Chưa có dữ liệu từ vựng cho từ này trong bài đọc. (Bạn có thể nhờ giáo viên bổ sung.)';
+  }
+  $('#vmodal').hidden=false;
+  (vocabEntry?btn:$('#vm-close')).focus();
+}
+function closeVocab(){
+  if($('#vmodal').hidden)return;
+  $('#vmodal').hidden=true;
+  try{getSelection().removeAllRanges()}catch(e){}
+  if(vocabOpener&&vocabOpener.focus){try{vocabOpener.focus({preventScroll:true})}catch(e){}}
+  vocabOpener=null;
+}
+$('#vm-reveal').onclick=()=>{
+  const mean=$('#vm-meaning');
+  if(mean.hidden&&vocabEntry){mean.innerHTML='<span class="k">Meaning:</span>'+esc(vocabEntry.vn);mean.hidden=false;$('#vm-reveal').textContent='Hide meaning'}
+  else{mean.hidden=true;$('#vm-reveal').textContent='Reveal meaning'}
+};
+$('#vm-close').onclick=closeVocab;
+$('#vmodal').addEventListener('click',e=>{if(e.target.id==='vmodal')closeVocab()});
+document.addEventListener('keydown',e=>{
+  if($('#vmodal').hidden)return;
+  if(e.key==='Escape'){e.preventDefault();closeVocab();return}
+  if(e.key==='Tab'){  // keep focus inside the pop-up
+    const f=$$('#vmodal button').filter(b=>!b.hidden&&b.offsetParent!==null);
+    if(!f.length)return;const i=f.indexOf(document.activeElement);
+    if(e.shiftKey&&i<=0){e.preventDefault();f[f.length-1].focus()}
+    else if(!e.shiftKey&&i===f.length-1){e.preventDefault();f[0].focus()}
+  }
+});
+function partOfEl(el){const pg=el.closest('.page');return pg?+pg.id.slice(1):0}
+$('#app').addEventListener('dblclick',e=>{
+  const pt=e.target.closest&&e.target.closest('.paragraph-text');if(!pt)return;
+  let w=wordAtPoint(e.clientX,e.clientY);
+  if(!cleanWord(w))w=String(getSelection()||'');
+  openVocab(partOfEl(pt),w);
+});
+// long-press (touch devices)
+let lpTimer=null,lpX=0,lpY=0;
+$('#app').addEventListener('touchstart',e=>{
+  const pt=e.target.closest&&e.target.closest('.paragraph-text');if(!pt||e.touches.length!==1)return;
+  const t=e.touches[0];lpX=t.clientX;lpY=t.clientY;
+  clearTimeout(lpTimer);
+  lpTimer=setTimeout(()=>{const w=wordAtPoint(lpX,lpY);if(cleanWord(w))openVocab(partOfEl(pt),w)},550);
+},{passive:true});
+['touchmove','touchend','touchcancel'].forEach(ev=>$('#app').addEventListener(ev,e=>{
+  if(ev==='touchmove'&&e.touches[0]&&Math.hypot(e.touches[0].clientX-lpX,e.touches[0].clientY-lpY)<10)return;
+  clearTimeout(lpTimer);
+},{passive:true}));
+
+selectView(/^[rv][012]$/.test(savedView||'')?savedView:'r0');
+</script>
+</body>
+</html>
