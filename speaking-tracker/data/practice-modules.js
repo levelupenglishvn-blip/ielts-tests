@@ -26,35 +26,6 @@
      tags: []                           // free tags
    }
 
-   The two modules below are SAMPLE/DEMO data (sample:true) used to try the interface. Delete them when real content arrives.
-   Their text is placeholder only — it is not teaching material.
+   Currently empty: the guided Lexical Resource modules live in data/lexical-modules.js.
    ===================================================================== */
-window.LU.practice.register([
-  {
-    sample: true,
-    id: 'p1-hometown-atmosphere', category: 'part1', topic: 'hometown', subcategory: 'atmosphere', title: 'Hometown — Atmosphere',
-    target: '[DEMO] Mục tiêu của module sẽ do Level Up cung cấp.',
-    targetLanguage: ['[DEMO] target phrase 1', { text: '[DEMO] target phrase 2', note: '[DEMO] ghi chú' }],
-    examples: ['[DEMO] Câu ví dụ sẽ do Level Up cung cấp.'],
-    practiceSteps: {
-      recognise: ['[DEMO] Task mẫu — chỉ để thử giao diện.'],
-      retrieve: [{ text: '[DEMO] Task mẫu có gợi ý và đáp án.', hint: '[DEMO] gợi ý', answer: '[DEMO] đáp án' }],
-      use: ['[DEMO] Task mẫu 1.', '[DEMO] Task mẫu 2.'],
-      reuse: []
-    },
-    commonMistakes: ['[DEMO] Lỗi thường gặp sẽ do Level Up cung cấp.'],
-    recommendedRepetitions: 3,
-    addresses: ['vocabulary.limited_range', 'vocabulary.word_retrieval']
-  },
-  {
-    sample: true,
-    id: 'lf-giving-opinions', category: 'language', topic: '', subcategory: 'giving-opinions', title: 'Giving Opinions',
-    target: '[DEMO] Dùng các cách nêu quan điểm một cách tự nhiên — không nhét vào mọi câu trả lời.',
-    targetLanguage: ['Personally, I think...', 'I would say that...', 'I guess...', 'To be honest,...', 'Frankly speaking,...', 'In my opinion,...', "As far as I'm concerned,..."],
-    examples: [],
-    practiceSteps: { recognise: ['[DEMO] Task mẫu.'], use: ['[DEMO] Task mẫu.'] },
-    commonMistakes: [],
-    recommendedRepetitions: 2,
-    addresses: ['fluency.unclear_ideas']
-  }
-]);
+window.LU.practice.register([]);
