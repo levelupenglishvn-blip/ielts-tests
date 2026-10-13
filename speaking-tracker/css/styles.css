@@ -1074,3 +1074,48 @@ dialog{border-radius:6px;box-shadow:0 12px 40px #1d1e1e26}
  .g-match{grid-template-columns:minmax(0,.8fr) minmax(0,1.5fr);gap:12px;margin-top:20px}.gm{font-size:13px;padding:10px 8px;min-height:72px}.gm.mean{font-size:12px}.g-col ul{gap:6px}.g-foot .btn{width:100%;min-height:44px}.g-done h2{font-size:22px}
 }
 @media(max-width:359px){.gp-b{font-size:10px}.gm{font-size:12px}.gm.mean{font-size:11px;padding:10px 7px}.g-match{gap:10px}}
+
+/* ---- Guided practice: grouped Learn · multiple-choice Retrieve · Extra Practice (new g-* classes only; existing rules untouched) ---- */
+.g-grp{margin-top:32px}
+.g-grp:first-of-type{margin-top:24px}
+.g-gh{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 10px;margin:0;padding-bottom:8px;border-bottom:1px solid var(--line-strong);font-size:13px;font-weight:600;letter-spacing:.03em;color:var(--green-dark)}
+.g-gh .g-gl{font-size:11px;font-weight:600;color:var(--ink-3)}
+.g-gh .g-gv{font-weight:400;color:var(--ink-2);letter-spacing:0}
+.gt.g-gtab{margin-top:0}
+.gt.g-gtab thead th:nth-child(1){width:22%}.gt.g-gtab thead th:nth-child(2){width:36%}.gt.g-gtab thead th:nth-child(3){width:42%}
+.g-gn{margin-top:10px;font-size:13px;line-height:1.65;color:var(--ink-2)}
+.g-gn b{font-weight:600;color:var(--ink)}
+.g-notes{margin:12px 0 0;padding-left:18px;display:grid;gap:6px;font-size:14px;line-height:1.65}
+.g-qz{margin-top:24px;min-width:0}
+.g-qz+.g-qz{padding-top:20px;border-top:1px solid var(--line)}
+.g-qp{margin-top:10px;font-size:18px;font-weight:600;line-height:1.55;color:var(--green-dark)}
+.g-qh{margin-top:6px;font-size:13px;color:var(--ink-3)}
+.g-opts{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:8px}
+.g-opts .gm{min-height:48px;font-weight:500}
+.g-exp{margin-top:16px;padding:12px 14px;border-left:3px solid var(--green-btn);background:var(--green-tint);font-size:14px;line-height:1.7;color:var(--ink)}
+.g-exp.bad{border-left-color:var(--danger);background:var(--danger-tint)}
+.g-qz .g-exp{margin-top:12px}
+.g-key .g-qz:first-child{margin-top:20px}
+.g-ko{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:4px;font-size:14px}
+.g-ko li{padding:6px 10px;border:1px solid var(--line)}
+.g-ko li.key{border-color:var(--green-line);background:var(--green-tint);color:var(--green-dark);font-weight:600}
+.g-score{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;margin-top:24px;padding:14px 16px;background:var(--yellow);color:var(--ink)}
+.g-score b{font-size:32px;font-weight:700;line-height:1.1}
+.g-score span{font-size:14px}
+.g-allok{margin-top:16px;font-size:14px;color:var(--green-dark);font-weight:600}
+.g-miss{margin-top:24px}
+.g-extra{margin-top:36px}
+.g-ex-l{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:16px}
+.g-ex-i{min-width:0}
+.g-ex-i+.g-ex-i{border-left:1px solid var(--line);padding-left:24px}
+.g-exw{margin-top:10px;font-size:13px;font-weight:500;line-height:1.7;color:var(--green-dark)}
+.g-exw .lbl{display:inline-block;margin-right:8px;font-size:10px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3)}
+@media(max-width:760px){
+ .g-grp{margin-top:28px}
+ .gt.g-gtab tbody tr{grid-template-columns:minmax(0,1fr);gap:4px;padding:12px 0}
+ .gt.g-gtab td:nth-child(3){grid-column:auto}
+ .gt.g-gtab td::before,.gt.g-gtab tbody th::before{display:none}
+ .g-qp{font-size:17px}
+ .g-ex-l{grid-template-columns:1fr;gap:20px}.g-ex-i+.g-ex-i{border-left:0;border-top:1px solid var(--line);padding:20px 0 0}
+ .g-score b{font-size:28px}
+}
