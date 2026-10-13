@@ -55,7 +55,7 @@
       const dirty = LU.drafts.list().filter(d => d.dirty).length;
       if (dirty && !(await LU.confirm({ title: 'Còn ' + dirty + ' bản nháp chưa lưu lên hệ thống', body: 'Bản nháp vẫn nằm trên máy này và sẽ còn khi bạn đăng nhập lại. Vẫn đăng xuất?', ok: 'Đăng xuất', cancel: 'Ở lại', danger: true }))) return;
     }
-    LU.session.clear(); LU.sess.keys().filter(k => k.indexOf('lu.s.ack.') === 0).forEach(k => LU.sess.remove(k));
+    LU.session.clear(); LU.sess.keys().filter(k => k.indexOf('lu.s.') === 0).forEach(k => LU.sess.remove(k));   // reminder gate + saved practice positions
     LU.T.dash = null; LU.go('login');
   };
   LU.onUnauthorized = () => { LU.session.clear(); LU.sess.set('lu.flash', 'Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.'); setTimeout(() => LU.go('login'), 0); };
