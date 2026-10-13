@@ -9,8 +9,10 @@
      learnGroups: [{ id: 'A', title: 'Quiet atmosphere', titleVi: 'Không khí yên tĩnh', note: '(optional, Vietnamese)',
                      items: [{ word: 'Peaceful', meaning: '(Vietnamese)', example: 'English example.' }] }]
      learnNotes:  ['…']                       // optional "Lưu ý phân biệt" list shown after the groups
-     use:         ['question', …]             // up to 3 open speaking questions   (+ optional useWords: [...]; defaults to every learn word)
-     reuse:       ['question', …]             // up to 3 NEW questions
+     use:         ['question', …]             // up to 3 open speaking questions
+     useHints:    [['word', 'word', …], …]    // optional: 3–5 words/phrases (taken from the learn list) for each question, same order. No hints → the renderer picks a few learn words per question.
+     reuse:       ['question', …]             // up to 3 NEW questions (hints stay hidden until the student taps "Cần gợi ý?")
+     reuseHints:  [['word', …], …]            // optional, same idea as useHints
      quiz:        [{ prompt: 'Sentence with ______.', options: [{ id: 'A', text: 'cozy' }, …], answer: 'A', explain: '(Vietnamese)' }]
                                               // multiple choice, shown one by one; answer + explanation after each; retry allowed; no pass mark
      extra:       [{ prompt: 'Describe …', words: ['hint', …] }]   + optional extraNote
@@ -25,10 +27,10 @@ window.LU.practice.register([
     id: "lex_atmosphere_01", category: 'lexical', subcategory: 'tier-1', topic: "Atmosphere", title: "Describing Atmosphere",
     focus: "Describing the atmosphere of a place or an event",
     target: "Giúp học viên mô tả bầu không khí của một địa điểm hoặc sự kiện chính xác hơn, thay vì chỉ dùng những từ chung chung như “good”, “bad”, “nice” hoặc “boring”.",
-    learnTitle: 'Learn the language', learnInstruction: "Đọc từng nhóm từ và chú ý nghĩa cùng ví dụ. Bạn nên ghi từ vựng và ví dụ vào sổ tay cá nhân để dùng lại khi luyện nói.",
-    useTitle: 'Use the language', useInstruction: "Tự trả lời bằng lời nói theo từng câu hỏi dưới đây. Hãy thử dùng các từ vừa học một cách tự nhiên; bạn không cần dùng hết các từ trong cùng một câu trả lời.",
-    reuseTitle: 'Reuse the language', reuseInstruction: "Trả lời 3 câu hỏi mới bằng lời nói và tái sử dụng vốn từ vừa học trong một ngữ cảnh khác. Mục tiêu là dùng từ linh hoạt, không chỉ nhớ câu ví dụ ban đầu.",
-    retrieveTitle: 'Retrieve the language', retrieveInstruction: "Chọn đáp án phù hợp nhất với ngữ cảnh. Sau mỗi câu, bạn sẽ thấy đáp án và lời giải thích. Bạn có thể làm lại bài kiểm tra nếu cần.",
+    learnTitle: 'Learn the language', learnInstruction: "Đọc nghĩa và ví dụ của từng nhóm từ. Nên ghi lại vào sổ tay để dùng khi luyện nói.",
+    useTitle: 'Use the language', useInstruction: "Trả lời thành tiếng. Dùng từ đã học khi phù hợp.",
+    reuseTitle: 'Reuse the language', reuseInstruction: "Trả lời thành tiếng trong ngữ cảnh mới.",
+    retrieveTitle: 'Retrieve the language', retrieveInstruction: "Chọn đáp án phù hợp nhất với ngữ cảnh. Sau mỗi câu, bạn sẽ thấy đáp án và lời giải thích.",
     addresses: ['vocabulary.limited_range', 'vocabulary.word_retrieval'], recommendedRepetitions: 1,
     learnGroups: [
       {
@@ -72,6 +74,8 @@ window.LU.practice.register([
     reuse: ["Describe the atmosphere at a place where you like to spend time with friends or family.",
             "What is the atmosphere like during a major celebration in your country?",
             "Have you ever been somewhere with an uncomfortable atmosphere? What made you feel that way?"],
+    useHints: [["Cozy", "Welcoming", "Inviting", "Calm", "Peaceful"], ["Bustling", "Lively", "Vibrant", "Chaotic"], ["Calm", "Peaceful", "Tranquil", "Lively"]],
+    reuseHints: [["Cozy", "Welcoming", "Lively", "Peaceful"], ["Vibrant", "Lively", "Bustling", "Welcoming"], ["Tense", "Chaotic", "Overwhelming", "Gloomy"]],
     quiz: [
       {
         prompt: "The small café has soft lighting, comfortable chairs and a warm, ______ atmosphere.",
@@ -144,10 +148,10 @@ window.LU.practice.register([
     id: "lex_personality_01", category: 'lexical', subcategory: 'tier-1', topic: "Describing People", title: "Describing People",
     focus: "Describing people’s personality, qualities and characteristics",
     target: "Giúp học viên mô tả con người cụ thể và chính xác hơn, thay vì phụ thuộc vào những từ chung chung như “good”, “bad”, “funny” hoặc “sad”.",
-    learnTitle: 'Learn the language', learnInstruction: "Đọc từng nhóm từ và chú ý nghĩa cùng ví dụ. Bạn nên ghi từ vựng và ví dụ vào sổ tay cá nhân để dùng lại khi luyện nói.",
-    useTitle: 'Use the language', useInstruction: "Tự trả lời bằng lời nói theo từng câu hỏi dưới đây. Hãy thử dùng các từ vừa học một cách tự nhiên; bạn không cần dùng hết các từ trong cùng một câu trả lời.",
-    reuseTitle: 'Reuse the language', reuseInstruction: "Trả lời 3 câu hỏi mới bằng lời nói và tái sử dụng vốn từ vừa học trong một ngữ cảnh khác. Mục tiêu là dùng từ linh hoạt, không chỉ nhớ câu ví dụ ban đầu.",
-    retrieveTitle: 'Retrieve the language', retrieveInstruction: "Chọn đáp án phù hợp nhất với ngữ cảnh. Sau mỗi câu, bạn sẽ thấy đáp án và lời giải thích. Bạn có thể làm lại bài kiểm tra nếu cần.",
+    learnTitle: 'Learn the language', learnInstruction: "Đọc nghĩa và ví dụ của từng nhóm từ. Nên ghi lại vào sổ tay để dùng khi luyện nói.",
+    useTitle: 'Use the language', useInstruction: "Trả lời thành tiếng. Dùng từ đã học khi phù hợp.",
+    reuseTitle: 'Reuse the language', reuseInstruction: "Trả lời thành tiếng trong ngữ cảnh mới.",
+    retrieveTitle: 'Retrieve the language', retrieveInstruction: "Chọn đáp án phù hợp nhất với ngữ cảnh. Sau mỗi câu, bạn sẽ thấy đáp án và lời giải thích.",
     addresses: ['vocabulary.limited_range', 'vocabulary.word_retrieval'], recommendedRepetitions: 1,
     learnGroups: [
       {
@@ -212,6 +216,8 @@ window.LU.practice.register([
     reuse: ["Describe someone you find difficult to get along with. What makes the relationship difficult?",
             "What qualities make someone a good leader or role model?",
             "Can someone be quiet but still be confident, open-minded and approachable? Why?"],
+    useHints: [["Helpful", "Considerate", "Reliable", "Honest", "Approachable"], ["Outgoing", "Reserved", "Introverted", "Open-minded"], ["Diligent", "Disciplined", "Reliable", "Helpful", "Open-minded"]],
+    reuseHints: [["Self-centered", "Irritable", "Frustrated", "Upset"], ["Disciplined", "Reliable", "Considerate", "Humble", "Charming"], ["Reserved", "Introverted", "Open-minded", "Approachable"]],
     quiz: [
       {
         prompt: "Whenever someone in our class has a problem, Linh is the first person to offer help. She's very ______.",
