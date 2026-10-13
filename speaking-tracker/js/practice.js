@@ -70,7 +70,8 @@
       commonMistakes: arr(m.commonMistakes), tags: arr(m.tags).map(slug), addresses: arr(m.addresses).map(String),
       recommendedRepetitions: Math.max(1, parseInt(m.recommendedRepetitions, 10) || 1), sample: !!m.sample, active: m.active !== false,
       status: m.status === 'draft' ? 'draft' : 'ready', focus: String(m.focus || ''), level: String(m.level || ''), bestFor: String(m.bestFor || ''),
-      learn: Array.isArray(m.learn) ? m.learn : [], use: Array.isArray(m.use) ? m.use : [], reuse: Array.isArray(m.reuse) ? m.reuse : [], retrieve: Array.isArray(m.retrieve) ? m.retrieve : []
+      learn: Array.isArray(m.learn) ? m.learn : [], use: Array.isArray(m.use) ? m.use : [], reuse: Array.isArray(m.reuse) ? m.reuse : [], retrieve: Array.isArray(m.retrieve) ? m.retrieve : [],
+      learnGroups: Array.isArray(m.learnGroups) ? m.learnGroups : [], quiz: Array.isArray(m.quiz) ? m.quiz : [], extra: Array.isArray(m.extra) ? m.extra : []
     });
   };
   /** register([module,...]) or register({id: module,...}). Re-registering an id replaces it. Returns how many were accepted. */
@@ -90,7 +91,7 @@
   P.all = () => ORDER.map(id => REG[id]).filter(m => m.active);
   P.count = () => P.all().length;
   /** A GUIDED module has the sequential Learn → Use → Reuse → Retrieve content. A DRAFT module is a placeholder: the teacher can see and assign it, the student cannot launch it yet. */
-  P.isGuided = m => !!(m && m.learn.length && m.retrieve.length);
+  P.isGuided = m => !!(m && (m.learn.length || m.learnGroups.length) && (m.retrieve.length || m.quiz.length));
   P.isDraft = m => !!(m && m.status === 'draft');
   P.launchable = m => !!m && !P.isDraft(m);
 
