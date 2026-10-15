@@ -1970,23 +1970,27 @@ const HL='user-hl';
 function inNoHighlightZone(node){
  if(!node)return true;
  const el=node.nodeType===1?node:node.parentElement;
- return !!(el&&el.closest('input,button,select,textarea,.qchip-play,.play-btn,.progress-track,.part-nav,.qnav,.exam-status'));
+ // .match-layout is excluded: a selection dragged across the option rows used to
+ // be wrapped in <mark>, and wrapping is what split the rows (see applyHighlight).
+ return !!(el&&el.closest('input,button,select,textarea,.qchip-play,.play-btn,.progress-track,.part-nav,.qnav,.exam-status,.match-layout'));
 }
 function clearSelection(){const s=window.getSelection();if(s)s.removeAllRanges();}
 function applyHighlight(range){
  const mark=document.createElement('mark');
  mark.className=HL;
  try{
+  // surroundContents() refuses a range that only partially covers an element.
+  // The old fallback answered that refusal with extractContents(), which SPLITS
+  // every partially selected element and re-clones it WITH its attributes. A
+  // selection dragged across the matching rows therefore turned one
+  // <div class="mc-block match-row" data-q="17"> into two rows carrying the same
+  // data-q: the first kept the question text but lost its slot and radio inputs,
+  // and since lookups take the first match, that question could no longer be
+  // answered at all. Refuse instead of splitting; an ordinary selection inside
+  // one paragraph still highlights exactly as before.
   range.surroundContents(mark);
   return true;
- }catch(e){
-  try{
-   const frag=range.extractContents();
-   mark.appendChild(frag);
-   range.insertNode(mark);
-   return true;
-  }catch(e2){return false;}
- }
+ }catch(e){return false;}
 }
 function removeHighlight(mark){
  const parent=mark.parentNode;if(!parent)return;
