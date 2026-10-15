@@ -1688,77 +1688,192 @@ new MutationObserver(()=>{
 // persisted, scored and submitted through the existing handlers unchanged.
 // ---------------------------------------------------------------------------
 var MATCH_GROUPS={"g2": {"A": "Its origin is somewhat controversial.", "B": "It is historically significant for a country.", "C": "It was effective at attracting audiences.", "D": "It is included in a recent project.", "E": "It contains insights into the show.", "F": "It resembles an artwork."}};
-function mtext(g,l){return (MATCH_GROUPS[g]||{})[l]||'';}
+// ---------------------------------------------------------------------------
+// ONE source of truth per group: the option text a student reads in the bank is
+// the exact text rendered in the slot. MATCH_GROUPS above is regenerated from
+// that bank and is only a fallback for a letter the bank does not render, so the
+// two can no longer drift apart (that drift is what showed another test's
+// wording, and left G/H green but empty, in C20 L T4 Q15-20).
+// ---------------------------------------------------------------------------
+var mdrag=null,picked=null,MATCH_TEXT=null,lastDragEnd=0;
+function groupOf(el){return (el&&el.dataset&&el.dataset.group)||'_';}
+function groupEl(sel,g){const all=document.querySelectorAll(sel);for(let i=0;i<all.length;i++){if(groupOf(all[i])===g)return all[i];}return null;}
+function mrow(q){const all=document.querySelectorAll('.match-row');for(let i=0;i<all.length;i++){if(all[i].dataset.q===q)return all[i];}return null;}
+function rowOf(el){return el&&el.closest?el.closest('.match-row'):null;}
+function buildMatchText(){
+ const m={};
+ document.querySelectorAll('.topic-bank').forEach(bank=>{
+  const g=groupOf(bank),map=m[g]||(m[g]={});
+  bank.querySelectorAll('.topic-chip').forEach(ch=>{
+   const s=ch.querySelector('span'),txt=((s?s.textContent:ch.textContent)||'').replace(/\s+/g,' ').trim();
+   if(ch.dataset.letter&&txt)map[ch.dataset.letter]=txt;
+  });
+ });
+ Object.keys(MATCH_GROUPS||{}).forEach(g=>{const map=m[g]||(m[g]={});Object.keys(MATCH_GROUPS[g]).forEach(L=>{if(!map[L])map[L]=MATCH_GROUPS[g][L];});});
+ return m;
+}
+function mtext(g,l){
+ if(!l)return '';
+ if(!MATCH_TEXT)MATCH_TEXT=buildMatchText();
+ const map=MATCH_TEXT[g]||MATCH_TEXT['_']||{};
+ return map[l]||'';
+}
+// Repeat rule per group: data-repeat="1" on the layout/bank, else the file-wide
+// MATCH_ALLOW_REPEAT, else single use.
+function groupRepeats(g){
+ const el=groupEl('.match-layout',g)||groupEl('.topic-bank',g);
+ const v=el&&el.dataset?el.dataset.repeat:null;
+ if(v!==null&&v!==undefined&&v!=='')return v!=='0'&&v!=='false';
+ return typeof MATCH_ALLOW_REPEAT!=='undefined'&&!!MATCH_ALLOW_REPEAT;
+}
 function syncMatchingUI(){
  const used={};
+ const submitted=(typeof attempt!=='undefined'&&attempt&&attempt.phase==='submitted');
  document.querySelectorAll('.match-row').forEach(row=>{
-  const g=row.dataset.group;
-  const a=(typeof attempt!=='undefined'&&attempt&&attempt.answers[row.dataset.q])||'';
-  const slot=row.querySelector('.match-slot');if(!slot)return;
-  slot.classList.toggle('is-filled',!!a);
-  slot.innerHTML=(a&&mtext(g,a))
-   ?'<span class="match-chip-in" data-group="'+g+'" data-letter="'+a+'"><b>'+a+'</b><span>'+escapeHtml(mtext(g,a))+'</span></span><button type="button" class="match-clear" aria-label="Remove answer for question '+row.dataset.q+'">×</button>'
-   :'<span class="match-ph">'+((typeof attempt!=='undefined'&&attempt&&attempt.phase==='submitted')?'Chưa trả lời':'Kéo đáp án vào đây')+'</span>';
-  if(a)(used[g]=used[g]||new Set()).add(a);
+  const g=groupOf(row),q=row.dataset.q,slot=row.querySelector('.match-slot');
+  if(!slot)return;
+  const a=(typeof attempt!=='undefined'&&attempt&&attempt.answers[q])||'';
+  const txt=a?mtext(g,a):'';
+  const ok=!!(a&&txt);
+  // is-filled and the slot content come from the SAME check, so a slot can never
+  // go green while still showing the placeholder.
+  slot.classList.toggle('is-filled',ok);
+  slot.innerHTML=ok
+   ?'<span class="match-chip-in" data-group="'+g+'" data-letter="'+escapeHtml(a)+'"><b>'+escapeHtml(a)+'</b><span>'+escapeHtml(txt)+'</span></span><button type="button" class="match-clear" aria-label="Remove answer for question '+q+'">×</button>'
+   :'<span class="match-ph">'+(submitted?'Chưa trả lời':'Kéo đáp án vào đây')+'</span>';
+  if(ok&&!groupRepeats(g))(used[g]||(used[g]={}))[a]=1;
  });
- document.querySelectorAll('.topic-chip').forEach(ch=>ch.classList.toggle('is-used',!!(used[ch.dataset.group]&&used[ch.dataset.group].has(ch.dataset.letter))));
+ document.querySelectorAll('.topic-chip').forEach(ch=>{
+  const g=groupOf(ch);
+  ch.classList.toggle('is-used',!!(used[g]&&used[g][ch.dataset.letter]));
+ });
+ if(picked&&!mtext(picked.group,picked.letter))picked=null;
+ markPicked();
 }
+// Validates the target row AND the option before any stored answer is touched,
+// so a bad drop can never wipe an answer it then fails to replace.
 function setMatchAnswer(qid,letter){
- if(!editable())return;
- const row=document.querySelector('.match-row[data-q="'+qid+'"]');if(!row)return;
- if(!letter){attempt.answers[qid]='';persist();restoreAnswers();return;}
- // each option is used once inside its own group: free it from any other item first
- document.querySelectorAll('.match-row[data-group="'+row.dataset.group+'"]').forEach(r=>{if(r.dataset.q!==qid&&attempt.answers[r.dataset.q]===letter)attempt.answers[r.dataset.q]='';});
- const input=row.querySelector('input[value="'+letter+'"]');if(!input)return;
+ if(typeof attempt==='undefined'||!attempt||!editable())return false;
+ const row=mrow(qid);if(!row)return false;
+ const g=groupOf(row);
+ if(letter){
+  if(!/^[A-Z]$/.test(letter))return false;
+  if(!row.querySelector('input[value="'+letter+'"]'))return false;
+  if(!mtext(g,letter))return false;
+ }else{
+  if(!attempt.answers[qid])return false;
+  attempt.answers[qid]='';persist();restoreAnswers();return true;
+ }
+ if(!groupRepeats(g)){
+  document.querySelectorAll('.match-row').forEach(r=>{
+   if(groupOf(r)===g&&r.dataset.q!==qid&&attempt.answers[r.dataset.q]===letter)attempt.answers[r.dataset.q]='';
+  });
+ }
+ const input=row.querySelector('input[value="'+letter+'"]');
  input.checked=true;input.dispatchEvent(new Event('change',{bubbles:true}));
+ return true;
 }
-let mdrag=null,picked=null,suppressClick=false;
 function markPicked(){
- document.querySelectorAll('.topic-chip').forEach(c=>c.classList.toggle('is-picked',!!picked&&c.dataset.group===picked.group&&c.dataset.letter===picked.letter));
- document.querySelectorAll('.match-layout').forEach(l=>l.classList.toggle('has-picked',!!picked&&l.dataset.group===picked.group));
+ document.querySelectorAll('.topic-chip').forEach(c=>c.classList.toggle('is-picked',!!picked&&groupOf(c)===picked.group&&c.dataset.letter===picked.letter));
+ document.querySelectorAll('.match-layout').forEach(l=>l.classList.toggle('has-picked',!!picked&&groupOf(l)===picked.group));
+ document.body.classList.toggle('has-picked-topic',!!picked);
 }
 function slotAt(x,y){const el=document.elementFromPoint(x,y);return el&&el.closest?el.closest('.match-slot'):null;}
+// syncMatchingUI() rewrites every slot, so the dragged node can be replaced
+// mid-drag; re-resolve it instead of holding a stale reference.
+function dragSrcEl(d){
+ if(d.src&&d.src.isConnected)return d.src;
+ if(d.from){const r=mrow(d.from);return r?r.querySelector('.match-chip-in'):null;}
+ const bank=groupEl('.topic-bank',d.group);
+ return bank?bank.querySelector('.topic-chip[data-letter="'+d.letter+'"]'):null;
+}
+function clearDragVisuals(d){
+ if(d&&d.ghost&&d.ghost.remove)d.ghost.remove();
+ document.querySelectorAll('.match-ghost').forEach(g=>g.remove());
+ document.querySelectorAll('.is-dragging').forEach(e=>e.classList.remove('is-dragging'));
+ document.querySelectorAll('.match-slot.is-over').forEach(s=>s.classList.remove('is-over'));
+ document.body.classList.remove('is-match-dragging');
+}
+// A drag is followed by one synthetic click on whatever was under the release
+// point. Ignore only that one, inside this handler, so no other control on the
+// page is ever swallowed. The stale-pick bug it used to mask is fixed at the
+// source: activating a drag clears `picked`.
+function fromDrag(){return performance.now()-lastDragEnd<350;}
 document.addEventListener('pointerdown',e=>{
  const src=e.target.closest&&e.target.closest('.topic-chip,.match-chip-in');
- if(!src||!editable()||(e.pointerType==='mouse'&&e.button!==0)||src.classList.contains('is-used'))return;
- const row=src.closest('.match-row');
- mdrag={letter:src.dataset.letter,group:src.dataset.group,from:row?row.dataset.q:null,x:e.clientX,y:e.clientY,active:false,ghost:null,id:e.pointerId,src};
+ if(!src||!editable()||(e.pointerType==='mouse'&&e.button!==0))return;
+ if(src.classList.contains('topic-chip')&&src.classList.contains('is-used'))return;
+ const row=rowOf(src);
+ mdrag={letter:src.dataset.letter,group:groupOf(src),from:row?row.dataset.q:null,x:e.clientX,y:e.clientY,active:false,ghost:null,id:e.pointerId,src:src};
 });
 document.addEventListener('pointermove',e=>{
  if(!mdrag||e.pointerId!==mdrag.id)return;
  if(!mdrag.active){
   if(Math.hypot(e.clientX-mdrag.x,e.clientY-mdrag.y)<6)return;
+  if(!editable()){mdrag=null;return;}
   mdrag.active=true;
-  const g=document.createElement('div');g.className='match-ghost';g.textContent=mdrag.letter+'  '+mtext(mdrag.group,mdrag.letter);document.body.appendChild(g);mdrag.ghost=g;
-  mdrag.src.classList.add('is-dragging');document.body.classList.add('is-match-dragging');
+  picked=null;markPicked();
+  const g=document.createElement('div');g.className='match-ghost';
+  g.textContent=mdrag.letter+'  '+mtext(mdrag.group,mdrag.letter);
+  document.body.appendChild(g);mdrag.ghost=g;
+  const el=dragSrcEl(mdrag);if(el)el.classList.add('is-dragging');
+  document.body.classList.add('is-match-dragging');
  }
- mdrag.ghost.style.transform='translate('+(e.clientX+12)+'px,'+(e.clientY+12)+'px)';
+ if(mdrag.ghost)mdrag.ghost.style.transform='translate('+(e.clientX+12)+'px,'+(e.clientY+12)+'px)';
+ // Dragging towards the top/bottom edge scrolls the page, so a slot that starts
+ // off-screen (the single-column phone layout stacks the bank above the rows)
+ // can still be reached without letting go.
+ // 'instant': the page sets scroll-behavior:smooth, and an animated scroll
+ // cannot keep up with a finger that is already moving.
+ if(e.clientY<56)window.scrollBy({top:-18,behavior:'instant'});
+ else if(e.clientY>window.innerHeight-56)window.scrollBy({top:18,behavior:'instant'});
  document.querySelectorAll('.match-slot.is-over').forEach(s=>s.classList.remove('is-over'));
- const s=slotAt(e.clientX,e.clientY);if(s&&s.closest('.match-row').dataset.group===mdrag.group)s.classList.add('is-over');
+ const s=slotAt(e.clientX,e.clientY),r=rowOf(s);
+ if(s&&r&&groupOf(r)===mdrag.group)s.classList.add('is-over');
  e.preventDefault();
 },{passive:false});
 function endMatchDrag(e,cancel){
  if(!mdrag||e.pointerId!==mdrag.id)return;
  const d=mdrag;mdrag=null;
  if(!d.active)return;
- d.ghost.remove();d.src.classList.remove('is-dragging');document.body.classList.remove('is-match-dragging');
- document.querySelectorAll('.match-slot.is-over').forEach(s=>s.classList.remove('is-over'));
- suppressClick=true;setTimeout(()=>{suppressClick=false;},60);
+ clearDragVisuals(d);
+ lastDragEnd=performance.now();
  if(cancel)return;
- const s=slotAt(e.clientX,e.clientY);
- if(s&&s.closest('.match-row').dataset.group===d.group){setMatchAnswer(s.closest('.match-row').dataset.q,d.letter);picked=null;markPicked();}
- else if(d.from){const el=document.elementFromPoint(e.clientX,e.clientY);const bank=el&&el.closest?el.closest('.topic-bank'):null;if(bank&&bank.dataset.group===d.group)setMatchAnswer(d.from,'');}
+ const s=slotAt(e.clientX,e.clientY),trow=rowOf(s);
+ if(s&&trow&&groupOf(trow)===d.group){
+  const toQ=trow.dataset.q;
+  if(toQ===d.from)return;
+  // Moving a placed option: in a repeat group the old slot must be emptied on
+  // purpose; in a single-use group setMatchAnswer already frees it.
+  if(setMatchAnswer(toQ,d.letter)&&d.from&&groupRepeats(d.group))setMatchAnswer(d.from,'');
+ }else if(d.from){
+  const el=document.elementFromPoint(e.clientX,e.clientY),bank=el&&el.closest?el.closest('.topic-bank'):null;
+  if(bank&&groupOf(bank)===d.group)setMatchAnswer(d.from,'');
+ }
 }
 document.addEventListener('pointerup',e=>endMatchDrag(e,false));
 document.addEventListener('pointercancel',e=>endMatchDrag(e,true));
+// Losing the pointer (tab switch, window blur, context menu) must not leave a
+// ghost stuck to the cursor or a row frozen in is-dragging.
+function abortDrag(){if(!mdrag)return;const d=mdrag;mdrag=null;clearDragVisuals(d);}
+window.addEventListener('blur',abortDrag);
+document.addEventListener('visibilitychange',()=>{if(document.hidden)abortDrag();});
+document.addEventListener('contextmenu',abortDrag);
 document.addEventListener('click',e=>{
- if(suppressClick||!e.target.closest)return;
+ if(!e.target.closest||fromDrag())return;
  const clear=e.target.closest('.match-clear');
- if(clear){setMatchAnswer(clear.closest('.match-row').dataset.q,'');return;}
+ if(clear){const r=rowOf(clear);if(r)setMatchAnswer(r.dataset.q,'');return;}
  const chip=e.target.closest('.topic-chip');
- if(chip){if(!editable()||chip.classList.contains('is-used'))return;picked=(picked&&picked.group===chip.dataset.group&&picked.letter===chip.dataset.letter)?null:{group:chip.dataset.group,letter:chip.dataset.letter};markPicked();return;}
- const slot=e.target.closest('.match-slot');
- if(slot&&picked&&editable()&&slot.closest('.match-row').dataset.group===picked.group){setMatchAnswer(slot.closest('.match-row').dataset.q,picked.letter);picked=null;markPicked();}
+ if(chip){
+  if(!editable()||chip.classList.contains('is-used'))return;
+  const g=groupOf(chip),L=chip.dataset.letter;
+  picked=(picked&&picked.group===g&&picked.letter===L)?null:{group:g,letter:L};
+  markPicked();return;
+ }
+ const slot=e.target.closest('.match-slot'),srow=rowOf(slot);
+ if(slot&&srow&&picked&&editable()&&groupOf(srow)===picked.group){
+  if(setMatchAnswer(srow.dataset.q,picked.letter)){picked=null;markPicked();}
+ }
 });
 document.addEventListener('keydown',e=>{
  if((e.key==='Enter'||e.key===' ')&&e.target.classList&&(e.target.classList.contains('match-slot')||e.target.classList.contains('topic-chip'))){e.preventDefault();e.target.click();}
@@ -1767,7 +1882,7 @@ function decorateMatchReview(row){
  if(row.querySelector('.match-correct-hint')||!row.classList.contains('is-review-wrong'))return;
  const opt=row.querySelector('.mc-option.opt-correct');if(!opt)return;
  const L=opt.dataset.letter,h=document.createElement('div');h.className='match-correct-hint';
- h.innerHTML='Đáp án đúng: <b>'+L+'</b> '+escapeHtml(mtext(row.dataset.group,L));row.appendChild(h);
+ h.innerHTML='Đáp án đúng: <b>'+escapeHtml(L)+'</b> '+escapeHtml(mtext(groupOf(row),L));row.appendChild(h);
 }
 document.querySelectorAll('.match-row').forEach(row=>new MutationObserver(()=>decorateMatchReview(row)).observe(row,{attributes:true,attributeFilter:['class']}));
 syncMatchingUI();
