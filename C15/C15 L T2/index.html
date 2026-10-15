@@ -1363,7 +1363,7 @@ async function start(){
  const nameCheck=validateStudentName(rawName);
  if(!nameCheck.valid){$('startError').textContent=nameCheck.error;return;}
  const name=nameCheck.normalized;
- if(!Number.isFinite(audio.duration)||audio.duration<1800){$('startError').textContent='Audio chưa tải xong. Vui lòng đợi trong giây lát.';return;}
+ if(!Number.isFinite(audio.duration)||audio.duration<1200){$('startError').textContent='Audio chưa tải xong. Vui lòng đợi trong giây lát.';return;}
  if(!navigator.locks){$('startError').textContent='Vui lòng dùng trình duyệt Chrome, Edge hoặc Safari bản mới nhất, có hỗ trợ lưu trữ trên thiết bị.';return;}
  key=`ielts:v2:${config.testId}:${TestCore.normalize(name)}:${TestCore.normalize(cycle)}`;
  try{localStorage.setItem(key+':check','1');localStorage.removeItem(key+':check');}catch(e){$('startError').textContent='Vui lòng bật tính năng lưu trữ trên thiết bị trước khi bắt đầu làm bài.';return;}
