@@ -13,6 +13,7 @@
      useHints:    [['word', 'word', …], …]    // optional: 3–5 words/phrases (taken from the learn list) for each question, same order. No hints → the renderer picks a few learn words per question.
      reuse:       ['question', …]             // up to 3 NEW questions (hints stay hidden until the student taps "Cần gợi ý?")
      reuseHints:  [['word', …], …]            // optional, same idea as useHints
+     useSamples / reuseSamples: ['answer with **target word** marked', …]   // optional: one sample answer per question (same order); the student opens it with "View sample answer"
      quiz:        [{ prompt: 'Sentence with ______.', options: [{ id: 'A', text: 'cozy' }, …], answer: 'A', explain: '(Vietnamese)' }]
                                               // multiple choice, shown one by one; answer + explanation after each; retry allowed; no pass mark
      extra:       [{ prompt: 'Describe …', words: ['hint', …] }]   + optional extraNote
@@ -76,6 +77,13 @@ window.LU.practice.register([
             "Have you ever been somewhere with an uncomfortable atmosphere? What made you feel that way?"],
     useHints: [["Cozy", "Welcoming", "Inviting", "Calm", "Peaceful"], ["Bustling", "Lively", "Vibrant", "Chaotic"], ["Calm", "Peaceful", "Tranquil", "Lively"]],
     reuseHints: [["Cozy", "Welcoming", "Lively", "Peaceful"], ["Vibrant", "Lively", "Bustling", "Welcoming"], ["Tense", "Chaotic", "Overwhelming", "Gloomy"]],
+    /* Sample answers (reference only, hidden until the student taps "View sample answer"). **word** marks a target word. Same order as use / reuse. */
+    useSamples: ["I enjoy a **cozy** and **welcoming** atmosphere because it helps me feel relaxed. I especially like small cafés with soft lighting and comfortable seats, where I can chat with friends or read a book without feeling rushed.",
+                 "The atmosphere in my hometown is quite **lively**, especially in the city center. The streets can be **bustling** during rush hour, but I think that energy is part of what makes the city interesting.",
+                 "I prefer a **peaceful** and **calm** environment when I need to concentrate. If there is too much noise or activity around me, I can feel **overwhelmed** and find it difficult to focus on what I'm doing."],
+    reuseSamples: ["My favorite place to spend time with my friends is a small café near my home. It has a **cozy** interior and a really **inviting** atmosphere, so we often stay there for hours talking about our lives.",
+                   "During Tet, the atmosphere in my neighborhood is incredibly **vibrant**. The streets are **lively**, with colorful decorations and families visiting one another. Although some areas can get **bustling**, I really enjoy the excitement.",
+                   "Yes. I once went to a restaurant where two customers were having a loud argument. The atmosphere quickly became **tense**, and the noise made the whole place feel **chaotic**. I felt uncomfortable, so I decided to leave early."],
     quiz: [
       {
         prompt: "The small café has soft lighting, comfortable chairs and a warm, ______ atmosphere.",
@@ -218,6 +226,13 @@ window.LU.practice.register([
             "Can someone be quiet but still be confident, open-minded and approachable? Why?"],
     useHints: [["Helpful", "Considerate", "Reliable", "Honest", "Approachable"], ["Outgoing", "Reserved", "Introverted", "Open-minded"], ["Diligent", "Disciplined", "Reliable", "Helpful", "Open-minded"]],
     reuseHints: [["Self-centered", "Irritable", "Frustrated", "Upset"], ["Disciplined", "Reliable", "Considerate", "Humble", "Charming"], ["Reserved", "Introverted", "Open-minded", "Approachable"]],
+    /* Sample answers (reference only, hidden until the student taps "View sample answer"). **word** marks a target word. Same order as use / reuse. */
+    useSamples: ["I want to have a **reliable** and **supportive** friend who never lies to me and gives me **honest advice** when I need it. I also appreciate people who are **considerate** and take other people's feelings into account.",
+                 "I'd say I'm quite **reserved** when I first meet people, but I become more **outgoing** once I get to know them. As I've grown older, I've also become more **open-minded** and willing to consider different points of view.",
+                 "I enjoy working with **reliable** and **diligent** people because I know I can count on them to do their share of the work. I also prefer teammates who are **approachable**, so we can discuss problems openly and help each other improve."],
+    reuseSamples: ["I once worked with someone who was quite **self-centered**. He often made conversations about himself and rarely considered other people's opinions. He could also be **irritable** when things didn't go his way, which made it difficult for us to work together.",
+                   "I think a good leader should be **disciplined**, **reliable** and **open-minded**. They need to keep their promises, set a good example and listen to different opinions. A **considerate** leader can also make people feel respected and motivated.",
+                   "Definitely. Being **reserved** doesn't mean someone lacks confidence or dislikes other people. A quiet person can be **open-minded** and **approachable** by listening carefully, respecting different opinions and making others feel comfortable when they speak."],
     quiz: [
       {
         prompt: "Whenever someone in our class has a problem, Linh is the first person to offer help. She's very ______.",
