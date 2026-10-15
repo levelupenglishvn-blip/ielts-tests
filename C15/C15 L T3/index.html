@@ -1645,7 +1645,7 @@ var MATCH_GROUPS={"_": {"A": "She will definitely look for a suitable article.",
 // two can no longer drift apart (that drift is what showed another test's
 // wording, and left G/H green but empty, in C20 L T4 Q15-20).
 // ---------------------------------------------------------------------------
-var mdrag=null,picked=null,MATCH_TEXT=null,lastDragEnd=0;
+var mdrag=null,picked=null,MATCH_TEXT=null,dragClick=null;
 function groupOf(el){return (el&&el.dataset&&el.dataset.group)||'_';}
 function groupEl(sel,g){const all=document.querySelectorAll(sel);for(let i=0;i<all.length;i++){if(groupOf(all[i])===g)return all[i];}return null;}
 function mrow(q){const all=document.querySelectorAll('.match-row');for(let i=0;i<all.length;i++){if(all[i].dataset.q===q)return all[i];}return null;}
@@ -1748,7 +1748,16 @@ function clearDragVisuals(d){
 // point. Ignore only that one, inside this handler, so no other control on the
 // page is ever swallowed. The stale-pick bug it used to mask is fixed at the
 // source: activating a drag clears `picked`.
-function fromDrag(){return performance.now()-lastDragEnd<350;}
+function fromDrag(e){
+ // Consume ONLY the one synthetic click a finished drag produces: same spot,
+ // once, and soon after. Every other click - the x button, picking another
+ // option, tapping a slot - works immediately, even right after a drop.
+ if(!dragClick)return false;
+ const d=dragClick;
+ if(performance.now()-d.t>700){dragClick=null;return false;}
+ if(Math.hypot(e.clientX-d.x,e.clientY-d.y)>6)return false;
+ dragClick=null;return true;
+}
 document.addEventListener('pointerdown',e=>{
  const src=e.target.closest&&e.target.closest('.topic-chip,.match-chip-in');
  if(!src||!editable()||(e.pointerType==='mouse'&&e.button!==0))return;
@@ -1787,7 +1796,7 @@ function endMatchDrag(e,cancel){
  const d=mdrag;mdrag=null;
  if(!d.active)return;
  clearDragVisuals(d);
- lastDragEnd=performance.now();
+ dragClick={x:e.clientX,y:e.clientY,t:performance.now()};
  if(cancel)return;
  const s=slotAt(e.clientX,e.clientY),trow=rowOf(s);
  if(s&&trow&&groupOf(trow)===d.group){
@@ -1810,7 +1819,7 @@ window.addEventListener('blur',abortDrag);
 document.addEventListener('visibilitychange',()=>{if(document.hidden)abortDrag();});
 document.addEventListener('contextmenu',abortDrag);
 document.addEventListener('click',e=>{
- if(!e.target.closest||fromDrag())return;
+ if(!e.target.closest||fromDrag(e))return;
  const clear=e.target.closest('.match-clear');
  if(clear){const r=rowOf(clear);if(r)setMatchAnswer(r.dataset.q,'');return;}
  const chip=e.target.closest('.topic-chip');
