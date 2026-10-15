@@ -200,9 +200,9 @@
       <div class="timer-clock" id="tm-clock" role="timer" aria-label="Thời gian còn lại">${mmss(t.remaining)}</div>
       <div class="timer-msg" id="tm-msg" aria-live="polite">${t.msg}</div>
       <div class="timer-btns">
-        <button type="button" class="btn primary" data-action="m-tstart" ${t.running ? 'disabled' : ''}>START</button>
-        <button type="button" class="btn dark" data-action="m-tpause" ${t.running ? '' : 'disabled'}>PAUSE</button>
-        <button type="button" class="btn ghost" data-action="m-treset">RESET</button></div>`.s;
+        <button type="button" class="btn plum" data-action="m-tstart" ${t.running ? 'disabled' : ''}>START</button>
+        <button type="button" class="btn ghost" data-action="m-tpause" ${t.running ? '' : 'disabled'}>PAUSE</button>
+        <button type="button" class="btn link" data-action="m-treset">RESET</button></div>`.s;
   }
   LU.actions['m-tstart'] = () => {
     const t = M.timer; if (t.running) return;
@@ -242,7 +242,7 @@
         ${M.completed ? h`<span class="badge done">✓ Đã hoàn thành — đang chỉnh sửa</span>` : h`<span class="badge in_progress">● Đang thực hiện</span>`}
         <a class="btn ghost sm back" href="#/t">← Danh sách</a></div>
       <div class="syncbar local" id="syncbar" role="status" aria-live="polite"></div>
-      <ol class="stepper" aria-label="Các bước">${STEPS.map((s, i) => h`<li><button type="button" class="step ${stepDone(i) ? 'done' : ''}" data-action="m-step" data-i="${i}" ${i === M.step ? h`aria-current="step"` : ''}><span class="n">${stepDone(i) ? '✓' : i + 1}</span><span>${s}</span></button></li>`)}</ol>
+      <ol class="stepper" aria-label="Các bước">${STEPS.map((s, i) => h`<li><button type="button" class="step ${stepDone(i) ? 'done' : ''}" data-action="m-step" data-i="${i}" ${i === M.step ? h`aria-current="step"` : ''}><span class="n">Step ${i + 1}</span><span class="sn">${s}</span></button></li>`)}</ol>
       ${M.step < 3 ? partStep(M.step) : M.step === 3 ? finalStep() : practiceStep()}
       ${navButtons()}`;
     LU.render(LU.teacherShell('home', body));
@@ -256,9 +256,9 @@
     const last = M.step === STEPS.length - 1;
     return h`<div class="mock-nav">
       ${M.step > 0 ? h`<button class="btn ghost" data-action="m-prev">← ${STEPS[M.step - 1]}</button>` : ''}
-      <span class="grow"></span>
-      ${!M.completed ? h`<button class="btn ghost" data-action="m-save">Lưu tạm</button>` : ''}
-      ${!last ? h`<button class="btn ${M.step === 3 ? 'ghost' : 'primary'}" data-action="m-next">${STEPS[M.step + 1]} →</button>` : ''}
+      <span class="grow hint">${M.step < 3 ? 'Ghi chú theo từng tiêu chí' : ''}</span>
+      ${!M.completed ? h`<button class="btn plum" data-action="m-save">Lưu tạm</button>` : ''}
+      ${!last ? h`<button class="btn primary" data-action="m-next">${STEPS[M.step + 1]} →</button>` : ''}
       ${last ? h`<button class="btn primary lg" data-action="m-finish" ${checkItems().every(x => x.ok) && !M.finishing ? '' : 'disabled'}>${M.finishing ? 'Đang lưu…' : M.completed ? 'Lưu thay đổi' : 'SAVE & FINISH'}</button>` : ''}</div>`;
   }
 
@@ -284,18 +284,17 @@
           <div class="cue"><div class="ct">${c.cueCard}</div><ul>${(c.bulletPoints || []).map(b => h`<li>${b}</li>`)}</ul></div></div>
         <div class="ex-col"><span class="ex-lbl">TIMER</span><div class="timer" id="timer"></div></div></div>`;
     }
-    const groups = questionGroups(p, c);
-    return h`<div class="exam qs">${c.topic ? h`<div class="topic sm">${c.topic}</div>` : ''}
-      ${c.examinerScript ? h`<div class="script"><span class="lbl">Examiner đọc</span>${c.examinerScript}</div>` : ''}
+    const groups = questionGroups(p, c), side = !!(c.topic || c.examinerScript), pad = n => (n < 10 ? '0' : '') + n;
+    return h`<div class="exam qs ${side ? '' : 'solo'}">${side ? h`<div class="qs-side">${c.topic ? h`<div class="topic sm">${c.topic}</div>` : ''}
+        ${c.examinerScript ? h`<div class="script"><span class="lbl">Examiner đọc</span>${c.examinerScript}</div>` : ''}</div>` : ''}
       <div class="qgroups">${groups.map(g => { let num = 0; return h`<div class="qgroup">${g.head ? h`<div class="qhead">${g.head}</div>` : ''}
-        <ol class="qlist">${g.items.map(it => { num++; return h`<li><button type="button" class="q" data-action="m-asked" data-k="${p.key}.${it.n}" aria-pressed="${!!M.asked[p.key + '.' + it.n]}"><span class="qn">${num}.</span><span class="qt">${it.q}</span></button></li>`; })}</ol></div>`; })}</div>
-      <p class="tip">Bấm vào câu hỏi để đánh dấu đã hỏi (chỉ để bạn theo dõi, không lưu).</p></div>`;
+        <ol class="qlist">${g.items.map(it => { num++; return h`<li><button type="button" class="q" data-action="m-asked" data-k="${p.key}.${it.n}" aria-pressed="${!!M.asked[p.key + '.' + it.n]}"><span class="qn">${pad(num)}</span><span class="qt">${it.q}</span></button></li>`; })}</ol></div>`; })}</div></div>`;
   }
   const NOTE_HINT = { fluency: 'hesitation ở đầu câu', vocabulary: 'lặp good / interesting', grammar: 'sai past tense', pronunciation: 'âm cuối chưa rõ' };
   function partStep(i) {
     const p = LU.PARTS[i], c = M.content && M.content[p.key], fb = M.data.parts[p.key];
-    return h`<section class="ws" aria-label="${p.label}"><div class="ws-top"><div class="ws-h"><h2>${p.label}</h2></div>${examPanel(p, c)}</div>
-      <div class="ws-bottom"><div class="ws-h"><h2>Ghi chú nhanh</h2></div>
+    return h`<section class="ws" aria-label="${p.label}"><div class="ws-top"><div class="ws-h"><h2>${p.label}</h2>${p.key !== 'part2' && c && (c.questions || []).length ? h`<span class="hint">Bấm câu hỏi để đánh dấu đã hỏi</span>` : ''}</div>${examPanel(p, c)}</div>
+      <div class="ws-bottom"><div class="ws-h"><h2>Ghi chú nhanh</h2><span class="hint">${p.label}</span></div>
         <div class="crit-grid">${LU.CRITERIA.map(cr => h`<div class="crit-col note-col"><label class="crit-h" for="fb-${p.key}-${cr.id}-note"><b>${cr.en}</b></label>
           <textarea id="fb-${p.key}-${cr.id}-note" data-input="m-fb" data-path="${p.key}.${cr.id}.note" rows="6" placeholder="vd: ${NOTE_HINT[cr.id]}">${fb[cr.id].note}</textarea></div>`)}</div></div></section>`;
   }
@@ -359,8 +358,8 @@
       ${LU.KINDS.map(k => {
         const key = cr.id + '.' + k.key, id = 'mk-' + key.replace(/\./g, '-'), list = sm[k.key] || [], val = m[k.key], have = lines(val);
         return h`<div class="fbbox ${k.key === 'positive' ? 'positive' : 'negative'}"><label for="${id}">${k.label}</label>
-          <div class="samples" role="group" aria-label="${k.label} — gợi ý nhanh">${list.map((t, n) => h`<button type="button" class="smp" data-action="m-sample" data-path="${key}" data-n="${n}" aria-pressed="${have.indexOf(t) !== -1}">${t}</button>`)}</div>
-          <textarea id="${id}" data-input="m-mkfb" data-path="${key}" rows="2" placeholder="Gõ thêm…">${val}</textarea></div>`;
+          <textarea id="${id}" data-input="m-mkfb" data-path="${key}" rows="3" placeholder="Gõ thêm…">${val}</textarea>
+          ${list.length ? h`<details class="smp-box" ${list.some(t => have.indexOf(t) !== -1) ? LU.raw('open') : ''}><summary>Gợi ý nhanh</summary><div class="samples" role="group" aria-label="${k.label} — gợi ý nhanh">${list.map((t, n) => h`<button type="button" class="smp" data-action="m-sample" data-path="${key}" data-n="${n}" aria-pressed="${have.indexOf(t) !== -1}">${t}</button>`)}</div></details>` : ''}</div>`;
       })}
       <div class="issues-box"><span class="lbl">Diagnostic issues</span><div class="issue-tags" role="group" aria-label="Issues ${cr.en}">${cr.issues.map(i => h`<button type="button" class="itag" data-action="m-itag" data-c="${cr.id}" data-i="${i.id}" aria-pressed="${m.issues.indexOf(i.id) !== -1}">${i.label}</button>`)}</div></div></div>`;
   }

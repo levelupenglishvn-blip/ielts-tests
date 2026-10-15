@@ -83,6 +83,8 @@
   const NAME = { fluency: 'Fluency & Coherence', vocabulary: 'Lexical Resource', grammar: 'Grammar', pronunciation: 'Pronunciation' };
   const WORD = { fluency: 'Fluency', vocabulary: 'Vocabulary', grammar: 'Grammar', pronunciation: 'Pronunciation' };
   const clean = v => String(v || '').split('\n').map(x => x.trim()).filter(Boolean);
+  /** Date only (dd/mm/yyyy) out of LU.fmtDate, which also carries the time. */
+  const dayOf = v => { const t = String(LU.fmtDate(v)), m = t.match(/\d{1,2}\/\d{1,2}\/\d{4}/); return m ? m[0] : t; };
   const uniqL = a => a.filter((x, i) => a.indexOf(x) === i);
 
   /** Week pills (compact). Completed weeks are buttons; the rest are inert. */
@@ -99,8 +101,10 @@
     let status = '';
     if (cur && (!d || cur.week !== d.week)) status = h`<p class="s-status">Tuần ${cur.week}: <b>${LU.stateInfo(cur).label}</b> — feedback sẽ hiện ở đây khi thầy chấm xong.</p>`;
     LU.render(shell(h`
-      <header class="fb-head"><p class="eyebrow">FEEDBACK CỦA THẦY</p><h1>${d ? 'Week ' + d.week : 'Mock Test'}</h1><p class="sub">Mock Test Feedback</p>
-        <div class="fb-meta"><span>${p.name} · ${p.completedCount}/${N} tuần</span>${weekPills(p)}</div></header>
+      <header class="fb-head"><div class="fb-ht"><p class="eyebrow">FEEDBACK CỦA THẦY${d ? ' · WEEK ' + d.week : ''}</p><h1>Mock Test Feedback</h1>
+          <p class="sub">${p.name}${d && d.completedAt ? h` <span aria-hidden="true">·</span> Chấm ngày ${dayOf(d.completedAt)}` : ''}</p></div>
+        ${d ? h`<span class="wk-of">Tuần ${d.week} / ${N}</span>` : ''}
+        <div class="fb-meta">${weekPills(p)}</div></header>
       ${status}
       ${d ? summary(d) : h`<section class="d-sec"><p class="none">Chưa có kết quả mock test nào. Khi thầy chấm xong, feedback sẽ hiện ở đây.</p></section>`}
 `));
@@ -115,29 +119,41 @@
     return uniqL(out);
   }
   function overallPanel(d) {
-    const bands = LU.CRITERIA.map(c => d.marking[c.id].band), tn = String(d.teacherNote || '').trim();
-    return h`<div class="ov-box"><div class="ov-score"><span class="ov-big">${LU.fmtBand(d.overall)}</span><span class="ov-lbl">Overall Band</span></div>
-      <p class="ov-crit">${LU.CRITERIA.map((c, i) => h`<span class="oc">${WORD[c.id]} <b>${LU.fmtCrit(bands[i])}</b></span>`)}</p>
-      ${d.completedAt ? h`<p class="hint">Chấm ngày ${LU.fmtDate(d.completedAt)}</p>` : ''}</div>
-      ${tn ? h`<div class="t-note-box"><h3>Nhận xét của thầy</h3><p class="note-p">${tn}</p></div>` : ''}`;
+    const bands = LU.CRITERIA.map(c => d.marking[c.id].band), tn = String(d.teacherNote || '').trim(), rec = recFor(d.week);
+    const crits = uniqL([].concat.apply([], rec.map(a => critIds(P.get(a.moduleId))))).map(id => NAME[id]);
+    return h`<div class="pn-h"><h2>Overall</h2><span class="hint">Week ${d.week} · IELTS Speaking</span></div>
+      <div class="ov-box"><div class="ov-score"><span class="ov-lbl">Overall Band</span><span class="ov-big">${LU.fmtBand(d.overall)}</span></div>
+      <p class="ov-crit">${LU.CRITERIA.map((c, i) => h`<span class="oc"><span class="oc-n">${NAME[c.id]}</span><b>${LU.fmtCrit(bands[i])}</b></span>`)}</p></div>
+      <div class="ov-two"><div class="ov-fb">${tn ? h`<div class="t-note-box"><p class="kick">FEEDBACK</p><h3>Nhận xét của thầy</h3><p class="note-p">${tn}</p></div>` : h`<div class="t-note-box"><p class="kick">FEEDBACK</p><p class="none">Thầy chưa viết nhận xét chung cho tuần này.</p></div>`}
+          <p class="ov-links"><button type="button" class="linkbtn" data-action="s-tab" data-tab="strengths">Xem Strengths <span aria-hidden="true">→</span></button><button type="button" class="linkbtn plum" data-action="s-tab" data-tab="improvements">Xem Improvements <span aria-hidden="true">→</span></button></p></div>
+        ${nextSection(d, S.prog)}</div>
+      ${rec.length ? h`<div class="ov-assign"><div><h3>Bài thầy giao</h3><p class="hint">${rec.length} bài${crits.length ? ' · ' + crits.join(', ') : ''} · Tuần ${d.week}</p></div>
+        <button type="button" class="btn plum" data-action="s-tab" data-tab="plan">Xem Practice Plan <span aria-hidden="true">→</span></button></div>` : ''}`;
   }
+  /** Criteria that have teacher-assigned modules this week (from the module's own metadata) → where a "Luyện …" button can honestly go. */
+  const assignedFor = (d, id) => recFor(d.week).filter(a => { const m = P.get(a.moduleId); return !!m && P.launchable(m) && critIds(m).indexOf(id) !== -1; });
   function strengthsPanel(d) {
     const g = LU.CRITERIA.map(c => ({ c: c, items: linesFor(d, c.id, 'positive') })).filter(x => x.items.length);
-    if (!g.length) return h`<p class="none">Thầy chưa ghi điểm mạnh cụ thể cho tuần này.</p>`;
-    return h`${g.map(x => h`<div class="fb-g pos"><h4>${NAME[x.c.id]}</h4><ul>${x.items.map(t => h`<li>${t}</li>`)}</ul></div>`)}`;
+    const head = h`<div class="pn-h"><div><h2>Strengths</h2><p class="hint">Điểm mạnh được thầy ghi nhận</p></div><span class="pn-chip pos">Điểm mạnh</span></div>`;
+    if (!g.length) return h`${head}<p class="none">Thầy chưa ghi điểm mạnh cụ thể cho tuần này.</p>`;
+    return h`${head}<div class="fb-list">${g.map(x => h`<div class="fb-g pos"><h4>${NAME[x.c.id]}</h4><ul>${x.items.map(t => h`<li>${t}</li>`)}</ul></div>`)}</div>
+      <div class="pn-foot"><span class="hint">Week ${d.week} · Mock Test Feedback</span><button type="button" class="btn plum" data-action="s-tab" data-tab="improvements">Xem Improvements <span aria-hidden="true">→</span></button></div>`;
   }
   function improvementsPanel(d) {
-    const g = LU.CRITERIA.map(c => ({ c: c, items: linesFor(d, c.id, 'improvement'), tags: (d.marking[c.id].issues || []).map(i => LU.ISSUE_LABEL[c.id + '.' + i] || i) })).filter(x => x.items.length || x.tags.length);
-    if (!g.length) return h`<p class="none">Thầy chưa ghi điểm cần cải thiện cụ thể cho tuần này.</p>`;
-    return h`${g.map(x => h`<div class="fb-g neg" data-criterion="${x.c.id}"><div class="fb-g-head"><h4>${NAME[x.c.id]}</h4>
-      <button type="button" class="btn ghost sm criterion-practice" data-action="s-practice-context" data-ui="practice-request" data-criterion="${x.c.id}" data-week="${d.week}">Luyện ${x.c.id === 'fluency' ? 'FC&C' : WORD[x.c.id]} <span aria-hidden="true">→</span></button></div>
-      ${x.items.length ? h`<ul>${x.items.map(t => h`<li>${t}</li>`)}</ul>` : ''}
-      ${x.tags.length ? h`<div class="tags" aria-label="Vấn đề thầy ghi nhận">${x.tags.map(t => h`<span class="tag-i">${t}</span>`)}</div>` : ''}</div>`)}`;
+    const g = LU.CRITERIA.map(c => ({ c: c, items: linesFor(d, c.id, 'improvement'), tags: (d.marking[c.id].issues || []).map(i => LU.ISSUE_LABEL[c.id + '.' + i] || i), n: assignedFor(d, c.id).length })).filter(x => x.items.length || x.tags.length);
+    const pri = g.filter(x => x.n).map(x => NAME[x.c.id]);
+    const head = h`<div class="pn-h"><div><h2>Improvements</h2>${pri.length ? h`<p class="hint">Ưu tiên luyện tuần này: ${pri.join(', ')}</p>` : h`<p class="hint">Những điểm thầy muốn bạn cải thiện</p>`}</div><span class="pn-chip neg">Cần cải thiện</span></div>`;
+    if (!g.length) return h`${head}<p class="none">Thầy chưa ghi điểm cần cải thiện cụ thể cho tuần này.</p>`;
+    return h`${head}<div class="fb-list">${g.map(x => h`<div class="fb-g neg" data-criterion="${x.c.id}"><h4>${NAME[x.c.id]}${x.n ? h`<span class="tag-g">Thầy ưu tiên</span>` : ''}</h4>
+      <div class="fb-gb">${x.items.length ? h`<ul>${x.items.map(t => h`<li>${t}</li>`)}</ul>` : ''}
+      ${x.tags.length ? h`<div class="tags" aria-label="Vấn đề thầy ghi nhận">${x.tags.map(t => h`<span class="tag-i">${t}</span>`)}</div>` : ''}
+      ${x.n ? h`<div class="fb-act"><button type="button" class="btn plum sm criterion-practice" data-action="s-practice-context" data-ui="practice-request" data-criterion="${x.c.id}" data-week="${d.week}">Luyện ${x.c.id === 'fluency' ? 'FC&C' : WORD[x.c.id]} <span aria-hidden="true">→</span></button><span class="hint">${x.n} bài thầy giao</span></div>` : ''}</div></div>`)}</div>
+      <div class="pn-foot"><span class="hint">Bài tập được giao nằm trong Practice Plan.</span><button type="button" class="btn plum" data-action="s-tab" data-tab="plan">Xem Practice Plan <span aria-hidden="true">→</span></button></div>`;
   }
   const TABS = [{ id: 'overall', label: 'OVERALL' }, { id: 'strengths', label: 'STRENGTHS' }, { id: 'improvements', label: 'IMPROVEMENTS' }, { id: 'plan', label: 'PRACTICE PLAN' }];
   function summary(d) {
     const tab = TABS.some(t => t.id === S.tab) ? S.tab : 'overall';
-    const panel = tab === 'strengths' ? strengthsPanel(d) : tab === 'improvements' ? improvementsPanel(d) : tab === 'plan' ? todoSection(d) : h`${overallPanel(d)}${nextSection(d, S.prog)}`;
+    const panel = tab === 'strengths' ? strengthsPanel(d) : tab === 'improvements' ? improvementsPanel(d) : tab === 'plan' ? todoSection(d) : overallPanel(d);
     return h`<section class="fsum" aria-label="Feedback Summary"><div class="seg" role="tablist" aria-label="Feedback Summary">${TABS.map(t => h`<button type="button" role="tab" id="tab-${t.id}" class="seg-b ${tab === t.id ? 'on' : ''}" data-action="s-tab" data-tab="${t.id}" aria-selected="${tab === t.id}" aria-controls="tabpanel">${t.label}</button>`)}</div>
       <div class="seg-panel ${tab}" id="tabpanel" role="tabpanel" aria-labelledby="tab-${tab}">${panel}</div></section>`;
   }
@@ -188,7 +204,7 @@
       <div class="pl-main"><h4 class="pl-title">${href ? h`<a href="${href}">${m.title}</a>` : (m ? m.title : a.moduleId)}${match ? h` <span class="tag pl-flag">Phù hợp với ${WORD[S.focus]}</span>` : ''}</h4>
         <p class="pl-crit" data-practice-field="criterion">${ids.length ? ids.map(id => NAME[id]).join(' · ') : '—'}</p>
         <p class="pl-state" data-practice-field="status"><b>${info.state}</b>${info.detail ? h` <span>· ${info.detail}</span>` : ''}</p></div>
-      ${info.action && href ? h`<a class="btn ${info.cls === 'done' ? 'ghost' : 'primary'} sm pl-act" href="${href}" data-practice-field="action">${info.action}</a>` : ''}</li>`;
+      ${info.action && href ? h`<a class="btn plum pl-act" href="${href}" data-practice-field="action">${info.action}</a>` : ''}</li>`;
   }
   function focusNote(rec) {
     if (!S.focus) return '';
@@ -200,8 +216,8 @@
   /* ---------------------------------------------------------------- PRACTICE PLAN: teacher-assigned work first, then (quieter) Extra Practice + Recommended for you */
   function todoSection(d) {
     const rec = recFor(d.week), doneN = rec.filter(a => a.status === 'completed').length, legacy = (d.practice || []);
-    return h`<section class="todo-sec" data-ui="practice-plan" aria-label="Practice Plan"><h2>PRACTICE PLAN</h2>
-      <div class="pr-sec pr-main" id="sec-rec" aria-label="Bài thầy giao"><div class="pr-h"><h3>Bài thầy giao · Tuần ${d.week}</h3>${rec.length ? h`<span class="pr-count"><b>${doneN} / ${rec.length}</b> bài đã hoàn thành</span>` : ''}</div>
+    return h`<section class="todo-sec" data-ui="practice-plan" aria-label="Practice Plan"><h2>Practice Plan</h2>
+      <div class="pr-sec pr-main" id="sec-rec" aria-label="Bài thầy giao"><div class="pr-h"><h3>Bài thầy giao <span class="pr-wk">· Tuần ${d.week}</span></h3>${rec.length ? h`<span class="pr-count"><b>${doneN} / ${rec.length}</b> bài đã hoàn thành</span>` : ''}</div>
         <p class="hint">Làm các bài này trước. Mỗi dòng cho biết bạn đang ở bước nào và nút để làm tiếp.</p>
         ${focusNote(rec)}
         ${rec.length ? h`<div class="pbar" role="progressbar" aria-valuemin="0" aria-valuemax="${rec.length}" aria-valuenow="${doneN}" aria-label="Số bài thầy giao đã hoàn thành"><i style="width:${Math.round(doneN / rec.length * 100)}%"></i></div><ul class="pl-list">${rec.map(planRow)}</ul>` : h`<p class="none">Thầy chưa giao module nào cho tuần này.</p>`}
@@ -214,8 +230,8 @@
     const ok = d.eligibility === 'eligible', nx = d.week < p.totalWeeks ? p.weeks[d.week] : null;
     const en = String(d.eligibilityNote || '').trim();
     return h`<section class="next ${ok ? 'ok' : 'no'}" aria-label="Next mock"><h2>NEXT MOCK</h2>
-      <p class="nx-kicker">${ok ? 'Eligible for next mock' : 'Not ready for next mock'}</p>
       <p class="nx-badge"><span class="badge ${ok ? 'done' : 'not_eligible'}">${ok ? LU.MSG.eligYes : LU.MSG.eligNo}</span></p>
+      <p class="nx-kicker">${ok ? 'Eligible for next mock' : 'Not ready for next mock'}</p>
       ${en ? h`<p class="note-p nx-note">${en}</p>` : ''}
       ${nx ? h`<p class="hint">Week ${nx.week}: ${LU.stateInfo(nx).label}</p>` : ''}</section>`;
   }
@@ -232,7 +248,7 @@
     return h`<div class="pr-sec pr-low" aria-label="Extra Practice"><div class="pr-h"><h3>Extra Practice</h3></div>
       <p class="hint">Tự chọn thêm để luyện — không bắt buộc, không thuộc tuần nào.</p>
       ${ex.length ? h`<ul class="pcards">${ex.map(a => cardFor(a.moduleId, null, a.status, planFrom()))}</ul>` : h`<p class="none">Bạn chưa luyện module tự chọn nào.</p>`}
-      <div class="row sp"><a class="btn ghost sm" href="${base()}/practice">Duyệt thư viện luyện tập</a></div>
+      <div class="row sp"><a class="btn plum" href="${base()}/practice">Duyệt thư viện luyện tập</a></div>
       ${recommendBlock()}</div>`;
   }
   /** "Recommended for you" lives inside Extra Practice: a system suggestion, NOT a teacher assignment. */

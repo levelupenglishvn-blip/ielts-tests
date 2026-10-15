@@ -13,6 +13,11 @@
  * Host (student.js) calls  LU.guided.mount(module, { assignment: () => a|null, preview: bool, step: async stepId => assignment,
  *                                                    back: href, backLabel: 'Về Practice Plan', store: {get,set,remove}|null })
  * and puts the returned markup in the page. Clicks come back through LU.actions['g-…'].
+ *
+ * v2.6 (design + sample answers): the step bar is "Step n" badge + name; the control bar right under it holds the position, "Đã thực hành"
+ * and the next button; Use/Reuse questions can open a hidden-by-default sample answer (m.useSamples / m.reuseSamples, **bold** = target word).
+ * Opening a sample is pure view state: it is never saved, never counts as progress and never gates anything.
+ * "Đã thực hành" (CONFIRM_ITEMS) is a UI-only pace gate for the NEXT button inside Learn/Use/Reuse; the server (assignment.steps) still decides what is done.
  */
 (function () {
   'use strict';
@@ -23,7 +28,8 @@
     { id: 'learn', label: 'Learn' }, { id: 'use', label: 'Use' }, { id: 'reuse', label: 'Reuse' },
     { id: 'retrieve', label: 'Retrieve' }, { id: 'finished', label: 'Finished' }
   ];
-  const X = { id: '', sig: '', view: '', gi: 0, ui: { use: 0, reuse: 0 }, hint: {}, sel: -1, ok: {}, order: [], note: '', wrong: -1,
+  const CONFIRM_ITEMS = true;      // false → no "Đã thực hành" gate (the next button is always available)
+  const X = { id: '', sig: '', view: '', gi: 0, ui: { use: 0, reuse: 0 }, hint: {}, cf: { learn: {}, use: {}, reuse: {} }, smp: { use: {}, reuse: {} }, sel: -1, ok: {}, order: [], note: '', wrong: -1,
     host: null, m: null, busy: false, saveFailed: false, qi: 0, ans: {}, justSaved: false };
 
   /** Small non-cryptographic string hash (cyrb53). Used for a content fingerprint and, by student.js, for a storage namespace. */
@@ -80,7 +86,7 @@
     const low = t.toLowerCase(), lw = w.toLowerCase(), isL = c => c !== undefined && /[A-Za-z0-9À-ɏ]/.test(c);
     for (let i = low.indexOf(lw); i !== -1; i = low.indexOf(lw, i + 1)) {
       if (isL(t[i - 1]) || isL(t[i + w.length])) continue;
-      return h`${t.slice(0, i)}<b class="g-hit">${t.slice(i, i + w.length)}</b>${t.slice(i + w.length)}`;
+      return h`${t.slice(0, i)}<b class="g-hit g-tw">${t.slice(i, i + w.length)}</b>${t.slice(i + w.length)}`;
     }
     return h`${t}`;
   }
@@ -96,7 +102,7 @@
   }
   function save() {
     const st = X.host && X.host.store; if (!st || !X.m) return;
-    try { st.set(JSON.stringify({ v: 1, sig: X.sig, view: X.view, gi: X.gi, ui: X.ui, qi: X.qi, ans: X.ans })); } catch (e) { /* storage is optional */ }
+    try { st.set(JSON.stringify({ v: 1, sig: X.sig, view: X.view, gi: X.gi, ui: X.ui, qi: X.qi, ans: X.ans, cf: X.cf })); } catch (e) { /* storage is optional */ }
   }
   /** Take the saved view state back only if it still fits THIS content. Anything odd → ignored (and removed). */
   function restore(m) {
@@ -109,6 +115,14 @@
     const pages = isGrouped(m) ? m.learnGroups.length : 1; if (int(o.gi, 0, pages - 1)) X.gi = o.gi;
     const u = o.ui && typeof o.ui === 'object' ? o.ui : {};
     ['use', 'reuse'].forEach(k => { if (int(u[k], 0, Math.max(0, A(m[k]).length - 1))) X.ui[k] = u[k]; });
+    /* "Đã thực hành" marks: taken back only as valid indexes; positions reached by an older version (no marks saved) count as done for the items before them */
+    const cfo = o.cf && typeof o.cf === 'object' ? o.cf : {};
+    const lens = { learn: pages, use: A(m.use).length, reuse: A(m.reuse).length };
+    Object.keys(lens).forEach(k => {
+      const src = cfo[k] && typeof cfo[k] === 'object' ? cfo[k] : {};
+      Object.keys(src).forEach(i => { if (/^\d{1,3}$/.test(i) && +i < lens[k] && src[i] === true) X.cf[k][+i] = true; });
+      const pos = k === 'learn' ? X.gi : X.ui[k]; for (let i = 0; i < pos; i++) X.cf[k][i] = true;
+    });
     if (isQuiz(m) && o.ans && typeof o.ans === 'object' && int(o.qi, 0, m.quiz.length)) {
       const keys = Object.keys(o.ans);
       let good = keys.every(k => /^\d{1,3}$/.test(k) && +k < m.quiz.length && A(m.quiz[+k].options).some(op => op.id === o.ans[k]) && +k <= o.qi);
@@ -117,14 +131,15 @@
     }
   }
   function reset(m, host) {
-    X.id = m.id; X.m = m; X.host = host; X.sig = sigOf(m); X.view = ''; X.gi = 0; X.ui = { use: 0, reuse: 0 }; X.hint = {};
+    X.id = m.id; X.m = m; X.host = host; X.sig = sigOf(m); X.view = ''; X.gi = 0; X.ui = { use: 0, reuse: 0 }; X.hint = {}; X.cf = { learn: {}, use: {}, reuse: {} }; X.smp = { use: {}, reuse: {} };
     X.sel = -1; X.note = ''; X.wrong = -1; X.busy = false; X.saveFailed = false; X.justSaved = false;
     X.order = shuffle(A(m.retrieve).length, true); X.ok = {}; X.qi = 0; X.ans = {};
     restore(m);
   }
   /** A finished step starts from its beginning next time (a completed Retrieve attempt is over). */
   function clearStep(step) {
-    if (step === 'learn') X.gi = 0; else if (step === 'use') X.ui.use = 0; else if (step === 'reuse') { X.ui.reuse = 0; X.hint = {}; }
+    X.smp = { use: {}, reuse: {} };
+    if (step === 'learn') { X.gi = 0; X.cf.learn = {}; } else if (step === 'use') { X.ui.use = 0; X.cf.use = {}; } else if (step === 'reuse') { X.ui.reuse = 0; X.hint = {}; X.cf.reuse = {}; }
     else if (step === 'retrieve') { X.qi = 0; X.ans = {}; X.ok = {}; }
   }
 
@@ -132,48 +147,57 @@
   const eyebrowOf = m => [LU.practice.groupLabel(m.category), m.subcategory ? LU.practice.subLabel(m.category, m.subcategory) : ''].filter(Boolean).join(' · ');
   const header = m => h`<header class="g-hd"><p class="eyebrow">${eyebrowOf(m)}</p><h1>${m.title}</h1>${m.focus ? h`<p class="g-focus">${m.focus}</p>` : ''}</header>`;
 
-  /** Four steps + a small end marker. Finished is where you land, not a fifth task: it has no number and is not counted. */
+  /** Five steps: a small "Step n" badge + the step name outside it. Finished is where you land (it has a badge too but is not one of the four tasks).
+   *  Available steps (done / current / earlier) read darker than steps that are not open yet; the step on screen is underlined. */
   function bar() {
     const c = curIndex(), v = viewIndex(), prev = X.host.preview, all = isDone();
     return h`<nav class="gs ${prev ? 'is-prev' : ''}" aria-label="Tiến độ luyện tập: đã xong ${prev ? 0 : doneCount(asg())} trên 4 bước"><ol>${STEPS.map((s, i) => {
       const end = i === 4, done = !prev && (end ? all : (all || i < c)), cur = !prev && !all && i === c, ok = unlocked(i);
-      const mark = end ? (done ? '✓' : '') : done ? '✓' : String(i + 1);
-      return h`<li class="gs-i ${end ? 'gs-end' : ''} ${done ? 'done' : cur ? 'cur' : 'todo'} ${i === v ? 'view' : ''}"><button type="button" class="gs-b" data-action="g-view" data-step="${s.id}" ${ok ? '' : 'disabled'} ${i === v ? LU.raw('aria-current="step"') : ''}>
-        <span class="gs-m" aria-hidden="true">${mark}</span><span class="gs-l">${s.label}</span><span class="sr-only">${done ? ' — đã xong' : cur ? ' — đang làm' : ok ? '' : ' — chưa mở'}</span></button></li>`;
+      return h`<li class="gs-i ${end ? 'gs-end' : ''} ${done ? 'done' : cur ? 'cur' : 'todo'} ${ok ? 'open' : 'shut'} ${i === v ? 'view' : ''}"><button type="button" class="gs-b" data-action="g-view" data-step="${s.id}" ${ok ? '' : 'disabled'} ${i === v ? LU.raw('aria-current="step"') : ''}>
+        <span class="gs-m">Step ${i + 1}</span><span class="gs-l">${s.label}</span><span class="sr-only">${done ? ' — đã xong' : cur ? ' — đang làm' : ok ? '' : ' — chưa mở'}</span></button></li>`;
     })}</ol></nav>`;
   }
-  /** Panel heading: "Learn · Nhóm 1/5". Focus lands here when the position changes (screen readers hear the new position). */
-  const head = (label, pos, ins) => h`<header class="g-ph"><h2 id="g-h" tabindex="-1">${label}${pos ? h` <span class="g-pos">· ${pos}</span>` : ''}</h2>${ins ? h`<p class="g-ins">${ins}</p>` : ''}</header>`;
+  /** Control bar right under the step bar: step name + position on the left, "Đã thực hành" and the next button on the right (same place on every screen).
+   *  Focus lands on the step name when the position changes (screen readers hear the new position). */
+  const head = (label, pos, ins, actions) => h`<header class="g-ph"><div class="g-ctl"><h2 id="g-h" tabindex="-1">${label}${pos ? h` <span class="g-pos">${pos}</span>` : ''}</h2>${actions ? h`<div class="g-ctl-a">${actions}</div>` : ''}</div>${ins ? h`<p class="g-ins">${ins}</p>` : ''}</header>`;
   const btn = (label, action, o) => { o = o || {}; return h`<button type="button" class="btn ${o.cls || 'ghost'}" data-action="${action}" ${o.attrs ? LU.raw(o.attrs) : ''} ${o.disabled ? 'disabled' : ''}>${label}</button>`; };
-  const gap = h`<span class="g-gap"></span>`;
-  /** The finishing button of a step. Teacher preview shows a hint instead; a step that is already done shows a way back to where the student is. */
-  function completeBtn(label, step) {
+  /** UI-only pace gate: while a student works through a step, "next" opens after "Đã thực hành" on the item. Not used in teacher preview or when looking back at a finished step. */
+  const gated = () => CONFIRM_ITEMS && !X.host.preview && !reviewing() && !isDone();
+  const isConf = (k, i) => !gated() || X.cf[k][i] === true;
+  /** "Đã thực hành" (green) → "✓ Đã thực hành" (done). Nothing is shown when the gate is off. */
+  const confirmBtn = (k, i) => !gated() ? '' : X.cf[k][i] ? h`<button type="button" class="btn conf" disabled aria-pressed="true">✓ Đã thực hành</button>`
+    : h`<button type="button" class="btn primary" data-action="g-conf" data-k="${k}" data-i="${i}">Đã thực hành</button>`;
+  /** next / previous item buttons: green when open, muted and disabled until the item is confirmed */
+  const nextBtn = (label, action, ok, attrs) => btn(label, action, { cls: ok ? 'primary' : 'ghost', attrs: 'data-role="next" ' + (attrs || ''), disabled: !ok });
+  /** The finishing button of a step ("Hoàn thành Step n →"). Teacher preview shows a hint instead; a step that is already done shows a way back to where the student is. */
+  function completeBtn(label, step, ok) {
     if (X.host.preview) return '';
-    if (reviewing()) return btn(curIndex() === 4 ? 'Về màn hình hoàn thành' : 'Về bước hiện tại', 'g-view', { attrs: 'data-step="' + STEPS[curIndex()].id + '"' });
-    return btn(label, 'g-next', { cls: 'primary', attrs: 'data-step="' + step + '"', disabled: X.busy });
+    if (reviewing()) return btn(curIndex() === 4 ? 'Về màn hình hoàn thành' : 'Về bước hiện tại', 'g-view', { cls: 'primary', attrs: 'data-step="' + STEPS[curIndex()].id + '" data-role="next"' });
+    const open = ok !== false && !X.busy;
+    return btn(label, 'g-next', { cls: open ? 'primary' : 'ghost', attrs: 'data-step="' + step + '" data-role="next"', disabled: !open });
   }
   const previewHint = label => X.host.preview ? h`<p class="hint g-prev">Xem trước — học viên bấm “${label}” để sang bước tiếp theo.</p>` : '';
-  const nav = (left, right) => h`<div class="g-nav">${left || gap}${right || ''}</div>`;
+  const stepLabel = (n) => 'Hoàn thành Step ' + n + ' →';
 
   /* ---- LEARN: one group at a time ---- */
   function learnGroupsPanel(m) {
     const gs = m.learnGroups, n = gs.length, i = Math.min(Math.max(0, X.gi), n - 1), g = gs[i], last = i === n - 1;
-    const notes = A(m.learnNotes);
-    return h`${head('Learn', 'Nhóm ' + (i + 1) + '/' + n, i === 0 ? m.learnInstruction : '')}
-      <section class="g-grp" aria-labelledby="g-gh"><h3 class="g-gh" id="g-gh"><span class="g-gl">${g.id}</span><span class="g-gt">${g.title}</span>${g.titleVi ? h`<span class="g-gv">${g.titleVi}</span>` : ''}</h3>
+    const notes = A(m.learnNotes), ok = isConf('learn', i);
+    const actions = h`${i > 0 ? btn('← Nhóm trước', 'g-gprev') : ''}${confirmBtn('learn', i)}${last ? completeBtn(stepLabel(1), 'learn', ok) : nextBtn('Nhóm tiếp theo →', 'g-gnext', ok)}`;
+    return h`${head('Learn', '', i === 0 ? m.learnInstruction : '', actions)}
+      <section class="g-grp" aria-labelledby="g-gh"><h3 class="g-gh" id="g-gh"><span class="g-gp">Nhóm ${i + 1}/${n}</span><span class="g-gt">${g.title}</span>${g.titleVi ? h`<span class="g-gv">${g.titleVi}</span>` : ''}</h3>
         <table class="gt g-gtab"><thead><tr><th scope="col">Word</th><th scope="col">Meaning</th><th scope="col">Example</th></tr></thead>
-          <tbody>${A(g.items).map(it => h`<tr><th scope="row" data-l="Word"><b>${it.word}</b></th><td data-l="Meaning">${it.meaning}</td><td data-l="Example" class="gt-ex">${emph(it.example, it.word)}</td></tr>`)}</tbody></table>
+          <tbody>${A(g.items).map(it => h`<tr><th scope="row" data-l="Word"><b class="g-tw">${it.word}</b></th><td data-l="Meaning" class="gt-mean">${it.meaning}</td><td data-l="Example" class="gt-ex">${emph(it.example, it.word)}</td></tr>`)}</tbody></table>
         ${g.note ? h`<p class="g-gn"><b>Lưu ý:</b> ${g.note}</p>` : ''}</section>
       ${last && notes.length ? h`<details class="g-dis"><summary>Phân biệt cách dùng</summary><ul class="g-notes">${notes.map(t => h`<li>${t}</li>`)}</ul></details>` : ''}
-      ${nav(i > 0 ? btn('← Nhóm trước', 'g-gprev') : '', last ? completeBtn('Hoàn thành Learn →', 'learn') : btn('Nhóm tiếp theo →', 'g-gnext', { cls: 'dark' }))}
-      ${last ? previewHint('Hoàn thành Learn →') : ''}`;
+      ${last ? previewHint(stepLabel(1)) : ''}`;
   }
   function learnPanel(m) {
     if (isGrouped(m)) return learnGroupsPanel(m);
-    return h`${head('Learn', '', m.learnInstruction || 'Learn natural alternatives to words you may use too often.')}
+    return h`${head('Learn', '', m.learnInstruction || 'Learn natural alternatives to words you may use too often.', completeBtn(stepLabel(1), 'learn'))}
       <table class="gt"><thead><tr><th scope="col">You might say</th><th scope="col">More unique</th><th scope="col">Meaning</th><th scope="col">Example</th></tr></thead>
         <tbody>${A(m.learn).map(r => h`<tr><td data-l="You might say">${A(r.basic).join(' / ')}</td><th scope="row" data-l="More unique"><b>${r.unique}</b></th><td data-l="Meaning">${r.meaning}</td><td data-l="Example" class="gt-ex">${r.example}</td></tr>`)}</tbody></table>
-      ${nav('', completeBtn('Hoàn thành Learn →', 'learn'))}${previewHint('Hoàn thành Learn →')}`;
+      ${previewHint(stepLabel(1))}`;
   }
 
   /* ---- USE / REUSE: one question at a time ---- */
@@ -181,17 +205,27 @@
     const body = isGrouped(m) ? m.learnGroups.map(g => h`<p><b>${g.title}</b> <span>${A(g.items).map(it => it.word).join(' · ')}</span></p>`) : h`<p>${allWords(m).join(' · ')}</p>`;
     return h`<details class="g-all"><summary>Xem toàn bộ từ đã học</summary><div class="g-allb">${body}</div></details>`;
   }
+  /** "**word**" → the word in the plum treatment. Pure string slicing; every piece goes through the escaping template. */
+  function sampleText(t) {
+    const parts = String(t == null ? '' : t).split('**');
+    return h`${parts.map((p, k) => k % 2 ? h`<b class="g-tw">${p}</b>` : h`${p}`)}`;
+  }
+  const chips = words => h`<span class="g-chips">${words.map(w => h`<span class="g-chip g-tw">${w}</span>`)}</span>`;
   function askPanel(m, key, label, ins, doneLabel, step) {
     const qs = A(m[key]), n = qs.length;
-    if (!n) return h`${head(label, '', ins)}${nav('', completeBtn(doneLabel, step))}${previewHint(doneLabel)}`;
+    if (!n) return h`${head(label, '', ins, completeBtn(doneLabel, step))}${previewHint(doneLabel)}`;
     const i = Math.min(Math.max(0, X.ui[key]), n - 1), last = i === n - 1, words = hintsFor(m, key, i), isUse = key === 'use', open = !isUse && !!X.hint[i];
-    return h`${head(label, 'Câu ' + (i + 1) + '/' + n, ins)}
+    const ok = isConf(key, i), sample = A(m[key + 'Samples'])[i], shown = !!sample && !!X.smp[key][i], sid = 'g-smp-' + key + '-' + i;
+    const actions = h`${i > 0 ? btn('← Câu trước', 'g-qprev', { attrs: 'data-key="' + key + '"' }) : ''}${confirmBtn(key, i)}${last ? completeBtn(doneLabel, step, ok) : nextBtn('Câu tiếp theo →', 'g-qgo', ok, 'data-key="' + key + '"')}`;
+    const hintBox = h`<div class="g-hint"><span class="lbl">Gợi ý</span>${chips(words)}</div>${allWordsBlock(m)}`;
+    const sampleBtn = sample ? btn(shown ? 'Hide sample answer' : 'View sample answer', 'g-sample', { cls: 'ghost sm', attrs: 'data-key="' + key + '" data-i="' + i + '" aria-expanded="' + shown + '" aria-controls="' + sid + '"' }) : '';
+    return h`${head(label, 'Câu ' + (i + 1) + '/' + n, ins, actions)}
       <section class="g-ask"><p class="g-aq">${qLines(qs[i])}</p>
-        ${isUse ? h`<p class="g-hint"><span class="lbl">Gợi ý</span> ${words.join(' · ')}</p>${allWordsBlock(m)}`
-          : h`<div class="g-need">${btn(open ? 'Ẩn gợi ý' : 'Cần gợi ý?', 'g-hint', { attrs: 'data-i="' + i + '" aria-expanded="' + open + '" aria-controls="g-hintbox"' })}</div>
-            <div id="g-hintbox" ${open ? '' : 'hidden'}><p class="g-hint"><span class="lbl">Gợi ý</span> ${words.join(' · ')}</p>${allWordsBlock(m)}</div>`}
+        ${isUse ? hintBox : h`<div class="g-need">${btn(open ? 'Ẩn gợi ý' : 'Cần gợi ý?', 'g-hint', { cls: 'ghost sm', attrs: 'data-i="' + i + '" aria-expanded="' + open + '" aria-controls="g-hintbox"' })}</div>
+            <div id="g-hintbox" ${open ? '' : 'hidden'}>${hintBox}</div>`}
+        ${sample ? h`<div class="g-need g-smpb">${sampleBtn}</div>
+          <div id="${sid}" class="g-sample" ${shown ? '' : 'hidden'}>${shown ? h`<span class="lbl">Sample answer</span><p>${sampleText(sample)}</p><p class="g-snote">Chỉ để tham khảo — không phải đáp án duy nhất.</p>` : ''}</div>` : ''}
       </section>
-      ${nav(i > 0 ? btn('← Câu trước', 'g-qprev', { attrs: 'data-key="' + key + '"' }) : '', last ? completeBtn(doneLabel, step) : btn('Câu tiếp theo →', 'g-qgo', { cls: 'dark', attrs: 'data-key="' + key + '"' }))}
       ${last ? previewHint(doneLabel) : ''}`;
   }
 
@@ -206,7 +240,7 @@
       </div>
       <p class="g-count" role="status" aria-live="polite"><b>${n} / ${m.retrieve.length}</b> matched${X.note ? h` · <span class="${X.wrong !== -1 ? 'g-bad' : ''}">${X.note}</span>` : ''}</p>
       ${X.host.preview ? h`<p class="hint g-prev">Xem trước — học viên bấm chọn từ rồi chọn nghĩa; khi đúng cả ${m.retrieve.length} cặp, module tự hoàn thành.</p>` : ''}
-      ${!done && !X.host.preview && solved() && X.saveFailed ? h`<div class="g-nav">${gap}<button type="button" class="btn primary" data-action="g-save" ${X.busy ? 'disabled' : ''}>Lưu kết quả</button></div>` : ''}`;
+      ${!done && !X.host.preview && solved() && X.saveFailed ? h`<div class="g-nav"><span class="g-gap"></span><button type="button" class="btn primary" data-action="g-save" ${X.busy ? 'disabled' : ''}>Lưu kết quả</button></div>` : ''}`;
   }
 
   /* ---- RETRIEVE (multiple choice): one question at a time; answer + explanation right after; score of THIS attempt; retry; no pass mark ---- */
@@ -228,21 +262,21 @@
     }
     if (X.qi >= n) {                                                              // result of this attempt
       const sc = score(), missed = qz.map((q, i) => [q, i]).filter(p => X.ans[p[1]] !== p[0].answer);
-      return h`${head('Retrieve', 'Kết quả')}
+      return h`${head('Retrieve', 'Kết quả', '', h`${btn('Làm lại', 'g-qretry')}${completeBtn(stepLabel(4), 'retrieve')}`)}
         <p class="g-score" role="status"><mark>Đúng ${sc}/${n} câu trong lượt này</mark></p>
         <p class="hint g-sc-note">Đây chỉ là kết quả của lượt luyện này, không phải band IELTS hay điểm Speaking.</p>
         ${missed.length ? h`<section class="g-miss"><h3 class="g-gh"><span class="g-gt">Câu cần xem lại</span><span class="g-gv">${missed.length} câu — bấm từng câu để xem đáp án</span></h3>
           <ul class="g-ml">${missed.map(p => h`<li><details><summary><span class="g-mn">Câu ${p[1] + 1}</span><span class="g-mp">${p[0].prompt}</span></summary>
             <div class="g-mb"><p class="g-qp">${p[0].prompt}</p>${verdict(p[0], X.ans[p[1]])}</div></details></li>`)}</ul></section>` : h`<p class="g-allok">Bạn trả lời đúng tất cả các câu.</p>`}
-        ${nav(btn('Làm lại', 'g-qretry'), completeBtn('Hoàn thành Retrieve →', 'retrieve'))}`;
+        `;
     }
     const q = qz[X.qi], a = X.ans[X.qi], answered = a !== undefined;
-    return h`${head('Retrieve', 'Câu ' + (X.qi + 1) + '/' + n, X.qi === 0 && !answered ? ins : '')}
-      <section class="g-qz"><p class="g-qp g-ink">${q.prompt}</p>
+    return h`${head('Retrieve', 'Câu ' + (X.qi + 1) + '/' + n, X.qi === 0 && !answered ? ins : '', nextBtn(X.qi + 1 < n ? 'Câu tiếp theo →' : 'Xem kết quả →', 'g-qnext', answered))}
+      <section class="g-qz g-qa"><p class="g-qp g-ink">${q.prompt}</p>
         ${q.prompt.indexOf('______') === -1 ? h`<p class="g-qh">Chọn từ phù hợp nhất để mô tả.</p>` : ''}
         <ul class="g-opts">${q.options.map(o => h`<li><button type="button" class="gm ${answered && o.id === q.answer ? 'ok' : ''} ${answered && o.id === a && a !== q.answer ? 'bad' : ''}" data-action="g-opt" data-k="${o.id}" ${answered ? 'disabled' : ''} ${answered && o.id === a ? LU.raw('aria-pressed="true"') : ''}><span class="g-ol">${o.id}.</span><span class="g-ot">${o.text}</span></button></li>`)}</ul>
         ${answered ? verdict(q, a) : ''}</section>
-      ${nav('', btn(X.qi + 1 < n ? 'Câu tiếp theo →' : 'Xem kết quả →', 'g-qnext', { cls: answered ? 'primary' : 'dark', disabled: !answered }))}`;
+      `;
   }
   const retrievePanel = m => isQuiz(m) ? quizPanel(m) : matchPanel(m);
 
@@ -254,7 +288,7 @@
     const ex = A(m.extra);
     return h`<div class="g-done" role="status"><h2 id="g-h" tabindex="-1">Đã hoàn thành module.</h2>
       <p class="g-dsub">${m.title}${m.focus ? ' — ' + m.focus : ''}</p>${X.host.preview ? h`<p class="hint">Xem trước — học viên thấy màn hình này khi hoàn thành module.</p>` : saved}</div>
-      <div class="g-nav g-end"><a class="btn primary" href="${X.host.back}">${X.host.backLabel} →</a>${btn('Ôn lại bài', 'g-review')}</div>
+      <div class="g-nav g-end"><a class="btn primary" href="${X.host.back}">${X.host.backLabel} →</a>${btn('Ôn lại bài', 'g-review', { cls: 'plum' })}</div>
       ${ex.length ? h`<details class="g-extra"><summary>Luyện thêm — không bắt buộc</summary>
         <div class="g-ex-l">${ex.map((t, i) => h`<div class="g-ex-i"><span class="g-qn">Chủ đề ${i + 1}</span><p class="g-qp">${t.prompt}</p>${A(t.words).length ? h`<p class="g-exw"><span class="lbl">Gợi ý từ</span> ${t.words.join(' · ')}</p>` : ''}</div>`)}</div>
         ${m.extraNote ? h`<p class="g-gn">${m.extraNote}</p>` : ''}</details>` : ''}`;
@@ -262,8 +296,8 @@
   function panel() {
     const m = X.m, v = STEPS[viewIndex()].id;
     if (v === 'learn') return learnPanel(m);
-    if (v === 'use') return askPanel(m, 'use', 'Use', m.useInstruction || 'Trả lời thành tiếng. Dùng từ đã học khi phù hợp.', 'Hoàn thành Use →', 'use');
-    if (v === 'reuse') return askPanel(m, 'reuse', 'Reuse', m.reuseInstruction || 'Trả lời thành tiếng trong ngữ cảnh mới.', 'Hoàn thành Reuse →', 'reuse');
+    if (v === 'use') return askPanel(m, 'use', 'Use', m.useInstruction || 'Trả lời thành tiếng. Dùng từ đã học khi phù hợp.', stepLabel(2), 'use');
+    if (v === 'reuse') return askPanel(m, 'reuse', 'Reuse', m.reuseInstruction || 'Trả lời thành tiếng trong ngữ cảnh mới.', stepLabel(3), 'reuse');
     if (v === 'retrieve') return retrievePanel(m);
     return finishedPanel(m);
   }
@@ -306,17 +340,32 @@
       save(); refresh(); landOnHeading(); window.scrollTo(0, 0); return true;
     } catch (e) { X.busy = false; LU.toast(LU.errText(e, 'save'), true); refresh(); return false; }
   }
-  LU.actions['g-next'] = el => { advance(el.dataset.step); };
+  LU.actions['g-next'] = el => {
+    if (!guard()) return; const st = el.dataset.step;
+    if (gated() && X.cf[st]) { const len = st === 'learn' ? (isGrouped(X.m) ? X.m.learnGroups.length : 0) : A(X.m[st]).length; if (len > 0 && !X.cf[st][len - 1]) return; }   // the gate: confirm the last item first
+    advance(st);
+  };
+  /* "Đã thực hành": only unlocks the NEXT button of this item (view state, mirrored to sessionStorage; the server never hears about it) */
+  LU.actions['g-conf'] = el => {
+    if (!guard() || !gated()) return; const k = el.dataset.k, i = Number(el.dataset.i);
+    if (!X.cf[k] || !(i >= 0)) return; X.cf[k][i] = true; save(); refresh('[data-role=next]');
+  };
+  /* "View sample answer": show / hide only. Not saved, not progress, never blocks anything. */
+  LU.actions['g-sample'] = el => {
+    if (!guard()) return; const k = el.dataset.key, i = Number(el.dataset.i);
+    if (!keyOK(k) || !A(X.m[k + 'Samples'])[i]) return;
+    X.smp[k][i] = !X.smp[k][i]; refresh('[data-action=g-sample]');
+  };
   LU.actions['g-save'] = () => { advance('retrieve').then(ok => { if (!ok) { X.saveFailed = true; refresh('[data-action=g-save]'); } }); };
 
   /* learn: group navigation only — it says nothing about what the student has learnt */
   const step = (n, d, lo, hi) => Math.min(hi, Math.max(lo, n + d));
   LU.actions['g-gprev'] = () => { if (!guard() || !isGrouped(X.m)) return; X.gi = step(X.gi, -1, 0, X.m.learnGroups.length - 1); save(); refresh(); landOnHeading(); };
-  LU.actions['g-gnext'] = () => { if (!guard() || !isGrouped(X.m)) return; X.gi = step(X.gi, 1, 0, X.m.learnGroups.length - 1); save(); refresh(); landOnHeading(); };
+  LU.actions['g-gnext'] = () => { if (!guard() || !isGrouped(X.m) || !isConf('learn', X.gi)) return; X.gi = step(X.gi, 1, 0, X.m.learnGroups.length - 1); save(); refresh(); landOnHeading(); };
   /* use / reuse: question navigation */
   const keyOK = k => k === 'use' || k === 'reuse';
   LU.actions['g-qprev'] = el => { const k = el.dataset.key; if (!guard() || !keyOK(k)) return; X.ui[k] = step(X.ui[k], -1, 0, Math.max(0, A(X.m[k]).length - 1)); save(); refresh(); landOnHeading(); };
-  LU.actions['g-qgo'] = el => { const k = el.dataset.key; if (!guard() || !keyOK(k)) return; X.ui[k] = step(X.ui[k], 1, 0, Math.max(0, A(X.m[k]).length - 1)); save(); refresh(); landOnHeading(); };
+  LU.actions['g-qgo'] = el => { const k = el.dataset.key; if (!guard() || !keyOK(k) || !isConf(k, X.ui[k])) return; X.ui[k] = step(X.ui[k], 1, 0, Math.max(0, A(X.m[k]).length - 1)); save(); refresh(); landOnHeading(); };
   LU.actions['g-hint'] = el => { if (!guard()) return; const i = Number(el.dataset.i); X.hint[i] = !X.hint[i]; refresh('[data-action=g-hint]'); };
 
   /* retrieve (multiple choice) */
