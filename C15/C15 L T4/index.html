@@ -1695,23 +1695,27 @@ const HL='user-hl';
 function inNoHighlightZone(node){
  if(!node)return true;
  const el=node.nodeType===1?node:node.parentElement;
- return !!(el&&el.closest('input,button,select,textarea,.qchip-play,.play-btn,.progress-track,.part-nav,.qnav,.exam-status'));
+ // .match-layout is listed for parity with the tests that have drag-and-drop
+ // matching; this paper has none, so it simply never matches here.
+ return !!(el&&el.closest('input,button,select,textarea,.qchip-play,.play-btn,.progress-track,.part-nav,.qnav,.exam-status,.match-layout'));
 }
 function clearSelection(){const s=window.getSelection();if(s)s.removeAllRanges();}
 function applyHighlight(range){
  const mark=document.createElement('mark');
  mark.className=HL;
  try{
+  // surroundContents() refuses a range that only partially covers an element.
+  // The old fallback answered that refusal with extractContents(), which SPLITS
+  // every partially selected element and re-clones it WITH its attributes. A
+  // selection dragged across two blanks turned one
+  // <span class="qchip" data-q="2"> into two chips carrying the same data-q,
+  // one of them with no answer input inside it; lookups such as the
+  // question-nav jump and the review feedback take the first match, so they
+  // landed on the empty copy. Refuse instead of splitting; an ordinary
+  // selection inside one line still highlights exactly as before.
   range.surroundContents(mark);
   return true;
- }catch(e){
-  try{
-   const frag=range.extractContents();
-   mark.appendChild(frag);
-   range.insertNode(mark);
-   return true;
-  }catch(e2){return false;}
- }
+ }catch(e){return false;}
 }
 function removeHighlight(mark){
  const parent=mark.parentNode;if(!parent)return;
