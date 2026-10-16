@@ -184,6 +184,7 @@
   function planInfo(a, m) {
     if (!m) return { state: 'Module này hiện không còn trong thư viện', cls: 'gone' };
     if (P.isDraft(m)) return { state: 'Đang chờ nội dung', detail: 'thầy sẽ cập nhật sau', cls: 'draft' };
+    if (P.isReference(m)) return { state: 'Thư viện của thầy', detail: 'chưa có bài luyện', cls: 'draft' };
     const done = a.status === 'completed';
     if (P.isGuided(m)) {
       const n = done ? 4 : Math.min(4, (a.steps || []).length);
@@ -312,8 +313,8 @@
       LU.render(shell(h`${backLink(origin)}<div class="notice bad">Module này chưa được giao cho bạn.</div>`)); return;
     }
     LU.guided.reset();
-    if (P.isDraft(m)) { LU.render(shell(h`${backLink(origin)}<article class="module"><header class="mod-h"><p class="eyebrow">${P.meta(m)}</p><h1>${m.title} <span class="tag pending">Content pending</span></h1></header>
-      <div class="notice info">Nội dung module này chưa sẵn sàng. Thầy sẽ cập nhật sau.</div></article>`)); return; }
+    if (P.isDraft(m) && !(S.preview && P.isReference(m)) || P.isReference(m) && !S.preview) { LU.render(shell(h`${backLink(origin)}<article class="module"><header class="mod-h"><p class="eyebrow">${P.meta(m)}</p><h1>${m.title} <span class="tag pending">${P.isReference(m) ? 'Thư viện' : 'Content pending'}</span></h1></header>
+      <div class="notice info">${P.isReference(m) ? 'Đây là danh sách từ vựng / cụm diễn đạt trong thư viện của thầy. Chưa có bài luyện cho phần này.' : 'Nội dung module này chưa sẵn sàng. Thầy sẽ cập nhật sau.'}</div></article>`)); return; }
     if (!S.preview) {                                   // opening = starting (server logs it; completing needs this first)
       LU.render(shell(h`<div class="loading" role="status">Đang mở module…</div>`));
       try { const r = await LU.api.call('openPractice', { moduleId: id, type: type, week: wk, guided: P.isGuided(m) }); if (navId !== LU.navId) return; putAssignment(r.assignment); }
@@ -348,6 +349,7 @@
         <div class="mod-foot" id="mod-foot">${footer(m, wk, st)}</div></article>`));
   }
   function footer(m, wk, st) {
+    if (P.isReference(m)) return h`<p class="hint">Module thư viện — học viên chưa mở được (chưa có bài luyện).</p>`;
     if (S.preview) return h`<p class="hint">Xem trước — học viên sẽ thấy nút “Mark as completed” ở đây.</p>`;
     if (st === 'completed') return h`<div class="notice done" role="status">Bạn đã hoàn thành module này.</div>`;
     return h`<button class="btn primary lg" data-action="s-complete" data-id="${m.id}" data-week="${wk === null ? 'extra' : wk}" ${S.busy ? 'disabled' : ''}>Mark as completed</button>

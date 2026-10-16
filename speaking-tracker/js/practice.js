@@ -25,7 +25,8 @@
       { id: 'giving-examples', label: 'Giving examples' }, { id: 'comparing', label: 'Comparing' }, { id: 'speculating', label: 'Speculating' },
       { id: 'reflecting', label: 'Reflecting' }, { id: 'giving-opinions', label: 'Giving opinions' }] },
     { id: 'lexical', label: 'LEXICAL RESOURCE', aliases: ['lexical-resource', 'vocabulary'], subs: [
-      { id: 'tier-1', label: 'Tier 1', aliases: ['tier1'] }, { id: 'tier-2', label: 'Tier 2', aliases: ['tier2'] }] }
+      { id: 'tier-1', label: 'Tier 1', aliases: ['tier1'] }, { id: 'tier-2', label: 'Tier 2', aliases: ['tier2'] },
+      { id: 'topic-vocabulary', label: 'Topic Vocabulary', aliases: ['topic-vocab'] }] }
   ];
   /* Which kind of practice usually helps which diagnostic issue. Plain suggestions for the TEACHER (nothing is ever auto-assigned).
    * Look-up order: 'criterion.issue' -> 'criterion'. Edit freely. Modules can also declare `addresses: ['vocabulary.limited_range']`. */
@@ -93,7 +94,9 @@
   /** A GUIDED module has the sequential Learn → Use → Reuse → Retrieve content. A DRAFT module is a placeholder: the teacher can see and assign it, the student cannot launch it yet. */
   P.isGuided = m => !!(m && (m.learn.length || m.learnGroups.length) && (m.retrieve.length || m.quiz.length));
   P.isDraft = m => !!(m && m.status === 'draft');
-  P.launchable = m => !!m && !P.isDraft(m);
+  /** v2.7: a LIBRARY-ONLY module (vocabulary / language-function reference list, no lesson yet) is for the teacher: the student side never opens it. */
+  P.isReference = m => !!(m && m.libraryOnly);
+  P.launchable = m => !!m && !P.isDraft(m) && !P.isReference(m);
 
   P.groupLabel = id => { const g = groupOf(id); return g ? g.label : String(id || '').toUpperCase() || 'KHÁC'; };
   P.subLabel = (cat, sub) => { const s = subOf(groupOf(cat), sub); return s ? s.label : human(sub); };
@@ -118,7 +121,7 @@
     return out;
   };
   const rank = m => { const gi = P.groups.findIndex(g => g.id === m.category), g = P.groups[gi]; const si = g ? g.subs.findIndex(s => s.id === m.subcategory) : -1; return [gi < 0 ? 99 : gi, si < 0 ? 99 : si]; };
-  const haystack = m => [m.title, m.topic, P.subLabel(m.category, m.subcategory), P.groupLabel(m.category), m.target].concat(m.tags, m.targetLanguage.map(t => typeof t === 'string' ? t : (t && (t.text || t.phrase)) || '')).join(' ').toLowerCase();
+  const haystack = m => [m.moduleNo ? 'module ' + m.moduleNo + ' module ' + (m.moduleNo < 10 ? '0' : '') + m.moduleNo : '', arr(m.vocabulary).map(v => v.term + ' ' + (v.vi || '')).join(' '), arr(m.expressions).map(e => e.text).join(' '), m.title, m.topic, P.subLabel(m.category, m.subcategory), P.groupLabel(m.category), m.target].concat(m.tags, m.targetLanguage.map(t => typeof t === 'string' ? t : (t && (t.text || t.phrase)) || '')).join(' ').toLowerCase();
   /** filter({group, sub, q}) -> modules, in library order (group, subcategory, title). */
   P.filter = function (f) {
     f = f || {}; const q = String(f.q || '').trim().toLowerCase().split(/\s+/).filter(Boolean);
@@ -134,8 +137,8 @@
   /** One module as a card. o: { status, href, reason, tag, check:{id,checked}, extra: Safe }. */
   P.renderCard = function (m, o) {
     o = o || {};
-    if (P.isDraft(m)) o = Object.assign({}, o, { href: '' });                       // content pending: never a link to the student
-    const inner = h`<span class="pc-main"><span class="pc-top"><b class="pc-title">${m.title}</b>${o.status ? P.statusBadge(o.status) : ''}${m.sample ? h`<span class="tag">Demo</span>` : ''}${P.isDraft(m) ? h`<span class="tag pending">Content pending</span>` : ''}${o.tag ? h`<span class="tag">${o.tag}</span>` : ''}</span>
+    if (P.isDraft(m) || P.isReference(m)) o = Object.assign({}, o, { href: '' });                       // content pending: never a link to the student
+    const inner = h`<span class="pc-main"><span class="pc-top"><b class="pc-title">${m.title}</b>${o.status ? P.statusBadge(o.status) : ''}${m.sample ? h`<span class="tag">Demo</span>` : ''}${P.isDraft(m) ? h`<span class="tag pending">${P.isReference(m) ? 'Draft' : 'Content pending'}</span>` : P.isReference(m) ? h`<span class="tag">${m.moduleNo ? 'Module ' + (m.moduleNo < 10 ? '0' : '') + m.moduleNo + ' · ' : ''}Thư viện</span>` : ''}${o.tag ? h`<span class="tag">${o.tag}</span>` : ''}</span>
       <span class="pc-meta">${P.meta(m)}</span>${m.focus ? h`<span class="pc-target">${m.focus}</span>` : ''}${m.target ? h`<span class="pc-target">${m.target}</span>` : ''}${o.reason ? h`<span class="pc-reason">${o.reason}</span>` : ''}</span>`;
     if (o.check) {
       return h`<li class="pcard sel ${o.check.checked ? 'on' : ''}"><label class="pc-check"><input type="checkbox" data-change="${o.check.action}" data-id="${m.id}" ${o.check.checked ? 'checked' : ''}>${inner}</label>${o.extra || ''}</li>`;
@@ -149,15 +152,33 @@
       ${t.hint ? h`<details class="t-more"><summary>Gợi ý</summary><p class="note-p">${t.hint}</p></details>` : ''}
       ${ans.length ? h`<details class="t-more"><summary>Đáp án</summary><p class="note-p">${ans.join(' · ')}</p></details>` : ''}</li>`;
   }
+  /** v2.7 reference content: vocabulary table (term · meaning · note) or language-function expressions + spoken examples + links to Mock Tests. */
+  P.renderReference = function (m) {
+    if (!P.isReference(m)) return '';
+    const voc = arr(m.vocabulary), hasNote = arr(m.vocabulary).some(v => v.note), ex = arr(m.expressions), sp = arr(m.spokenExamples), mocks = P.mocksFor(m.id);
+    return h`${m.draftNote && P.isDraft(m) ? h`<div class="notice info">${m.draftNote}</div>` : ''}
+      ${m.purposeVi ? h`<section class="mod-sec"><h3>Mục đích</h3><p class="note-p">${m.purposeVi}</p>${m.purpose ? h`<p class="hint">${m.purpose}</p>` : ''}</section>` : ''}
+      ${voc.length ? h`<section class="mod-sec"><h3>Vocabulary <small>${voc.length} mục</small></h3><div class="vl-wrap"><table class="vl"><thead><tr><th>Từ / cụm</th><th>Nghĩa</th>${hasNote ? h`<th>Ghi chú</th>` : ''}</tr></thead><tbody>${voc.map(v => h`<tr><th scope="row"><b class="g-tw">${v.term}</b></th><td>${v.vi}</td>${hasNote ? h`<td>${v.note || ''}</td>` : ''}</tr>`)}</tbody></table></div>
+        <p class="hint">Đây là danh sách để chọn dùng khi phù hợp — không phải cụm bắt buộc phải xuất hiện trong mọi câu trả lời.</p></section>` : ''}
+      ${ex.length ? h`<section class="mod-sec"><h3>Expressions <small>${ex.length} cụm</small></h3><ul class="tl-list">${ex.map(e => h`<li><span class="tl">${e.text}</span>${e.vi ? h`<span class="t-note">${e.vi}</span>` : ''}</li>`)}</ul></section>` : ''}
+      ${sp.length ? h`<section class="mod-sec"><h3>Ví dụ trong câu trả lời nói</h3><ul class="ex-list">${sp.map(t => h`<li class="note-p">${t}</li>`)}</ul>${m.examplesNote ? h`<p class="hint">${m.examplesNote}</p>` : ''}</section>` : ''}
+      ${mocks.length ? h`<section class="mod-sec"><h3>Liên quan tới Mock</h3><p class="note-p">${mocks.map(x => 'Mock ' + x).join(' · ')}</p><p class="hint">Liên kết khởi đầu, thầy có thể chỉnh.</p></section>` : ''}`;
+  };
+  /** Mock numbers that list this module (links are ids only: LU.practice.links = { n: { title, topics:[id], functions:[id] } }). */
+  P.mocksFor = id => Object.keys(P.links || {}).filter(n => (P.links[n].topics || []).indexOf(id) !== -1 || (P.links[n].functions || []).indexOf(id) !== -1).map(Number).sort((a, b) => a - b);
+  /** The modules a mock lists: { title, topics:[module], functions:[module] } (missing ids are skipped). */
+  P.linksFor = n => { const l = (P.links || {})[n]; if (!l) return null; const get = ids => (ids || []).map(P.get).filter(Boolean); return { title: l.title, topics: get(l.topics), functions: get(l.functions) }; };
+  P.links = P.links || {};
+
   /** Full module content: target, language, examples, then every practice step present (any number, any order, any keys). */
   P.renderBody = function (m) {
     const keys = STEP_ORDER.filter(k => m.practiceSteps[k]).concat(Object.keys(m.practiceSteps).filter(k => STEP_ORDER.indexOf(k) === -1));
     const lang = m.targetLanguage.map(t => typeof t === 'string' ? h`<li><span class="tl">${t}</span></li>` : h`<li><span class="tl">${tText(t)}</span>${t.note || t.meaning ? h`<span class="t-note">${t.note || t.meaning}</span>` : ''}</li>`);
-    return h`${m.target ? h`<section class="mod-sec"><h3>Target</h3><p class="note-p">${m.target}</p></section>` : ''}
+    return h`${P.renderReference(m)}${m.target && !P.isReference(m) ? h`<section class="mod-sec"><h3>Target</h3><p class="note-p">${m.target}</p></section>` : ''}
       ${lang.length ? h`<section class="mod-sec"><h3>Target language</h3><ul class="tl-list">${lang}</ul></section>` : ''}
       ${m.examples.length ? h`<section class="mod-sec"><h3>Examples</h3><ul class="ex-list">${m.examples.map(e => typeof e === 'string' ? h`<li class="note-p">${e}</li>` : h`<li class="note-p">${tText(e)}${e.note ? h`<span class="t-note">${e.note}</span>` : ''}</li>`)}</ul></section>` : ''}
       ${keys.map((k, i) => h`<section class="mod-sec step"><h3><span class="sn">${i + 1}</span>${STEP_LABEL[k] || String(k).toUpperCase()}${STEP_HINT[k] ? h`<small>${STEP_HINT[k]}</small>` : ''}</h3><ol class="tasks">${m.practiceSteps[k].map(task)}</ol></section>`)}
-      ${!keys.length && !m.target && !lang.length ? h`<p class="none">Module này chưa có nội dung.</p>` : ''}
+      ${!keys.length && !m.target && !lang.length && !P.isReference(m) ? h`<p class="none">Module này chưa có nội dung.</p>` : ''}
       ${m.commonMistakes.length ? h`<section class="mod-sec"><h3>Common mistakes</h3><ul class="cm-list">${m.commonMistakes.map(c => h`<li class="note-p">${tText(c)}</li>`)}</ul></section>` : ''}`;
   };
 

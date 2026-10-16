@@ -440,7 +440,7 @@
     const P = LU.practice, list = P.filter(M.pr), sel = M.data.recommendedPractice;
     if (!P.count()) return h`<p class="none">Thư viện chưa có module nào. Thêm module vào <span class="mono">data/practice-modules.js</span>.</p>`;
     if (!list.length) return h`<p class="none">Không có module nào khớp bộ lọc.</p>`;
-    return h`<ul class="pcards" aria-label="Thư viện">${list.map(m => P.renderCard(m, { check: { action: 'm-prcheck', checked: sel.indexOf(m.id) !== -1 } }))}</ul>`;
+    return h`<ul class="pcards" aria-label="Thư viện">${list.map(m => P.renderCard(m, { check: { action: 'm-prcheck', checked: sel.indexOf(m.id) !== -1 }, extra: P.isReference(m) ? h`<details class="ref-det"><summary>Xem nội dung</summary>${P.renderReference(m)}</details>` : '' }))}</ul>`;
   }
   function pillsBlock() {
     const P = LU.practice, gv = P.groupsView(), g = gv.find(x => x.id === M.pr.group);
@@ -448,9 +448,21 @@
     return h`<div class="pills" role="group" aria-label="Nhóm">${pill('m-prgroup', '', 'Tất cả', !M.pr.group, P.count())}${gv.map(x => pill('m-prgroup', x.id, x.label, M.pr.group === x.id, x.count))}</div>
       ${g ? h`<div class="pills sub" role="group" aria-label="Nhóm con">${pill('m-prsub', '', 'Tất cả', !M.pr.sub)}${g.subs.map(x => pill('m-prsub', x.id, x.label, M.pr.sub === x.id, x.count))}</div>` : ''}`;
   }
+  /** v2.7: topic modules + language functions linked to this mock's topic (LU.practice.links). Suggestions only — never auto-assigned. */
+  function mockLinkBlock() {
+    const P = LU.practice, sel = M.data.recommendedPractice, lk = P.linksFor(M.week);
+    if (!lk || !(lk.topics.length + lk.functions.length)) return h``;
+    const row = m => h`<li><span>${m.moduleNo ? (m.moduleNo < 10 ? '0' : '') + m.moduleNo + ' · ' : ''}${m.title}${P.isDraft(m) ? h` <span class="tag pending">Draft</span>` : ''}</span>${sel.indexOf(m.id) !== -1 ? h`<span class="tag">Đã chọn</span>` : h`<button type="button" class="btn dark sm" data-action="m-pradd" data-id="${m.id}">+ Thêm</button>`}</li>`;
+    return h`<div class="sug"><h3>Gợi ý theo đề Mock ${M.week}</h3><p class="hint">${lk.title}. Chỉ là gợi ý — thầy chọn chủ đề + 1–2 Language Function; hệ thống không tự giao bài.</p>
+      ${lk.topics.length ? h`<div class="sug-row"><div class="sug-h"><b>Topic Vocabulary</b></div><ul class="sug-mods">${lk.topics.map(row)}</ul></div>` : ''}
+      ${lk.functions.length ? h`<div class="sug-row"><div class="sug-h"><b>Language Functions</b></div><ul class="sug-mods">${lk.functions.map(row)}</ul></div>` : ''}</div>`;
+  }
   function suggestBlock() {
     const P = LU.practice, sel = M.data.recommendedPractice, sug = P.suggestFor(M.data.marking);
-    if (!sug.length) return h``;
+    if (!sug.length) return mockLinkBlock();
+    return mockLinkBlock().s ? h`${mockLinkBlock()}${suggestInner(sug, sel)}` : suggestInner(sug, sel);
+  }
+  function suggestInner(sug, sel) {
     return h`<div class="sug"><h3>Gợi ý từ chẩn đoán</h3><p class="hint">Chỉ là gợi ý để bạn tham khảo — hệ thống không tự giao bài.</p>
       ${sug.map(x => h`<div class="sug-row"><div class="sug-h"><b>${x.label}</b></div>
         ${x.hints.length ? h`<p class="hint">Thường hợp với: ${x.hints.join(' · ')}</p>` : ''}
