@@ -25,7 +25,7 @@
    ===================================================================== */
 window.LU.practice.register([
   {
-    id: "lex_atmosphere_01", category: 'lexical', subcategory: 'tier-1', topic: "Atmosphere", title: "Describing Atmosphere",
+    id: "lex_atmosphere_01", moduleNo: 1, category: 'lexical', subcategory: 'tier-1', topic: "Atmosphere", title: "Describing Atmosphere",
     focus: "Describing the atmosphere of a place or an event",
     target: "Giúp học viên mô tả bầu không khí của một địa điểm hoặc sự kiện chính xác hơn, thay vì chỉ dùng những từ chung chung như “good”, “bad”, “nice” hoặc “boring”.",
     learnTitle: 'Learn the language', learnInstruction: "Đọc nghĩa và ví dụ của từng nhóm từ. Nên ghi lại vào sổ tay để dùng khi luyện nói.",
@@ -153,7 +153,7 @@ window.LU.practice.register([
     extraNote: "Soothing, laid-back và electrifying là từ mở rộng, không bắt buộc học thuộc trong danh sách mục tiêu."
   },
   {
-    id: "lex_personality_01", category: 'lexical', subcategory: 'tier-1', topic: "Describing People", title: "Describing People",
+    id: "lex_personality_01", moduleNo: 2, category: 'lexical', subcategory: 'tier-1', topic: "Describing People", title: "Describing People",
     focus: "Describing people’s personality, qualities and characteristics",
     target: "Giúp học viên mô tả con người cụ thể và chính xác hơn, thay vì phụ thuộc vào những từ chung chung như “good”, “bad”, “funny” hoặc “sad”.",
     learnTitle: 'Learn the language', learnInstruction: "Đọc nghĩa và ví dụ của từng nhóm từ. Nên ghi lại vào sổ tay để dùng khi luyện nói.",
