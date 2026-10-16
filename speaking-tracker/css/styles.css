@@ -1651,3 +1651,20 @@ dialog{border-radius:6px;box-shadow:0 12px 40px #1d1e1e26}
   .g-qa .g-qh,.g-qa .g-opts{grid-column:1;grid-row:auto}
   .g-opts .gm{min-height:60px;font-size:17px}
 }
+
+/* v2.7 — vocabulary library (reference modules) */
+.vl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
+.vl{width:100%;border-collapse:collapse;font-size:.92rem}
+.vl th,.vl td{text-align:left;vertical-align:top;padding:8px 10px;border-bottom:1px solid #e6e9ec}
+.vl thead th{font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;color:#5b6670}
+.vl tbody th{font-weight:600;min-width:7rem;overflow-wrap:anywhere}
+.vl td{overflow-wrap:anywhere}
+.vl .g-tw{background:#F5E6EA;color:#81364E;padding:1px 6px;border-radius:5px;font-weight:600}
+.ref-det{margin:6px 12px 12px}
+.ref-det>summary{cursor:pointer;color:#15934e;font-weight:600;padding:6px 0}
+.tl-list,.ex-list{padding-left:1.1rem;margin:.4rem 0}
+.tl-list li{margin:.25rem 0}
+@media (max-width:560px){.vl{font-size:.86rem}.vl th,.vl td{padding:6px 6px}}
+
+.pcard:has(>.ref-det){flex-wrap:wrap}
+.pcard>.ref-det{flex:1 1 100%;margin:0 12px 12px;min-width:0}
