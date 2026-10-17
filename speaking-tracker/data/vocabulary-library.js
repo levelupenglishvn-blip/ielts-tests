@@ -1,14 +1,15 @@
 /* =====================================================================
-   Vocabulary Library v2.7 — 26 Topic Vocabulary modules (24 here + Module 01/02 which are the guided modules in data/lexical-modules.js)
+   Vocabulary Library v2.8 — 30 Topic Vocabulary modules (28 here + Module 01/02, the original guided modules in data/lexical-modules.js)
    and 8 Language Functions. Static, public teaching content (no student data).
 
-   WHAT THIS FILE IS:   a REFERENCE LIBRARY for the teacher. There are NO lessons, quizzes or exercises here yet (by design):
-   every module has `libraryOnly: true`, so the student side never opens it (it shows "chưa có bài luyện"); the teacher can browse it,
-   see the words, and assign it to a student's week through the existing Practice step (stored as moduleId + week only).
+   WHAT THIS FILE IS:   the vocabulary / expression LISTS (and Mock Test links). Module 19 = Describing News & Media; Modules 27–30 are new.
+   The practice itself (Learn examples, Use, Reuse, Retrieve, sample answers) lives in data/packs-1.js … data/packs-6.js
+   (one pack per module, attached with LU.practice.addPack). A module with a pack is a full guided module the student can open and complete;
+   `libraryOnly: true` (used before v2.8) is removed automatically when a pack is attached. A module without a pack would still show
+   "Thư viện của thầy — chưa có bài luyện" (this should not happen now: tests/verify_practice_packs.js checks that all 38 have packs).
 
-   TO EDIT:   change the text between the quotes (term / vi / note, expressions, examples). Keep every `id` unchanged.
-              Add an entry:  { term: 'new word', vi: 'nghĩa tiếng Việt', note: 'optional usage note' }
-              Draft module:  status: 'draft'   → stays "Draft" until you change it to 'ready'.
+   TO EDIT:   change the text between the quotes (term / vi / note, expressions). Keep every `id` unchanged.
+              Add an entry:  { term: 'new word', vi: 'nghĩa tiếng Việt', note: 'optional usage note' }  (and add its example sentence at the same position in the pack's `ex`).
    Not every item is mandatory: they are options the student can choose from, never a checklist for one answer.
    Links to Mock Tests are in LU.practice.links at the bottom (ids only, nothing is copied into the mock tests).
    ===================================================================== */
@@ -376,28 +377,26 @@ window.LU.practice.register([
     ]
   },
   {
-    id: "voc_19_communication_language", category: "lexical", subcategory: "topic-vocabulary", moduleNo: 19, topic: "Communication & Language", title: "Describing Communication & Language",
-    status: "draft", libraryOnly: true, draftNote: "Bản nháp — chờ thầy xác nhận nội dung.",
-    target: "Thư viện từ vựng tham khảo — 18 mục. Chưa có bài luyện; không phải cụm bắt buộc phải dùng trong mọi câu trả lời.",
+    id: "voc_19_news_media", category: "lexical", subcategory: "topic-vocabulary", moduleNo: 19, topic: "News & Media", title: "Describing News & Media",
+    status: "ready", libraryOnly: true,
+    target: "Từ vựng chủ đề — 16 mục.",
     vocabulary: [
-      { term: "express myself clearly", vi: "diễn đạt bản thân một cách rõ ràng" },
-      { term: "get my message across", vi: "truyền đạt được điều mình muốn nói" },
-      { term: "overcome the language barrier", vi: "vượt qua rào cản ngôn ngữ" },
-      { term: "be fluent in", vi: "sử dụng thành thạo một ngôn ngữ" },
-      { term: "have a good command of", vi: "có khả năng sử dụng tốt một ngôn ngữ" },
-      { term: "expand my vocabulary", vi: "mở rộng vốn từ vựng" },
-      { term: "pick up a language", vi: "học một ngôn ngữ một cách tự nhiên qua tiếp xúc" },
-      { term: "have difficulty expressing myself", vi: "gặp khó khăn khi diễn đạt" },
-      { term: "mispronounce a word", vi: "phát âm sai một từ" },
-      { term: "misunderstand / misinterpret something", vi: "hiểu nhầm / diễn giải sai điều gì" },
-      { term: "communicate effectively", vi: "giao tiếp hiệu quả" },
-      { term: "speak with confidence", vi: "nói một cách tự tin" },
-      { term: "a native speaker", vi: "người bản ngữ" },
-      { term: "body language", vi: "ngôn ngữ cơ thể" },
-      { term: "a language exchange partner", vi: "bạn đồng hành trao đổi ngôn ngữ" },
-      { term: "make small talk", vi: "trò chuyện xã giao" },
-      { term: "keep a conversation going", vi: "duy trì cuộc trò chuyện" },
-      { term: "clarify what I mean", vi: "làm rõ ý mình muốn nói" }
+      { term: "breaking news", vi: "tin nóng, tin mới xảy ra" },
+      { term: "a news report / a news article", vi: "bản tin / bài báo" },
+      { term: "a reliable source", vi: "nguồn tin đáng tin cậy" },
+      { term: "verify information", vi: "xác minh thông tin" },
+      { term: "misleading information", vi: "thông tin gây hiểu lầm" },
+      { term: "spread fake news", vi: "lan truyền tin giả" },
+      { term: "cover a story", vi: "đưa tin về một sự kiện" },
+      { term: "stay informed", vi: "cập nhật, nắm bắt thông tin" },
+      { term: "keep up with current affairs", vi: "theo dõi các vấn đề thời sự" },
+      { term: "a headline", vi: "tiêu đề tin tức" },
+      { term: "a biased report", vi: "bản tin thiên vị" },
+      { term: "media coverage", vi: "sự đưa tin của truyền thông" },
+      { term: "freedom of the press", vi: "tự do báo chí" },
+      { term: "sensationalize a story", vi: "giật gân hóa một câu chuyện hoặc sự kiện" },
+      { term: "a public figure", vi: "nhân vật của công chúng" },
+      { term: "traditional media / digital media", vi: "truyền thông truyền thống / truyền thông kỹ thuật số" }
     ]
   },
   {
@@ -549,6 +548,92 @@ window.LU.practice.register([
       { term: "disrupt food chains", vi: "phá vỡ chuỗi thức ăn" }
     ]
   },
+  {
+    id: "voc_27_advertising_consumer_influence", category: "lexical", subcategory: "topic-vocabulary", moduleNo: 27, topic: "Advertising & Consumer Influence", title: "Advertising & Consumer Influence",
+    status: "ready", libraryOnly: true,
+    target: "Từ vựng chủ đề — 15 mục.",
+    vocabulary: [
+      { term: "persuasive advertising", vi: "quảng cáo có sức thuyết phục" },
+      { term: "target audience", vi: "đối tượng mục tiêu" },
+      { term: "brand awareness", vi: "mức độ nhận diện thương hiệu" },
+      { term: "promote a product", vi: "quảng bá sản phẩm" },
+      { term: "influence purchasing decisions", vi: "ảnh hưởng đến quyết định mua hàng" },
+      { term: "celebrity endorsement", vi: "việc người nổi tiếng quảng bá sản phẩm" },
+      { term: "eye-catching", vi: "bắt mắt" },
+      { term: "misleading advertising", vi: "quảng cáo gây hiểu lầm" },
+      { term: "appeal to emotions", vi: "đánh vào cảm xúc" },
+      { term: "impulse purchase", vi: "món hàng mua bốc đồng" },
+      { term: "shape consumer behavior", vi: "định hình hành vi người tiêu dùng" },
+      { term: "advertising campaign", vi: "chiến dịch quảng cáo" },
+      { term: "targeted advertising", vi: "quảng cáo nhắm đến nhóm đối tượng cụ thể" },
+      { term: "raise awareness of something", vi: "nâng cao nhận thức về điều gì" },
+      { term: "be exposed to advertisements", vi: "tiếp xúc với quảng cáo" }
+    ]
+  },
+  {
+    id: "voc_28_rules_laws_crime", category: "lexical", subcategory: "topic-vocabulary", moduleNo: 28, topic: "Rules, Laws & Crime", title: "Rules, Laws & Crime",
+    status: "ready", libraryOnly: true,
+    target: "Từ vựng chủ đề — 15 mục.",
+    vocabulary: [
+      { term: "obey / break the law", vi: "tuân thủ / vi phạm pháp luật" },
+      { term: "follow the rules", vi: "tuân thủ quy định" },
+      { term: "commit a crime", vi: "phạm tội" },
+      { term: "minor / serious offence", vi: "hành vi phạm pháp nhẹ / nghiêm trọng" },
+      { term: "law-abiding citizen", vi: "công dân tuân thủ pháp luật" },
+      { term: "deter crime", vi: "ngăn chặn hành vi phạm tội" },
+      { term: "prevent crime", vi: "phòng chống tội phạm" },
+      { term: "impose a fine", vi: "áp dụng hình phạt tiền" },
+      { term: "face the consequences", vi: "chịu hậu quả" },
+      { term: "serve a prison sentence", vi: "chấp hành án tù" },
+      { term: "rehabilitation", vi: "sự cải tạo, phục hồi" },
+      { term: "law enforcement", vi: "hoạt động thực thi pháp luật" },
+      { term: "public safety", vi: "an toàn công cộng" },
+      { term: "take responsibility for one's actions", vi: "chịu trách nhiệm về hành động của mình" },
+      { term: "a sense of justice", vi: "ý thức về công lý" }
+    ]
+  },
+  {
+    id: "voc_29_history_heritage", category: "lexical", subcategory: "topic-vocabulary", moduleNo: 29, topic: "History & Historical Heritage", title: "History & Historical Heritage",
+    status: "ready", libraryOnly: true,
+    target: "Từ vựng chủ đề — 13 mục.",
+    vocabulary: [
+      { term: "historical site", vi: "di tích lịch sử" },
+      { term: "historical figure", vi: "nhân vật lịch sử" },
+      { term: "preserve historical buildings", vi: "bảo tồn các công trình lịch sử" },
+      { term: "restore an ancient monument", vi: "trùng tu di tích cổ" },
+      { term: "pass down through generations", vi: "truyền lại qua các thế hệ" },
+      { term: "learn from the past", vi: "học hỏi từ quá khứ" },
+      { term: "a significant turning point", vi: "bước ngoặt quan trọng" },
+      { term: "cultural and historical significance", vi: "ý nghĩa văn hóa và lịch sử" },
+      { term: "gain insight into the past", vi: "hiểu sâu hơn về quá khứ" },
+      { term: "preserve historical heritage", vi: "bảo tồn di sản lịch sử" },
+      { term: "preserve cultural and historical values", vi: "bảo tồn các giá trị văn hóa và lịch sử" },
+      { term: "promote cultural and historical values", vi: "phát huy, quảng bá các giá trị văn hóa và lịch sử" },
+      { term: "promote national identity", vi: "phát huy bản sắc dân tộc" }
+    ]
+  },
+  {
+    id: "voc_30_arts_creativity", category: "lexical", subcategory: "topic-vocabulary", moduleNo: 30, topic: "Arts & Creativity", title: "Arts & Creativity",
+    status: "ready", libraryOnly: true,
+    target: "Từ vựng chủ đề — 15 mục.",
+    vocabulary: [
+      { term: "visual arts", vi: "nghệ thuật thị giác" },
+      { term: "a work of art", vi: "tác phẩm nghệ thuật" },
+      { term: "artistic talent", vi: "tài năng nghệ thuật" },
+      { term: "creative expression", vi: "sự thể hiện sáng tạo" },
+      { term: "draw inspiration from", vi: "lấy cảm hứng từ" },
+      { term: "express oneself through art", vi: "thể hiện bản thân thông qua nghệ thuật" },
+      { term: "appreciate a work of art", vi: "thưởng thức / cảm nhận một tác phẩm nghệ thuật" },
+      { term: "develop one's creativity", vi: "phát triển khả năng sáng tạo" },
+      { term: "think outside the box", vi: "tư duy sáng tạo, vượt khỏi lối mòn" },
+      { term: "hands-on activity", vi: "hoạt động thực hành trực tiếp" },
+      { term: "artistic skills", vi: "kỹ năng nghệ thuật" },
+      { term: "stimulate the imagination", vi: "kích thích trí tưởng tượng" },
+      { term: "a source of inspiration", vi: "nguồn cảm hứng" },
+      { term: "traditional and contemporary art", vi: "nghệ thuật truyền thống và đương đại" },
+      { term: "have an eye for detail", vi: "có con mắt tinh tường với các chi tiết" }
+    ]
+  },
   /* ---------------- Language Functions 01–08 (category "language") ---------------- */
   {
     id: "fn_01_giving_reasons", category: "language", subcategory: "giving-reasons", moduleNo: 1, topic: "Giving Reasons", title: "Giving Reasons",
@@ -695,18 +780,18 @@ window.LU.practice.register([
 ]);
 
 /* Module numbers → ids (Module 01 and 02 are the existing guided modules). */
-window.LU.practice.topicIds = {"1": "lex_atmosphere_01", "2": "lex_personality_01", "3": "voc_03_natural_views", "4": "voc_04_places", "5": "voc_05_experiences_events", "6": "voc_06_skills_achievements", "7": "voc_07_study_education", "8": "voc_08_work_careers", "9": "voc_09_technology_social_media", "10": "voc_10_health_lifestyle", "11": "voc_11_food_eating_habits", "12": "voc_12_travel_tourism", "13": "voc_13_money_shopping", "14": "voc_14_relationships_friendship", "15": "voc_15_hobbies_leisure", "16": "voc_16_books_films_entertainment", "17": "voc_17_cities_environment", "18": "voc_18_culture_traditions", "19": "voc_19_communication_language", "20": "voc_20_home_accommodation", "21": "voc_21_family_childhood", "22": "voc_22_daily_routines_time", "23": "voc_23_weather_seasons", "24": "voc_24_transport_getting_around", "25": "voc_25_clothes_fashion", "26": "voc_26_animals_pets"};
+window.LU.practice.topicIds = {"1": "lex_atmosphere_01", "2": "lex_personality_01", "3": "voc_03_natural_views", "4": "voc_04_places", "5": "voc_05_experiences_events", "6": "voc_06_skills_achievements", "7": "voc_07_study_education", "8": "voc_08_work_careers", "9": "voc_09_technology_social_media", "10": "voc_10_health_lifestyle", "11": "voc_11_food_eating_habits", "12": "voc_12_travel_tourism", "13": "voc_13_money_shopping", "14": "voc_14_relationships_friendship", "15": "voc_15_hobbies_leisure", "16": "voc_16_books_films_entertainment", "17": "voc_17_cities_environment", "18": "voc_18_culture_traditions", "19": "voc_19_news_media", "20": "voc_20_home_accommodation", "21": "voc_21_family_childhood", "22": "voc_22_daily_routines_time", "23": "voc_23_weather_seasons", "24": "voc_24_transport_getting_around", "25": "voc_25_clothes_fashion", "26": "voc_26_animals_pets", "27": "voc_27_advertising_consumer_influence", "28": "voc_28_rules_laws_crime", "29": "voc_29_history_heritage", "30": "voc_30_arts_creativity"};
 window.LU.practice.functionIds = {"1": "fn_01_giving_reasons", "2": "fn_02_describing_change", "3": "fn_03_describing_feelings", "4": "fn_04_giving_examples", "5": "fn_05_comparing", "6": "fn_06_speculating", "7": "fn_07_reflecting", "8": "fn_08_giving_opinions"};
 
 /* Starting links: Mock test number → topic modules and language functions (ids only). Editable; a link never means "must master everything in one mock". */
 window.LU.practice.links = {
   1: { title: "Mock 1 — Sports, Hobbies & Daily Life", topics: ["voc_10_health_lifestyle", "voc_15_hobbies_leisure", "voc_05_experiences_events"], functions: ["fn_03_describing_feelings", "fn_01_giving_reasons", "fn_05_comparing", "fn_02_describing_change"] },
-  2: { title: "Mock 2 — Technology & Communication", topics: ["voc_09_technology_social_media", "voc_19_communication_language"], functions: ["fn_02_describing_change", "fn_08_giving_opinions", "fn_04_giving_examples", "fn_06_speculating"] },
+  2: { title: "Mock 2 — Technology & Communication", topics: ["voc_09_technology_social_media", "voc_19_news_media"], functions: ["fn_02_describing_change", "fn_08_giving_opinions", "fn_04_giving_examples", "fn_06_speculating"] },
   3: { title: "Mock 3 — People, Teachers & Relationships", topics: ["lex_personality_01", "voc_14_relationships_friendship", "voc_21_family_childhood"], functions: ["fn_03_describing_feelings", "fn_04_giving_examples", "fn_05_comparing", "fn_07_reflecting"] },
   4: { title: "Mock 4 — Places, Travel & The Environment", topics: ["voc_04_places", "voc_12_travel_tourism", "voc_17_cities_environment", "voc_03_natural_views"], functions: ["fn_05_comparing", "fn_01_giving_reasons", "fn_02_describing_change", "fn_08_giving_opinions"] },
   5: { title: "Mock 5 — Education, Skills & Careers", topics: ["voc_07_study_education", "voc_06_skills_achievements", "voc_08_work_careers"], functions: ["fn_01_giving_reasons", "fn_05_comparing", "fn_07_reflecting", "fn_06_speculating"] },
-  6: { title: "Mock 6 — Culture, Festivals & Food", topics: ["voc_18_culture_traditions", "voc_11_food_eating_habits", "voc_05_experiences_events"], functions: ["fn_03_describing_feelings", "fn_02_describing_change", "fn_01_giving_reasons", "fn_07_reflecting"] },
-  7: { title: "Mock 7 — Shopping, Fashion & Consumer Choices", topics: ["voc_13_money_shopping", "voc_25_clothes_fashion"], functions: ["fn_01_giving_reasons", "fn_05_comparing", "fn_08_giving_opinions", "fn_06_speculating"] },
-  8: { title: "Mock 8 — Entertainment, Weather & Personal Influence", topics: ["voc_16_books_films_entertainment", "voc_23_weather_seasons", "lex_personality_01", "voc_14_relationships_friendship"], functions: ["fn_03_describing_feelings", "fn_04_giving_examples", "fn_01_giving_reasons", "fn_07_reflecting"] },
-  9: { title: "Mock 9 — Transport, Animals & Places in the City", topics: ["voc_24_transport_getting_around", "voc_17_cities_environment", "voc_26_animals_pets", "voc_04_places"], functions: ["fn_08_giving_opinions", "fn_01_giving_reasons", "fn_05_comparing", "fn_06_speculating"] }
+  6: { title: "Mock 6 — Culture, Festivals & Food", topics: ["voc_18_culture_traditions", "voc_11_food_eating_habits", "voc_05_experiences_events", "voc_29_history_heritage"], functions: ["fn_03_describing_feelings", "fn_02_describing_change", "fn_01_giving_reasons", "fn_07_reflecting"] },
+  7: { title: "Mock 7 — Shopping, Fashion & Consumer Choices", topics: ["voc_13_money_shopping", "voc_25_clothes_fashion", "voc_27_advertising_consumer_influence"], functions: ["fn_01_giving_reasons", "fn_05_comparing", "fn_08_giving_opinions", "fn_06_speculating"] },
+  8: { title: "Mock 8 — Entertainment, Weather & Personal Influence", topics: ["voc_16_books_films_entertainment", "voc_23_weather_seasons", "lex_personality_01", "voc_14_relationships_friendship", "voc_19_news_media", "voc_30_arts_creativity"], functions: ["fn_03_describing_feelings", "fn_04_giving_examples", "fn_01_giving_reasons", "fn_07_reflecting"] },
+  9: { title: "Mock 9 — Transport, Animals & Places in the City", topics: ["voc_24_transport_getting_around", "voc_17_cities_environment", "voc_26_animals_pets", "voc_04_places", "voc_28_rules_laws_crime"], functions: ["fn_08_giving_opinions", "fn_01_giving_reasons", "fn_05_comparing", "fn_06_speculating"] }
 };
