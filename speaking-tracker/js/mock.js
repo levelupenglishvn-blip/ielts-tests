@@ -440,7 +440,8 @@
     const P = LU.practice, list = P.filter(M.pr), sel = M.data.recommendedPractice;
     if (!P.count()) return h`<p class="none">Thư viện chưa có module nào. Thêm module vào <span class="mono">data/practice-modules.js</span>.</p>`;
     if (!list.length) return h`<p class="none">Không có module nào khớp bộ lọc.</p>`;
-    return h`<ul class="pcards" aria-label="Thư viện">${list.map(m => P.renderCard(m, { check: { action: 'm-prcheck', checked: sel.indexOf(m.id) !== -1 }, extra: P.isReference(m) ? h`<details class="ref-det"><summary>Xem nội dung</summary>${P.renderReference(m)}</details>` : '' }))}</ul>`;
+    return h`<ul class="pcards" aria-label="Thư viện">${list.map(m => P.renderCard(m, { check: { action: 'm-prcheck', checked: sel.indexOf(m.id) !== -1 }, tag: P.hasPractice(m) ? 'Có bài luyện' : (P.isDraft(m) ? '' : 'Chưa có bài luyện'),
+      extra: P.renderReference(m).s || P.hasPractice(m) ? h`<details class="ref-det"><summary>Xem nội dung</summary>${P.renderReference(m)}${P.hasPractice(m) ? h`<p class="hint"><a href="#/t/preview/${M.sid}/module/${m.id}/extra" target="_blank" rel="noopener">Xem thử bài luyện như học viên (Use · Reuse · Retrieve, có đáp án) ↗</a></p>` : ''}</details>` : '' }))}</ul>`;
   }
   function pillsBlock() {
     const P = LU.practice, gv = P.groupsView(), g = gv.find(x => x.id === M.pr.group);

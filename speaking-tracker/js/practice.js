@@ -92,11 +92,45 @@
   P.all = () => ORDER.map(id => REG[id]).filter(m => m.active);
   P.count = () => P.all().length;
   /** A GUIDED module has the sequential Learn → Use → Reuse → Retrieve content. A DRAFT module is a placeholder: the teacher can see and assign it, the student cannot launch it yet. */
-  P.isGuided = m => !!(m && (m.learn.length || m.learnGroups.length) && (m.retrieve.length || m.quiz.length));
+  P.isGuided = m => !!(m && (m.learn.length || m.learnGroups.length) && (m.retrieve.length || m.quiz.length || arr(m.recall).length));
+  /** v2.8: a module with real Use + Reuse + Retrieve content (what the teacher sees as "Có bài luyện"). */
+  P.hasPractice = m => !!(m && P.isGuided(m) && m.use.length && m.reuse.length && (m.retrieve.length || m.quiz.length || arr(m.recall).length));
   P.isDraft = m => !!(m && m.status === 'draft');
   /** v2.7: a LIBRARY-ONLY module (vocabulary / language-function reference list, no lesson yet) is for the teacher: the student side never opens it. */
   P.isReference = m => !!(m && m.libraryOnly);
   P.launchable = m => !!m && !P.isDraft(m) && !P.isReference(m);
+
+  /** v2.8 practice pack → the module's guided content (Learn → Use → Reuse → Retrieve). Compact authoring form (data/packs-*.js):
+   *    ex:[sentence per vocabulary item]  (or lg:[[expression, meaning, example],…] for a Language Function)
+   *    use:[ {t:'fill'|'fix', q, o:[4 options], a:index|[index…], w:why}, {t:'speak', q, h:[words], s:sample} … ]
+   *    reuse:[ {q, h:[words], s:sample} … ]      recall:[ {k:'vi'|'sit'|'blank'|'speak', q, a:[accepted…], w?, s?} … ]
+   *  The vocabulary list stays the module's own (module.vocabulary / module.expressions); nothing is copied twice. Returns false when the module is unknown. */
+  const LETTERS = ['A', 'B', 'C', 'D', 'E'];
+  P.addPack = function (id, pack) {
+    const m = REG[id]; if (!m || !pack) { if (window.console) console.warn('[practice] pack for an unknown module:', id); return false; }
+    const voc = arr(m.vocabulary), fn = arr(pack.lg).length > 0;
+    const rows = fn ? pack.lg.map(r => ({ word: r[0], meaning: r[1], example: r[2] || '' }))
+      : voc.map((v, i) => ({ word: v.term, meaning: v.vi + (v.note ? ' — ' + v.note : ''), example: arr(pack.ex)[i] || '' }));
+    const per = rows.length <= 7 ? rows.length : Math.ceil(rows.length / Math.ceil(rows.length / 6)), groups = [];
+    for (let i = 0, g = 0; i < rows.length; i += per, g++) groups.push({ id: LETTERS[g] || String(g + 1), title: fn ? 'Useful expressions' : 'Words & phrases', titleVi: fn ? 'Cụm diễn đạt' : 'Từ và cụm từ ' + (g + 1), note: '', items: rows.slice(i, i + per) });
+    const mapUse = q => q.t === 'speak' ? { type: 'speak', q: q.q, hints: arr(q.h), sample: q.s || '' }
+      : choiceItem(q);
+    /* Authoring lists the key option first; spread it deterministically (same position on every device and reload) so the key is not always "A". */
+    function choiceItem(q) {
+      const opts = arr(q.o).slice(), keys = arr(q.a), seed = String(q.q).split('').reduce((a, c) => (a * 31 + c.charCodeAt(0)) % 9973, 7);
+      let order = opts.map((_, k) => k);
+      if (keys.length === 1 && opts.length > 1) { const at = seed % opts.length, rest = order.filter(k => k !== keys[0]); order = rest.slice(0, at).concat([keys[0]], rest.slice(at)); }
+      return { type: q.t === 'fix' ? 'fix' : 'fill', q: q.q, options: order.map((k, n) => ({ id: LETTERS[n], text: opts[k] })), answer: keys.map(k => LETTERS[order.indexOf(k)]), why: q.w || '' };
+    }
+    m.learnGroups = groups; m.learnInstruction = 'Đọc nghĩa và ví dụ của từng nhóm. Không cần học thuộc tất cả cùng lúc — ghi lại những cụm bạn muốn dùng.';
+    m.use = arr(pack.use).map(mapUse); m.useInstruction = 'Làm lần lượt từng câu. Câu điền / sửa: chọn đáp án để xem kết quả và giải thích ngay. Câu nói: trả lời thành tiếng, rồi xem sample answer nếu muốn.';
+    m.reuse = arr(pack.reuse).map(q => ({ type: 'speak', q: q.q, hints: arr(q.h), sample: q.s || '' })); m.reuseInstruction = 'Trả lời thành tiếng trong ngữ cảnh mới. Dùng từ đã học khi phù hợp — không cần đưa tất cả vào một câu trả lời.';
+    m.recall = arr(pack.recall).map(r => ({ kind: r.k || 'vi', q: r.q, answer: arr(r.a), why: r.w || '', sample: r.s || '' }));
+    m.retrieveInstruction = 'Nhớ lại và gõ (hoặc nói thầm) đáp án trước, rồi mới bấm Kiểm tra hoặc Xem đáp án. Câu hỏi không kèm đáp án gợi ý.';
+    if (/chưa có bài luyện/i.test(m.target || '')) m.target = (fn ? (m.purposeVi || m.purpose || m.title) + ' ' : '') + 'Luyện ' + (fn ? arr(m.expressions).length + ' cụm diễn đạt' : voc.length + ' cụm từ vựng') + ' qua 4 bước Learn → Use → Reuse → Retrieve. Không cần dùng hết trong một câu trả lời.';
+    m.practicePack = true; delete m.libraryOnly; if (m.status !== 'draft') m.status = 'ready';
+    return true;
+  };
 
   P.groupLabel = id => { const g = groupOf(id); return g ? g.label : String(id || '').toUpperCase() || 'KHÁC'; };
   P.subLabel = (cat, sub) => { const s = subOf(groupOf(cat), sub); return s ? s.label : human(sub); };
@@ -154,7 +188,7 @@
   }
   /** v2.7 reference content: vocabulary table (term · meaning · note) or language-function expressions + spoken examples + links to Mock Tests. */
   P.renderReference = function (m) {
-    if (!P.isReference(m)) return '';
+    if (!(P.isReference(m) || arr(m.vocabulary).length || arr(m.expressions).length)) return '';
     const voc = arr(m.vocabulary), hasNote = arr(m.vocabulary).some(v => v.note), ex = arr(m.expressions), sp = arr(m.spokenExamples), mocks = P.mocksFor(m.id);
     return h`${m.draftNote && P.isDraft(m) ? h`<div class="notice info">${m.draftNote}</div>` : ''}
       ${m.purposeVi ? h`<section class="mod-sec"><h3>Mục đích</h3><p class="note-p">${m.purposeVi}</p>${m.purpose ? h`<p class="hint">${m.purpose}</p>` : ''}</section>` : ''}
