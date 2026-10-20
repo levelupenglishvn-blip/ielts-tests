@@ -1,0 +1,101 @@
+/* =====================================================================
+   Level Up IELTS — shared design tokens & presentational components
+   =====================================================================
+   Linked from every test/correction page (Reading full test, Reading
+   explanation, Listening full test) so new tests automatically inherit
+   the same look. This file is visual-only: it never defines element
+   IDs, never attaches behavior, and must stay safe to add to any page
+   without touching scoring/timer/submission/navigation logic.
+   ===================================================================== */
+
+:root{
+  --lu-green:#15934E;
+  --lu-green-dark:#119446;
+  --lu-ink:#1D1E1E;
+  --lu-yellow:#FFE76E;
+  --lu-yellow-soft:#FFF8E1;
+  --lu-border:#E5E5E5;
+  --lu-bg:#F5F5F5;
+  --lu-bg-soft:#F4F8F6;
+  --lu-white:#FFFFFF;
+  --lu-danger:#C0392B;
+  --lu-danger-bg:#FDECEA;
+  --lu-muted:#6B7280;
+  --lu-radius-sm:6px;
+  --lu-radius:10px;
+  --lu-radius-lg:16px;
+  --lu-radius-pill:999px;
+  --lu-shadow-card:0 8px 28px rgba(29,30,30,0.07);
+  --lu-shadow-pop:0 10px 28px rgba(29,30,30,0.16);
+  --lu-font-body:'Inter',Arial,Helvetica,sans-serif;
+  --lu-font-heading:'Plus Jakarta Sans',Arial,Helvetica,sans-serif;
+}
+
+/* ---------- Brand eyebrow bar (additive; sits above a page's own header) ---------- */
+.lu-eyebrow{
+  display:flex;
+  align-items:baseline;
+  gap:7px;
+  font-family:var(--lu-font-heading);
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.08em;
+  color:var(--lu-green);
+  text-transform:uppercase;
+  padding:9px 20px 0;
+  background:var(--lu-white);
+}
+.lu-eyebrow .lu-divider{ color:var(--lu-border); font-weight:400; }
+.lu-eyebrow .lu-studio{ color:var(--lu-muted); font-weight:600; letter-spacing:.06em; }
+/* Dark-header variant (sits on a navy/ink bar instead of white; parent
+   already carries the header's own padding, so this resets its own) */
+.lu-eyebrow.lu-eyebrow-on-dark{ background:transparent; color:#8fd6a8; padding:0 0 3px; }
+.lu-eyebrow.lu-eyebrow-on-dark .lu-divider{ color:rgba(255,255,255,.25); }
+.lu-eyebrow.lu-eyebrow-on-dark .lu-studio{ color:rgba(255,255,255,.55); }
+/* Inline variant (sits inside a page's own light header block, e.g. Listening's
+   .page-header .wrap, instead of as a full-bleed bar above it) */
+.lu-eyebrow.lu-eyebrow-inline{ padding:0; margin-bottom:16px; background:transparent; }
+
+/* ---------- Timer clock icon (additive, inline SVG — no asset request) ---------- */
+.lu-clock-icon{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:14px;
+  height:14px;
+  margin-right:6px;
+  color:var(--lu-green);
+  vertical-align:-2px;
+  flex:none;
+}
+.lu-clock-icon svg{ width:100%; height:100%; display:block; }
+.lu-timer-row{ display:flex; align-items:center; gap:6px; }
+
+/* =====================================================================
+   Listening Full Test — harmonization overrides (visual only)
+   =====================================================================
+   These selectors (table.qtable, .qchip, .qnav-pill, .part-nav, …) only
+   exist in the Listening engine's own markup/CSS, so this section is a
+   no-op on Reading/Correction pages that also link this file. Every rule
+   here reads the Listening file's OWN local CSS variables (--primary,
+   --accent, …), which already match the shared brand colors above, so a
+   new Listening test only needs the <link> tag — no copy-pasted CSS. The
+   script/position/behavior rules (sticky qnav, fixed part-nav, data-q
+   attributes, etc.) are untouched; only color, radius, border and font
+   are adjusted here.
+   ===================================================================== */
+.page-header{ border-top:4px solid var(--primary); }
+body{ font-family:var(--font-transcript); }
+h1.page-title,.section-heading,.notes-title,.script-pane-title,.brand-word,.exam-button,
+.entry-section-title,.guide-title,.rules-subtitle{ font-family:var(--font); }
+table.qtable th{ background:var(--primary); color:#fff; border-color:var(--primary-dark); }
+.qchip{ border-color:var(--primary-tint-strong); background:var(--primary-tint); }
+.qchip-num{ background:var(--primary); color:#fff; border-radius:999px; min-width:24px; height:24px; padding:0 8px; }
+.answer-input{ border:1.5px solid var(--primary-tint-strong); background:var(--primary-tint); border-radius:999px; padding:7px 14px; }
+.answer-input:focus{ outline:none; border-color:var(--accent); background:var(--accent-tint); box-shadow:0 0 0 3px var(--accent-tint-strong); }
+.qnav-pill{ border-radius:999px; }
+.qnav-pill.active{ box-shadow:0 2px 8px rgba(21,147,78,.25); }
+.part-nav{ background:var(--ink); box-shadow:0 10px 28px rgba(29,30,30,.22); }
+.part-nav-btn.active{ box-shadow:0 2px 8px rgba(21,147,78,.35); }
+.map-card{ border-color:var(--border); box-shadow:var(--shadow-card); }
+.left-pane,.script-pane,.exam-card{ box-shadow:var(--shadow-card); }

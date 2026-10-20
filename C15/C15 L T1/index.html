@@ -627,12 +627,15 @@ body.is-review-listening .left-pane{width:auto;}
  body.is-review-listening .split-layout{grid-template-columns:1fr;max-width:1200px;}
  body.is-review-listening .right-pane.script-pane{position:static;top:auto;max-height:60vh;margin-top:20px;}
 }
-</style></head>
+</style>
+<!-- ===== Level Up shared theme (visual only; harmonization rules live in theme.css) ===== -->
+<link rel="stylesheet" href="../../assets/theme.css"></head>
 <body>
 
 <header class="page-header">
   <div class="wrap wrap-wide">
     
+    <div class="lu-eyebrow lu-eyebrow-inline">LEVEL UP<span class="lu-divider">|</span><span class="lu-studio">LISTENING STUDIO</span></div>
     <h1 class="page-title">IELTS Listening Full Test</h1>
     <p class="header-meta"><strong>Cambridge IELTS 15 – Test 1</strong></p>
     <p class="header-scope" id="headerScope">Part 1 | Questions 1–10</p>
@@ -691,7 +694,7 @@ body.is-review-listening .left-pane{width:auto;}
 </div></section><div id="exam" hidden>
 <div class="control-stack" id="controlStack">
   <section class="player-bar">
-    <div class="exam-status"><div><div id="candidate"></div><div id="phaseLabel">Ready</div><p id="audioStatus">Audio plays once. Playback controls are disabled.</p><button id="resumeAudio" class="exam-button secondary" hidden>Continue at current position</button></div><div><div id="timer" role="timer">00:00</div><div id="answered">0 / 40 answered</div></div></div><audio id="audio" preload="metadata" controlslist="nodownload noplaybackrate" disableRemotePlayback src="audio.mp3"></audio>
+    <div class="exam-status"><div><div id="candidate"></div><div id="phaseLabel">Ready</div><p id="audioStatus">Audio plays once. Playback controls are disabled.</p><button id="resumeAudio" class="exam-button secondary" hidden>Continue at current position</button></div><div><div class="lu-timer-row"><span class="lu-clock-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 3"></path></svg></span><div id="timer" role="timer">00:00</div></div><div id="answered">0 / 40 answered</div></div></div><audio id="audio" preload="metadata" controlslist="nodownload noplaybackrate" disableRemotePlayback src="audio.mp3"></audio>
   </section>
 
   <nav class="qnav">
