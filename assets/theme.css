@@ -285,9 +285,9 @@
 .ynng-options label:has(input:checked):not(.opt-correct):not(.opt-wrong),
 .mcq-options label:has(input:checked):not(.opt-correct):not(.opt-wrong),
 .checkbox-options label:has(input:checked):not(.opt-correct):not(.opt-wrong){
-  border-color:#E8C94A;
+  border-color:var(--lu-yellow);
   background:var(--lu-yellow-soft);
-  box-shadow:0 0 0 1px #E8C94A;
+  box-shadow:0 0 0 1px var(--lu-yellow);
 }
 
 /* -- Each file ALSO carries its own older, native ".tfn-options
@@ -403,7 +403,7 @@ table.qtable th{ background:var(--primary); color:#fff; border-color:var(--prima
 }
 .qchip:hover{ border-color:var(--primary); }
 .qchip:has(.answer-input:focus):not(.is-correct):not(.is-wrong){
-  border-color:#E8C94A;
+  border-color:var(--lu-yellow);
   background:var(--lu-yellow-soft);
 }
 .qchip-num{ background:transparent; color:var(--primary-dark); border-radius:0; min-width:24px; height:28px; padding:0 8px; }
