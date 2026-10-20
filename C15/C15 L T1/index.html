@@ -45,6 +45,46 @@
     --danger-bg:#FDECEA;
   }
 
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#F2F3F5;
+      --ink-soft:#B5BBC4;
+      --ink-faint:#7A8088;
+      --border:#41464F;
+      --table-border:#41464F;
+      --surface:#202328;
+      --bg:#17191C;
+      --primary-tint:#15241D;
+      --primary-tint-strong:#1F4433;
+      --secondary-tint:#15241D;
+      --secondary-tint-strong:#1F4433;
+      --accent-tint:#332D19;
+      --accent-tint-strong:#3D331C;
+      --danger:#ef5350;
+      --danger-bg:#3a1f20;
+      --shadow-card:0 1px 2px rgba(0,0,0,.35), 0 10px 26px -16px rgba(0,0,0,.5);
+      --shadow-sticky:0 6px 18px -12px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#F2F3F5;
+    --ink-soft:#B5BBC4;
+    --ink-faint:#7A8088;
+    --border:#41464F;
+    --table-border:#41464F;
+    --surface:#202328;
+    --bg:#17191C;
+    --primary-tint:#15241D;
+    --primary-tint-strong:#1F4433;
+    --secondary-tint:#15241D;
+    --secondary-tint-strong:#1F4433;
+    --accent-tint:#332D19;
+    --accent-tint-strong:#3D331C;
+    --danger:#ef5350;
+    --danger-bg:#3a1f20;
+    --shadow-card:0 1px 2px rgba(0,0,0,.35), 0 10px 26px -16px rgba(0,0,0,.5);
+    --shadow-sticky:0 6px 18px -12px rgba(0,0,0,.5);
+  }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   body{
@@ -631,6 +671,7 @@ body.is-review-listening .left-pane{width:auto;}
 <!-- ===== Level Up shared theme (visual only; harmonization rules live in theme.css) ===== -->
 <link rel="stylesheet" href="../../assets/theme.css"></head>
 <body>
+<button class="lu-theme-toggle" id="lu-theme-toggle" type="button" aria-label="Đổi chế độ sáng tối" aria-pressed="false">◐ Dark mode</button>
 
 <header class="page-header">
   <div class="wrap wrap-wide">
@@ -1741,6 +1782,31 @@ document.getElementById('teacherSubmit').addEventListener('click',()=>{
  setStatus(ok?'Submitted.':'Cannot submit: already submitted or no attempt.');
 });
 document.getElementById('teacherExit').addEventListener('click',()=>{panel.hidden=true;});
+})();
+</script>
+<script>
+(function(){
+  var KEY='lu-theme';
+  var btn=document.getElementById('lu-theme-toggle');
+  function apply(dark){
+    document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+    if(btn){
+      btn.textContent = dark ? '☀ Light mode' : '◐ Dark mode';
+      btn.setAttribute('aria-pressed', String(dark));
+    }
+  }
+  var saved = null;
+  try{ saved = localStorage.getItem(KEY); }catch(e){}
+  var prefersDark = false;
+  try{ prefersDark = matchMedia('(prefers-color-scheme:dark)').matches; }catch(e){}
+  apply(saved ? saved === 'dark' : prefersDark);
+  if(btn){
+    btn.addEventListener('click', function(){
+      var next = document.documentElement.dataset.theme !== 'dark';
+      apply(next);
+      try{ localStorage.setItem(KEY, next ? 'dark' : 'light'); }catch(e){}
+    });
+  }
 })();
 </script>
 </body>

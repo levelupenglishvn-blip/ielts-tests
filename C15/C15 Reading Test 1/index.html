@@ -43,49 +43,49 @@
 
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --navy: #26314f;
-      --navy-dark: #171d30;
-      --brand: #34D399;
-      --brand-dark: #10B981;
-      --brand-tint: #113124;
-      --heading: #6EE7B7;
-      --accent: #34D399;
-      --accent-dark: #10B981;
-      --bg: #1c1f26;
-      --panel: #131519;
-      --border: #33383f;
-      --text: #e6e8eb;
-      --muted: #9aa1ac;
+      --navy: #202328;
+      --navy-dark: #17191C;
+      --brand: #15934E;
+      --brand-dark: #119446;
+      --brand-tint: #15241D;
+      --heading: #15934E;
+      --accent: #15934E;
+      --accent-dark: #119446;
+      --bg: #202328;
+      --panel: #17191C;
+      --border: #41464F;
+      --text: #F2F3F5;
+      --muted: #B5BBC4;
       --danger: #ef5350;
       --danger-bg: #3a1f20;
-      --success: #34D399;
-      --success-bg: #113124;
-      --answered: #34D399;
-      --input-bg: #22252c;
+      --success: #15934E;
+      --success-bg: #15241D;
+      --answered: #15934E;
+      --input-bg: #292D33;
       --shadow-card: 0 8px 28px rgba(0, 0, 0, 0.35);
       --shadow-pop: 0 10px 30px rgba(0, 0, 0, 0.45);
     }
   }
   :root[data-theme="dark"] {
-    --navy: #26314f;
-    --navy-dark: #171d30;
-    --brand: #34D399;
-    --brand-dark: #10B981;
-    --brand-tint: #113124;
-    --heading: #6EE7B7;
-    --accent: #34D399;
-    --accent-dark: #10B981;
-    --bg: #1c1f26;
-    --panel: #131519;
-    --border: #33383f;
-    --text: #e6e8eb;
-    --muted: #9aa1ac;
+    --navy: #202328;
+    --navy-dark: #17191C;
+    --brand: #15934E;
+    --brand-dark: #119446;
+    --brand-tint: #15241D;
+    --heading: #15934E;
+    --accent: #15934E;
+    --accent-dark: #119446;
+    --bg: #202328;
+    --panel: #17191C;
+    --border: #41464F;
+    --text: #F2F3F5;
+    --muted: #B5BBC4;
     --danger: #ef5350;
     --danger-bg: #3a1f20;
-    --success: #34D399;
-    --success-bg: #113124;
-    --answered: #34D399;
-    --input-bg: #22252c;
+    --success: #15934E;
+    --success-bg: #15241D;
+    --answered: #15934E;
+    --input-bg: #292D33;
     --shadow-card: 0 8px 28px rgba(0, 0, 0, 0.35);
     --shadow-pop: 0 10px 30px rgba(0, 0, 0, 0.45);
   }
@@ -772,6 +772,7 @@
 <link rel="stylesheet" href="../../assets/theme.css">
 </head>
 <body>
+<button class="lu-theme-toggle" id="lu-theme-toggle" type="button" aria-label="Đổi chế độ sáng tối" aria-pressed="false">◐ Dark mode</button>
 
 <!-- ============ STEP 1: START SCREEN (nhập họ tên / xác nhận / chọn hành động) ============ -->
 <div id="start-screen">
@@ -2420,5 +2421,30 @@
 })();
 </script>
 
+<script>
+(function(){
+  var KEY='lu-theme';
+  var btn=document.getElementById('lu-theme-toggle');
+  function apply(dark){
+    document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+    if(btn){
+      btn.textContent = dark ? '☀ Light mode' : '◐ Dark mode';
+      btn.setAttribute('aria-pressed', String(dark));
+    }
+  }
+  var saved = null;
+  try{ saved = localStorage.getItem(KEY); }catch(e){}
+  var prefersDark = false;
+  try{ prefersDark = matchMedia('(prefers-color-scheme:dark)').matches; }catch(e){}
+  apply(saved ? saved === 'dark' : prefersDark);
+  if(btn){
+    btn.addEventListener('click', function(){
+      var next = document.documentElement.dataset.theme !== 'dark';
+      apply(next);
+      try{ localStorage.setItem(KEY, next ? 'dark' : 'light'); }catch(e){}
+    });
+  }
+})();
+</script>
 </body>
 </html>

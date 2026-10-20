@@ -46,17 +46,91 @@
    no dark-mode variant, so in dark mode the pill kept that pale fill
    while the option text used the dark theme's light-gray color -- near
    white text on near-white yellow, almost unreadable. Dark mode now uses
-   a translucent amber tint instead of a solid pale fill, so the dark
-   page background still shows through and the existing light text stays
-   legible; the gold border is unchanged since it already reads fine on
-   a dark surface. -- */
+   the spec's "nền vàng trầm" (#332D19) instead of a pale fill, so the
+   existing light text and gold border stay legible on it. Also carries
+   the rest of the shared dark-token family (ink/border/bg/muted) used by
+   small additive pieces below (eyebrow bar, toggle button). -- */
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --lu-yellow-soft: rgba(255,231,110,0.16);
+    --lu-yellow-soft:#332D19;
+    --lu-ink:#F2F3F5;
+    --lu-muted:#B5BBC4;
+    --lu-border:#41464F;
+    --lu-bg:#17191C;
+    --lu-bg-soft:#202328;
   }
 }
 :root[data-theme="dark"]{
-  --lu-yellow-soft: rgba(255,231,110,0.16);
+  --lu-yellow-soft:#332D19;
+  --lu-ink:#F2F3F5;
+  --lu-muted:#B5BBC4;
+  --lu-border:#41464F;
+  --lu-bg:#17191C;
+  --lu-bg-soft:#202328;
+}
+
+/* -- Brand eyebrow bar must go dark too (req: "đồng bộ các màn hình
+   hướng dẫn... và thành phần phụ liên quan"). --lu-white stays a literal
+   white everywhere else (cards, buttons that need true white), so this
+   retargets only the eyebrow bar's own background rather than redefining
+   --lu-white globally. -- */
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .lu-eyebrow{ background:#202328; }
+}
+:root[data-theme="dark"] .lu-eyebrow{ background:#202328; }
+
+/* ---------- Light/dark toggle (additive; Reading exam + Listening exam) ----------
+   A single fixed pill button, top-right, matching the Reading correction
+   pages' existing "◐ Dark mode / ☀ Light mode" control. Each exam page's
+   own tiny init script just flips documentElement.dataset.theme, which
+   every dark-mode rule in this file and in each page's own <style> is
+   already keyed off -- this button adds no new theming mechanism. */
+.lu-theme-toggle{
+  position:fixed;
+  top:14px;
+  right:14px;
+  z-index:500;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:7px 14px;
+  font-family:var(--lu-font-body);
+  font-size:12.5px;
+  font-weight:700;
+  color:var(--lu-ink);
+  background:var(--lu-white);
+  border:1px solid var(--lu-border);
+  border-radius:var(--lu-radius-pill);
+  box-shadow:var(--lu-shadow-card);
+  cursor:pointer;
+}
+.lu-theme-toggle:hover{ border-color:var(--lu-green); }
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .lu-theme-toggle{
+    background:#202328; color:#F2F3F5; border-color:#41464F;
+  }
+}
+:root[data-theme="dark"] .lu-theme-toggle{
+  background:#202328; color:#F2F3F5; border-color:#41464F;
+}
+@media (max-width:650px){
+  .lu-theme-toggle{ top:8px; right:8px; padding:6px 10px; font-size:11px; }
+}
+
+/* -- Listening entry screen: name/cycle inputs hardcode background:white
+   in the file's own CSS (no CSS variable), so dark mode left white boxes
+   with light text -- the same failure as the TFN yellow pill, just from a
+   hardcoded literal instead of a token. Harmless no-op on Reading pages,
+   which have no .exam-card. -- */
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .exam-card input,
+  :root:not([data-theme="light"]) .exam-card select{
+    background:var(--surface); color:var(--ink); border-color:var(--table-border);
+  }
+}
+:root[data-theme="dark"] .exam-card input,
+:root[data-theme="dark"] .exam-card select{
+  background:var(--surface); color:var(--ink); border-color:var(--table-border);
 }
 
 /* ---------- Brand eyebrow bar (additive; sits above a page's own header) ---------- */
