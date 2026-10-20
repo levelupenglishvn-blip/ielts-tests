@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-visual-pilot="listening">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -741,7 +741,8 @@ body.save-pending #result .score-row{filter:none}
 @media(max-width:560px){.match-rows .match-row{grid-template-columns:1fr}}
 </style>
 <!-- ===== Level Up shared theme (visual only; harmonization rules live in theme.css) ===== -->
-<link rel="stylesheet" href="../../assets/theme.css"></head>
+<link rel="stylesheet" href="../../assets/theme.css">
+<link rel="stylesheet" href="../../assets/dark-mode-pilot.css"></head>
 <body>
 <button class="lu-theme-toggle" id="lu-theme-toggle" type="button" aria-label="Đổi chế độ sáng tối" aria-pressed="false">◐ Dark mode</button>
 
@@ -830,7 +831,7 @@ body.save-pending #result .score-row{filter:none}
           <li>This can give the carer:
             <ul class="notes" style="margin-top:6px;">
               <li>time for other responsibilities</li>
-              <li>a <span class="qchip" data-q="1"><span class="qchip-num" data-q="1">1</span><input class="answer-input" data-q="1" aria-label="Answer 1" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span></li>
+              <li>a <span class="qchip" data-q="1"><span class="qchip-num" data-q="1">1</span><input class="answer-input" data-q="1" aria-label="Answer 1" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span></li>
             </ul>
           </li>
         </ul>
@@ -839,21 +840,21 @@ body.save-pending #result .score-row{filter:none}
         <ul class="notes">
           <li>This may include discussion of:
             <ul class="notes" style="margin-top:6px;">
-              <li>how much <span class="qchip" data-q="2"><span class="qchip-num" data-q="2">2</span><input class="answer-input" data-q="2" aria-label="Answer 2" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> the caring involves</li>
+              <li>how much <span class="qchip" data-q="2"><span class="qchip-num" data-q="2">2</span><input class="answer-input" data-q="2" aria-label="Answer 2" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span> the caring involves</li>
               <li>what types of tasks are involved, e.g.
                 <ul class="notes" style="margin-top:6px;">
                   <li>help with dressing</li>
-                  <li>helping her have a <span class="qchip" data-q="3"><span class="qchip-num" data-q="3">3</span><input class="answer-input" data-q="3" aria-label="Answer 3" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span></li>
+                  <li>helping her have a <span class="qchip" data-q="3"><span class="qchip-num" data-q="3">3</span><input class="answer-input" data-q="3" aria-label="Answer 3" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span></li>
                   <li>shopping</li>
                   <li>helping with meals</li>
-                  <li>dealing with <span class="qchip" data-q="4"><span class="qchip-num" data-q="4">4</span><input class="answer-input" data-q="4" aria-label="Answer 4" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span></li>
+                  <li>dealing with <span class="qchip" data-q="4"><span class="qchip-num" data-q="4">4</span><input class="answer-input" data-q="4" aria-label="Answer 4" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span></li>
                 </ul>
               </li>
               <li>any aspects of caring that are especially difficult, e.g.
                 <ul class="notes" style="margin-top:6px;">
-                  <li>loss of <span class="qchip" data-q="5"><span class="qchip-num" data-q="5">5</span><input class="answer-input" data-q="5" aria-label="Answer 5" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span></li>
-                  <li><span class="qchip" data-q="6"><span class="qchip-num" data-q="6">6</span><input class="answer-input" data-q="6" aria-label="Answer 6" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> her</li>
-                  <li>preventing a <span class="qchip" data-q="7"><span class="qchip-num" data-q="7">7</span><input class="answer-input" data-q="7" aria-label="Answer 7" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span></li>
+                  <li>loss of <span class="qchip" data-q="5"><span class="qchip-num" data-q="5">5</span><input class="answer-input" data-q="5" aria-label="Answer 5" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span></li>
+                  <li><span class="qchip" data-q="6"><span class="qchip-num" data-q="6">6</span><input class="answer-input" data-q="6" aria-label="Answer 6" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span> her</li>
+                  <li>preventing a <span class="qchip" data-q="7"><span class="qchip-num" data-q="7">7</span><input class="answer-input" data-q="7" aria-label="Answer 7" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span></li>
                 </ul>
               </li>
             </ul>
@@ -862,10 +863,10 @@ body.save-pending #result .score-row{filter:none}
 
         <p class="notes-title" style="margin-top:16px;">Types of support that may be offered to carers</p>
         <ul class="notes">
-          <li>transport costs, e.g. cost of a <span class="qchip" data-q="8"><span class="qchip-num" data-q="8">8</span><input class="answer-input" data-q="8" aria-label="Answer 8" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span></li>
-          <li>car-related costs, e.g. fuel and <span class="qchip" data-q="9"><span class="qchip-num" data-q="9">9</span><input class="answer-input" data-q="9" aria-label="Answer 9" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span></li>
+          <li>transport costs, e.g. cost of a <span class="qchip" data-q="8"><span class="qchip-num" data-q="8">8</span><input class="answer-input" data-q="8" aria-label="Answer 8" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span></li>
+          <li>car-related costs, e.g. fuel and <span class="qchip" data-q="9"><span class="qchip-num" data-q="9">9</span><input class="answer-input" data-q="9" aria-label="Answer 9" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span></li>
           <li>help with housework</li>
-          <li>help to reduce <span class="qchip" data-q="10"><span class="qchip-num" data-q="10">10</span><input class="answer-input" data-q="10" aria-label="Answer 10" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span></li>
+          <li>help to reduce <span class="qchip" data-q="10"><span class="qchip-num" data-q="10">10</span><input class="answer-input" data-q="10" aria-label="Answer 10" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span></li>
         </ul>
       </section>
 
@@ -1130,32 +1131,32 @@ body.save-pending #result .score-row{filter:none}
 
         <p class="notes-title">Developing food trends</p>
         <ul class="notes">
-          <li>The growth in interest in food fashions started with <span class="qchip" data-q="31"><span class="qchip-num" data-q="31">31</span><input class="answer-input" data-q="31" aria-label="Answer 31" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> of food being shared on social media.</li>
+          <li>The growth in interest in food fashions started with <span class="qchip" data-q="31"><span class="qchip-num" data-q="31">31</span><input class="answer-input" data-q="31" aria-label="Answer 31" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span> of food being shared on social media.</li>
           <li>The UK food industry is constantly developing products which are new or different.</li>
           <li>Influencers on social media become &#x27;ambassadors&#x27; for a brand.</li>
-          <li>Sales of <span class="qchip" data-q="32"><span class="qchip-num" data-q="32">32</span><input class="answer-input" data-q="32" aria-label="Answer 32" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> food brands have grown this way.</li>
+          <li>Sales of <span class="qchip" data-q="32"><span class="qchip-num" data-q="32">32</span><input class="answer-input" data-q="32" aria-label="Answer 32" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span> food brands have grown this way.</li>
           <li>Supermarkets track demand for ingredients on social media.</li>
-          <li>Famous <span class="qchip" data-q="33"><span class="qchip-num" data-q="33">33</span><input class="answer-input" data-q="33" aria-label="Answer 33" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> are influential.</li>
+          <li>Famous <span class="qchip" data-q="33"><span class="qchip-num" data-q="33">33</span><input class="answer-input" data-q="33" aria-label="Answer 33" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span> are influential.</li>
         </ul>
 
         <p class="notes-title" style="margin-top:16px;">Marketing campaigns</p>
         <ul class="notes">
           <li>The avocado:
             <ul class="notes" style="margin-top:6px;">
-              <li><span class="qchip" data-q="34"><span class="qchip-num" data-q="34">34</span><input class="answer-input" data-q="34" aria-label="Answer 34" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> were invited to visit growers in South Africa.</li>
-              <li>Advertising focused on its <span class="qchip" data-q="35"><span class="qchip-num" data-q="35">35</span><input class="answer-input" data-q="35" aria-label="Answer 35" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> benefits.</li>
+              <li><span class="qchip" data-q="34"><span class="qchip-num" data-q="34">34</span><input class="answer-input" data-q="34" aria-label="Answer 34" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span> were invited to visit growers in South Africa.</li>
+              <li>Advertising focused on its <span class="qchip" data-q="35"><span class="qchip-num" data-q="35">35</span><input class="answer-input" data-q="35" aria-label="Answer 35" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span> benefits.</li>
             </ul>
           </li>
           <li>Oat milk:
             <ul class="notes" style="margin-top:6px;">
               <li>A Swedish brand&#x27;s media campaign received publicity by upsetting competitors.</li>
-              <li>Promotion in the USA through <span class="qchip" data-q="36"><span class="qchip-num" data-q="36">36</span><input class="answer-input" data-q="36" aria-label="Answer 36" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> shops reduced the need for advertising.</li>
-              <li>It appealed to consumers who are concerned about the <span class="qchip" data-q="37"><span class="qchip-num" data-q="37">37</span><input class="answer-input" data-q="37" aria-label="Answer 37" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span></li>
+              <li>Promotion in the USA through <span class="qchip" data-q="36"><span class="qchip-num" data-q="36">36</span><input class="answer-input" data-q="36" aria-label="Answer 36" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span> shops reduced the need for advertising.</li>
+              <li>It appealed to consumers who are concerned about the <span class="qchip" data-q="37"><span class="qchip-num" data-q="37">37</span><input class="answer-input" data-q="37" aria-label="Answer 37" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span></li>
             </ul>
           </li>
           <li>Norwegian skrei:
             <ul class="notes" style="margin-top:6px;">
-              <li>has helped strengthen the <span class="qchip" data-q="38"><span class="qchip-num" data-q="38">38</span><input class="answer-input" data-q="38" aria-label="Answer 38" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> of Norwegian seafood.</li>
+              <li>has helped strengthen the <span class="qchip" data-q="38"><span class="qchip-num" data-q="38">38</span><input class="answer-input" data-q="38" aria-label="Answer 38" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span> of Norwegian seafood.</li>
             </ul>
           </li>
         </ul>
@@ -1164,8 +1165,8 @@ body.save-pending #result .score-row{filter:none}
         <ul class="notes">
           <li>Quinoa:
             <ul class="notes" style="margin-top:6px;">
-              <li>Its success led to an increase in its <span class="qchip" data-q="39"><span class="qchip-num" data-q="39">39</span><input class="answer-input" data-q="39" aria-label="Answer 39" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span></li>
-              <li>Overuse of resources resulted in poor quality <span class="qchip" data-q="40"><span class="qchip-num" data-q="40">40</span><input class="answer-input" data-q="40" aria-label="Answer 40" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span></li>
+              <li>Its success led to an increase in its <span class="qchip" data-q="39"><span class="qchip-num" data-q="39">39</span><input class="answer-input" data-q="39" aria-label="Answer 39" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span></li>
+              <li>Overuse of resources resulted in poor quality <span class="qchip" data-q="40"><span class="qchip-num" data-q="40">40</span><input class="answer-input" data-q="40" aria-label="Answer 40" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span></li>
             </ul>
           </li>
         </ul>
