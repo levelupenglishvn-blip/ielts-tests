@@ -76,6 +76,98 @@
 .result-card{ border-top-width:8px; }
 
 /* =====================================================================
+   Reading Full Test — layout redesign (visual + nav restructure)
+   =====================================================================
+   Converts the dark navy header to a light header, turns the passage/
+   questions panes into two white rounded cards on a gray page background,
+   recolors the "selected answer" state to yellow, and replaces the
+   3-separate-grid question navigator with a single fixed-bottom row (all
+   questions in one line, grouped by Part with an inline label). The
+   navigator MARKUP is unchanged — still 3 "footer-nav-part" groups each
+   with their own "nav-grid"/"nav-btn" elements and IDs — only how it is
+   laid out changes, so buildNavigator()/refreshNavButton()/
+   scrollToQuestion()/applyReviewAnnotations() (all keyed off element IDs,
+   not layout) keep working unmodified.
+   ===================================================================== */
+
+/* -- Light header (was dark navy) -- */
+.test-header{ background:var(--bg); color:var(--text); border-bottom:1px solid var(--border); }
+.test-header .title-block .test-title{ color:var(--text); }
+.test-header .title-block .student-name{ color:var(--muted); }
+.timer-block{ background:var(--panel); border:1px solid var(--border); }
+.timer-label{ color:var(--muted); }
+.timer-value{ color:var(--text); }
+.timer-value.warning{ color:var(--danger); }
+.score-summary-block{ background:var(--panel); border:1px solid var(--border); color:var(--text); }
+.score-summary-block .score-value{ color:var(--brand-dark); }
+.save-status-block{ background:var(--panel); border:1px solid var(--border); color:var(--muted); }
+.save-status-block.is-saved{ color:var(--success); }
+.save-status-block.is-error{ color:var(--danger); }
+.retry-save-btn{ border-color:var(--border); color:var(--text); }
+.retry-save-btn:hover{ background:var(--panel); }
+.submit-header-btn{ background:var(--brand); color:#fff; }
+.submit-header-btn:hover{ background:var(--brand-dark); }
+
+/* -- Two white cards on a gray page background (was edge-to-edge panes) -- */
+.test-body{ gap:18px; padding:18px; background:var(--panel); }
+.passage-pane,.questions-pane{
+  background:var(--bg);
+  border:1px solid var(--border);
+  border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-card);
+}
+.passage-tabs{ border-radius:var(--radius-lg) var(--radius-lg) 0 0; }
+
+/* -- Selected-answer state: light yellow (was green tint). This only
+   touches the "currently picked, not graded yet" state — .opt-correct/
+   .opt-wrong (applied after submit, each file's own CSS) stay green/red
+   because they're defined later in that file's cascade. -- */
+.tfn-options label:has(input:checked),
+.ynng-options label:has(input:checked),
+.mcq-options label:has(input:checked),
+.checkbox-options label:has(input:checked){
+  border-color:#E8C94A;
+  background:var(--lu-yellow-soft);
+  box-shadow:0 0 0 1px #E8C94A;
+}
+
+/* -- Fixed bottom question navigator: one flowing row, grouped by Part -- */
+.footer-nav{
+  position:fixed; left:0; right:0; bottom:0; z-index:50;
+  display:flex; flex-direction:row; align-items:center; gap:20px;
+  padding:9px 20px;
+  background:var(--bg);
+  border-top:1px solid var(--border);
+  box-shadow:0 -6px 20px rgba(29,30,30,.06);
+  overflow-x:auto; white-space:nowrap;
+}
+.footer-nav-part{
+  display:flex; align-items:center; gap:5px;
+  flex:0 0 auto; min-width:0;
+  background:none; border:none; padding:0;
+}
+.footer-nav-part-label{
+  margin-bottom:0; margin-right:3px; flex-shrink:0;
+  color:var(--brand-dark);
+}
+.footer-nav-part .nav-grid-wrap{ max-height:none; overflow:visible; }
+.nav-grid{ display:flex; flex-wrap:nowrap; gap:4px; }
+.nav-btn{
+  background:transparent;
+  border:1px solid transparent;
+  color:var(--text);
+  width:26px; height:26px; padding:0;
+  font-size:12px; border-radius:4px;
+  flex:0 0 auto;
+}
+.nav-btn:hover{ border-color:var(--border); background:var(--panel); }
+.nav-btn.flash{ box-shadow:inset 0 -2px 0 #5B9BF5; background:none; }
+
+/* Reserve room at the very bottom of the exam screen so the fixed
+   navigator above never overlaps the last line of content. */
+#test-screen{ padding-bottom:58px; }
+
+/* =====================================================================
    Listening Full Test — harmonization overrides (visual only)
    =====================================================================
    These selectors (table.qtable, .qchip, .qnav-pill, .part-nav, …) only
@@ -97,13 +189,85 @@ table.qtable th{ background:var(--primary); color:#fff; border-color:var(--prima
 .qchip-num{ background:var(--primary); color:#fff; border-radius:999px; min-width:24px; height:24px; padding:0 8px; }
 .answer-input{ border:1.5px solid var(--primary-tint-strong); background:var(--primary-tint); border-radius:999px; padding:7px 14px; }
 .answer-input:focus{ outline:none; border-color:var(--accent); background:var(--accent-tint); box-shadow:0 0 0 3px var(--accent-tint-strong); }
-.qnav-pill{ border-radius:999px; }
-.qnav-pill.active{ box-shadow:0 2px 8px rgba(21,147,78,.25); }
-.part-nav{ background:var(--ink); box-shadow:0 10px 28px rgba(29,30,30,.22); }
-.part-nav-btn.active{ box-shadow:0 2px 8px rgba(21,147,78,.35); }
 .map-card{ border-color:var(--border); box-shadow:var(--shadow-card); }
 .left-pane,.script-pane,.exam-card{ box-shadow:var(--shadow-card); }
 /* Result screen ("Kết quả bài làm") — bold green top bar, matching the
    Reading result card's accent border above. #result already carries
    class="exam-card" for its base box styling; this only adds the bar. */
 #result{ border-top:8px solid var(--primary); }
+
+/* =====================================================================
+   Listening Full Test — unified fixed-bottom navigator (visual + nav
+   restructure, mirrors the Reading section above)
+   =====================================================================
+   Replaces the old top-of-page "current part only, 10 numbers" qnav bar
+   and the separate floating black "Part 1/2/3/4" dock with ONE fixed
+   bar at the bottom of the viewport holding all 40 question numbers,
+   grouped by Part with an inline label. Requires a small JS change
+   (each file's own <script>): building all 40 pills once instead of
+   rebuilding 10 per part, and letting a pill click switch Part before
+   scrolling — see buildFullQnav()/showPart() in this file's <script>.
+   updateProgress()/annotateReviewPills() already query ".qnav-pill"
+   globally, so they keep working unmodified. The old black dock
+   (.part-nav) is kept in the DOM (other code still toggles its
+   "hidden"/active state harmlessly) but visually removed — its job is
+   now done by clicking any number in a Part's group. ===================================================================== */
+.qnav{
+  position:fixed; left:0; right:0; bottom:0; z-index:60;
+  border-bottom:none; border-top:1px solid var(--border);
+  box-shadow:0 -6px 20px rgba(29,30,30,.06);
+}
+/* The file's own CSS sets .qnav-inner{flex-wrap:wrap} and
+   .qnav-pill{min-height:38px}, sized for the OLD 10-pills-per-part bar.
+   With all 40 pills + 4 labels now in the same row, wrapping would break
+   the "one row, scroll on mobile" requirement, so force nowrap + an
+   explicit height here. */
+.qnav-inner{ gap:3px; flex-wrap:nowrap; padding:9px 16px; }
+.qnav-part-label{
+  flex:0 0 auto;
+  font-family:var(--font);
+  font-size:10px; font-weight:700;
+  color:var(--primary-dark);
+  text-transform:uppercase; letter-spacing:.03em;
+  white-space:nowrap;
+  margin:0 3px 0 10px;
+}
+.qnav-part-label:first-child{ margin-left:0; }
+.qnav-pill{
+  width:22px; height:22px; min-height:22px; padding:0;
+  font-size:11px;
+  color:var(--ink);
+  background:transparent;
+  border:1px solid transparent;
+  border-radius:4px;
+}
+.qnav-pill:hover{ border-color:var(--border); background:var(--bg); color:var(--ink); }
+/* "Current question" marker: a light underline, not a solid fill — kept
+   to box-shadow only so it layers on top of .answered/.is-review-correct/
+   .is-review-wrong without overriding their background colors. */
+.qnav-pill.active{ box-shadow:inset 0 -2px 0 #5B9BF5; }
+/* Old floating Part switcher — superseded by the bar above. */
+.part-nav{ display:none; }
+/* Leave room at the bottom of the exam content for the fixed bar
+   (main.content's own 110px bottom padding already covers this). */
+
+/* -- Compact header + status bar while an exam is actually in progress
+   (not on the start screen, not in the result/correction views, which
+   already have their own tighter "rv-result"/"rv-review" header rules).
+   "#exam" never regains its "hidden" attribute once a test starts, so
+   this is scoped off whenever body carries rv-result/rv-review too. -- */
+body:not(.rv-result):not(.rv-review):has(#exam:not([hidden])) .page-header{
+  padding:14px 20px 10px;
+}
+body:not(.rv-result):not(.rv-review):has(#exam:not([hidden])) .page-header .tagline,
+body:not(.rv-result):not(.rv-review):has(#exam:not([hidden])) .page-header .header-meta{
+  display:none;
+}
+body:not(.rv-result):not(.rv-review):has(#exam:not([hidden])) h1.page-title{
+  font-size:20px; margin:0 0 2px;
+}
+body:not(.rv-result):not(.rv-review):has(#exam:not([hidden])) .brand-row{
+  margin-bottom:8px;
+}
+.exam-status{ padding:8px 20px; }
+#timer{ font-size:18px; }

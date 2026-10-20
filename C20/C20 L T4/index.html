@@ -1184,15 +1184,33 @@ function showPart(part){
  document.querySelectorAll('.part-view').forEach((el,i)=>el.hidden=i!==part-1);
  document.querySelectorAll('.part-nav-btn').forEach(el=>el.classList.toggle('active',Number(el.dataset.part)===part));
  $('headerScope').textContent=`Part ${part} | Questions ${(part-1)*10+1}–${part*10}`;
- $('qnavInner').replaceChildren();
- for(let n=(part-1)*10+1;n<=part*10;n++){
-  const q=questions.find(q=>q.id.split('-').map(Number).includes(n));
-  const button=document.createElement('button');button.className='qnav-pill';button.textContent=n;button.dataset.q=q.id;
-  button.setAttribute('aria-label',`Go to question ${n}`);
-  button.onclick=()=>{const el=document.querySelector(`.qchip[data-q="${q.id}"],.mc-block[data-q="${q.id}"]`);el.scrollIntoView({block:'center',behavior:'smooth'});el.querySelector('input')?.focus({preventScroll:true});};
-  $('qnavInner').append(button);
- }
  updateProgress();
+}
+// Builds the fixed-bottom navigator ONCE with all 40 questions grouped by
+// Part (instead of showPart() rebuilding just the current part's 10 pills).
+// A pill click switches to the right Part first (showPart), then scrolls/
+// focuses the question — so navigation works the same regardless of which
+// part is currently open.
+function buildFullQnav(){
+ const inner=$('qnavInner');inner.replaceChildren();
+ for(let part=1;part<=4;part++){
+  const label=document.createElement('span');label.className='qnav-part-label';label.textContent=`Part ${part}`;
+  inner.append(label);
+  for(let n=(part-1)*10+1;n<=part*10;n++){
+   const q=questions.find(q=>q.id.split('-').map(Number).includes(n));
+   const button=document.createElement('button');button.className='qnav-pill';button.textContent=n;button.dataset.q=q.id;
+   button.setAttribute('aria-label',`Go to question ${n}`);
+   button.onclick=()=>{
+    showPart(part);
+    const el=document.querySelector(`.qchip[data-q="${q.id}"],.mc-block[data-q="${q.id}"]`);
+    el.scrollIntoView({block:'center',behavior:'smooth'});
+    el.querySelector('input')?.focus({preventScroll:true});
+    document.querySelectorAll('#qnavInner .qnav-pill.active').forEach(p=>p.classList.remove('active'));
+    button.classList.add('active');
+   };
+   inner.append(button);
+  }
+ }
 }
 function updateProgress(){
  let count=0;
@@ -1324,7 +1342,7 @@ async function start(){
    }else if(attempt.phase==='listening')attempt.interrupted=true;
    anchorWall=Math.max(Date.now(),attempt.lastNow);anchorMono=performance.now();persist();
    $('startScreen').hidden=true;$('exam').hidden=false;$('partNav').hidden=false;$('candidate').textContent=`${attempt.name} · ${attempt.cycleId}`;
-   restoreAnswers();showPart(1);
+   buildFullQnav();restoreAnswers();showPart(1);
    if(attempt.phase==='submitted'){stopAudio();displayResult();document.querySelectorAll('main input').forEach(el=>el.disabled=true);$('phaseLabel').textContent='Test submitted';if(!attempt.saved)send();}
    else{tick();if(attempt.phase==='review')stopAudio();if(attempt.phase==='listening')await continueAudio();timerHandle=setInterval(tick,200);}
    await new Promise(resolve=>releaseLock=resolve);
@@ -1511,9 +1529,10 @@ function initReviewPlayer(){
 }
 initReviewPlayer();
 function syncPartNavOffset(){
- const bar=$('reviewPlayerBar'),nav=$('partNav');
+ const bar=$('reviewPlayerBar'),nav=document.querySelector('.qnav');
+ if(!nav)return;
  if(bar.hidden){nav.style.removeProperty('bottom');return;}
- nav.style.bottom=(bar.offsetHeight+14)+'px';
+ nav.style.bottom=bar.offsetHeight+'px';
 }
 window.addEventListener('resize',syncPartNavOffset);
 
