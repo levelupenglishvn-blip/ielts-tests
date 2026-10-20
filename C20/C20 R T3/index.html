@@ -2354,16 +2354,40 @@
     btn.classList.toggle("answered", hasAnswer);
   }
 
+  // ---------- PERSISTENT "current question" marker (req 4) ----------
+  // Replaces the old flash-then-fade highlight: the marker now stays on
+  // whichever question the student is actually on, updated both by a nav
+  // click (scrollToQuestion) and by focusing an answer field anywhere in
+  // the question pane (see the focusin listener in init()). For a shared
+  // two-answer block (getBlockId returns "qwrap-N-M"), every question
+  // number sharing that block is marked together so they stay consistent.
+  function getQnumsFromBlockId(blockId) {
+    return blockId.replace(/^qwrap-/, "").split("-").map(function (s) { return parseInt(s, 10); });
+  }
+  function setCurrentQuestion(qnum) {
+    var qnums = getQnumsFromBlockId(getBlockId(qnum));
+    document.querySelectorAll(".nav-btn.current").forEach(function (b) {
+      if (qnums.indexOf(parseInt(b.id.replace("nav-btn-", ""), 10)) === -1) b.classList.remove("current");
+    });
+    qnums.forEach(function (n) {
+      var btn = document.getElementById("nav-btn-" + n);
+      if (btn) btn.classList.add("current");
+    });
+  }
+
   function scrollToQuestion(qnum) {
     var passageNum = QUESTION_PASSAGE[qnum];
     if (passageNum !== state.currentPassage) switchPassage(passageNum);
     var target = document.getElementById(getBlockId(qnum));
     if (!target) return;
     target.scrollIntoView({ behavior: "smooth", block: "center" });
-    var navBtn = document.getElementById("nav-btn-" + qnum);
-    if (navBtn) {
-      navBtn.classList.add("flash");
-      window.setTimeout(function () { navBtn.classList.remove("flash"); }, 900);
+    setCurrentQuestion(qnum);
+    // Focus the corresponding interactive field where one exists (text
+    // input, or the first option of a radio/checkbox group), so clicking
+    // a nav number both scrolls AND lands the student in the field.
+    var focusTarget = target.querySelector("input, textarea, select");
+    if (focusTarget) {
+      window.setTimeout(function () { focusTarget.focus({ preventScroll: true }); }, 350);
     }
   }
 
@@ -3123,6 +3147,21 @@
     buildNavigator();
     initHighlighting();
     initSaveGate();
+
+    // req 4: keep the current-question marker synced to focus, not just
+    // nav clicks. Inactive passages/question-groups are display:none, so
+    // a delegated focusin on the pane only ever fires for content that is
+    // actually visible -- no extra guard needed. Initialize at Q1 on entry.
+    var questionsPane = document.querySelector(".questions-pane");
+    if (questionsPane) {
+      questionsPane.addEventListener("focusin", function (e) {
+        var block = e.target.closest("[id^='qwrap-']");
+        if (!block) return;
+        var qnums = getQnumsFromBlockId(block.id);
+        if (qnums.length) setCurrentQuestion(qnums[0]);
+      });
+    }
+    setCurrentQuestion(1);
   }
 
   document.addEventListener("DOMContentLoaded", init);

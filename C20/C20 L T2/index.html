@@ -1323,6 +1323,21 @@ function showPart(part){
  $('headerScope').textContent=`Part ${part} | Questions ${(part-1)*10+1}–${part*10}`;
  updateProgress();
 }
+
+// ---------- PERSISTENT "current question" marker (req 4) ----------
+// Keeps the active pill synced to focus, not just nav-pill clicks. Every
+// sibling pill sharing the same data-q (a composite/two-part question) is
+// marked together, matching how buildFullQnav() assigns data-q.
+function setCurrentQuestion(qid){
+ document.querySelectorAll('#qnavInner .qnav-pill.active').forEach(p=>p.classList.remove('active'));
+ document.querySelectorAll(`#qnavInner .qnav-pill[data-q="${qid}"]`).forEach(p=>p.classList.add('active'));
+}
+$('exam').addEventListener('focusin',e=>{
+ const el=e.target.closest('[data-q]');
+ if(!el)return;
+ const qid=el.dataset.q||el.getAttribute('data-q');
+ if(qid)setCurrentQuestion(qid);
+});
 // Builds the fixed-bottom navigator ONCE with all 40 questions grouped by
 // Part (instead of showPart() rebuilding just the current part's 10 pills).
 // A pill click switches to the right Part first (showPart), then scrolls/
@@ -1342,8 +1357,7 @@ function buildFullQnav(){
     const el=document.querySelector(`.qchip[data-q="${q.id}"],.mc-block[data-q="${q.id}"]`);
     el.scrollIntoView({block:'center',behavior:'smooth'});
     el.querySelector('input')?.focus({preventScroll:true});
-    document.querySelectorAll('#qnavInner .qnav-pill.active').forEach(p=>p.classList.remove('active'));
-    button.classList.add('active');
+    setCurrentQuestion(q.id);
    };
    inner.append(button);
   }
@@ -1480,6 +1494,8 @@ async function start(){
    anchorWall=Math.max(Date.now(),attempt.lastNow);anchorMono=performance.now();persist();
    $('startScreen').hidden=true;$('exam').hidden=false;$('partNav').hidden=false;$('candidate').textContent=`${attempt.name} · ${attempt.cycleId}`;
    buildFullQnav();restoreAnswers();showPart(1);
+   const firstPill=document.querySelector('#qnavInner .qnav-pill');
+   if(firstPill)setCurrentQuestion(firstPill.dataset.q);
    if(attempt.phase==='submitted'){stopAudio();displayResult();document.querySelectorAll('main input').forEach(el=>el.disabled=true);$('phaseLabel').textContent='Test submitted';if(!attempt.saved)send();}
    else{tick();if(attempt.phase==='review')stopAudio();if(attempt.phase==='listening')await continueAudio();timerHandle=setInterval(tick,200);}
    await new Promise(resolve=>releaseLock=resolve);

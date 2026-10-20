@@ -118,17 +118,100 @@
 }
 .passage-tabs{ border-radius:var(--radius-lg) var(--radius-lg) 0 0; }
 
+/* -- Brand color fix (dark mode): each Reading file's own dark-mode
+   variable blocks (@media(prefers-color-scheme:dark) and
+   [data-theme="dark"]) redefine --brand/--accent/--success/--answered to
+   an off-brand mint (#34D399/#10B981) and --heading to #6EE7B7. This
+   overrides them back to shades from the official brand scale
+   (#A0D2B5/#70BB91/#41A56C/#15934E/#0F7F3F/#08602C) — #41A56C reads
+   clearly as the same green family and keeps AA-level contrast against
+   this engine's dark backgrounds (~5.4:1), unlike the literal main green
+   at this exact text size (~4.2:1). --brand-dark/--accent-dark keep the
+   main #15934E as the "darker" companion shade. Scoped to
+   :has(.passage-pane), a class unique to this Reading full-test markup,
+   so it can never leak into the Listening engine's own unrelated
+   (already brand-correct) --accent token. -- */
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]):has(.passage-pane){
+    --brand:#41A56C; --brand-dark:#15934E;
+    --heading:#41A56C; --accent:#41A56C; --accent-dark:#15934E;
+    --success:#41A56C; --answered:#41A56C;
+  }
+}
+:root[data-theme="dark"]:has(.passage-pane){
+  --brand:#41A56C; --brand-dark:#15934E;
+  --heading:#41A56C; --accent:#41A56C; --accent-dark:#15934E;
+  --success:#41A56C; --answered:#41A56C;
+}
+
+/* -- Passage title must read as black/ink text, not solid brand green
+   (req: "tên passage phải màu đen"). --heading is shared with other
+   green UI text (score figures, section titles) so it's left alone;
+   only this specific selector is retargeted. A small green accent bar
+   stays next to the title rather than coloring the text itself. In dark
+   mode, use the page's own light body-text color instead of forcing
+   black onto a dark background. -- */
+.passage-pane h2{
+  color:var(--lu-ink);
+  border-left:3px solid var(--brand);
+  padding-left:10px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .passage-pane h2{ color:var(--text); }
+}
+:root[data-theme="dark"] .passage-pane h2{ color:var(--text); }
+
+/* -- Reading passage text must not justify on mobile: justify-spacing
+   between words gets uneven/large at narrow widths. Scoped to the same
+   900px breakpoint the engine already uses to stack the two panes;
+   desktop/tablet keep the existing justified layout. -- */
+@media (max-width:900px){
+  .passage-pane p{ text-align:left; text-justify:auto; }
+}
+
 /* -- Selected-answer state: light yellow (was green tint). This only
-   touches the "currently picked, not graded yet" state — .opt-correct/
-   .opt-wrong (applied after submit, each file's own CSS) stay green/red
-   because they're defined later in that file's cascade. -- */
-.tfn-options label:has(input:checked),
-.ynng-options label:has(input:checked),
-.mcq-options label:has(input:checked),
-.checkbox-options label:has(input:checked){
+   touches the "currently picked, not graded yet" state. Once grading has
+   run, each file's JS adds .opt-correct/.opt-wrong to the same <label>
+   that still carries the checked input, so :has(input:checked) and
+   .opt-correct/.opt-wrong land on the SAME element with equal selector
+   specificity — source order alone would let this yellow rule win since
+   theme.css loads last. The explicit :not() exclusions below restrict
+   yellow to the ungraded state only, so post-grading green/red always
+   wins regardless of cascade order (fixes yellow bg/border overriding
+   correct/wrong feedback in Reading review). -- */
+.tfn-options label:has(input:checked):not(.opt-correct):not(.opt-wrong),
+.ynng-options label:has(input:checked):not(.opt-correct):not(.opt-wrong),
+.mcq-options label:has(input:checked):not(.opt-correct):not(.opt-wrong),
+.checkbox-options label:has(input:checked):not(.opt-correct):not(.opt-wrong){
   border-color:#E8C94A;
   background:var(--lu-yellow-soft);
   box-shadow:0 0 0 1px #E8C94A;
+}
+
+/* -- Each file ALSO carries its own older, native ".tfn-options
+   label:has(input:checked)" (and ynng/mcq/checkbox equivalents) selected-
+   state rule, predating the shared yellow treatment above — it recolors
+   a checked option green-tinted independently of theme.css. Its
+   selector (class + element + :has(element:pseudo-class)) computes to
+   higher specificity than ".opt-correct"/".opt-wrong" ((0,2,2) vs
+   (0,2,1)), so a WRONG answer that is still selected (the student's own
+   pick) shows that leftover green "selected" tint instead of red — the
+   same failure mode as the yellow bug above, just from a different,
+   file-native rule theme.css doesn't otherwise touch. These !important
+   declarations are scoped to exactly .opt-correct/.opt-wrong so grading
+   feedback always wins over ANY "currently selected" styling, present or
+   future, regardless of which stylesheet or selector introduces it. -- */
+.tfn-options label.opt-correct,.ynng-options label.opt-correct,
+.mcq-options label.opt-correct,.checkbox-options label.opt-correct{
+  border-color:var(--success) !important;
+  background:var(--success-bg) !important;
+  box-shadow:none !important;
+}
+.tfn-options label.opt-wrong,.ynng-options label.opt-wrong,
+.mcq-options label.opt-wrong,.checkbox-options label.opt-wrong{
+  border-color:var(--danger) !important;
+  background:var(--danger-bg) !important;
+  box-shadow:none !important;
 }
 
 /* -- Fixed bottom question navigator: one flowing row, grouped by Part -- */
@@ -161,7 +244,19 @@
   flex:0 0 auto;
 }
 .nav-btn:hover{ border-color:var(--border); background:var(--panel); }
-.nav-btn.flash{ box-shadow:inset 0 -2px 0 #5B9BF5; background:none; }
+/* "Current question" marker — persistent (set on nav click AND on answer-
+   field focus, see each file's own <script>), styled as a brand-green
+   underline + subtle glow rather than a solid fill. Kept to box-shadow so
+   it layers on top of .answered/.correct/.incorrect instead of
+   overriding their background; the background:none reset only applies
+   when none of those states are present, so a current+answered/correct/
+   incorrect question never loses its own color. */
+.nav-btn.current{
+  box-shadow:inset 0 -2px 0 var(--lu-green), 0 0 0 3px rgba(21,147,78,.16);
+}
+.nav-btn.current:not(.answered):not(.correct):not(.incorrect){
+  background:none;
+}
 
 /* Reserve room at the very bottom of the exam screen so the fixed
    navigator above never overlaps the last line of content. */
@@ -185,10 +280,43 @@ body{ font-family:var(--font-transcript); }
 h1.page-title,.section-heading,.notes-title,.script-pane-title,.brand-word,.exam-button,
 .entry-section-title,.guide-title,.rules-subtitle{ font-family:var(--font); }
 table.qtable th{ background:var(--primary); color:#fff; border-color:var(--primary-dark); }
-.qchip{ border-color:var(--primary-tint-strong); background:var(--primary-tint); }
-.qchip-num{ background:var(--primary); color:#fff; border-radius:999px; min-width:24px; height:24px; padding:0 8px; }
-.answer-input{ border:1.5px solid var(--primary-tint-strong); background:var(--primary-tint); border-radius:999px; padding:7px 14px; }
-.answer-input:focus{ outline:none; border-color:var(--accent); background:var(--accent-tint); box-shadow:0 0 0 3px var(--accent-tint-strong); }
+/* -- Req 7: unified answer-box. Markup is unchanged — .qchip already
+   wraps .qchip-num + .answer-input (and, inline-in-prose, .qchip-play)
+   as a single element — only the visual treatment changes from "two
+   overlapping pill shapes" (a round number chip + a separately
+   999px-pill input) to ONE moderately-rounded box. overflow:hidden on
+   .qchip clips both children to its own radius, so neither child needs
+   its own border-radius. Default: light green fill + green border;
+   turns yellow only while the input is actually focused (:has() lets
+   the whole box react to focus inside it, not just the input slice).
+   Post-grading colors (.qchip.is-correct/.is-wrong, set by this file's
+   own JS after submit) are defined in the file's own CSS and are MORE
+   specific than the plain .qchip rules below, so they keep winning and
+   are never covered by the focus-yellow. -- */
+.qchip{
+  border-radius:8px;
+  overflow:hidden;
+  border-color:var(--primary-tint-strong);
+  background:var(--primary-tint);
+}
+.qchip:hover{ border-color:var(--primary); }
+.qchip:has(.answer-input:focus):not(.is-correct):not(.is-wrong){
+  border-color:#E8C94A;
+  background:var(--lu-yellow-soft);
+}
+.qchip-num{ background:transparent; color:var(--primary-dark); border-radius:0; min-width:24px; height:28px; padding:0 8px; }
+.qchip.is-answered .qchip-num{ background:transparent; color:var(--ink); }
+.answer-input{
+  border:none;
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+  /* Req 6: content font is Inter everywhere, incl. answer inputs — this
+     previously used var(--font) (Plus Jakarta Sans, headings-only). */
+  font-family:var(--font-transcript);
+}
+.answer-input:focus{ outline:none; border:none; background:transparent; box-shadow:none; }
+select.answer-input,textarea.answer-input,button.answer-input{ font-family:var(--font-transcript); }
 .map-card{ border-color:var(--border); box-shadow:var(--shadow-card); }
 .left-pane,.script-pane,.exam-card{ box-shadow:var(--shadow-card); }
 /* Result screen ("Kết quả bài làm") — bold green top bar, matching the
@@ -242,10 +370,20 @@ table.qtable th{ background:var(--primary); color:#fff; border-color:var(--prima
   border-radius:4px;
 }
 .qnav-pill:hover{ border-color:var(--border); background:var(--bg); color:var(--ink); }
-/* "Current question" marker: a light underline, not a solid fill — kept
-   to box-shadow only so it layers on top of .answered/.is-review-correct/
-   .is-review-wrong without overriding their background colors. */
-.qnav-pill.active{ box-shadow:inset 0 -2px 0 #5B9BF5; }
+/* "Current question" marker: a green underline + subtle glow, not a blue
+   underline and not the file's own solid-fill/white-text treatment
+   (.qnav-pill.active{background:var(--primary);color:#fff} in this
+   file's own CSS). The box-shadow is unconditional so it layers on top
+   of .answered/.is-review-correct/.is-review-wrong; the solid-fill reset
+   only applies when none of those are present, so an active question
+   that is ALSO answered/correct/wrong keeps that state's own color
+   instead of losing it. */
+.qnav-pill.active{ box-shadow:inset 0 -2px 0 var(--primary), 0 0 0 3px rgba(21,147,78,.16); }
+.qnav-pill.active:not(.answered):not(.is-review-correct):not(.is-review-wrong){
+  background:none;
+  border-color:transparent;
+  color:var(--ink);
+}
 /* Old floating Part switcher — superseded by the bar above. */
 .part-nav{ display:none; }
 /* Leave room at the bottom of the exam content for the fixed bar
@@ -271,3 +409,62 @@ body:not(.rv-result):not(.rv-review):has(#exam:not([hidden])) .brand-row{
 }
 .exam-status{ padding:8px 20px; }
 #timer{ font-size:18px; }
+
+/* =====================================================================
+   Listening correction — left (question/answer table) vs right (script)
+   column balance
+   =====================================================================
+   The file's own CSS sets body.is-review-listening .split-layout to
+   grid-template-columns:1fr 1.4fr (favoring the script side) and
+   table.qtable to min-width:720px regardless of mode. At 1440px wide,
+   that leaves the left column only ~480px while a 2-3 column notes
+   table (long prose + an inline answer box per cell) naturally wants
+   ~900px+, forcing .table-scroll's overflow-x:auto to kick in — so the
+   question/answer columns are hidden behind a horizontal scrollbar
+   right next to the script the student is trying to compare them
+   against. Fix: rebalance the ratio toward the table side, drop the
+   hard min-width floor so the table can actually shrink instead of
+   just overflowing, and let cell content wrap. Content/order unchanged;
+   nothing is shrunk below a legible size. -- */
+/* Scoped to the file's own ">980px" desktop/tablet breakpoint (its CSS
+   already stacks .split-layout to a single full-width column at
+   <=980px) -- an earlier version of this rule had no such guard and
+   ended up fighting that stacking rule at mobile widths, forcing the
+   table pane down to a ~150px sliver with single-letter-wrapped header
+   text instead of the intended full-width stacked layout. */
+@media (min-width:981px){
+  body.is-review-listening .split-layout{
+    grid-template-columns:1.35fr 1fr;
+  }
+  body.is-review-listening .left-pane{
+    padding:16px 14px 16px 18px;
+  }
+}
+body.is-review-listening table.qtable{
+  min-width:0;
+  width:100%;
+  /* table-layout:fixed is what actually makes the container width win:
+     in the default "auto" mode the browser sizes columns to fit the
+     longest unbroken line first and only shrinks/wraps as a last
+     resort, which is why width:100% alone did not stop the overflow
+     (an inline answer box + feedback text inside a cell is enough to
+     keep a column's preferred width wide). Fixed layout distributes
+     the container's actual width up front, so wrapping always kicks
+     in instead of pushing the table wider than its pane. */
+  table-layout:fixed;
+}
+body.is-review-listening table.qtable td,
+body.is-review-listening table.qtable th{
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+/* The inline answer box only needs to fit the student's actual (usually
+   short) submitted word — the separate "Đáp án đúng: …" feedback text
+   already wraps on its own line, so this doesn't hide anything. */
+body.is-review-listening .answer-input{
+  width:auto;
+  min-width:44px;
+  max-width:100%;
+}
+/* Below the two-column breakpoint the file's own CSS already stacks the
+   columns full-width, so the rebalanced ratio above doesn't apply there. */
