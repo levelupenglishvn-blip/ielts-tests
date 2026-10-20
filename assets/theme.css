@@ -71,6 +71,10 @@
 .lu-clock-icon svg{ width:100%; height:100%; display:block; }
 .lu-timer-row{ display:flex; align-items:center; gap:6px; }
 
+/* ---------- Result screen accent border (matches reference mockup: bold
+   green top bar on the "Kết quả bài làm" card, not just a hairline) ---------- */
+.result-card{ border-top-width:8px; }
+
 /* =====================================================================
    Listening Full Test — harmonization overrides (visual only)
    =====================================================================
@@ -99,3 +103,7 @@ table.qtable th{ background:var(--primary); color:#fff; border-color:var(--prima
 .part-nav-btn.active{ box-shadow:0 2px 8px rgba(21,147,78,.35); }
 .map-card{ border-color:var(--border); box-shadow:var(--shadow-card); }
 .left-pane,.script-pane,.exam-card{ box-shadow:var(--shadow-card); }
+/* Result screen ("Kết quả bài làm") — bold green top bar, matching the
+   Reading result card's accent border above. #result already carries
+   class="exam-card" for its base box styling; this only adds the bar. */
+#result{ border-top:8px solid var(--primary); }
