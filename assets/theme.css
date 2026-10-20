@@ -9,6 +9,16 @@
    ===================================================================== */
 
 :root{
+  /* Tells the browser this page already implements its own light/dark
+     styling via prefers-color-scheme / [data-theme], so it should not
+     ALSO apply its own heuristic "auto-darken this page" repaint on top
+     (Chrome/Chromium's built-in forced-dark mode). Without this, some
+     small bordered UI pieces (word-bank tiles, filled answer chips) can
+     get heuristically re-colored by the browser independently of this
+     stylesheet -- inverted to a light fill with dark text -- even though
+     every rule below already resolves to correct dark-mode colors. This
+     is a one-line opt-out, not a visual change of our own. */
+  color-scheme: light dark;
   --lu-green:#15934E;
   --lu-green-dark:#119446;
   --lu-ink:#1D1E1E;
@@ -29,6 +39,24 @@
   --lu-shadow-pop:0 10px 28px rgba(29,30,30,0.16);
   --lu-font-body:'Inter',Arial,Helvetica,sans-serif;
   --lu-font-heading:'Plus Jakarta Sans',Arial,Helvetica,sans-serif;
+}
+
+/* -- Pre-grading "selected" yellow (TFN/YNNG/MCQ/checkbox) must stay
+   legible in dark mode. --lu-yellow-soft is a pale cream (#FFF8E1) with
+   no dark-mode variant, so in dark mode the pill kept that pale fill
+   while the option text used the dark theme's light-gray color -- near
+   white text on near-white yellow, almost unreadable. Dark mode now uses
+   a translucent amber tint instead of a solid pale fill, so the dark
+   page background still shows through and the existing light text stays
+   legible; the gold border is unchanged since it already reads fine on
+   a dark surface. -- */
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --lu-yellow-soft: rgba(255,231,110,0.16);
+  }
+}
+:root[data-theme="dark"]{
+  --lu-yellow-soft: rgba(255,231,110,0.16);
 }
 
 /* ---------- Brand eyebrow bar (additive; sits above a page's own header) ---------- */
