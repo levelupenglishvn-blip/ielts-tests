@@ -732,6 +732,42 @@
 
   .footer-nav-part { border-radius: var(--radius); box-shadow: var(--shadow-card); }
   .nav-btn { border-radius: var(--radius-sm); }
+
+  /* ===== Result popup ("Kết quả bài làm"), synced from the other Reading
+     tests — visual/structural addition only; score source is still the
+     existing calculateResults()/computeWrongQuestionsByPassage(). ===== */
+  .result-overlay {
+    position: fixed; inset: 0; z-index: 1000;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(20, 27, 46, 0.55);
+    padding: 16px;
+  }
+  .result-overlay[hidden] { display: none; }
+  .result-card {
+    background: var(--bg); color: var(--text);
+    width: 100%; max-width: 580px; max-height: 92vh; overflow-y: auto;
+    border-radius: var(--radius-lg); box-shadow: var(--shadow-pop);
+    padding: 26px 28px 22px;
+    border-top: 5px solid var(--brand);
+  }
+  .result-card h2 { margin: 0 0 2px 0; font-size: 21px; font-family: var(--font-heading); color: var(--heading); }
+  .result-student { font-size: 13px; color: var(--muted); margin-bottom: 16px; }
+  .result-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+  .result-metric { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px; }
+  .result-metric .m-label { display: block; font-size: 11.5px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .result-metric strong { font-family: var(--font-heading); font-size: 26px; font-variant-numeric: tabular-nums; }
+  .result-metric.is-main strong { color: var(--brand-dark); }
+  .result-metric.is-wrong strong { color: var(--danger); }
+  .result-section-title { font-size: 12.5px; font-weight: bold; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); margin: 6px 0 8px; }
+  .result-passages { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 12px; }
+  .result-passages .result-metric strong { font-size: 21px; }
+  .result-note { font-size: 12.5px; color: var(--muted); margin: 0 0 12px 0; }
+  .result-actions { display: flex; gap: 10px; justify-content: flex-end; }
+  @media (max-width: 520px) {
+    .result-card { padding: 20px 16px 16px; }
+    .result-passages { grid-template-columns: 1fr; }
+    .result-metric strong { font-size: 23px; }
+  }
 </style>
 </head>
 <body>
@@ -824,8 +860,10 @@
     </div>
     <div class="score-summary-block" id="score-summary-block">
       <span>Điểm: <span class="score-value" id="header-score"></span></span>
+      <span>&nbsp;·&nbsp;Band: <span class="score-value" id="header-band"></span></span>
       <span>&nbsp;·&nbsp;Thời gian làm bài: <span id="header-time-used"></span></span>
     </div>
+    <button class="submit-header-btn" id="show-result-btn" style="display:none">Kết quả</button>
     <button class="submit-header-btn" id="submit-btn">Nộp bài</button>
   </div>
 
@@ -1196,6 +1234,28 @@
   </div>
 </div>
 
+<!-- ============ RESULT BOX (after submit) ============ -->
+<div class="result-overlay" id="result-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="result-title">
+  <div class="result-card">
+    <h2 id="result-title">Kết quả bài làm</h2>
+    <div class="result-student" id="res-student"></div>
+    <div class="result-metrics">
+      <div class="result-metric is-main"><span class="m-label">Total Score</span><strong id="res-score"></strong></div>
+      <div class="result-metric is-main"><span class="m-label">IELTS Band</span><strong id="res-band"></strong></div>
+      <div class="result-metric is-wrong"><span class="m-label">Incorrect Answers</span><strong id="res-wrong"></strong></div>
+      <div class="result-metric"><span class="m-label">Unanswered Questions</span><strong id="res-unanswered"></strong></div>
+    </div>
+    <div class="result-section-title">Câu sai theo từng Passage</div>
+    <div class="result-passages">
+      <div class="result-metric is-wrong"><span class="m-label">Passage 1 Wrong</span><strong id="res-p1-wrong"></strong></div>
+      <div class="result-metric is-wrong"><span class="m-label">Passage 2 Wrong</span><strong id="res-p2-wrong"></strong></div>
+      <div class="result-metric is-wrong"><span class="m-label">Passage 3 Wrong</span><strong id="res-p3-wrong"></strong></div>
+    </div>
+    <p class="result-note">Câu bỏ trống được tính là câu sai (đã nằm trong &ldquo;Incorrect Answers&rdquo;). Thời gian làm bài: <span id="res-time"></span>.</p>
+    <div class="result-actions"><button type="button" class="btn-primary" id="res-close-btn">Xem lại bài làm</button></div>
+  </div>
+</div>
+
 <script>
 (function () {
   "use strict";
@@ -1543,7 +1603,9 @@
     els.reviewBanner.style.display = "inline-block";
     els.scoreSummaryBlock.style.display = "flex";
     els.headerScore.textContent = results.score + " / " + TOTAL_QUESTIONS;
+    els.headerBand.textContent = readingBand(results.score).toFixed(1);
     els.headerTimeUsed.textContent = formatTime(attempt.timeUsed);
+    renderResultBox(results, attempt.timeUsed);
 
     els.startScreen.style.display = "none";
     els.testScreen.style.display = "flex";
@@ -2106,6 +2168,50 @@
     return wrong;
   }
 
+  // ---------- Result popup (synced from the other Reading tests) ----------
+  var READING_BANDS = [[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5],[0,0]];
+  function readingBand(raw) {
+    for (var i = 0; i < READING_BANDS.length; i++) {
+      if (raw >= READING_BANDS[i][0]) return READING_BANDS[i][1];
+    }
+    return 0;
+  }
+
+  function countUnanswered() {
+    var n = 0;
+    for (var q = 1; q <= TOTAL_QUESTIONS; q++) {
+      if (!Object.prototype.hasOwnProperty.call(state.answers, q)) n++;
+    }
+    return n;
+  }
+
+  function renderResultBox(results, elapsedSeconds) {
+    els.resStudent.textContent = "Học viên: " + state.studentName;
+    els.resScore.textContent = results.score + " / " + TOTAL_QUESTIONS;
+    els.resBand.textContent = readingBand(results.score).toFixed(1);
+    els.resWrong.textContent = String(TOTAL_QUESTIONS - results.score);
+    els.resUnanswered.textContent = String(countUnanswered());
+    [1, 2, 3].forEach(function (p) {
+      var ps = results.passageScores[p];
+      document.getElementById("res-p" + p + "-wrong").textContent = String(ps.total - ps.correct);
+    });
+    els.resTime.textContent = formatTime(elapsedSeconds);
+    els.showResultBtn.style.display = "inline-block";
+  }
+
+  var resultOpener = null;
+  function openResultBox() {
+    resultOpener = document.activeElement;
+    els.resultOverlay.hidden = false;
+    els.resCloseBtn.focus();
+  }
+
+  function closeResultBox() {
+    els.resultOverlay.hidden = true;
+    if (resultOpener && resultOpener.focus) { try { resultOpener.focus(); } catch (e) {} }
+    resultOpener = null;
+  }
+
   function submitTest(isAutoSubmit) {
     if (state.submitted) return;
     state.submitted = true;
@@ -2126,7 +2232,10 @@
     els.submitBtn.style.display = "none";
     els.scoreSummaryBlock.style.display = "flex";
     els.headerScore.textContent = results.score + " / " + TOTAL_QUESTIONS;
+    els.headerBand.textContent = readingBand(results.score).toFixed(1);
     els.headerTimeUsed.textContent = formatTime(elapsedSeconds);
+    renderResultBox(results, elapsedSeconds);
+    openResultBox();
 
     var submittedAt = new Date().toISOString();
 
@@ -2229,8 +2338,18 @@
     els.timerValue = document.getElementById("timer-value");
     els.scoreSummaryBlock = document.getElementById("score-summary-block");
     els.headerScore = document.getElementById("header-score");
+    els.headerBand = document.getElementById("header-band");
     els.headerTimeUsed = document.getElementById("header-time-used");
     els.submitBtn = document.getElementById("submit-btn");
+    els.showResultBtn = document.getElementById("show-result-btn");
+    els.resultOverlay = document.getElementById("result-overlay");
+    els.resStudent = document.getElementById("res-student");
+    els.resScore = document.getElementById("res-score");
+    els.resBand = document.getElementById("res-band");
+    els.resWrong = document.getElementById("res-wrong");
+    els.resUnanswered = document.getElementById("res-unanswered");
+    els.resTime = document.getElementById("res-time");
+    els.resCloseBtn = document.getElementById("res-close-btn");
 
     els.nameContinueBtn.addEventListener("click", handleNameContinue);
     els.nameInput.addEventListener("keydown", function (e) { if (e.key === "Enter") handleNameContinue(); });
@@ -2241,6 +2360,10 @@
     els.reviewBtn.addEventListener("click", handleReviewClick);
     els.actionsBackBtn.addEventListener("click", handleActionsBack);
     els.submitBtn.addEventListener("click", handleManualSubmit);
+    els.showResultBtn.addEventListener("click", openResultBox);
+    els.resCloseBtn.addEventListener("click", closeResultBox);
+    els.resultOverlay.addEventListener("click", function (e) { if (e.target === els.resultOverlay) closeResultBox(); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !els.resultOverlay.hidden) closeResultBox(); });
 
     initPassageTabs();
     buildTfnOptions();
