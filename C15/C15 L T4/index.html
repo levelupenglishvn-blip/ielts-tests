@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-visual-pilot="listening">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -733,7 +733,8 @@ body.save-pending #result .score-row{filter:none}
 @media(max-width:900px){.map-layout,.match-layout{grid-template-columns:1fr}.map-figure,.topic-bank{position:static}.topic-bank{order:-1}}
 </style>
 <!-- ===== Level Up shared theme (visual only; harmonization rules live in theme.css) ===== -->
-<link rel="stylesheet" href="../../assets/theme.css"></head>
+<link rel="stylesheet" href="../../assets/theme.css">
+<link rel="stylesheet" href="../../assets/dark-mode-pilot.css"></head>
 <body>
 <button class="lu-theme-toggle" id="lu-theme-toggle" type="button" aria-label="Đổi chế độ sáng tối" aria-pressed="false">◐ Dark mode</button>
 
@@ -819,27 +820,27 @@ body.save-pending #result .score-row{filter:none}
         <p class="notes-title">Customer details</p>
         <ul class="notes">
           <li>Name: Sophie Bird</li>
-          <li>Occupation: <span class="qchip" data-q="1"><span class="qchip-num" data-q="1">1</span><input class="answer-input" data-q="1" aria-label="Answer 1" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span></li>
-          <li>Reason for travel today: <span class="qchip" data-q="2"><span class="qchip-num" data-q="2">2</span><input class="answer-input" data-q="2" aria-label="Answer 2" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span></li>
+          <li>Occupation: <span class="qchip" data-q="1"><span class="qchip-num" data-q="1">1</span><input class="answer-input" data-q="1" aria-label="Answer 1" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span></li>
+          <li>Reason for travel today: <span class="qchip" data-q="2"><span class="qchip-num" data-q="2">2</span><input class="answer-input" data-q="2" aria-label="Answer 2" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span></li>
         </ul>
         <p class="notes-title" style="margin-top:14px;">Journey information</p>
         <ul class="notes">
-          <li>Name of station returning to: <span class="qchip" data-q="3"><span class="qchip-num" data-q="3">3</span><input class="answer-input" data-q="3" aria-label="Answer 3" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span></li>
-          <li>Type of ticket purchased: standard <span class="qchip" data-q="4"><span class="qchip-num" data-q="4">4</span><input class="answer-input" data-q="4" aria-label="Answer 4" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> ticket</li>
-          <li>Cost of ticket: &pound;<span class="qchip" data-q="5"><span class="qchip-num" data-q="5">5</span><input class="answer-input" data-q="5" aria-label="Answer 5" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span></li>
+          <li>Name of station returning to: <span class="qchip" data-q="3"><span class="qchip-num" data-q="3">3</span><input class="answer-input" data-q="3" aria-label="Answer 3" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span></li>
+          <li>Type of ticket purchased: standard <span class="qchip" data-q="4"><span class="qchip-num" data-q="4">4</span><input class="answer-input" data-q="4" aria-label="Answer 4" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span> ticket</li>
+          <li>Cost of ticket: &pound;<span class="qchip" data-q="5"><span class="qchip-num" data-q="5">5</span><input class="answer-input" data-q="5" aria-label="Answer 5" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span></li>
           <li>When ticket was purchased: yesterday</li>
-          <li>Where ticket was bought: <span class="qchip" data-q="6"><span class="qchip-num" data-q="6">6</span><input class="answer-input" data-q="6" aria-label="Answer 6" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span></li>
+          <li>Where ticket was bought: <span class="qchip" data-q="6"><span class="qchip-num" data-q="6">6</span><input class="answer-input" data-q="6" aria-label="Answer 6" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span></li>
         </ul>
         <p class="notes-title" style="margin-top:14px;">Satisfaction with journey</p>
         <ul class="notes">
           <li>Most satisfied with: the wifi</li>
-          <li>Least satisfied with: the <span class="qchip" data-q="7"><span class="qchip-num" data-q="7">7</span><input class="answer-input" data-q="7" aria-label="Answer 7" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> this morning</li>
+          <li>Least satisfied with: the <span class="qchip" data-q="7"><span class="qchip-num" data-q="7">7</span><input class="answer-input" data-q="7" aria-label="Answer 7" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span> this morning</li>
         </ul>
         <p class="notes-title" style="margin-top:14px;">Satisfaction with station facilities</p>
         <ul class="notes">
-          <li>Most satisfied with: how much <span class="qchip" data-q="8"><span class="qchip-num" data-q="8">8</span><input class="answer-input" data-q="8" aria-label="Answer 8" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> was provided</li>
-          <li>Least satisfied with: lack of seats, particularly on the <span class="qchip" data-q="9"><span class="qchip-num" data-q="9">9</span><input class="answer-input" data-q="9" aria-label="Answer 9" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span></li>
-          <li>Neither satisfied nor dissatisfied with: the <span class="qchip" data-q="10"><span class="qchip-num" data-q="10">10</span><input class="answer-input" data-q="10" aria-label="Answer 10" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> available</li>
+          <li>Most satisfied with: how much <span class="qchip" data-q="8"><span class="qchip-num" data-q="8">8</span><input class="answer-input" data-q="8" aria-label="Answer 8" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span> was provided</li>
+          <li>Least satisfied with: lack of seats, particularly on the <span class="qchip" data-q="9"><span class="qchip-num" data-q="9">9</span><input class="answer-input" data-q="9" aria-label="Answer 9" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span></li>
+          <li>Neither satisfied nor dissatisfied with: the <span class="qchip" data-q="10"><span class="qchip-num" data-q="10">10</span><input class="answer-input" data-q="10" aria-label="Answer 10" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span> available</li>
         </ul>
       </section>
 
@@ -1009,32 +1010,32 @@ body.save-pending #result .score-row{filter:none}
 
         <p class="notes-title">19th century</p>
         <ul class="notes">
-          <li>For the first time, people&rsquo;s possessions were used to measure Britain&rsquo;s <span class="qchip" data-q="31"><span class="qchip-num" data-q="31">31</span><input class="answer-input" data-q="31" aria-label="Answer 31" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span>.</li>
-          <li>Developments in production of goods and in <span class="qchip" data-q="32"><span class="qchip-num" data-q="32">32</span><input class="answer-input" data-q="32" aria-label="Answer 32" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> greatly changed lives.</li>
+          <li>For the first time, people&rsquo;s possessions were used to measure Britain&rsquo;s <span class="qchip" data-q="31"><span class="qchip-num" data-q="31">31</span><input class="answer-input" data-q="31" aria-label="Answer 31" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span>.</li>
+          <li>Developments in production of goods and in <span class="qchip" data-q="32"><span class="qchip-num" data-q="32">32</span><input class="answer-input" data-q="32" aria-label="Answer 32" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span> greatly changed lives.</li>
         </ul>
 
         <p class="notes-title" style="margin-top:16px;">Manufacturing</p>
         <ul class="notes">
-          <li>The Industrial Revolution would not have happened without the new types of <span class="qchip" data-q="33"><span class="qchip-num" data-q="33">33</span><input class="answer-input" data-q="33" aria-label="Answer 33" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> that were used then.</li>
-          <li>The leading industry was <span class="qchip" data-q="34"><span class="qchip-num" data-q="34">34</span><input class="answer-input" data-q="34" aria-label="Answer 34" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> (its products became widely available).</li>
-          <li>New <span class="qchip" data-q="35"><span class="qchip-num" data-q="35">35</span><input class="answer-input" data-q="35" aria-label="Answer 35" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> made factories necessary and so more people moved into towns.</li>
+          <li>The Industrial Revolution would not have happened without the new types of <span class="qchip" data-q="33"><span class="qchip-num" data-q="33">33</span><input class="answer-input" data-q="33" aria-label="Answer 33" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span> that were used then.</li>
+          <li>The leading industry was <span class="qchip" data-q="34"><span class="qchip-num" data-q="34">34</span><input class="answer-input" data-q="34" aria-label="Answer 34" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span> (its products became widely available).</li>
+          <li>New <span class="qchip" data-q="35"><span class="qchip-num" data-q="35">35</span><input class="answer-input" data-q="35" aria-label="Answer 35" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span> made factories necessary and so more people moved into towns.</li>
         </ul>
 
         <p class="notes-title" style="margin-top:16px;">Transport</p>
         <ul class="notes">
           <li>The railways took the place of canals.</li>
           <li>Because of the new transport:</li>
-          <li>greater access to <span class="qchip" data-q="36"><span class="qchip-num" data-q="36">36</span><input class="answer-input" data-q="36" aria-label="Answer 36" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> made people more aware of what they could buy in shops.</li>
-          <li>when shopping, people were not limited to buying <span class="qchip" data-q="37"><span class="qchip-num" data-q="37">37</span><input class="answer-input" data-q="37" aria-label="Answer 37" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> goods.</li>
+          <li>greater access to <span class="qchip" data-q="36"><span class="qchip-num" data-q="36">36</span><input class="answer-input" data-q="36" aria-label="Answer 36" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span> made people more aware of what they could buy in shops.</li>
+          <li>when shopping, people were not limited to buying <span class="qchip" data-q="37"><span class="qchip-num" data-q="37">37</span><input class="answer-input" data-q="37" aria-label="Answer 37" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span> goods.</li>
         </ul>
 
         <p class="notes-title" style="margin-top:16px;">Retailing</p>
         <ul class="notes">
           <li>The first department stores were opened.</li>
           <li>The displays of goods were more visible:</li>
-          <li>inside stores because of better <span class="qchip" data-q="38"><span class="qchip-num" data-q="38">38</span><input class="answer-input" data-q="38" aria-label="Answer 38" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span>.</li>
-          <li>outside stores, because <span class="qchip" data-q="39"><span class="qchip-num" data-q="39">39</span><input class="answer-input" data-q="39" aria-label="Answer 39" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> were bigger.</li>
-          <li><span class="qchip" data-q="40"><span class="qchip-num" data-q="40">40</span><input class="answer-input" data-q="40" aria-label="Answer 40" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false"></span> that was persuasive became much more common.</li>
+          <li>inside stores because of better <span class="qchip" data-q="38"><span class="qchip-num" data-q="38">38</span><input class="answer-input" data-q="38" aria-label="Answer 38" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span>.</li>
+          <li>outside stores, because <span class="qchip" data-q="39"><span class="qchip-num" data-q="39">39</span><input class="answer-input" data-q="39" aria-label="Answer 39" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span> were bigger.</li>
+          <li><span class="qchip" data-q="40"><span class="qchip-num" data-q="40">40</span><input class="answer-input" data-q="40" aria-label="Answer 40" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span> that was persuasive became much more common.</li>
         </ul>
       </section>
 
