@@ -22,6 +22,7 @@
   function shell(inner) {
     const preview = !!S.preview;
     return h`<header class="s-top"><a class="brand" href="${preview ? '#/t' : '#/s'}">${LU.wordmark()}</a>
+      <a class="btn ghost sm" href="${base()}/pronunciation">Pronunciation Practice</a>
       ${preview ? h`<a class="btn ghost sm" href="#/t">← Giáo viên</a>` : h`<button class="btn ghost sm" data-action="logout">Đăng xuất</button>`}</header>
       <main class="s-wrap">${preview ? h`<div class="notice info" style="margin-top:0">Chế độ xem trước của giáo viên — đây là màn hình học viên sẽ thấy (chỉ đọc, không ghi nhận tiến độ).</div>` : ''}${inner}</main>`;
   }
@@ -53,6 +54,7 @@
     if (S.preview !== preview) { S.prog = null; S.sel = null; S.br = { q: '', group: '', sub: '' }; }
     S.preview = preview;
     rest = rest || [];
+    if (rest[0] === 'pronunciation') return pronunciationView(rest[1] ? decodeURIComponent(rest[1]) : '', navId);
     if (rest[0] === 'module' && rest[1]) return moduleView(decodeURIComponent(rest[1]), rest[2] || 'extra', rest[3] || '', navId);
     if (rest[0] === 'plan') return planView(Number(rest[1]), navId);
     if (rest[0] === 'practice') return browseView(navId);
@@ -240,6 +242,7 @@
   /** A module card from just an id (+status). Unknown ids (library changed) still show something harmless. `from` = where the student comes from ('lib' | 'plan<week>'). */
   function cardFor(id, wk, status, from, o) {
     const m = P.get(id);
+    if (m && m.pronunciationVersion === 1) return pronunciationView(id, navId);
     if (!m) return h`<li class="pcard"><span class="pc-main"><b class="pc-title">${id}</b><span class="pc-meta">Module này hiện không còn trong thư viện.</span></span>${status ? P.statusBadge(status) : ''}</li>`;
     return P.renderCard(m, Object.assign({ status: status || undefined, href: modHref(id, wk, from) }, o || {}));
   }
@@ -321,6 +324,21 @@
       catch (e) { if (navId !== LU.navId) return; LU.render(shell(h`${backLink(origin)}<div class="notice bad">${LU.errText(e, 'load')}</div>`)); return; }
     }
     renderModule(m, wk, origin);
+  }
+  async function pronunciationView(moduleId, navId) {
+    if (!(await load(navId, false))) return;
+    LU.render(shell(h`<div class="loading" role="status">Đang tải Pronunciation Practice…</div>`));
+    let data;
+    try {
+      data = await LU.api.call('getPronunciationPractice', S.preview ? { studentId: S.preview } : {});
+      if (!data || data.protocolVersion !== 1) throw new Error('Unsupported Pronunciation backend');
+    } catch (e) {
+      if (navId === LU.navId) LU.render(shell(h`<a class="btn ghost sm back" href="${base()}/plan">← Practice Plan</a><div class="notice info">Chưa thể tải Pronunciation Practice. Backend phát âm cần được kích hoạt hoặc kết nối lại. Lexis Practice vẫn dùng như trước.</div>`));
+      return;
+    }
+    if (navId !== LU.navId) return;
+    const back = moduleId ? base() + '/pronunciation' : base() + '/plan';
+    LU.render(shell(h`<a class="btn ghost sm back" href="${back}">← ${moduleId ? 'Pronunciation Practice' : 'Practice Plan'}</a><article class="module">${LU.pronunciationUI.practice(data, moduleId, base())}</article>`));
   }
   /** Where this student's view position of one module is kept for a reload: sessionStorage, per login session + module + assignment. Holds no token (only a hash in the key). */
   function viewStore(id, wk) {
