@@ -12,7 +12,7 @@
   const lines = v => String(v || '').split('\n').map(x => x.trim()).filter(Boolean);
   const uniq = a => a.filter((x, i) => a.indexOf(x) === i);
   const blankData = () => {
-    const d = { parts: {}, marking: {}, eligibility: '', eligibilityNote: '', teacherNote: '', practice: [''], recommendedPractice: [] };
+    const d = { pronunciation: { confirmed: [], revision: 0, pending: false }, parts: {}, marking: {}, eligibility: '', eligibilityNote: '', teacherNote: '', practice: [''], recommendedPractice: [] };
     LU.PARTS.forEach(p => { d.parts[p.key] = blankPart(); });
     LU.CRITERIA.forEach(c => { d.marking[c.id] = { issues: [], band: null, positive: '', improvement: '' }; });
     return d;
@@ -38,6 +38,7 @@
       d.marking[c.id][k] = uniq(lines(d.marking[c.id][k]).concat(old)).join('\n');
       LU.PARTS.forEach(p => { d.parts[p.key][c.id][k] = ''; });
     }));
+    if (src.pronunciation) d.pronunciation = { confirmed: LU.pronunciation.normalize(src.pronunciation.confirmed), revision: Number(src.pronunciation.revision) || 0, pending: !!src.pronunciation.pending };
     d.eligibility = src.eligibility || ''; d.eligibilityNote = src.eligibilityNote || ''; d.teacherNote = String(src.teacherNote || '');
     d.practice = src.practice && src.practice.length ? src.practice.slice() : [''];
     d.recommendedPractice = Array.isArray(src.recommendedPractice) ? src.recommendedPractice.map(x => typeof x === 'string' ? x : x.moduleId).filter(Boolean) : [];
@@ -84,6 +85,7 @@
     m.saving = true; m.sync = { state: 'saving', at: m.sync.at }; updateSyncBar();
     const rev = m.rev;
     try {
+      await LU.pronunciation.save(m);
       const res = await LU.api.call('saveDraft', { studentId: m.sid, week: m.week, data: payload() });
       m.base = res.session.updatedAt; m.weeks = res.weeks;
       const sameRev = m.rev === rev, adjusted = adoptAssignments(m, res.session, sameRev);
@@ -150,15 +152,65 @@
       } else if ((local.base || '') === M.base) M.step = Math.min(local.step || 0, STEPS.length - 1);
     }
     persistIfNeeded();
+    await loadPronunciation(M);
+    if (navId !== LU.navId) return;
     initTimer(); renderMock(); scheduleAuto();
     if (M.restored) LU.toast('Đã khôi phục bản nháp chưa lưu từ máy này.');
   };
   function newState(sid, week, name, content, previous, completed, data, base) {
     return { sid, week, name, content, previous, completed, data, base: base || '', step: 0, dirty: false, rev: 0, saving: false, again: false,
       sync: { state: 'ok', at: null }, result: null, asked: {}, finishErr: '', weeks: null, timer: null, autoT: null, restored: false,
-      assigned: {}, pr: { q: '', group: '', sub: '' }, sampOpen: {} };
+      pron: { ready: false, error: 'Chưa kết nối dịch vụ Pronunciation.', revision: data.pronunciation.revision, editRev: 0, dirty: !!data.pronunciation.pending, retest: [], history: [] }, assigned: {}, pr: { q: '', group: '', sub: '' }, sampOpen: {} };
   }
   function persistIfNeeded() { if (M.dirty) persist(); }
+  async function loadPronunciation(m) {
+    if (!m) return;
+    m.pron.dirty = !!m.data.pronunciation.pending;
+    try {
+      const result = await LU.pronunciation.load(m.sid, m.week);
+      if (M !== m) return;
+      const local = m.data.pronunciation;
+      if (local.pending && local.revision !== result.revision) {
+        const choice = await LU.choose({ title: 'Có hai bản lỗi Pronunciation khác nhau', body: 'Một tab khác đã lưu lỗi phát âm. Giữ bản trên hệ thống hay dùng các xác nhận trong bản nháp này?', choices: [{ id: 'server', label: 'Dùng bản trên hệ thống', cls: 'ghost' }, { id: 'local', label: 'Dùng bản nháp', cls: 'primary' }] });
+        if (M !== m) return;
+        if (choice !== 'local') { local.confirmed = result.confirmed; local.pending = false; }
+      } else if (!local.pending) local.confirmed = result.confirmed;
+      local.revision = result.revision;
+      m.pron.revision = result.revision; m.pron.pendingRequest = null; m.pron.dirty = !!local.pending; m.pron.ready = true; m.pron.error = '';
+      m.pron.retest = result.retest || []; m.pron.history = result.history || [];
+      if (local.pending) { m.dirty = true; persist(); }
+    } catch (e) {
+      if (M !== m) return;
+      m.pron.ready = false;
+      m.pron.error = e.code === 'BAD_REQUEST' ? 'Backend hiện chưa hỗ trợ lưu Pronunciation. Các chức năng cũ vẫn hoạt động.' : LU.errText(e, 'load');
+    }
+  }
+  LU.actions['m-pn-retry'] = async () => { const m = M; await loadPronunciation(m); if (M === m) rerender(); };
+  LU.actions['m-pn-toggle'] = el => {
+    if (!M || !M.pron.ready) return;
+    const term = el.dataset.term, issue = el.dataset.issue;
+    M.data.pronunciation.confirmed = LU.pronunciation.toggle(M.data.pronunciation.confirmed, term, issue);
+    M.data.pronunciation.pending = true; M.pron.dirty = true; M.pron.editRev++; touch();
+    const box = document.querySelector('.pn-marking'); if (box) box.outerHTML = LU.pronunciationUI.marking(M).s;
+    const next = Array.from(document.querySelectorAll('[data-action="m-pn-toggle"]')).find(b => b.dataset.term === term && b.dataset.issue === issue); if (next) next.focus();
+  };
+  LU.actions['m-pn-retest'] = async el => {
+    const m = M; if (!m || !m.pron.ready || m.pron.retestBusy) return;
+    const item = m.pron.retest[Number(el.dataset.index)]; if (!item) return;
+    const result = el.dataset.result, key = item.sourceWeek + '|' + LU.pronunciation.key(item);
+    m.pron.attempts = m.pron.attempts || {};
+    let attempt = m.pron.attempts[key];
+    if (!attempt || attempt.result !== result) attempt = m.pron.attempts[key] = { attemptId: LU.pronunciation.requestId(), result: result };
+    m.pron.retestBusy = true;
+    document.querySelectorAll('[data-action="m-pn-retest"]').forEach(b => b.disabled = true);
+    try {
+      await LU.api.call('recordPronunciationRetest', { studentId: m.sid, sourceWeek: item.sourceWeek, testWeek: m.week, term: item.term, issueId: item.issueId, result: result, attemptId: attempt.attemptId });
+      delete m.pron.attempts[key];
+      if (M === m) { await loadPronunciation(m); if (M === m) LU.toast('Đã lưu kết quả kiểm tra lại.'); }
+    } catch (e) { if (M === m) LU.toast(LU.errText(e, 'save'), true); }
+    finally { m.pron.retestBusy = false; if (M === m) { rerender(); const box = document.querySelector('.pn-retest'); if (box) box.open = true; } }
+  };
+
   LU.leave = function () {
     if (!M) return;
     clearTimeout(M.autoT); stopTick();
@@ -343,25 +395,21 @@
     if (!items.length) return h`<p class="rc none">Chưa có ghi chú trong mock</p>`;
     return h`<ul class="recap">${items.map(x => h`<li class="rc"><b>${x.p.label}</b> ${x.t.replace(/\n+/g, '; ')}</li>`)}</ul>`;
   }
-  function mkCell(c) {
-    const m = M.data.marking[c.id];
-    return h`<div class="mk-cell"><div class="mk-top"><div class="mk-name"><b>${c.en}</b></div>
-        <div class="band-pick"><button type="button" class="band-btn ${m.band === null ? 'empty' : ''}" data-action="m-bandmenu" data-c="${c.id}" aria-haspopup="listbox" aria-expanded="false" aria-label="Band ${c.en}"><span class="bv" data-now="${c.id}">${LU.fmtCrit(m.band)}</span><span class="caret" aria-hidden="true">▾</span></button>
+  function bandPicker(c) { const m = M.data.marking[c.id]; return h`<div class="band-pick"><button type="button" class="band-btn ${m.band === null ? 'empty' : ''}" data-action="m-bandmenu" data-c="${c.id}" aria-haspopup="listbox" aria-expanded="false" aria-label="Band ${c.en}"><span class="bv" data-now="${c.id}">${LU.fmtCrit(m.band)}</span><span class="caret" aria-hidden="true">▾</span></button>
           <div class="band-menu" role="listbox" aria-label="Chọn band ${c.en}" hidden>${LU.BANDS.map(b => h`<button type="button" role="option" class="band" data-action="m-band" data-c="${c.id}" data-b="${b}" aria-pressed="${m.band === b}">${b}</button>`)}
-            <button type="button" class="band-clear" data-action="m-band" data-c="${c.id}" data-b="">Bỏ chọn</button></div></div></div>
-      ${critRecap(c)}</div>`;
-  }
+            <button type="button" class="band-clear" data-action="m-band" data-c="${c.id}" data-b="">Bỏ chọn</button></div></div>`; }
   /** One criterion column of the post-mock feedback: strengths chips+text · improvements chips+text · diagnostic issues. */
   function fbCol(cr) {
     const sm = (LU.FB_SAMPLES && LU.FB_SAMPLES[cr.id]) || {}, m = M.data.marking[cr.id];
-    return h`<div class="crit-col" aria-label="${cr.en}"><div class="crit-h"><b>${cr.en}</b></div>
+    return h`<div class="pn-crit-row" aria-label="${cr.en}"><div class="pn-crit-head"><b>${cr.en}</b>${bandPicker(cr)}</div>${critRecap(cr)}<div class="pn-feedback-cols">
       ${LU.KINDS.map(k => {
         const key = cr.id + '.' + k.key, id = 'mk-' + key.replace(/\./g, '-'), list = sm[k.key] || [], val = m[k.key], have = lines(val);
         return h`<div class="fbbox ${k.key === 'positive' ? 'positive' : 'negative'}"><label for="${id}">${k.label}</label>
           <textarea id="${id}" data-input="m-mkfb" data-path="${key}" rows="3" placeholder="Gõ thêm…">${val}</textarea>
+          ${cr.id === 'pronunciation' && k.key === 'improvement' ? LU.pronunciationUI.marking(M) : ''}
           ${list.length ? h`<details class="smp-box" ${list.some(t => have.indexOf(t) !== -1) ? LU.raw('open') : ''}><summary>Gợi ý nhanh</summary><div class="samples" role="group" aria-label="${k.label} — gợi ý nhanh">${list.map((t, n) => h`<button type="button" class="smp" data-action="m-sample" data-path="${key}" data-n="${n}" aria-pressed="${have.indexOf(t) !== -1}">${t}</button>`)}</div></details>` : ''}</div>`;
       })}
-      <div class="issues-box"><span class="lbl">Diagnostic issues</span><div class="issue-tags" role="group" aria-label="Issues ${cr.en}">${cr.issues.map(i => h`<button type="button" class="itag" data-action="m-itag" data-c="${cr.id}" data-i="${i.id}" aria-pressed="${m.issues.indexOf(i.id) !== -1}">${i.label}</button>`)}</div></div></div>`;
+      </div><div class="issues-box"><span class="lbl">Diagnostic issues</span><div class="issue-tags" role="group" aria-label="Issues ${cr.en}">${cr.issues.map(i => h`<button type="button" class="itag" data-action="m-itag" data-c="${cr.id}" data-i="${i.id}" aria-pressed="${m.issues.indexOf(i.id) !== -1}">${i.label}</button>`)}</div></div>${cr.id === 'pronunciation' ? LU.pronunciationUI.retest(M) : ''}</div>`;
   }
   function finishRow() {
     const items = checkItems(), okAll = items.every(x => x.ok), miss = items.filter(x => !x.ok), np = M.data.recommendedPractice.length;
@@ -377,10 +425,10 @@
     const legacy = LU.PARTS.filter(p => d.parts[p.key].notes.trim());
     const prevBtn = M.previous ? h`<button type="button" class="btn ghost sm" data-action="m-copyprev">Dùng issues Tuần ${M.previous.week} làm điểm xuất phát</button>` : '';
     return h`<section class="final" aria-label="Marking và quyết định">
-      <div class="blk"><div class="ws-h"><h2>Marking</h2><span class="hint">Band từng tiêu chí là số nguyên 1–9 · Overall tự tính</span></div>
-        <div class="mk-grid">${LU.CRITERIA.map(c => mkCell(c))}<div class="overall" id="overall" aria-live="polite"></div></div></div>
-      <div class="blk"><div class="ws-h"><h2>Feedback</h2>${prevBtn}</div>
-        <div class="crit-grid">${LU.CRITERIA.map(cr => fbCol(cr))}</div>
+      <div class="blk"><div class="ws-h"><h2>Marking & Feedback</h2><span class="hint">Band từng tiêu chí là số nguyên 1–9 · Overall tự tính</span></div>
+        <div class="overall pn-scorebar" id="overall" aria-live="polite"></div>
+        ${prevBtn ? h`<div class="row">${prevBtn}</div>` : ''}
+        <div class="pn-feedback-list">${LU.CRITERIA.map(cr => fbCol(cr))}</div>
         ${legacy.length ? h`<div class="recap-notes"><h3>Ghi chú chung từ bản cũ</h3><ul>${legacy.map(p => h`<li><b>${p.label}</b><span class="rn">${d.parts[p.key].notes.trim()}</span></li>`)}</ul></div>` : ''}</div>
       <div class="blk"><div class="final-grid">
         <div class="field"><label for="t-note">NHẬN XÉT CUỐI <small>(học viên sẽ đọc)</small></label><textarea id="t-note" data-input="m-tnote" rows="3" maxlength="4000" placeholder="Nhận xét tổng kết cho học viên…">${d.teacherNote}</textarea></div>
@@ -530,6 +578,7 @@
     if (checkItems().some(x => !x.ok)) { m.step = 3; rerender(); return; }
     m.finishing = true; m.finishErr = ''; rerender();
     try {
+      await LU.pronunciation.save(m);
       const res = await LU.api.call(m.completed ? 'saveMock' : 'completeMock', { studentId: m.sid, week: m.week, data: payload() });
       m.finishing = false; m.weeks = res.weeks;
       LU.drafts.remove(m.sid, m.week); m.dirty = false; clearTimeout(m.autoT);
