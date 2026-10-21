@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://levelupenglishvn-blip.github.io/ielts-tests/speaking-tracker/docs/pronunciation-module.schema.json",
+  "title": "Level Up Pronunciation Module v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "id", "ipa", "title", "rules", "core", "retest"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "id": { "$ref": "#/$defs/id" },
+    "ipa": { "const": "en-GB" },
+    "title": { "$ref": "#/$defs/text" },
+    "category": { "type": "string" },
+    "target": { "type": "string" },
+    "rules": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "title", "issueIds", "evidenceRuleIds"],
+        "properties": {
+          "id": { "$ref": "#/$defs/id" }, "title": { "$ref": "#/$defs/text" },
+          "issueIds": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string" } },
+          "evidenceRuleIds": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string" } }
+        }
+      }
+    },
+    "core": {
+      "type": "object", "additionalProperties": false, "required": ["theory", "practice"],
+      "properties": {
+        "theory": { "type": "array", "minItems": 1, "items": { "type": "object", "additionalProperties": false, "required": ["id", "title", "text"], "properties": { "id": { "$ref": "#/$defs/id" }, "title": { "$ref": "#/$defs/text" }, "text": { "$ref": "#/$defs/text" } } } },
+        "practice": { "type": "array", "minItems": 1, "items": { "type": "object", "additionalProperties": false, "required": ["id", "ruleId", "target", "sentence"], "properties": { "id": { "$ref": "#/$defs/id" }, "ruleId": { "$ref": "#/$defs/id" }, "target": { "$ref": "#/$defs/text" }, "sentence": { "$ref": "#/$defs/text" } } } }
+      }
+    },
+    "media": {
+      "type": "array", "items": { "type": "object", "additionalProperties": false, "required": ["id", "type", "label", "url"], "properties": { "id": { "$ref": "#/$defs/id" }, "type": { "enum": ["audio", "video", "document", "reference"] }, "label": { "$ref": "#/$defs/text" }, "url": { "type": "string", "pattern": "^https://[^\\s]+$" } } }
+    },
+    "retest": {
+      "type": "array", "minItems": 1, "items": { "type": "object", "additionalProperties": false, "required": ["id", "ruleId", "prompt"], "properties": { "id": { "$ref": "#/$defs/id" }, "ruleId": { "$ref": "#/$defs/id" }, "prompt": { "$ref": "#/$defs/text" } } }
+    }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,79}$" },
+    "text": { "type": "string", "minLength": 1, "maxLength": 8000 }
+  }
+}
