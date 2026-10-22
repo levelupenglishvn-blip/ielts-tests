@@ -1,0 +1,40 @@
+/* Only the approved marking layout and Pronunciation components. Brand tokens stay in styles.css. */
+.final .pn-scorebar{display:flex;align-items:center;gap:16px;margin:0 0 22px;padding:14px 0;border:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);border-radius:0;background:#fff;color:var(--ink)}
+.final .pn-scorebar .big{padding:2px 18px;border-radius:3px;background:var(--yellow);font-size:36px;line-height:1.25;color:var(--ink)}
+.final .pn-scorebar .big.na{background:var(--grey-tint);color:var(--ink-3)}
+.final .pn-scorebar .why{min-width:0;flex:1;font-size:12.5px}
+.final .pn-feedback-list{display:grid;grid-template-columns:minmax(0,1fr);gap:18px}
+.final .pn-crit-row{padding:0;border:1px solid var(--line);border-radius:4px;min-width:0;background:#fff}
+.final .pn-crit-head{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 16px;border-bottom:1px solid var(--line)}
+.final .pn-crit-head>b{font-size:15px;font-weight:600;color:var(--green-dark)}
+.final .pn-crit-head .band-btn{font-size:22px;min-height:40px}
+.final .pn-crit-row>.recap,.final .pn-crit-row>.rc{padding:8px 16px 0;margin:0;font-size:12.5px}
+.final .pn-feedback-cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);align-items:start;gap:22px;padding:14px 16px 16px}
+.final .pn-feedback-cols>.fbbox{min-width:0}
+.final .pn-crit-row>.issues-box{margin:0 16px;padding:11px 0 14px}
+.pn-marking{margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
+.pn-review-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:13px}
+.pn-tags{display:flex;gap:6px;flex-wrap:wrap}
+.pn-suggestion-row{display:grid;grid-template-columns:minmax(50px,auto) minmax(0,1fr);gap:10px;align-items:start;padding-top:10px}
+.pn-suggestion-row>b{font-size:12.5px;padding-top:5px;overflow-wrap:anywhere;max-width:110px}
+.pn-tag{white-space:normal;text-align:left}
+.pn-tag[aria-pressed="true"]::before{content:"✓ ";font-weight:700}
+.pn-retained{margin-top:12px;padding-top:10px;border-top:1px solid var(--line)}
+.pn-retained .hint{margin-bottom:7px}
+.pn-empty{margin-top:10px}
+.pn-warning{margin:8px 0;color:var(--plum);font-size:12px;font-weight:400}
+.pn-retest{margin-top:18px;padding:0 16px 14px}
+.pn-retest summary,.pn-self-practice summary{display:flex;align-items:center;min-height:36px;cursor:pointer;font-size:13px;font-weight:600}
+.pn-retest summary::before,.pn-self-practice summary::before{content:"▸";margin-right:6px}
+.pn-retest[open]>summary::before,.pn-self-practice[open]>summary::before{content:"▾"}
+.pn-retest-row{display:flex;gap:12px;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding:12px 0;flex-wrap:wrap}
+.pn-retest-row>b{font-size:13px}
+.pn-evidence{padding:4px 9px;border-radius:3px;background:var(--plum-tint);color:var(--plum);font-size:12.5px}
+.pn-theory,.pn-practice-item{margin-top:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.pn-theory p{white-space:pre-line}
+.pn-self-practice{padding:8px 0;border-bottom:1px solid var(--line)}
+@media(max-width:680px){.final .pn-feedback-cols{grid-template-columns:minmax(0,1fr)}.pn-suggestion-row{grid-template-columns:1fr;gap:4px}.pn-suggestion-row>b{max-width:none}.final .pn-scorebar{flex-wrap:wrap}.final .pn-scorebar .why{flex-basis:100%}}
+@media(pointer:coarse){.pn-tag,.pn-retest button{min-height:44px}.final .pn-feedback-cols textarea{font-size:16px}}
+
+/* v2.8.1 fix: the extra header button must not push "Đăng xuất" off a 375px screen — let the header wrap instead */
+@media(max-width:430px){.s-top{flex-wrap:wrap;row-gap:8px}.s-top .btn.sm{padding-left:10px;padding-right:10px}}
