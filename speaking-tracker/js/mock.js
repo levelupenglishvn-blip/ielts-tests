@@ -152,7 +152,14 @@
       } else if ((local.base || '') === M.base) M.step = Math.min(local.step || 0, STEPS.length - 1);
     }
     persistIfNeeded();
-    await loadPronunciation(M);
+    // v2.9.1: do NOT block opening the mock on the Pronunciation round-trip (~2-3 s on Apps Script). Open now, fill the Pronunciation data in when it arrives.
+    const pm = M;
+    loadPronunciation(pm).then(() => {
+      if (M !== pm || navId !== LU.navId) return;
+      const a = document.activeElement;
+      if (a && /^(TEXTAREA|INPUT|SELECT)$/.test(a.tagName)) { const box = document.querySelector('.pn-marking'); if (box) box.outerHTML = LU.pronunciationUI.marking(M).s; }
+      else rerender();
+    });
     if (navId !== LU.navId) return;
     initTimer(); renderMock(); scheduleAuto();
     if (M.restored) LU.toast('Đã khôi phục bản nháp chưa lưu từ máy này.');
