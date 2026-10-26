@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>C16 R T2 Correction</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../assets/theme.css">
+<style>
+:root{
+  color-scheme:light;
+  --font-heading:'Plus Jakarta Sans',Arial,Helvetica,sans-serif;
+  --brand:#15934E;--brand-dark:#119446;--brand-tint:#ECF6F1;
+  --bg:#f5f6f5;--card:#ffffff;--text:#202020;--muted:#6f7771;--line:#dce0dc;--soft:#f4f5f3;--edge:#b2ada3;--focus:#8a7534;
+  --gold:#ffe563;--goldtext:#000000;
+  --ref:#2563EB;--ref-strong:#1D4ED8;--ref-bg:#2563eb1f;
+  --ctx-bg:#fbe4e1;--ctx-border:#000000;
+  --shadow:0 8px 28px #24312a12;
+  --correct-bg:#e3f4ea;--wrong-bg:#fdecea;--wrong:#c0392b;
+}
+[data-theme=dark]{
+  color-scheme:dark;
+  --brand:#34D399;--brand-dark:#10B981;--brand-tint:#113124;
+  --bg:#191b1a;--card:#222523;--text:#eeeeee;--muted:#afb7b0;--line:#404640;--soft:#292d29;--edge:#867f73;--focus:#d2b960;
+  --ctx-bg:#4b2a28;--ctx-border:#e6e6e6;
+  --ref:#60A5FA;--ref-bg:#3b82f633;
+  --shadow:0 8px 28px #0006;
+  --correct-bg:#173a29;--wrong-bg:#3a1f20;--wrong:#ef5350;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font:15px/1.65 Inter,Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+button{font:inherit;cursor:pointer;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 14px}
+button:hover{border-color:var(--edge)}
+button:focus-visible,[tabindex]:focus-visible,summary:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+
+/* ---------- header ---------- */
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:84px;padding:12px 26px;background:var(--card);border-bottom:1px solid var(--line)}
+.logo{font-size:10.5px;letter-spacing:.16em;font-weight:700;color:var(--brand)}
+h1{margin:2px 0 0;font:700 21px/1.25 var(--font-heading)}
+header small{color:var(--muted);font-size:12.5px}
+.toolbar{display:flex;gap:10px}
+
+/* ---------- pages / panes ---------- */
+.page{display:none}
+.page.active{display:block}
+.workspace{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:18px;padding:18px 22px 108px;height:calc(100vh - 84px)}
+.pane{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow-y:auto;padding:22px 26px;min-height:0}
+.eyebrow{font-size:11px;letter-spacing:.16em;font-weight:700;color:var(--brand)}
+.passage-title{margin:4px 0 8px;font:700 24px/1.3 var(--font-heading)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin:0 0 16px;font-size:12.5px;color:var(--muted);align-items:center}
+.legend .lg-box{display:inline-block;width:18px;height:12px;vertical-align:-1px;margin-right:6px;background:var(--ctx-bg);border:1px solid var(--ctx-border);border-radius:3px}
+.legend mark.answer-hl{padding:0 4px}
+
+/* ---------- passage paragraphs ---------- */
+.passage-p{margin:0 0 14px;padding:10px 12px 8px;border-radius:12px;border-left:3px solid transparent;scroll-margin-top:12px}
+.passage-p.active-context{border-left-color:var(--brand);background:var(--soft)}
+.paragraph-text{font-size:17.5px;line-height:1.85;text-align:left;color:var(--text)}
+
+/* Paragraph labels — SAME values as the Test file (size / weight / shape / colour) */
+.para-label{
+  display:flex;align-items:center;width:fit-content;
+  font-family:var(--font-heading);font-size:16px;font-weight:700;letter-spacing:.02em;line-height:1.3;
+  color:var(--brand-dark);background:var(--brand-tint);border:1px solid var(--brand);border-radius:999px;
+  padding:4px 14px;margin:4px 0 10px 0;text-align:left;-webkit-user-select:none;user-select:none;
+}
+
+/* Layer 1: Context Box — thin black rectangle, light-red fill, around the whole context.
+   Layer 2: Answer Highlight — yellow, black text, only the decisive words. Both show together. */
+.context-box{
+  display:block;margin:8px 0;padding:9px 14px;
+  background:var(--ctx-bg);border:1px solid var(--ctx-border);border-radius:6px;
+}
+mark.answer-hl{background:var(--gold);color:var(--goldtext);border-radius:4px;padding:1px 3px;font-weight:700;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+/* Layer 3 (Matching Names only): person / reference chain — medium blue, never green, never louder than the yellow */
+.ref-name{color:var(--ref);background:var(--ref-bg);border-bottom:2px solid var(--ref);border-radius:3px;padding:0 2px;font-weight:700}
+mark.answer-hl .ref-name{color:var(--ref-strong);background:transparent}
+[data-theme=dark] mark.answer-hl .ref-name{color:#1D4ED8}
+.legend .ref-name{font-weight:700}
+
+/* ---------- question pane ---------- */
+.hint{font-size:12.5px;color:var(--muted);margin:0 0 14px}
+.section-title{font:700 18px/1.4 var(--font-heading);border-bottom:1px solid var(--line);border-left:3px solid var(--brand);padding:6px 0 6px 10px;margin:22px 0 6px}
+.section-title:first-of-type{margin-top:6px}
+.q-instr{font-size:13.5px;color:var(--muted);margin:0 0 12px}
+.word-box{margin:10px 0 14px;border:1px solid var(--edge);border-radius:8px;overflow:hidden;background:var(--soft)}
+.word-box-title{padding:8px 12px;border-bottom:1px solid var(--line);font-size:11px;letter-spacing:1.4px;font-weight:700}
+.word-options{border-collapse:collapse;width:100%;table-layout:fixed;font-size:14px}
+.word-options td{width:50%;border-bottom:1px solid var(--line);padding:8px 10px;vertical-align:top;overflow-wrap:anywhere}
+.word-options td+td{border-left:1px solid var(--line)}
+.word-options tr:last-child td{border-bottom:0}
+.option-letter{display:inline-block;font-size:12px;font-weight:700;min-width:22px;color:var(--focus)}
+
+.question-block{border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:0 0 12px;background:var(--card);transition:border-color .18s,box-shadow .18s}
+.question-block:hover{border-color:var(--edge)}
+.question-block.active-question{border:1.5px solid var(--brand);box-shadow:0 0 0 5px #15934e0f}
+.question-block p{margin:0 0 8px}
+.question-number{display:inline-block;background:#202020;color:#fff;border-radius:6px;padding:1px 8px;margin-right:6px;font-weight:700;line-height:1.6}
+[data-theme=dark] .question-number{background:#e7e7e7;color:#202020}
+.q-label{font-size:12.5px;color:var(--muted)}
+.btn-answer{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:600;padding:5px 14px;border-radius:8px;font-size:13.5px}
+[data-theme=dark] .btn-answer{color:#0b1a12}
+.btn-answer:hover{filter:brightness(1.1);border-color:var(--brand)}
+.explanation-box{display:none;margin-top:10px;padding:10px 14px;background:var(--soft);border-left:3px solid var(--brand);border-radius:8px;font-size:14.5px}
+.explanation-box.show{display:block}
+.explanation-box .ans{font-weight:700}
+.explanation-box p{margin:6px 0 0}
+
+/* MCQ */
+.choice-item{border:1px solid var(--line);border-radius:10px;padding:9px 12px;margin:7px 0;cursor:pointer;font-size:14.5px;display:flex;gap:9px;align-items:flex-start;flex-wrap:wrap}
+.choice-item:hover{border-color:var(--edge)}
+.choice-item .cl{display:inline-flex;align-items:center;justify-content:center;flex:0 0 26px;width:26px;height:26px;border:1.5px solid var(--edge);border-radius:50%;font-weight:600;font-size:12.5px;color:var(--muted)}
+.choice-item .ct{flex:1 1 200px}
+.choice-item.selected{border-color:var(--brand);box-shadow:0 0 0 2px #15934e14}
+.choice-item.is-correct{border-color:var(--brand);background:var(--correct-bg)}
+.choice-item.is-correct .cl{background:var(--brand);border-color:var(--brand);color:#fff}
+.choice-item.is-wrong{border-color:var(--wrong);background:var(--wrong-bg)}
+.mcq-info-box{display:none;flex-basis:100%;margin:4px 0 0 35px;padding:7px 10px;border-left:2px solid var(--edge);background:var(--soft);border-radius:6px;font-size:13.5px}
+.mcq-info-box.show{display:block}
+
+/* summary with gaps — inline correction */
+.gap-wrap{white-space:nowrap}
+.ans-btn{display:inline;font-size:11.5px;font-weight:700;line-height:1.5;padding:0 7px;margin-left:3px;border-radius:6px;color:var(--brand-dark);background:var(--brand-tint);border:1px solid var(--brand);vertical-align:baseline}
+.ans-btn:hover{filter:brightness(.96);border-color:var(--brand)}
+.ans-btn[aria-expanded=true]{background:var(--brand);color:#fff}
+[data-theme=dark] .ans-btn[aria-expanded=true]{color:#08130d}
+.inline-exp{display:block;margin:8px 0 12px;padding:10px 14px;background:var(--soft);border:1px solid var(--line);border-left:3px solid var(--brand);border-radius:8px;font-size:14.5px;line-height:1.65;white-space:normal}
+.inline-exp .ie-head{display:block;font:700 12px/1.4 var(--font-heading);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.inline-exp .ie-ans{display:block;font-weight:700;margin-bottom:4px}
+.inline-exp .ie-quote{display:block;margin:2px 0 4px}
+.inline-exp .ie-loc{font-size:12px;font-weight:700;color:var(--brand-dark);margin-right:6px}
+.inline-exp .ie-body{display:block;margin-top:4px}
+/* summary with gaps */
+.summary-group{border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:6px 0 16px;background:var(--card)}
+.summary-prose{padding:14px 16px;font-size:15px;line-height:1.95}
+.summary-prose h3{font:700 17px/1.5 var(--font-heading);margin:0 0 8px}
+.summary-prose p{margin:0 0 12px}
+.summary-gap{display:inline;border:0;border-bottom:1px solid var(--edge);border-radius:3px;padding:1px 4px;font:inherit;line-height:inherit;background:transparent;color:inherit}
+.summary-gap strong{font-size:12px;margin-right:3px}
+.summary-gap:hover,.summary-gap.active-gap{background:var(--soft);border-bottom-color:var(--brand)}
+.summary-gap.filled{color:var(--brand-dark);font-weight:700;border-bottom-color:var(--brand)}
+.summary-gap.filled .blank-space{font-weight:700}
+.pending-note{font-size:12.5px;color:var(--muted);margin:0 0 8px}
+/* notes completion: section headings + bullet lines, same card as a summary */
+.summary-prose p.notes-h{font:700 15px/1.5 var(--font-heading);color:var(--brand-dark);margin:14px 0 2px}
+.summary-prose p.notes-h:first-of-type{margin-top:2px}
+.summary-prose p.notes-li{position:relative;margin:0 0 6px;padding-left:20px}
+.summary-prose p.notes-li::before{content:'•';position:absolute;left:5px;color:var(--muted)}
+/* matching headings: the dashed box at the head of each section shows the correct heading */
+.head-box{display:flex;flex-wrap:wrap;justify-content:center;align-items:baseline;gap:4px 10px;width:100%;box-sizing:border-box;margin:0 0 10px;padding:8px 12px;border:1.5px dashed var(--brand);border-radius:8px;background:var(--brand-tint);color:var(--text);font:inherit;cursor:pointer;text-align:center}
+.head-box:hover{filter:brightness(.97)}
+.head-box.active{border-style:solid;box-shadow:0 0 0 4px #15934e1f}
+.head-box .hb-n{font:800 16px var(--font-heading)}
+.head-box .hb-sec{font-size:12.5px;font-weight:600;color:var(--muted)}
+.head-box .hb-ans{font-weight:700;color:var(--brand-dark)}
+.option-letter.lbl{min-width:34px}
+.summary-prose p.notes-li2{padding-left:42px}
+.summary-prose p.notes-li2::before{content:'\25E6';left:26px}
+
+/* ---------- vocabulary pages ---------- */
+.vocab-wrap{max-width:900px;margin:0 auto;padding:22px 22px 120px}
+.vocab-head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin:6px 0 14px}
+.vocab-head h2{margin:0;font:700 22px var(--font-heading)}
+.vocab-head p{margin:2px 0 0;color:var(--muted);font-size:13px}
+.vocab-list details{border:1px solid var(--line);border-radius:12px;background:var(--card);margin:0 0 8px;padding:0}
+.vocab-list summary{list-style:none;cursor:pointer;padding:11px 14px;font-weight:600;display:flex;justify-content:space-between;gap:10px}
+.vocab-list summary::-webkit-details-marker{display:none}
+.vocab-list summary .pos{font-weight:400;color:var(--muted);font-size:13px}
+.vocab-list details[open]{border-color:var(--brand)}
+.vocab-list .vbody{padding:0 14px 12px;font-size:14.5px}
+.vocab-list .vbody p{margin:4px 0}
+.vocab-list .ex{color:var(--muted)}
+
+/* ---------- dock ---------- */
+.dock{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:50;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:5px;width:780px;max-width:calc(100% - 24px);padding:7px;background:#202020;border-radius:999px;box-shadow:0 10px 28px #0003}
+.dock button{background:transparent;border:0;color:#c6c6c6;border-radius:999px;padding:10px 8px;font-weight:600;font-size:13px}
+.dock button:hover{background:#303030;color:#fff}
+.dock button[aria-current=page]{background:var(--brand);color:#fff}
+[data-theme=dark] .dock button[aria-current=page]{color:#08130d}
+
+/* ---------- vocabulary pop-up (centre of screen) ---------- */
+.vmodal{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;background:rgba(20,27,46,.5);padding:16px}
+.vmodal[hidden]{display:none}
+.vcard{position:relative;width:100%;max-width:440px;background:var(--card);color:var(--text);border-radius:16px;box-shadow:0 18px 50px #0005;padding:24px 24px 18px;border-top:5px solid var(--brand)}
+.vclose{position:absolute;right:10px;top:10px;width:34px;height:34px;padding:0;border-radius:50%;font-size:20px;line-height:1;background:transparent}
+.vword{font:700 26px/1.25 var(--font-heading);margin:0 34px 10px 0;overflow-wrap:anywhere}
+.vexample{font-size:16px;line-height:1.6;margin:0 0 14px}
+.vexample .k{color:var(--muted);font-weight:600;margin-right:4px}
+.vexample strong{background:var(--gold);color:var(--goldtext);border-radius:3px;padding:0 3px}
+.vmeaning{font-size:16px;line-height:1.6;margin:0 0 14px;padding:10px 12px;background:var(--soft);border-left:3px solid var(--brand);border-radius:8px}
+.vmeaning .k{font-weight:700;margin-right:4px}
+.vnone{font-size:15px;color:var(--muted);margin:0 0 12px}
+.vactions{display:flex;justify-content:flex-end;gap:8px}
+.btn-reveal{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:600}
+[data-theme=dark] .btn-reveal{color:#08130d}
+
+/* ---------- responsive / print ---------- */
+@media(max-width:900px){
+  header{padding:12px 16px}
+  h1{font-size:17px}
+  .workspace{display:block;height:auto;padding:12px 12px 108px}
+  .pane{overflow:visible;margin-bottom:14px;padding:16px}
+  .paragraph-text{font-size:16.5px}
+  .dock{width:380px;grid-template-columns:repeat(3,minmax(0,1fr));border-radius:24px}
+  .dock button{padding:8px;font-size:12px}
+}
+@media print{
+  header,.dock,.btn-answer,.vmodal{display:none!important}
+  .page.active{display:block}
+  .workspace{display:block;height:auto}
+  .pane{overflow:visible;border:0;box-shadow:none}
+}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="logo">LEVEL UP · READING STUDIO</div>
+    <h1>Cambridge 16 · Reading Test 2</h1>
+    <small id="subtitle">Reading correction · 3 passages / 40 questions</small>
+  </div>
+  <div class="toolbar">
+    <button id="reset" type="button">Ẩn lời giải</button>
+    <button id="theme" type="button" aria-pressed="false">◐ Dark mode</button>
+  </div>
+</header>
+<main id="app"></main>
+<nav class="dock" aria-label="Điều hướng bài đọc và từ vựng"></nav>
+
+<div class="vmodal" id="vmodal" hidden role="dialog" aria-modal="true" aria-labelledby="vm-word">
+  <div class="vcard">
+    <button type="button" class="vclose" id="vm-close" aria-label="Đóng">×</button>
+    <div class="vword" id="vm-word"></div>
+    <div class="vexample" id="vm-example"></div>
+    <div class="vmeaning" id="vm-meaning" hidden></div>
+    <div class="vnone" id="vm-none" hidden></div>
+    <div class="vactions"><button type="button" class="btn-reveal" id="vm-reveal">Reveal meaning</button></div>
+  </div>
+</div>
+
+<script>
+const DATA={"parts": [{"title": "The White Horse of Uffington", "subtitle": null, "paras": [{"label": null, "text": "The cutting of huge figures or ‘geoglyphs’ into the earth of English hillsides has taken place for more than 3,000 years. There are 56 hill figures scattered around England, with the vast majority on the chalk downlands of the country’s southern counties. The figures include giants, horses, crosses and regimental badges. Although the majority of these geoglyphs date within the last 300 years or so, there are one or two that are much older."}, {"label": null, "text": "The most famous of these figures is perhaps also the most mysterious - the Uffington White Horse in Oxfordshire. The White Horse has recently been re-dated and shown to be even older than its previously assigned ancient pre-Roman Iron Age* date. More controversial is the date of the enigmatic Long Man of Wilmington in Sussex. While many historians are convinced the figure is prehistoric, others believe that it was the work of an artistic monk from a nearby priory and was created between the 11th and 15th centuries."}, {"label": null, "text": "The method of cutting these huge figures was simply to remove the overlying grass to reveal the gleaming white chalk below. However, the grass would soon grow over the geoglyph again unless it was regularly cleaned or scoured by a fairly large team of people. One reason that the vast majority of hill figures have disappeared is that when the traditions associated with the figures faded, people no longer bothered or remembered to clear away the grass to expose the chalk outline. Furthermore, over hundreds of years the outlines would sometimes change due to people not always cutting in exactly the same place, thus creating a different shape to the original geoglyph. The fact that any ancient hill figures survive at all in England today is testament to the strength and continuity of local customs and beliefs which, in one case at least, must stretch back over millennia."}, {"label": null, "text": "The Uffington White Horse is a unique, stylised representation of a horse consisting of a long, sleek back, thin disjointed legs, a streaming tail, and a bird-like beaked head. The elegant creature almost melts into the landscape. The horse is situated 2.5 km from Uffington village on a steep slope close to the Late Bronze Age* (c. 7th century BCE) hillfort of Uffington Castle and below the Ridgeway, a long-distance Neolithic** track."}, {"label": null, "text": "The Uffington Horse is also surrounded by Bronze Age burial mounds. It is not far from the Bronze Age cemetery of Lambourn Seven Barrows, which consists of more than 30 well-preserved burial mounds. The carving has been placed in such a way as to make it extremely difficult to see from close quarters, and like many geoglyphs is best appreciated from the air. Nevertheless, there are certain areas of the Vale of the White Horse, the valley containing and named after the enigmatic creature, from which an adequate impression may be gained. Indeed on a clear day the carving can be seen from up to 30 km away."}, {"label": null, "text": "The earliest evidence of a horse at Uffington is from the 1070s CE when ‘White Horse Hill’ is mentioned in documents from the nearby Abbey of Abingdon, and the first reference to the horse itself is soon after, in 1190 CE. However, the carving is believed to date back much further than that. Due to the similarity of the Uffington White Horse to the stylised depictions of horses on 1st century BCE coins, it had been thought that the creature must also date to that period."}, {"label": null, "text": "However, in 1995 Optically Stimulated Luminescence (OSL) testing was carried out by the Oxford Archaeological Unit on soil from two of the lower layers of the horse’s body, and from another cut near the base. The result was a date for the horse’s construction somewhere between 1400 and 600 BCE - in other words, it had a Late Bronze Age or Early Iron Age origin."}, {"label": null, "text": "The latter end of this date range would tie the carving of the horse in with occupation of the nearby Uffington hillfort, indicating that it may represent a tribal emblem marking the land of the inhabitants of the hillfort. Alternatively, the carving may have been carried out during a Bronze or Iron Age ritual. Some researchers see the horse as representing the Celtic*** horse goddess Epona, who was worshipped as a protector of horses, and for her associations with fertility. However, the cult of Epona was not imported from Gaul (France) until around the first century CE. This date is at least six centuries after the Uffington Horse was probably carved. Nevertheless, the horse had great ritual and economic significance during the Bronze and Iron Ages, as attested by its depictions on jewellery and other metal objects. It is possible that the carving represents a goddess in native mythology, such as Rhiannon, described in later Welsh mythology as a beautiful woman dressed in gold and riding a white horse."}, {"label": null, "text": "The fact that geoglyphs can disappear easily, along with their associated rituals and meaning, indicates that they were never intended to be anything more than temporary gestures. But this does not lessen their importance. These giant carvings are a fascinating glimpse into the minds of their creators and how they viewed the landscape in which they lived."}, {"label": null, "text": "*Iron Age: a period (in Britain 800 BCE - 43 CE) that is characterised by the use of iron tools"}, {"label": null, "text": "*Bronze Age: a period (in Britain c. 2,500 BCE - 800 BCE) that is characterised by the development of bronze tools"}, {"label": null, "text": "**Neolithic: a period (in Britain c. 4,000 BCE - c. 2,500 BCE) that is significant for the spread of agricultural practices, and the use of stone tools"}, {"label": null, "text": "***Celtic: an ancient people who migrated from Europe to Britain before the Romans"}], "groups": [{"kind": "tfng", "title": "Questions 1–8", "instr": "Do the following statements agree with the information given in Reading Passage 1? TRUE if the statement agrees with the information · FALSE if the statement contradicts the information · NOT GIVEN if there is no information on this.", "qs": [1, 2, 3, 4, 5, 6, 7, 8]}, {"kind": "summary", "title": "Questions 9–13", "instr": "Complete the summary below. Choose ONE WORD ONLY from the passage for each answer.", "qs": [9, 10, 11, 12, 13], "summary": {"title": "The Uffington White Horse", "paras": ["The location of the Uffington White Horse:", "a distance of 2.5 km from Uffington village", "near an ancient road known as the {9}", "close to an ancient cemetery that has a number of burial mounds", "Dating the Uffington White Horse:", "first reference to White Horse Hill appears in {10} from the 1070s", "horses shown on coins from the period 100 BCE - 1 BCE are similar in appearance", "according to analysis of the surrounding {11}, the Horse is Late Bronze Age / Early Iron Age", "Possible reasons for creation of the Uffington White Horse:", "an emblem to indicate land ownership", "formed part of an ancient ritual", "was a representation of goddess Epona - associated with protection of horses and {12}", "was a representation of a Welsh goddess called {13}"], "styles": ["h", "li", "li", "li", "h", "li", "li", "li", "h", "li", "li", "li", "li"]}}]}, {"title": "I contain multitudes", "subtitle": "Wendy Moore reviews Ed Yong’s book about microbes", "paras": [{"label": null, "text": "Microbes, most of them bacteria, have populated this planet since long before animal life developed and they will outlive us. Invisible to the naked eye, they are ubiquitous. They inhabit the soil, air, rocks and water and are present within every form of life, from seaweed and coral to dogs and humans. And, as Yong explains in his utterly absorbing and hugely important book we mess with them at our peril."}, {"label": null, "text": "Every species has its own colony of microbes, called a ‘microbiome’, and these microbes vary not only between species but also between individuals and within different parts of each individual. What is amazing is that while the number of human cells in the average person is about 30 trillion, the number of microbial ones is higher - about 39 trillion. At best, Yong informs us, we are only 50 per cent human. Indeed, some scientists even suggest we should think of each species and its microbes as a single unit, dubbed a ‘holobiont’."}, {"label": null, "text": "In each human there are microbes that live only in the stomach, the mouth or the armpit and by and large they do so peacefully. So ‘bad’ microbes are just microbes out of context. Microbes that sit contentedly in the human gut (where there are more microbes than there are stars in the galaxy) can become deadly if they find their way into the bloodstream. These communities are constantly changing too. The right hand shares just one sixth of its microbes with the left hand. And, of course, we are surrounded by microbes. Every time we eat, we swallow a million microbes in each gram of food; we are continually swapping microbes with other humans, pets and the world at large."}, {"label": null, "text": "It’s a fascinating topic and Yong, a young British science journalist, is an extraordinarily adept guide. Writing with lightness and panache, he has a knack of explaining complex science in terms that are both easy to understand and totally enthralling. Yong is on a mission. Leading us gently by the hand, he takes us into the world of microbes - a bizarre, alien planet - in a bid to persuade us to love them as much as he does. By the end, we do."}, {"label": null, "text": "For most of human history we had no idea that microbes existed. The first man to see these extraordinarily potent creatures was a Dutch lens-maker called Antony van Leeuwenhoek in the 1670s. Using microscopes of his own design that could magnify up to 270 times, he examined a drop of water from a nearby lake and found it teeming with tiny creatures he called ‘animalcules’. It wasn’t until nearly two hundred years later that the research of French biologist Louis Pasteur indicated that some microbes caused disease. It was Pasteur’s ‘germ theory’ that gave bacteria the poor image that endures today."}, {"label": null, "text": "Yong’s book is in many ways a plea for microbial tolerance, pointing out that while fewer than one hundred species of bacteria bring disease, many thousands more play a vital role in maintaining our health. The book also acknowledges that our attitude towards bacteria is not a simple one. We tend to see the dangers posed by bacteria, yet at the same time we are sold yoghurts and drinks that supposedly nurture ‘friendly’ bacteria. In reality, says Yong, bacteria should not be viewed as either friends or foes, villains or heroes. Instead we should realise we have a symbiotic relationship, that can be mutually beneficial or mutually destructive."}, {"label": null, "text": "What then do these millions of organisms do? The answer is pretty much everything. New research is now unravelling the ways in which bacteria aid digestion, regulate our immune systems, eliminate toxins, produce vitamins, affect our behaviour and even combat obesity. ‘They actually help us become who we are,’ says Yong. But we are facing a growing problem. Our obsession with hygiene, our overuse of antibiotics and our unhealthy, low-fibre diets are disrupting the bacterial balance and may be responsible for soaring rates of allergies and immune problems, such as inflammatory bowel disease (IBD)."}, {"label": null, "text": "The most recent research actually turns accepted norms upside down. For example, there are studies indicating that the excessive use of household detergents and antibacterial products actually destroys the microbes that normally keep the more dangerous germs at bay. Other studies show that keeping a dog as a pet gives children early exposure to a diverse range of bacteria, which may help protect them against allergies later."}, {"label": null, "text": "The readers of Yong’s book must be prepared for a decidedly unglamorous world. Among the less appealing case studies is one about a fungus that is wiping out entire populations of frogs and that can be halted by a rare microbial bacterium. Another is about squid that carry luminescent bacteria that protect them against predators. However, if you can overcome your distaste for some of the investigations, the reasons for Yong’s enthusiasm become clear. The microbial world is a place of wonder. Already, in an attempt to stop mosquitoes spreading dengue fever - a disease that infects 400 million people a year - mosquitoes are being loaded with a bacterium to block the disease. In the future, our ability to manipulate microbes means we could construct buildings with useful microbes built into their walls to fight off infections. Just imagine a neonatal hospital ward coated in a specially mixed cocktail of microbes so that babies get the best start in life."}], "groups": [{"kind": "mcq", "title": "Questions 14–16", "instr": "Choose the correct letter, A, B, C or D.", "qs": [14, 15, 16]}, {"kind": "wordlist", "title": "Questions 17–20", "instr": "Complete the summary using the list of words, A–H, below. Write the correct letter, A–H.", "qs": [17, 18, 19, 20], "summary": {"title": "We should be more tolerant of microbes", "paras": ["Yong’s book argues that we should be more tolerant of microbes. Many have a beneficial effect, and only a relatively small number lead to {17}. And although it is misleading to think of microbes as ‘friendly’, we should also stop thinking of them as the enemy. In fact, we should accept that our relationship with microbes is one based on {18}.", "New research shows that microbes have numerous benefits for humans. Amongst other things, they aid digestion, remove poisons, produce vitamins and may even help reduce obesity. However, there is a growing problem. Our poor {19}, our overuse of antibiotics, and our excessive focus on {20} are upsetting the bacterial balance and may be contributing to the huge increase in allergies and immune system problems."]}, "bank": {"title": "List of Words", "items": ["solution", "partnership", "destruction", "exaggeration", "cleanliness", "regulations", "illness", "nutrition"]}}, {"kind": "tfng", "title": "Questions 21–26", "instr": "Do the following statements agree with the claims of the writer in Reading Passage 2? YES if the statement agrees with the claims of the writer · NO if the statement contradicts the claims of the writer · NOT GIVEN if it is impossible to say what the writer thinks about this.", "qs": [21, 22, 23, 24, 25, 26]}]}, {"title": "How to make wise decisions", "subtitle": null, "paras": [{"label": null, "text": "Across cultures, wisdom has been considered one of the most revered human qualities. Although the truly wise may seem few and far between, empirical research examining wisdom suggests that it isn’t an exceptional trait possessed by a small handful of bearded philosophers after all - in fact, the latest studies suggest that most of us have the ability to make wise decisions, given the right context."}, {"label": null, "text": "‘It appears that experiential, situational, and cultural factors are even more powerful in shaping wisdom than previously imagined,’ says Associate Professor Igor Grossmann of the University of Waterloo in Ontario, Canada. ‘Recent empirical findings from cognitive, developmental, social, and personality psychology cumulatively suggest that people’s ability to reason wisely varies dramatically across experiential and situational contexts. Understanding the role of such contextual factors offers unique insights into understanding wisdom in daily life, as well as how it can be enhanced and taught.’"}, {"label": null, "text": "It seems that it’s not so much that some people simply possess wisdom and others lack it, but that our ability to reason wisely depends on a variety of external factors. ‘It is impossible to characterize thought processes attributed to wisdom without considering the role of contextual factors,’ explains Grossmann. ‘In other words, wisdom is not solely an “inner quality” but rather unfolds as a function of situations people happen to be in. Some situations are more likely to promote wisdom than others.’"}, {"label": null, "text": "Coming up with a definition of wisdom is challenging, but Grossmann and his colleagues have identified four key characteristics as part of a framework of wise reasoning. One is intellectual humility or recognition of the limits of our own knowledge, and another is appreciation of perspectives wider than the issue at hand. Sensitivity to the possibility of change in social relations is also key, along with compromise or integration of different attitudes and beliefs."}, {"label": null, "text": "Grossmann and his colleagues have also found that one of the most reliable ways to support wisdom in our own day-to-day decisions is to look at scenarios from a third-party perspective, as though giving advice to a friend. Research suggests that when adopting a first-person viewpoint we focus on ‘the focal features of the environment’ and when we adopt a third-person, ‘observer’ viewpoint we reason more broadly and focus more on interpersonal and moral ideals such as justice and impartiality. Looking at problems from this more expansive viewpoint appears to foster cognitive processes related to wise decisions."}, {"label": null, "text": "What are we to do, then, when confronted with situations like a disagreement with a spouse or negotiating a contract at work, that require us to take a personal stake? Grossmann argues that even when we aren’t able to change the situation, we can still evaluate these experiences from different perspectives."}, {"label": null, "text": "For example, in one experiment that took place during the peak of a recent economic recession, graduating college seniors were asked to reflect on their job prospects. The students were instructed to imagine their career either ‘as if you were a distant observer’ or ‘before your own eyes as if you were right there’. Participants in the group assigned to the ‘distant observer’ role displayed more wisdom-related reasoning (intellectual humility and recognition of change) than did participants in the control group."}, {"label": null, "text": "In another study, couples in long-term romantic relationships were instructed to visualize an unresolved relationship conflict either through the eyes of an outsider or from their own perspective. Participants then discussed the incident with their partner for 10 minutes, after which they wrote down their thoughts about it. Couples in the ‘other’s eyes’ condition were significantly more likely to rely on wise reasoning - recognizing others’ perspectives and searching for a compromise - compared to the couples in the egocentric condition."}, {"label": null, "text": "‘Ego-decentering promotes greater focus on others and enables a bigger picture, conceptual view of the experience, affording recognition of intellectual humility and change,’ says Grossmann."}, {"label": null, "text": "We might associate wisdom with intelligence or particular personality traits, but research shows only a small positive relationship between wise thinking and crystallized intelligence and the personality traits of openness and agreeableness. ‘It is remarkable how much people can vary in their wisdom from one situation to the next, and how much stronger such contextual effects are for understanding the relationship between wise judgment and its social and affective outcomes as compared to the generalized “traits”,’ Grossmann explains. ‘That is, knowing how wisely a person behaves in a given situation is more informative for understanding their emotions or likelihood to forgive [or] retaliate as compared to knowing whether the person may be wise “in general”.’"}], "groups": [{"kind": "mcq", "title": "Questions 27–30", "instr": "Choose the correct letter, A, B, C or D.", "qs": [27, 28, 29, 30]}, {"kind": "wordlist", "title": "Questions 31–35", "instr": "Complete the summary using the list of words, A–J, below. Write the correct letter, A–J.", "qs": [31, 32, 33, 34, 35], "summary": {"title": "The characteristics of wise reasoning", "paras": ["Igor Grossmann and colleagues have established four characteristics which enable us to make wise decisions. It is important to have a certain degree of {31} regarding the extent of our knowledge, and to take into account {32} which may not be the same as our own. We should also be able to take a broad {33} of any situation. Another key characteristic is being aware of the likelihood of alterations in the way that people relate to each other.", "Grossmann also believes that it is better to regard scenarios with {34}. By avoiding the first-person perspective, we focus more on {35} and on other moral ideals, which in turn leads to wiser decision-making."]}, "bank": {"title": "List of Words", "items": ["opinions", "confidence", "view", "modesty", "problems", "objectivity", "fairness", "experiences", "range", "reasons"]}}, {"kind": "tfng", "title": "Questions 36–40", "instr": "Do the following statements agree with the information given in Reading Passage 3? TRUE if the statement agrees with the information · FALSE if the statement contradicts the information · NOT GIVEN if there is no information on this.", "qs": [36, 37, 38, 39, 40]}]}], "questions": {"1": {"exp": "Paragraph 1: “There are 56 hill figures scattered around England, with the vast majority on the chalk downlands of the country’s southern counties” → phần lớn tượng đồi nằm ở một khu vực nhất định (các hạt phía nam) ≈ located in a particular area of the country → TRUE.", "ev": [{"p": 0, "s": 122, "e": 255, "hl": [[179, 254]], "blue": []}], "ansShow": "TRUE", "text": "Most geoglyphs in England are located in a particular area of the country.", "qhl": [[30, 73]]}, "2": {"exp": "Paragraph 1 chỉ liệt kê “giants, horses, crosses and regimental badges” (người khổng lồ, ngựa, thập tự, huy hiệu trung đoàn). Bài KHÔNG so sánh số lượng hình con ngựa với các loại hình khác → NOT GIVEN.", "ev": [{"p": 0, "s": 256, "e": 322, "hl": [[276, 321]], "blue": []}], "ansShow": "NOT GIVEN", "text": "There are more geoglyphs in the shape of a horse than any other creature.", "qhl": [[10, 72]]}, "3": {"exp": "Paragraph 2: “The White Horse has recently been re-dated and shown to be even older than its previously assigned … date” → lần xác định niên đại gần đây cho thấy trước đây người ta đã nhầm về tuổi của nó (mistaken ≈ even older than previously assigned) → TRUE.", "ev": [{"p": 1, "s": 113, "e": 245, "hl": [[133, 211]], "blue": []}], "ansShow": "TRUE", "text": "A recent dating of the Uffington White Horse indicates that people were mistaken about its age.", "qhl": [[0, 15], [60, 94]]}, "4": {"exp": "Paragraph 2: về Long Man of Wilmington, “many historians are convinced the figure is prehistoric, others believe that it was the work of an artistic monk” → các nhà sử học còn bất đồng, chưa thống nhất (come to an agreement) → FALSE.", "ev": [{"p": 1, "s": 246, "e": 520, "hl": [[334, 405]], "blue": []}], "ansShow": "FALSE", "text": "Historians have come to an agreement about the origins of the Long Man of Wilmington.", "qhl": [[0, 36]]}, "5": {"exp": "Paragraph 3: “The method of cutting these huge figures was simply to remove the overlying grass to reveal the gleaming white chalk below” → hình được tạo bằng cách BỎ lớp cỏ để lộ phấn trắng bên dưới, chứ không phải đặt phấn trắng lên sườn đồi → FALSE.", "ev": [{"p": 2, "s": 0, "e": 123, "hl": [[55, 122]], "blue": []}], "ansShow": "FALSE", "text": "Geoglyphs were created by people placing white chalk on the hillside.", "qhl": [[15, 68]]}, "6": {"exp": "Paragraph 3: “One reason that the vast majority of hill figures have disappeared is that when the traditions … faded, people no longer bothered … to clear away the grass” → nhiều hình ở Anh không còn nhìn thấy (no longer visible ≈ have disappeared) → TRUE.", "ev": [{"p": 2, "s": 260, "e": 482, "hl": [[276, 326]], "blue": []}], "ansShow": "TRUE", "text": "Many geoglyphs in England are no longer visible.", "qhl": [[0, 47]]}, "7": {"exp": "Paragraph 3: “over hundreds of years the outlines would sometimes change due to people not always cutting in exactly the same place” → hình dạng của một số hình đồi đã bị thay đổi theo thời gian (altered ≈ change) → TRUE.", "ev": [{"p": 2, "s": 483, "e": 672, "hl": [[519, 613]], "blue": []}], "ansShow": "TRUE", "text": "The shape of some geoglyphs has been altered over time.", "qhl": [[0, 54]]}, "8": {"exp": "Paragraph 2 chỉ nói Uffington White Horse là hình “most famous” và “most mysterious”. Bài KHÔNG nói sự nổi tiếng của nó là do kích thước (size) → NOT GIVEN.", "ev": [{"p": 1, "s": 0, "e": 112, "hl": [[0, 68]], "blue": []}], "ansShow": "NOT GIVEN", "text": "The fame of the Uffington White Horse is due to its size.", "qhl": [[0, 56]]}, "9": {"exp": "Paragraph 4: con ngựa nằm “below the Ridgeway, a long-distance Neolithic track” → gần một con đường cổ (ancient road ≈ long-distance Neolithic track) có tên là the Ridgeway. Đáp án: Ridgeway.", "ev": [{"p": 3, "s": 231, "e": 438, "hl": [[384, 437]], "blue": []}], "ansShow": "Ridgeway", "gapShow": "Ridgeway", "qp": 2, "qhl": [[0, 33]]}, "10": {"exp": "Paragraph 6: “The earliest evidence of a horse at Uffington is from the 1070s CE when ‘White Horse Hill’ is mentioned in documents from the nearby Abbey of Abingdon” → lần đầu nhắc đến White Horse Hill xuất hiện trong các tài liệu (documents) từ thập niên 1070. Đáp án: documents.", "ev": [{"p": 5, "s": 0, "e": 222, "hl": [[72, 150]], "blue": []}], "ansShow": "documents", "gapShow": "documents", "qp": 5, "qhl": [[0, 46], [52, 66]]}, "11": {"exp": "Paragraph 7: “OSL testing was carried out … on soil from two of the lower layers of the horse’s body” → theo phân tích đất (soil) xung quanh/ trong các lớp của hình, con ngựa có niên đại Late Bronze Age / Early Iron Age. Đáp án: soil.", "ev": [{"p": 6, "s": 0, "e": 363, "hl": [[57, 171]], "blue": []}], "ansShow": "soil", "gapShow": "soil", "qp": 7, "qhl": [[0, 40], [47, 92]]}, "12": {"exp": "Paragraph 8: nữ thần Epona “was worshipped as a protector of horses, and for her associations with fertility” → gắn với việc bảo vệ ngựa và sự phì nhiêu/ sinh sôi (fertility). Đáp án: fertility.", "ev": [{"p": 7, "s": 313, "e": 480, "hl": [[403, 479]], "blue": []}], "ansShow": "fertility", "gapShow": "fertility", "qp": 11, "qhl": [[40, 80]]}, "13": {"exp": "Paragraph 8: “It is possible that the carving represents a goddess in native mythology, such as Rhiannon, described in later Welsh mythology as a beautiful woman dressed in gold and riding a white horse” → nữ thần xứ Wales tên Rhiannon. Đáp án: Rhiannon.", "ev": [{"p": 7, "s": 830, "e": 1019, "hl": [[873, 956]], "blue": []}], "ansShow": "Rhiannon", "gapShow": "Rhiannon", "qp": 12, "qhl": [[0, 46]]}, "14": {"exp": "Paragraph 1: “Microbes … have populated this planet since long before animal life developed and they will outlive us” → vi khuẩn sẽ tồn tại lâu hơn loài người (outlive us ≈ continue to exist for longer than the human race) → D.", "ev": [{"p": 0, "s": 0, "e": 125, "hl": [[104, 124]], "blue": []}], "ansShow": "D — They will continue to exist for longer than the human race.", "text": "What point does the writer make about microbes in the first paragraph?", "opts": ["They adapt quickly to their environment.", "The risk they pose has been exaggerated.", "They are more plentiful in animal life than plant life.", "They will continue to exist for longer than the human race."], "optExp": ["Sai: bài không nói vi khuẩn thích nghi nhanh với môi trường.", "Sai: tác giả nhấn mạnh “we mess with them at our peril” – không hề nói rủi ro bị phóng đại.", "Sai: bài nói vi khuẩn có trong “every form of life, from seaweed and coral to dogs and humans”, không so sánh động vật với thực vật.", "Đúng: “they will outlive us” ≈ will continue to exist for longer than the human race."], "correctIdx": 3, "qhl": [], "ohl": [0, 58]}, "15": {"exp": "Paragraph 2: “What is amazing is that while the number of human cells in the average person is about 30 trillion, the number of microbial ones is higher - about 39 trillion” → điều khiến tác giả ấn tượng là số tế bào vi khuẩn nhiều hơn tế bào người ở một cá thể trung bình → C.", "ev": [{"p": 1, "s": 194, "e": 353, "hl": [[294, 352]], "blue": []}], "ansShow": "C — the average individual has more microbial cells than human ones.", "text": "In the second paragraph, the writer is impressed by the fact that", "opts": ["each species tends to have vastly different microbes.", "some parts of the body contain relatively few microbes.", "the average individual has more microbial cells than human ones.", "scientists have limited understanding of how microbial cells behave."], "optExp": ["Sai: bài nói vi khuẩn khác nhau giữa các loài, nhưng không phải điều khiến tác giả ấn tượng (“What is amazing” là về số lượng).", "Sai: bài nói vi khuẩn sống ở dạ dày, miệng, nách… nhưng không nói có bộ phận nào chứa ít vi khuẩn.", "Đúng: số tế bào vi khuẩn (39 nghìn tỷ) cao hơn số tế bào người (30 nghìn tỷ) ≈ more microbial cells than human ones.", "Sai: bài không nói giới khoa học hiểu biết hạn chế về hành vi của vi khuẩn ở đoạn này."], "correctIdx": 2, "qhl": [], "ohl": [0, 63]}, "16": {"exp": "Paragraph 5: tác giả kể Antony van Leeuwenhoek là người đầu tiên nhìn thấy vi khuẩn (thập niên 1670) rồi đến nghiên cứu của Louis Pasteur cho thấy một số vi khuẩn gây bệnh → giải thích một phát hiện đã được thực hiện như thế nào (explaining how a discovery was made) → A.", "ev": [{"p": 4, "s": 0, "e": 604, "hl": [[64, 146], [428, 518]], "blue": []}], "ansShow": "A — explaining how a discovery was made", "text": "What is the writer doing in the fifth paragraph?", "opts": ["explaining how a discovery was made", "comparing scientists’ theories about microbes", "describing confusion among scientists", "giving details of how microbes cause disease"], "optExp": ["Đúng: kể lại việc phát hiện ra vi khuẩn và việc Pasteur nhận ra chúng gây bệnh ≈ explaining how a discovery was made.", "Sai: Paragraph 5 không so sánh các giả thuyết khác nhau của các nhà khoa học.", "Sai: Paragraph 5 không nói về sự bối rối của giới khoa học.", "Sai: bài chỉ nhắc ngắn việc “some microbes caused disease”, không đi vào chi tiết cơ chế gây bệnh."], "correctIdx": 0, "qhl": [], "ohl": [0, 35]}, "17": {"exp": "Paragraph 6: “fewer than one hundred species of bacteria bring disease, many thousands more play a vital role in maintaining our health” → chỉ một số ít gây bệnh (disease ≈ illness) → “lead to illness” → G.", "ev": [{"p": 5, "s": 0, "e": 141, "hl": [[84, 140]], "blue": []}], "ansShow": "G (illness)", "gapShow": "G · illness", "qp": 0, "qhl": [[99, 137]]}, "18": {"exp": "Paragraph 6: “we should realise we have a symbiotic relationship, that can be mutually beneficial or mutually destructive” → mối quan hệ cộng sinh, hai bên cùng có lợi hoặc cùng bị hại ≈ a relationship based on partnership → B.", "ev": [{"p": 5, "s": 534, "e": 650, "hl": [[560, 649]], "blue": []}], "ansShow": "B (partnership)", "gapShow": "B · partnership", "qp": 0, "qhl": [[292, 338]]}, "19": {"exp": "Paragraph 7: “Our obsession with hygiene, our overuse of antibiotics and our unhealthy, low-fibre diets are disrupting the bacterial balance” → chế độ ăn không lành mạnh, ít chất xơ (unhealthy, low-fibre diets) ≈ poor nutrition → H.", "ev": [{"p": 6, "s": 359, "e": 448, "hl": [[418, 448]], "blue": []}], "ansShow": "H (nutrition)", "gapShow": "H · nutrition", "qp": 1, "qhl": [[214, 222]]}, "20": {"exp": "Paragraph 7: cùng câu trên, “Our obsession with hygiene” → nỗi ám ảnh về vệ sinh (hygiene ≈ cleanliness; obsession ≈ excessive focus) → E.", "ev": [{"p": 6, "s": 359, "e": 448, "hl": [[359, 385]], "blue": []}], "ansShow": "E (cleanliness)", "gapShow": "E · cleanliness", "qp": 1, "qhl": [[261, 283]]}, "21": {"exp": "Paragraph 8: “the excessive use of household detergents and antibacterial products actually destroys the microbes that normally keep the more dangerous germs at bay” → dùng sản phẩm kháng khuẩn trong nhà có thể không đạt hiệu quả mong muốn (thậm chí phản tác dụng) → tác giả đồng ý → YES.", "ev": [{"p": 7, "s": 68, "e": 266, "hl": [[115, 265]], "blue": []}], "ansShow": "YES", "text": "It is possible that using antibacterial products in the home fails to have the desired effect.", "qhl": [[20, 93]]}, "22": {"exp": "Paragraph 8: “keeping a dog as a pet gives children early exposure to a diverse range of bacteria, which may help protect them against allergies later” → cho trẻ tiếp xúc với nhiều vi khuẩn là có lợi, nên KHÔNG nên để trẻ tiếp xúc với ít vi khuẩn nhất có thể → tác giả không đồng ý → NO.", "ev": [{"p": 7, "s": 267, "e": 428, "hl": [[314, 427]], "blue": []}], "ansShow": "NO", "text": "It is a good idea to ensure that children come into contact with as few bacteria as possible.", "qhl": [[21, 92]]}, "23": {"exp": "Paragraph 9 chỉ nói sách có những “less appealing case studies” (một số ca nghiên cứu kém hấp dẫn). Bài KHÔNG nhận xét sách có nhiều ca nghiên cứu hơn mức cần thiết → NOT GIVEN.", "ev": [{"p": 8, "s": 0, "e": 331, "hl": [[79, 116]], "blue": []}], "ansShow": "NOT GIVEN", "text": "Yong’s book contains more case studies than are necessary.", "qhl": [[21, 57]]}, "24": {"exp": "Paragraph 9: “Among the less appealing case studies … Another is about squid that carry luminescent bacteria that protect them against predators” → ca nghiên cứu về mực này nằm trong số những ca kém hấp dẫn (less appealing ≈ limited appeal) → YES.", "ev": [{"p": 8, "s": 79, "e": 331, "hl": [[79, 116], [240, 330]], "blue": []}], "ansShow": "YES", "text": "The case study about bacteria that prevent squid from being attacked may have limited appeal.", "qhl": [[69, 92]]}, "25": {"exp": "Paragraph 9: bài chỉ nói “mosquitoes are being loaded with a bacterium to block the disease” (đang thử nghiệm), nhưng KHÔNG đánh giá những nỗ lực kiểm soát bệnh sốt xuất huyết đã thành công đến mức đáng ngạc nhiên hay chưa → NOT GIVEN.", "ev": [{"p": 8, "s": 497, "e": 681, "hl": [[615, 680]], "blue": []}], "ansShow": "NOT GIVEN", "text": "Efforts to control dengue fever have been surprisingly successful.", "qhl": [[0, 65]]}, "26": {"exp": "Paragraph 9: “In the future, our ability to manipulate microbes means we could construct buildings with useful microbes … Just imagine a neonatal hospital ward coated in a specially mixed cocktail of microbes” → đây mới chỉ là viễn cảnh trong tương lai (“Just imagine”), chưa có phòng bệnh nào được làm vậy → NO.", "ev": [{"p": 8, "s": 682, "e": 965, "hl": [[682, 695], [836, 922]], "blue": []}], "ansShow": "NO", "text": "Microbes that reduce the risk of infection have already been put inside the walls of some hospital wards.", "qhl": [[43, 104]]}, "27": {"exp": "Paragraph 1: nghiên cứu cho thấy trí tuệ/ sự khôn ngoan “isn’t an exceptional trait possessed by a small handful of bearded philosophers after all” → giả định cơ bản (chỉ số ít người đặc biệt mới có) có thể sai → B.", "ev": [{"p": 0, "s": 85, "e": 401, "hl": [[192, 281]], "blue": []}], "ansShow": "B — A basic assumption about wisdom may be wrong.", "text": "What point does the writer make in the first paragraph?", "opts": ["Wisdom appears to be unique to the human race.", "A basic assumption about wisdom may be wrong.", "Concepts of wisdom may depend on the society we belong to.", "There is still much to be discovered about the nature of wisdom."], "optExp": ["Sai: bài không nói sự khôn ngoan chỉ có ở loài người.", "Đúng: quan niệm cho rằng chỉ số ít người đặc biệt mới khôn ngoan bị bác bỏ ≈ a basic assumption about wisdom may be wrong.", "Sai: yếu tố văn hóa chỉ được nhắc ở đoạn sau như một nhân tố ảnh hưởng, không phải quan điểm chính của Paragraph 1 về “concepts of wisdom”.", "Sai: Paragraph 1 không nói còn nhiều điều chưa được khám phá về bản chất của sự khôn ngoan."], "correctIdx": 1, "qhl": [], "ohl": [0, 44]}, "28": {"exp": "Paragraph 2: Grossmann nói “experiential, situational, and cultural factors are even more powerful in shaping wisdom than previously imagined” → tầm quan trọng của một số yếu tố ảnh hưởng đã bị đánh giá thấp (underestimated ≈ more powerful than previously imagined) → C.", "ev": [{"p": 1, "s": 0, "e": 132, "hl": [[69, 130]], "blue": []}], "ansShow": "C — The importance of certain influences on it was underestimated.", "text": "What does Igor Grossmann suggest about the ability to make wise decisions?", "opts": ["It can vary greatly from one person to another.", "Earlier research into it was based on unreliable data.", "The importance of certain influences on it was underestimated.", "Various branches of psychology define it according to their own criteria."], "optExp": ["Sai: ông nói khả năng suy luận khôn ngoan thay đổi theo bối cảnh (contexts), không phải khác nhau giữa người với người.", "Sai: bài không nói nghiên cứu trước đây dựa trên dữ liệu không đáng tin.", "Đúng: các yếu tố trải nghiệm, tình huống, văn hóa mạnh hơn người ta tưởng ≈ importance of certain influences was underestimated.", "Sai: bài nói các nhánh tâm lý học đưa ra bằng chứng gộp lại (cumulatively), không nói mỗi nhánh định nghĩa theo tiêu chí riêng."], "correctIdx": 2, "qhl": [], "ohl": [0, 61]}, "29": {"exp": "Paragraph 3: Grossmann nói “our ability to reason wisely depends on a variety of external factors … wisdom is not solely an ‘inner quality’ but rather unfolds as a function of situations people happen to be in” → mức độ khôn ngoan của một cá nhân sẽ khác nhau tùy hoàn cảnh (different circumstances) → B.", "ev": [{"p": 2, "s": 0, "e": 507, "hl": [[99, 168], [333, 442]], "blue": []}], "ansShow": "B — will be different in different circumstances.", "text": "According to the third paragraph, Grossmann claims that the level of wisdom an individual shows", "opts": ["can be greater than they think it is.", "will be different in different circumstances.", "may be determined by particular aspects of their personality.", "should develop over time as a result of their life experiences."], "optExp": ["Sai: bài không nói mức độ khôn ngoan của một người có thể cao hơn chính họ nghĩ.", "Đúng: ≈ will be different in different circumstances (situations people happen to be in).", "Sai: Grossmann nhấn mạnh sự khôn ngoan không chỉ là “inner quality”, nên không phải do khía cạnh tính cách quyết định.", "Sai: bài không nói sự khôn ngoan phát triển dần theo trải nghiệm sống."], "correctIdx": 1, "qhl": [], "ohl": [0, 44]}, "30": {"exp": "Paragraph 5: “one of the most reliable ways to support wisdom in our own day-to-day decisions is to look at scenarios from a third-party perspective, as though giving advice to a friend” → mô tả một chiến lược được khuyến nghị giúp suy luận khôn ngoan → D.", "ev": [{"p": 4, "s": 0, "e": 222, "hl": [[50, 184]], "blue": []}], "ansShow": "D — a recommended strategy that can help people to reason wisely", "text": "What is described in the fifth paragraph?", "opts": ["a difficulty encountered when attempting to reason wisely", "an example of the type of person who is likely to reason wisely", "a controversial view about the benefits of reasoning wisely", "a recommended strategy that can help people to reason wisely"], "optExp": ["Sai: Paragraph 5 không nói về khó khăn gặp phải khi suy luận khôn ngoan (khó khăn nằm ở Paragraph 6).", "Sai: Paragraph 5 không mô tả kiểu người dễ suy luận khôn ngoan.", "Sai: không có quan điểm gây tranh cãi nào về lợi ích của suy luận khôn ngoan.", "Đúng: “one of the most reliable ways to support wisdom … look at scenarios from a third-party perspective” ≈ a recommended strategy."], "correctIdx": 3, "qhl": [], "ohl": [0, 60]}, "31": {"exp": "Paragraph 4: “One is intellectual humility or recognition of the limits of our own knowledge” → sự khiêm tốn về trí tuệ (humility ≈ modesty), nhận ra giới hạn kiến thức (the extent of our knowledge) → D.", "ev": [{"p": 3, "s": 170, "e": 249, "hl": [[177, 248]], "blue": []}], "ansShow": "D (modesty)", "gapShow": "D · modesty", "qp": 0, "qhl": [[108, 151], [157, 194]]}, "32": {"exp": "Paragraph 4: “compromise or integration of different attitudes and beliefs” → cân nhắc những quan điểm khác với mình (different attitudes and beliefs ≈ opinions which may not be the same as our own) → A.", "ev": [{"p": 3, "s": 324, "e": 470, "hl": [[409, 469]], "blue": []}], "ansShow": "A (opinions)", "gapShow": "A · opinions", "qp": 0, "qhl": [[196, 220], [226, 262]]}, "33": {"exp": "Paragraph 4: “appreciation of perspectives wider than the issue at hand” → nhìn tình huống bằng góc nhìn rộng (broad view ≈ perspectives wider than the issue at hand) → C.", "ev": [{"p": 3, "s": 250, "e": 323, "hl": [[265, 322]], "blue": []}], "ansShow": "C (view)", "gapShow": "C · view", "qp": 0, "qhl": [[264, 302], [308, 324]]}, "34": {"exp": "Paragraph 5: nhìn tình huống từ góc nhìn người thứ ba, quan sát (“third-person, ‘observer’ viewpoint”) → khách quan (objectivity) → “regard scenarios with objectivity” → F.", "ev": [{"p": 4, "s": 0, "e": 414, "hl": [[136, 184], [341, 414]], "blue": []}], "ansShow": "F (objectivity)", "gapShow": "F · objectivity", "qp": 1, "qhl": [[0, 66]]}, "35": {"exp": "Paragraph 5: “we reason more broadly and focus more on interpersonal and moral ideals such as justice and impartiality” → justice and impartiality ≈ fairness → “focus more on fairness” → G.", "ev": [{"p": 4, "s": 341, "e": 497, "hl": [[433, 496]], "blue": []}], "ansShow": "G (fairness)", "gapShow": "G · fairness", "qp": 1, "qhl": [[115, 131], [137, 162]]}, "36": {"exp": "Paragraph 7: “The students were instructed to imagine their career either ‘as if you were a distant observer’ or ‘before your own eyes’” và “the group assigned to the ‘distant observer’ role” → sinh viên được chỉ định (instructed/ assigned) góc nhìn, không được tự chọn (could choose) → FALSE.", "ev": [{"p": 6, "s": 168, "e": 517, "hl": [[168, 220], [318, 383]], "blue": []}], "ansShow": "FALSE", "text": "Students participating in the job prospects experiment could choose one of two perspectives to take.", "qhl": [[55, 99]]}, "37": {"exp": "Paragraph 8 chỉ nói các cặp đôi “were instructed to visualize an unresolved relationship conflict” từ góc nhìn người ngoài hoặc của bản thân. Bài KHÔNG nói họ có biết đây là nghiên cứu về suy luận khôn ngoan hay không → NOT GIVEN.", "ev": [{"p": 7, "s": 0, "e": 325, "hl": [[18, 126]], "blue": []}], "ansShow": "NOT GIVEN", "text": "Participants in the couples experiment were aware that they were taking part in a study about wise reasoning.", "qhl": [[39, 108]]}, "38": {"exp": "Paragraph 8: kết quả chỉ so sánh nhóm “other’s eyes” với nhóm “egocentric”. Bài KHÔNG nói thời gian quan hệ của các cặp đôi (length of relationships) có ảnh hưởng đến kết quả hay không → NOT GIVEN.", "ev": [{"p": 7, "s": 0, "e": 543, "hl": [[326, 422]], "blue": []}], "ansShow": "NOT GIVEN", "text": "In the couples experiments, the length of the couples’ relationships had an impact on the results.", "qhl": [[28, 97]]}, "39": {"exp": "Paragraph 7: nhóm ‘distant observer’ “displayed more wisdom-related reasoning”; Paragraph 8: nhóm ‘other’s eyes’ “significantly more likely to rely on wise reasoning” → cả hai thí nghiệm, người nhìn từ góc độ tách biệt hơn (detached) đều suy luận khôn ngoan hơn → TRUE.", "ev": [{"p": 6, "s": 318, "e": 517, "hl": [[384, 423]], "blue": []}, {"p": 7, "s": 326, "e": 543, "hl": [[371, 422]], "blue": []}], "ansShow": "TRUE", "text": "In both experiments, the participants who looked at the situation from a more detached viewpoint tended to make wiser decisions.", "qhl": [[0, 19], [66, 127]]}, "40": {"exp": "Paragraph 10: “research shows only a small positive relationship between wise thinking and crystallized intelligence” → trí thông minh chỉ quyết định sự khôn ngoan ở mức rất hạn chế (only a very limited extent ≈ only a small positive relationship) → TRUE.", "ev": [{"p": 9, "s": 0, "e": 241, "hl": [[97, 183]], "blue": []}], "ansShow": "TRUE", "text": "Grossmann believes that a person’s wisdom is determined by their intelligence to only a very limited extent.", "qhl": [[45, 107]]}}};
+const VOCAB=[{"part": 0, "hw": "geoglyph", "pos": "n", "f": ["geoglyphs", "geoglyph"], "vn": "hình khổng lồ khắc/ vẽ trên mặt đất", "ex": "Geoglyphs are best seen from the air.", "core": true}, {"part": 0, "hw": "scattered", "pos": "adj", "f": ["scattered"], "vn": "rải rác", "ex": "Small villages are scattered across the valley.", "core": true}, {"part": 0, "hw": "controversial", "pos": "adj", "f": ["controversial"], "vn": "gây tranh cãi", "ex": "The decision was highly controversial.", "core": true}, {"part": 0, "hw": "enigmatic", "pos": "adj", "f": ["enigmatic"], "vn": "bí ẩn, khó hiểu", "ex": "She gave an enigmatic smile.", "core": true}, {"part": 0, "hw": "prehistoric", "pos": "adj", "f": ["prehistoric"], "vn": "thuộc thời tiền sử", "ex": "Prehistoric tools were found at the site.", "core": true}, {"part": 0, "hw": "gleaming", "pos": "adj", "f": ["gleaming"], "vn": "sáng bóng, lấp lánh", "ex": "The gleaming white walls shone in the sun.", "core": true}, {"part": 0, "hw": "scour", "pos": "v", "f": ["scoured"], "vn": "cọ rửa, làm sạch", "ex": "The surface was scoured to remove the moss.", "core": true}, {"part": 0, "hw": "fade", "pos": "v", "f": ["faded"], "vn": "mờ dần, phai nhạt", "ex": "The old traditions gradually faded.", "core": true}, {"part": 0, "hw": "testament to", "pos": "n", "f": ["testament"], "vn": "minh chứng cho", "ex": "The building is a testament to their skill.", "core": true}, {"part": 0, "hw": "stylised", "pos": "adj", "f": ["stylised"], "vn": "được cách điệu hóa", "ex": "The painting shows a stylised bird.", "core": true}, {"part": 0, "hw": "sleek", "pos": "adj", "f": ["sleek"], "vn": "thon gọn, mượt mà", "ex": "The sleek car sped away.", "core": true}, {"part": 0, "hw": "burial mound", "pos": "n", "f": ["burial mounds"], "vn": "gò mộ", "ex": "Burial mounds dot the hills.", "core": true}, {"part": 0, "hw": "appreciate", "pos": "v", "f": ["appreciated"], "vn": "thưởng thức, cảm nhận được giá trị", "ex": "The view is best appreciated from the top.", "core": true}, {"part": 0, "hw": "emblem", "pos": "n", "f": ["emblem"], "vn": "biểu tượng, huy hiệu", "ex": "The eagle is the national emblem.", "core": true}, {"part": 0, "hw": "ritual", "pos": "n", "f": ["ritual"], "vn": "nghi lễ", "ex": "The ritual has been practised for centuries.", "core": true}, {"part": 0, "hw": "worship", "pos": "v", "f": ["worshipped"], "vn": "thờ cúng", "ex": "Ancient peoples worshipped the sun.", "core": true}, {"part": 0, "hw": "fertility", "pos": "n", "f": ["fertility"], "vn": "sự phì nhiêu, khả năng sinh sản", "ex": "Farmers prayed for the fertility of the soil.", "core": true}, {"part": 0, "hw": "attest", "pos": "v", "f": ["attested"], "vn": "chứng thực, chứng tỏ", "ex": "Records attest to the town’s ancient origins.", "core": true}, {"part": 0, "hw": "regimental", "pos": "adj", "f": ["regimental"], "vn": "thuộc trung đoàn", "ex": "The regimental badge shows a lion.", "core": false}, {"part": 0, "hw": "hillfort", "pos": "n", "f": ["hillfort"], "vn": "pháo đài trên đồi (thời cổ)", "ex": "The hillfort overlooks the valley.", "core": false}, {"part": 0, "hw": "temporary gesture", "pos": "n", "f": ["temporary gestures"], "vn": "hành động mang tính tạm thời", "ex": "The sculpture was only a temporary gesture.", "core": false}, {"part": 1, "hw": "ubiquitous", "pos": "adj", "f": ["ubiquitous"], "vn": "có mặt khắp nơi", "ex": "Smartphones are now ubiquitous.", "core": true}, {"part": 1, "hw": "absorbing", "pos": "adj", "f": ["absorbing"], "vn": "cuốn hút", "ex": "It is an absorbing novel.", "core": true}, {"part": 1, "hw": "at one’s peril", "pos": "phr", "f": ["at our peril"], "vn": "tự chịu rủi ro", "ex": "Ignore the warning at your peril.", "core": true}, {"part": 1, "hw": "adept", "pos": "adj", "f": ["adept"], "vn": "thành thạo, khéo léo", "ex": "She is adept at solving problems.", "core": true}, {"part": 1, "hw": "panache", "pos": "n", "f": ["panache"], "vn": "phong thái, sự phô diễn phong cách", "ex": "He played the piece with panache.", "core": true}, {"part": 1, "hw": "knack", "pos": "n", "f": ["knack"], "vn": "sở trường, mánh khóe", "ex": "He has a knack for languages.", "core": true}, {"part": 1, "hw": "enthralling", "pos": "adj", "f": ["enthralling"], "vn": "làm say mê", "ex": "The film was enthralling from start to finish.", "core": true}, {"part": 1, "hw": "potent", "pos": "adj", "f": ["potent"], "vn": "mạnh, có sức ảnh hưởng", "ex": "Social media is a potent force.", "core": true}, {"part": 1, "hw": "symbiotic", "pos": "adj", "f": ["symbiotic"], "vn": "cộng sinh", "ex": "Bees and flowers have a symbiotic relationship.", "core": true}, {"part": 1, "hw": "nurture", "pos": "v", "f": ["nurture"], "vn": "nuôi dưỡng", "ex": "Parents should nurture their children’s talents.", "core": true}, {"part": 1, "hw": "unravel", "pos": "v", "f": ["unravelling"], "vn": "làm sáng tỏ, gỡ rối", "ex": "Scientists are unravelling the mystery.", "core": true}, {"part": 1, "hw": "eliminate", "pos": "v", "f": ["eliminate"], "vn": "loại bỏ", "ex": "The treatment can eliminate the virus.", "core": true}, {"part": 1, "hw": "disrupt", "pos": "v", "f": ["disrupting"], "vn": "làm xáo trộn, gián đoạn", "ex": "Strikes disrupted public transport.", "core": true}, {"part": 1, "hw": "keep at bay", "pos": "phr", "f": ["at bay"], "vn": "ngăn không cho đến gần", "ex": "Garlic is said to keep vampires at bay.", "core": true}, {"part": 1, "hw": "unglamorous", "pos": "adj", "f": ["unglamorous"], "vn": "không hào nhoáng, tẻ nhạt", "ex": "Nursing is hard, unglamorous work.", "core": true}, {"part": 1, "hw": "manipulate", "pos": "v", "f": ["manipulate"], "vn": "điều khiển, tác động khéo léo", "ex": "Scientists can manipulate genes.", "core": true}, {"part": 1, "hw": "neonatal", "pos": "adj", "f": ["neonatal"], "vn": "thuộc sơ sinh", "ex": "The baby was cared for in a neonatal unit.", "core": false}, {"part": 1, "hw": "luminescent", "pos": "adj", "f": ["luminescent"], "vn": "phát quang", "ex": "Luminescent fish live in the deep sea.", "core": false}, {"part": 1, "hw": "allergy", "pos": "n", "f": ["allergies"], "vn": "dị ứng", "ex": "She has an allergy to nuts.", "core": false}, {"part": 1, "hw": "hygiene", "pos": "n", "f": ["hygiene"], "vn": "vệ sinh", "ex": "Good hygiene prevents infection.", "core": false}, {"part": 2, "hw": "revered", "pos": "adj", "f": ["revered"], "vn": "được tôn kính", "ex": "She is a revered teacher.", "core": true}, {"part": 2, "hw": "few and far between", "pos": "idiom", "f": ["few and far between"], "vn": "hiếm hoi, thưa thớt", "ex": "Good restaurants here are few and far between.", "core": true}, {"part": 2, "hw": "empirical", "pos": "adj", "f": ["empirical"], "vn": "dựa trên thực nghiệm", "ex": "There is empirical evidence for the theory.", "core": true}, {"part": 2, "hw": "trait", "pos": "n", "f": ["trait"], "vn": "đặc điểm, nét tính cách", "ex": "Patience is a valuable trait.", "core": true}, {"part": 2, "hw": "cumulatively", "pos": "adv", "f": ["cumulatively"], "vn": "một cách tích lũy, gộp lại", "ex": "The small changes cumulatively made a big difference.", "core": true}, {"part": 2, "hw": "contextual", "pos": "adj", "f": ["contextual"], "vn": "thuộc ngữ cảnh/ bối cảnh", "ex": "Contextual factors influence behaviour.", "core": true}, {"part": 2, "hw": "humility", "pos": "n", "f": ["humility"], "vn": "sự khiêm tốn", "ex": "He accepted the prize with humility.", "core": true}, {"part": 2, "hw": "compromise", "pos": "n", "f": ["compromise"], "vn": "sự thỏa hiệp", "ex": "Both sides reached a compromise.", "core": true}, {"part": 2, "hw": "foster", "pos": "v", "f": ["foster"], "vn": "nuôi dưỡng, thúc đẩy", "ex": "The school aims to foster creativity.", "core": true}, {"part": 2, "hw": "impartiality", "pos": "n", "f": ["impartiality"], "vn": "sự vô tư, công bằng", "ex": "Judges must show impartiality.", "core": true}, {"part": 2, "hw": "expansive", "pos": "adj", "f": ["expansive"], "vn": "rộng rãi, mở rộng", "ex": "She took an expansive view of the problem.", "core": true}, {"part": 2, "hw": "confront", "pos": "v", "f": ["confronted"], "vn": "đối mặt", "ex": "She was confronted with a difficult choice.", "core": true}, {"part": 2, "hw": "egocentric", "pos": "adj", "f": ["egocentric"], "vn": "tự cho mình là trung tâm", "ex": "Young children are often egocentric.", "core": true}, {"part": 2, "hw": "retaliate", "pos": "v", "f": ["retaliate"], "vn": "trả đũa", "ex": "He did not retaliate when insulted.", "core": true}, {"part": 2, "hw": "agreeableness", "pos": "n", "f": ["agreeableness"], "vn": "tính dễ chịu, hòa nhã", "ex": "Agreeableness is one of the five personality traits.", "core": false}, {"part": 2, "hw": "recession", "pos": "n", "f": ["recession"], "vn": "suy thoái kinh tế", "ex": "Many firms closed during the recession.", "core": false}, {"part": 2, "hw": "detached", "pos": "adj", "f": ["distant observer"], "vn": "tách biệt, khách quan", "ex": "He kept a detached view of the dispute.", "core": false}];
+</script>
+<script>
+"use strict";
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const Q=DATA.questions;                      // n -> question object
+DATA.parts.forEach(p=>p.groups.forEach(g=>{if(g.kind==='mcq2')g.qs.slice(1).forEach(q=>{Q[q]=Q[g.qs[0]]})}));   // Choose TWO: both numbers share one card
+const isCorrectIdx=(d,k)=>d.correctIdxs?d.correctIdxs.includes(k):k===d.correctIdx;
+const PART_OF={};DATA.parts.forEach((p,i)=>p.groups.forEach(g=>g.qs.forEach(q=>PART_OF[q]=i)));
+
+/* ------------------------------------------------------------------ passage rendering: Context Box + Answer Highlight */
+function renderParagraph(text,ev){
+  if(!ev) return esc(text);
+  const blue=ev.blue||[];
+  const seg=(a,b)=>{                      // text[a,b) with the blue person/reference spans
+    let out='',last=a;
+    blue.forEach(([bs,be])=>{const s0=Math.max(bs,a),e0=Math.min(be,b);if(s0<e0){out+=esc(text.slice(last,s0))+'<span class="ref-name">'+esc(text.slice(s0,e0))+'</span>';last=e0}});
+    return out+esc(text.slice(last,b));
+  };
+  let inner='',last=ev.s;
+  [...ev.hl].sort((a,b)=>a[0]-b[0]).forEach(([hs,he])=>{inner+=seg(last,hs)+'<mark class="answer-hl">'+seg(hs,he)+'</mark>';last=he});
+  inner+=seg(last,ev.e);
+  return esc(text.slice(0,ev.s))+'<span class="context-box">'+inner+'</span>'+esc(text.slice(ev.e));
+}
+// question side: yellow + bold on the phrases that map to the passage evidence
+function markRanges(text,ranges){
+  let out='',last=0;
+  [...(ranges||[])].sort((a,b)=>a[0]-b[0]).forEach(([s0,e0])=>{out+=esc(text.slice(last,s0))+'<mark class="answer-hl">'+esc(text.slice(s0,e0))+'</mark>';last=e0});
+  return out+esc(text.slice(last));
+}
+let ACTIVE=null;                           // question currently selected
+const OPEN_ANS=new Set();                  // summary gaps whose inline answer is open
+function clearPassage(part){
+  $$('.passage-p',$('#r'+part)).forEach((el,i)=>{el.classList.remove('active-context');$('.paragraph-text',el).innerHTML=esc(DATA.parts[part].paras[i].text)});
+}
+
+/* ------------------------------------------------------------------ page construction */
+function paragraphsHTML(part){
+  return DATA.parts[part].paras.map((p,i)=>
+    '<div class="passage-p" id="para-'+part+'-'+i+'" data-part="'+part+'" data-idx="'+i+'">'+
+    (p.hq?'<button type="button" class="head-box" data-q="'+p.hq+'" aria-label="Heading '+p.hq+' – xem giải thích"><span class="hb-n">'+p.hq+'</span><span class="hb-sec">Section '+esc(p.sec)+'</span><span class="hb-ans">'+esc(Q[p.hq].hdText)+'</span></button>':p.label?'<div class="para-label">Paragraph '+esc(p.label)+'</div>':'')+
+    '<div class="paragraph-text">'+esc(p.text)+'</div></div>').join('');
+}
+const GROUP_OF={};DATA.parts.forEach(p=>p.groups.forEach(g=>g.qs.forEach(q=>GROUP_OF[q]=g)));
+const isSummaryGroup=g=>g.kind==='summary'||g.kind==='wordlist';
+function evidenceQuotes(q){
+  const part=PART_OF[q];
+  return Q[q].ev.map(e=>{
+    const par=DATA.parts[part].paras[e.p],t=par.text;
+    const label=par.sec?('Section '+par.sec):par.label?('Paragraph '+par.label):('Paragraph '+(e.p+1));
+    return [...e.hl].sort((a,b)=>a[0]-b[0]).map(([s0,e0])=>'<span class="ie-quote"><span class="ie-loc">'+esc(label)+'</span>“<mark class="answer-hl">'+esc(t.slice(s0,e0))+'</mark>”</span>').join('');
+  }).join('');
+}
+function inlineExp(q){
+  return '<span class="inline-exp" id="ans'+q+'"><span class="ie-head">Evidence / Explanation</span><span class="ie-ans">Đáp án: '+esc(Q[q].ansShow)+'</span>'+evidenceQuotes(q)+'<span class="ie-body">'+esc(Q[q].exp)+'</span></span>';
+}
+function gapHTML(q){
+  const open=OPEN_ANS.has(q);
+  return '<span class="gap-wrap" data-q="'+q+'"><button type="button" class="summary-gap'+(open?' filled':'')+(ACTIVE===q?' active-gap':'')+'" data-q="'+q+'" aria-label="Question '+q+': xem bằng chứng"><strong>'+q+'</strong> <span class="blank-space" id="b'+q+'">'+(open?esc(Q[q].gapShow):'__________')+'</span></button> <button type="button" class="ans-btn" data-q="'+q+'" aria-expanded="'+open+'" aria-label="Answer '+q+'">(Ans)</button></span>'+(open?inlineExp(q):'');
+}
+function summaryParaHTML(g,pi){
+  const text=g.summary.paras[pi];
+  const act=(ACTIVE&&g.qs.includes(ACTIVE)&&Q[ACTIVE].qp===pi)?Q[ACTIVE].qhl:[];
+  let out='',last=0;
+  const re=/\{(\d+)\}/g;let m;
+  const chunk=(a,b)=>{                    // text[a,b) with the yellow ranges that fall inside it
+    const rs=act.map(([s0,e0])=>[Math.max(s0,a)-a,Math.min(e0,b)-a]).filter(([s0,e0])=>s0<e0);
+    return markRanges(text.slice(a,b),rs);
+  };
+  while((m=re.exec(text))){out+=chunk(last,m.index)+gapHTML(+m[1]);last=m.index+m[0].length}
+  return out+chunk(last,text.length);
+}
+function summaryInnerHTML(g){
+  const st=g.summary.styles||[];
+  return '<div class="summary-prose">'+(g.summary.title?'<h3>'+esc(g.summary.title)+'</h3>':'')+g.summary.paras.map((_,pi)=>'<p'+(st[pi]==='h'?' class="notes-h"':st[pi]==='li'?' class="notes-li"':st[pi]==='li2'?' class="notes-li notes-li2"':'')+'>'+summaryParaHTML(g,pi)+'</p>').join('')+'</div>';
+}
+function summaryHTML(g){return '<div class="summary-group" data-g="'+g.qs[0]+'">'+summaryInnerHTML(g)+'</div>'}
+function refreshSummary(g,focusQ){
+  const el=$('.summary-group[data-g="'+g.qs[0]+'"]');if(!el)return;
+  el.innerHTML=summaryInnerHTML(g);
+  if(focusQ){const b=$('.ans-btn[data-q="'+focusQ+'"]',el);if(b)b.focus({preventScroll:true})}
+}
+function answerBlock(q){
+  const d=Q[q];
+  return '<div class="explanation-box" id="ans'+q+'"><span class="ans">Đáp án: '+esc(d.ansShow)+'</span><p><em>Giải thích:</em> '+esc(d.exp)+'</p></div>';
+}
+function cardHTML(q,g){
+  const d=Q[q];
+  let body='';
+  if(g.kind==='mcq'||g.kind==='mcq2'){
+    const qLabel=g.kind==='mcq2'?(g.qs[0]+'–'+g.qs[g.qs.length-1]):q;
+    body='<p><strong class="question-number">'+qLabel+'</strong><span class="q-text" data-q="'+q+'">'+esc(d.text)+'</span></p>'+d.opts.map((o,k)=>
+      '<div class="choice-item" tabindex="0" data-k="'+k+'" role="button"><span class="cl">'+'ABCDE'[k]+'</span><span class="ct">'+esc(o)+'</span><div class="mcq-info-box">'+esc(d.optExp[k])+'</div></div>').join('');
+  }else{
+    body='<p><strong class="question-number">'+q+'</strong><span class="q-text" data-q="'+q+'">'+esc(d.text)+'</span></p>';
+  }
+  return '<div class="question-block" data-q="'+q+'" tabindex="0" aria-label="Câu '+q+' — định vị ngữ cảnh">'+body+
+    '<button class="btn-answer" type="button" aria-expanded="false">Answer</button>'+answerBlock(q)+'</div>';
+}
+function refreshCard(q){
+  const d=Q[q],block=$('.question-block[data-q="'+q+'"]');if(!block)return;
+  const t=$('.q-text',block);if(t)t.innerHTML=markRanges(d.text,ACTIVE===q?d.qhl:[]);
+  if(d.opts){
+    const on=ACTIVE===q&&$('.explanation-box',block).classList.contains('show');
+    $$('.choice-item',block).forEach((c,k)=>{const r=d.ohls?(d.ohls[k]?[d.ohls[k]]:[]):(d.ohl&&k===d.correctIdx?[d.ohl]:[]);$('.ct',c).innerHTML=markRanges(d.opts[k],on?r:[])});
+  }
+}
+function groupHTML(g){
+  let h='<div class="section-title" role="heading" aria-level="3">'+esc(g.title)+'</div><p class="q-instr">'+esc(g.instr)+'</p>';
+  if(g.bank){
+    h+='<div class="word-box"><div class="word-box-title">'+esc(g.bank.title.toUpperCase())+'</div><table class="word-options"><tbody>'+
+      Array.from({length:Math.ceil(g.bank.items.length/2)},(_,j)=>'<tr>'+g.bank.items.slice(j*2,j*2+2).map((w,k)=>'<td><span class="option-letter'+(g.bank.labels?' lbl':'')+'">'+(g.bank.labels?g.bank.labels[j*2+k]:String.fromCharCode(65+j*2+k))+'</span>'+esc(w)+'</td>').join('')+(g.bank.items.slice(j*2,j*2+2).length<2?'<td></td>':'')+'</tr>').join('')+'</tbody></table></div>';
+  }
+  if(g.summary) h+=summaryHTML(g);
+  if(g.kind==='mcq2') h+=cardHTML(g.qs[0],g);
+  else if(!isSummaryGroup(g)) h+=g.qs.map(q=>cardHTML(q,g)).join('');   // summary questions are corrected inline, next to their blank
+  return h;
+}
+DATA.parts.forEach((p,i)=>{
+  const hasBlue=p.groups.some(g=>g.qs.some(q=>Q[q].ev.some(e=>e.blue&&e.blue.length)));
+  const reading=document.createElement('section');reading.id='r'+i;reading.className='page';
+  reading.innerHTML='<div class="workspace"><article class="pane reading"><div class="eyebrow">PASSAGE '+(i+1)+'</div><h2 class="passage-title">'+esc(p.title)+'</h2>'+
+    (p.subtitle?'<p class="hint"><em>'+esc(p.subtitle)+'</em></p>':'')+
+    '<div class="legend"><span><span class="lg-box"></span>Khung đỏ nhạt: ngữ cảnh chứa đáp án</span><span><mark class="answer-hl">Vàng đậm</mark> thông tin được hỏi: câu hỏi ↔ passage</span>'+(hasBlue?'<span><span class="ref-name">Xanh dương</span> tên người / đại từ chỉ người</span>':'')+'<span>Nhấp đúp vào một từ để tra từ vựng</span></div>'+
+    paragraphsHTML(i)+'</article><aside class="pane questions"><p class="hint">Chọn câu hỏi → passage hiện khung ngữ cảnh + highlight vàng đậm (và phần tương ứng trong câu hỏi) → bấm Answer / (Ans) để mở lời giải.</p>'+
+    p.groups.map(groupHTML).join('')+'</aside></div>';
+  $('#app').append(reading);
+
+  const vocab=document.createElement('section');vocab.id='v'+i;vocab.className='page';
+  const core=VOCAB.filter(e=>e.part===i&&e.core);
+  vocab.innerHTML='<div class="vocab-wrap"><div class="eyebrow">VOCABULARY '+(i+1)+' · '+esc(p.title)+'</div><div class="vocab-head"><div><h2>Core Vocabulary Spine</h2><p>'+core.length+' từ / cụm từ trọng tâm · Học theo ngữ cảnh bài đọc</p></div><button class="all-meanings" type="button">Hiện tất cả nghĩa</button></div><div class="vocab-list">'+
+    core.map(e=>'<details><summary><span>'+esc(e.hw)+' <span class="pos">('+esc(e.pos)+')</span></span></summary><div class="vbody"><p><strong>Nghĩa:</strong> '+esc(e.vn)+'</p><p class="ex"><em>Example:</em> '+esc(e.ex)+'</p></div></details>').join('')+'</div></div>';
+  $('#app').append(vocab);
+  $('.all-meanings',vocab).onclick=e=>{const show=!$$('details',vocab).every(x=>x.open);$$('details',vocab).forEach(x=>x.open=show);e.target.textContent=show?'Ẩn tất cả nghĩa':'Hiện tất cả nghĩa'};
+});
+for(const type of ['v','r'])for(let i=0;i<3;i++){const b=document.createElement('button');b.dataset.view=type+i;b.textContent=(type==='v'?'Vocabulary ':'Part ')+(i+1);b.onclick=()=>selectView(type+i);$('.dock').append(b)}
+
+/* ------------------------------------------------------------------ navigation */
+let activeView='r0';
+function selectView(id){
+  activeView=id;const part=+id.slice(1);
+  $$('.page').forEach(p=>p.classList.toggle('active',p.id===id));
+  $$('.dock button').forEach(b=>b.setAttribute('aria-current',b.dataset.view===id?'page':'false'));
+  $('#subtitle').textContent=(id[0]==='v'?'Vocabulary ':'Part ')+(part+1)+' · '+DATA.parts[part].title;
+  try{localStorage.setItem('c16r2-view',id)}catch(e){}
+  window.scrollTo(0,0);
+}
+
+/* ------------------------------------------------------------------ selecting a question */
+function jump(part,i){
+  const el=$('#para-'+part+'-'+i),pane=el.closest('.pane');
+  if(matchMedia('(max-width:900px)').matches)el.scrollIntoView({behavior:'smooth',block:'start'});
+  else pane.scrollTo({top:el.getBoundingClientRect().top-pane.getBoundingClientRect().top+pane.scrollTop-14,behavior:'smooth'});
+}
+function selectQuestion(q){
+  q=+q;const part=PART_OF[q],d=Q[q],prev=ACTIVE;ACTIVE=q;
+  $$('.active-question').forEach(x=>x.classList.remove('active-question'));
+  const block=$('#r'+part+' .question-block[data-q="'+q+'"]');if(block)block.classList.add('active-question');
+  $$('.head-box').forEach(h=>h.classList.toggle('active',+h.dataset.q===q));
+  if(prev&&prev!==q){const pg=GROUP_OF[prev];isSummaryGroup(pg)?refreshSummary(pg):refreshCard(prev)}
+  const g=GROUP_OF[q];isSummaryGroup(g)?refreshSummary(g):refreshCard(q);
+  const byPara={};d.ev.forEach(e=>{byPara[e.p]=e});
+  $$('.passage-p',$('#r'+part)).forEach((el,i)=>{
+    el.classList.toggle('active-context',!!byPara[i]);
+    $('.paragraph-text',el).innerHTML=renderParagraph(DATA.parts[part].paras[i].text,byPara[i]);
+  });
+  if(d.ev.length)jump(part,d.ev[0].p);
+}
+function toggleAnswer(block){
+  const q=+block.dataset.q;
+  if(!block.classList.contains('active-question'))selectQuestion(q);
+  const box=$('.explanation-box',block),show=!box.classList.contains('show');
+  box.classList.toggle('show',show);
+  $('.btn-answer',block).setAttribute('aria-expanded',show);
+  if(Q[q].opts){
+    $$('.choice-item',block).forEach((c,k)=>{c.classList.toggle('is-correct',show&&isCorrectIdx(Q[q],k));c.classList.toggle('is-wrong',show&&c.classList.contains('selected')&&!isCorrectIdx(Q[q],k))});
+    refreshCard(q);
+  }
+}
+function toggleGap(q){                       // inline (Ans) for summary blanks
+  q=+q;const g=GROUP_OF[q];
+  OPEN_ANS.has(q)?OPEN_ANS.delete(q):OPEN_ANS.add(q);
+  selectQuestion(q);                          // also re-renders the summary with the new state
+  refreshSummary(g,q);
+}
+$('#app').addEventListener('click',e=>{
+  const hb=e.target.closest('.head-box');
+  if(hb){const q=+hb.dataset.q;selectQuestion(q);const blk=$('#r'+PART_OF[q]+' .question-block[data-q="'+q+'"]');
+    if(blk){if(!$('.explanation-box',blk).classList.contains('show'))toggleAnswer(blk);blk.scrollIntoView({behavior:'smooth',block:'nearest'})}return}
+  const ansBtn=e.target.closest('.ans-btn');
+  if(ansBtn){e.stopPropagation();toggleGap(ansBtn.dataset.q);return}
+  const answerBtn=e.target.closest('.btn-answer');
+  if(answerBtn){e.stopPropagation();toggleAnswer(answerBtn.closest('.question-block'));return}
+  const choice=e.target.closest('.choice-item');
+  if(choice){
+    const block=choice.closest('.question-block');selectQuestion(block.dataset.q);
+    if(Q[+block.dataset.q].correctIdxs){                       // Choose TWO: pick / un-pick each option on its own
+      const on=!choice.classList.contains('selected'),k=+choice.dataset.k;
+      choice.classList.toggle('selected',on);$('.mcq-info-box',choice).classList.toggle('show',on);
+      choice.classList.toggle('is-wrong',on&&$('.explanation-box',block).classList.contains('show')&&!isCorrectIdx(Q[+block.dataset.q],k));
+      return;
+    }
+    $$('.choice-item',block).forEach(c=>{c.classList.remove('selected');$('.mcq-info-box',c).classList.remove('show');c.classList.remove('is-wrong')});
+    choice.classList.add('selected');$('.mcq-info-box',choice).classList.add('show');
+    if($('.explanation-box',block).classList.contains('show')){const k=+choice.dataset.k;choice.classList.toggle('is-wrong',!isCorrectIdx(Q[+block.dataset.q],k))}
+    return;
+  }
+  const gap=e.target.closest('.summary-gap');
+  if(gap){selectQuestion(gap.dataset.q);return}
+  const block=e.target.closest('.question-block');
+  if(block)selectQuestion(block.dataset.q);
+});
+$('#app').addEventListener('keydown',e=>{
+  if(!['Enter',' '].includes(e.key))return;
+  const choice=e.target.closest&&e.target.closest('.choice-item');
+  if(choice){e.preventDefault();choice.click();return}
+  if(e.target.classList&&e.target.classList.contains('question-block')){e.preventDefault();selectQuestion(e.target.dataset.q)}
+});
+
+/* ------------------------------------------------------------------ theme / reset */
+function setTheme(dark){document.documentElement.dataset.theme=dark?'dark':'light';$('#theme').textContent=dark?'☀ Light mode':'◐ Dark mode';$('#theme').setAttribute('aria-pressed',dark);try{localStorage.setItem('c16r2-theme',dark?'dark':'light')}catch(e){}}
+let theme,savedView;try{theme=localStorage.getItem('c16r2-theme');savedView=localStorage.getItem('c16r2-view')}catch(e){}
+setTheme(theme?theme==='dark':matchMedia('(prefers-color-scheme:dark)').matches);
+$('#theme').onclick=()=>setTheme(document.documentElement.dataset.theme!=='dark');
+$('#reset').onclick=()=>{
+  ACTIVE=null;OPEN_ANS.clear();
+  $$('.explanation-box.show').forEach(x=>x.classList.remove('show'));
+  $$('.btn-answer').forEach(x=>x.setAttribute('aria-expanded','false'));
+  DATA.parts.forEach(p=>p.groups.forEach(g=>{if(isSummaryGroup(g))refreshSummary(g);else g.qs.forEach(refreshCard)}));
+  $$('.choice-item').forEach(c=>{c.classList.remove('selected','is-correct','is-wrong');$('.mcq-info-box',c).classList.remove('show')});
+  $$('.active-question').forEach(x=>x.classList.remove('active-question'));
+  $$('.head-box.active').forEach(x=>x.classList.remove('active'));
+  DATA.parts.forEach((_,i)=>clearPassage(i));
+  closeVocab();
+};
+
+/* ------------------------------------------------------------------ vocabulary look-up (offline; two steps) */
+const LOOKUP=DATA.parts.map(()=>({}));
+VOCAB.forEach(e=>e.f.forEach(f=>{if(!LOOKUP[e.part][f])LOOKUP[e.part][f]=e}));
+const WORD_CH=/[\p{L}\p{M}’'\-]/u;
+function cleanWord(raw){return (raw||'').normalize('NFC').replace(/^[^\p{L}]+|[^\p{L}]+$/gu,'').replace(/[’']s$/i,'')}
+function findEntry(part,word){
+  const w=word.toLowerCase(),map=LOOKUP[part];
+  const c=[w,w.replace(/ies$/,'y'),w.replace(/(es|s)$/,''),w.replace(/(ed|d)$/,''),w.replace(/ing$/,''),w.replace(/ing$/,'e'),w.replace(/ly$/,''),w.replace(/ment$/,'')];
+  for(const k of c)if(k&&map[k])return map[k];
+  return null;
+}
+function wordAtPoint(x,y){
+  let node,off;
+  if(document.caretPositionFromPoint){const p=document.caretPositionFromPoint(x,y);if(p){node=p.offsetNode;off=p.offset}}
+  else if(document.caretRangeFromPoint){const r=document.caretRangeFromPoint(x,y);if(r){node=r.startContainer;off=r.startOffset}}
+  if(!node||node.nodeType!==3)return '';
+  const t=node.textContent;let s=Math.min(off,t.length),e=s;
+  while(s>0&&WORD_CH.test(t[s-1]))s--;
+  while(e<t.length&&WORD_CH.test(t[e]))e++;
+  return t.slice(s,e);
+}
+let vocabOpener=null,vocabEntry=null;
+function openVocab(part,rawWord){
+  const word=cleanWord(rawWord);if(!word)return;
+  vocabEntry=findEntry(part,word);
+  vocabOpener=document.activeElement;
+  $('#vm-word').textContent=word;
+  const ex=$('#vm-example'),mean=$('#vm-meaning'),none=$('#vm-none'),btn=$('#vm-reveal');
+  mean.hidden=true;btn.textContent='Reveal meaning';
+  if(vocabEntry){
+    // step 1: the selected word + one natural English example — NO Vietnamese yet
+    let exHtml=esc(vocabEntry.ex);
+    for(const f of [...vocabEntry.f].sort((a,b)=>b.length-a.length)){
+      const re=new RegExp('\\b'+f.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\b','i');
+      if(re.test(vocabEntry.ex)){exHtml=esc(vocabEntry.ex).replace(re,m=>'<strong>'+m+'</strong>');break}
+    }
+    ex.innerHTML='<span class="k">Example:</span>'+exHtml;ex.hidden=false;none.hidden=true;btn.hidden=false;
+  }else{
+    // no reliable data for this word in this passage: say so, never invent a meaning or example
+    ex.hidden=true;none.hidden=false;btn.hidden=true;
+    none.textContent='Chưa có dữ liệu từ vựng cho từ này trong bài đọc. (Bạn có thể nhờ giáo viên bổ sung.)';
+  }
+  $('#vmodal').hidden=false;
+  (vocabEntry?btn:$('#vm-close')).focus();
+}
+function closeVocab(){
+  if($('#vmodal').hidden)return;
+  $('#vmodal').hidden=true;
+  try{getSelection().removeAllRanges()}catch(e){}
+  if(vocabOpener&&vocabOpener.focus){try{vocabOpener.focus({preventScroll:true})}catch(e){}}
+  vocabOpener=null;
+}
+$('#vm-reveal').onclick=()=>{
+  const mean=$('#vm-meaning');
+  if(mean.hidden&&vocabEntry){mean.innerHTML='<span class="k">Meaning:</span>'+esc(vocabEntry.vn);mean.hidden=false;$('#vm-reveal').textContent='Hide meaning'}
+  else{mean.hidden=true;$('#vm-reveal').textContent='Reveal meaning'}
+};
+$('#vm-close').onclick=closeVocab;
+$('#vmodal').addEventListener('click',e=>{if(e.target.id==='vmodal')closeVocab()});
+document.addEventListener('keydown',e=>{
+  if($('#vmodal').hidden)return;
+  if(e.key==='Escape'){e.preventDefault();closeVocab();return}
+  if(e.key==='Tab'){  // keep focus inside the pop-up
+    const f=$$('#vmodal button').filter(b=>!b.hidden&&b.offsetParent!==null);
+    if(!f.length)return;const i=f.indexOf(document.activeElement);
+    if(e.shiftKey&&i<=0){e.preventDefault();f[f.length-1].focus()}
+    else if(!e.shiftKey&&i===f.length-1){e.preventDefault();f[0].focus()}
+  }
+});
+function partOfEl(el){const pg=el.closest('.page');return pg?+pg.id.slice(1):0}
+$('#app').addEventListener('dblclick',e=>{
+  const pt=e.target.closest&&e.target.closest('.paragraph-text');if(!pt)return;
+  let w=wordAtPoint(e.clientX,e.clientY);
+  if(!cleanWord(w))w=String(getSelection()||'');
+  openVocab(partOfEl(pt),w);
+});
+// long-press (touch devices)
+let lpTimer=null,lpX=0,lpY=0;
+$('#app').addEventListener('touchstart',e=>{
+  const pt=e.target.closest&&e.target.closest('.paragraph-text');if(!pt||e.touches.length!==1)return;
+  const t=e.touches[0];lpX=t.clientX;lpY=t.clientY;
+  clearTimeout(lpTimer);
+  lpTimer=setTimeout(()=>{const w=wordAtPoint(lpX,lpY);if(cleanWord(w))openVocab(partOfEl(pt),w)},550);
+},{passive:true});
+['touchmove','touchend','touchcancel'].forEach(ev=>$('#app').addEventListener(ev,e=>{
+  if(ev==='touchmove'&&e.touches[0]&&Math.hypot(e.touches[0].clientX-lpX,e.touches[0].clientY-lpY)<10)return;
+  clearTimeout(lpTimer);
+},{passive:true}));
+
+selectView(/^[rv][012]$/.test(savedView||'')?savedView:'r0');
+</script>
+</body>
+</html>
