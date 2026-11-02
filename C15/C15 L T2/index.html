@@ -639,9 +639,13 @@ body.rv-review #rvBackBtn{display:inline-block;margin:10px 0 0;padding:7px 14px;
 .qchip-correct-answer{display:inline-block;margin-left:5px;font-size:12.5px;font-weight:700;color:var(--primary-dark);}
 .mc-block.is-review-correct{border-left:4px solid var(--primary);}
 .mc-block.is-review-wrong{border-left:4px solid var(--danger);}
+.mc-block.is-review-partial{border-left:4px solid #D9A400;}
 .review-status-badge{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;margin-left:10px;vertical-align:middle;white-space:nowrap;}
 .review-status-badge.is-correct{background:var(--primary-tint);color:var(--primary-dark);}
 .review-status-badge.is-wrong{background:var(--danger-bg);color:var(--danger);}
+.review-status-badge.is-partial{background:#FFF4CC;color:#7A5A00;}
+:root[data-visual-pilot][data-theme="dark"] .review-status-badge.is-partial{background:var(--pilot-gold-bg);color:var(--pilot-yellow);}
+:root[data-visual-pilot]:not([data-theme="light"]) .review-status-badge.is-partial{background:var(--pilot-gold-bg);color:var(--pilot-yellow);}
 .review-status-badge.is-unanswered{background:var(--bg);color:var(--ink-soft);border:1px solid var(--border);}
 .mc-option.opt-correct,.mc-option:has(input:checked).opt-correct{border-color:var(--primary);background:var(--primary-tint);}
 .mc-option.opt-correct .mc-option-letter{border-color:var(--primary);background:var(--primary);color:#fff;}
@@ -1707,10 +1711,11 @@ function annotateReviewQuestion(q,info){
   else if(selected.includes(letter))opt.classList.add('opt-wrong');
  });
  const empty=selected.length===0;
- block.classList.add(info.isCorrect?'is-review-correct':'is-review-wrong');
+ const partial=!info.isCorrect&&info.points>0&&info.points<info.total;
+ block.classList.add(info.isCorrect?'is-review-correct':(partial?'is-review-partial':'is-review-wrong'));
  const badge=document.createElement('span');
- badge.className='review-status-badge '+(empty?'is-unanswered':(info.isCorrect?'is-correct':'is-wrong'));
- badge.textContent=empty?'\u25cb Ch\u01b0a tr\u1ea3 l\u1eddi':(info.isCorrect?'\u2713 \u0110\u00fang':'\u2717 Sai');
+ badge.className='review-status-badge '+(empty?'is-unanswered':(info.isCorrect?'is-correct':(partial?'is-partial':'is-wrong')));
+ badge.textContent=empty?'\u25cb Ch\u01b0a tr\u1ea3 l\u1eddi':(info.isCorrect?'\u2713 \u0110\u00fang':(partial?'\u0110\u00fang '+info.points+'/'+info.total:'\u2717 Sai'));
  const stem=block.querySelector('.mc-stem');
  if(stem){stem.appendChild(document.createTextNode(' '));stem.appendChild(badge);}
 }
@@ -1721,7 +1726,9 @@ function annotateReviewPills(){
  document.querySelectorAll('.qnav-pill').forEach(pill=>{
   const info=byId[pill.dataset.q];if(!info)return;
   pill.classList.remove('is-review-correct','is-review-wrong');
-  pill.classList.add(info.isCorrect?'is-review-correct':'is-review-wrong');
+  let ok=info.isCorrect;
+  if(!ok&&info.total>1&&info.points>0){const sibs=[...document.querySelectorAll('.qnav-pill[data-q="'+pill.dataset.q+'"]')];ok=sibs.indexOf(pill)<info.points;}
+  pill.classList.add(ok?'is-review-correct':'is-review-wrong');
  });
 }
 let reviewAnnotated=false;
