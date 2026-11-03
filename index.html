@@ -3,138 +3,150 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Level Up IELTS — Danh sách bài test</title>
+<meta name="description" content="Thư viện IELTS Cambridge 15, 16, 19, 20. Chọn bài Listening, Reading và xem giải thích tương ứng.">
+<title>Level Up IELTS — Thư viện bài test</title>
 <style>
-  :root{--green:#15934E;--bg:#F4F8F6;--text:#1F2937;--muted:#6B7280;--border:#E2E8E4;}
-  *{box-sizing:border-box;}
-  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);}
-  .wrap{max-width:720px;margin:0 auto;padding:32px 20px 60px;}
-  h1{font-size:22px;margin:0 0 4px;}
-  .sub{color:var(--muted);font-size:14px;margin:0 0 28px;}
-  .book{margin-bottom:28px;}
-  .book h2{font-size:16px;margin:0 0 10px;color:var(--green);}
-  .row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:8px;}
-  a.testlink{display:block;flex:1 1 220px;background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px 16px;text-decoration:none;color:var(--text);font-weight:600;font-size:14px;}
-  a.testlink span{display:block;font-weight:400;color:var(--muted);font-size:12px;margin-top:2px;}
-  a.testlink:active{background:#ECF6F1;}
-  .corrections{margin-top:6px;}
-  .corrections .label{font-size:12px;color:var(--muted);margin:2px 0 6px;}
-  a.correctionlink{display:block;flex:1 1 140px;background:#fff;border:1px dashed var(--border);border-radius:10px;padding:10px 14px;text-decoration:none;color:var(--muted);font-weight:600;font-size:13px;}
-  a.correctionlink:active{background:#F4F8F6;}
+
+#ielts-library-demo{--lu-bg:light-dark(#f5f8f6,#15211c);--lu-surface:light-dark(#ffffff,#1c2c24);--lu-ink:light-dark(#20362b,#ecf5ef);--lu-sub:light-dark(#66776d,#aec0b4);--lu-line:light-dark(#dce6df,#374a3e);--lu-green:light-dark(#087744,#78dca5);--lu-button:light-dark(#087744,#78dca5);--lu-on-button:light-dark(#ffffff,#13301e);--lu-soft:light-dark(#eaf4ed,#233e2e);background:var(--lu-bg);color:var(--lu-ink);font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;border-radius:18px;overflow:hidden;text-align:left}
+#ielts-library-demo *{box-sizing:border-box}
+#ielts-library-demo button,#ielts-library-demo select{font:inherit;min-height:44px}
+#ielts-library-demo button{cursor:pointer}
+#ielts-library-demo .lu-header{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:22px 36px;border-bottom:1px solid var(--lu-line);background:var(--lu-surface)}
+#ielts-library-demo .lu-brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--lu-ink);letter-spacing:1px;font-size:13px;font-weight:700}
+#ielts-library-demo .lu-brand b{font-weight:400;color:var(--lu-sub)}
+#ielts-library-demo .lu-mark{display:flex;align-items:center;gap:2px;background:var(--lu-green);color:var(--lu-on-button);padding:6px 8px;border-radius:9px;font-size:18px;letter-spacing:-1px}
+#ielts-library-demo .lu-mark span{font-size:14px;align-self:flex-start;color:light-dark(#ffe071,#ffe071)}
+#ielts-library-demo .lu-preview{color:light-dark(#71520b,#f5d97f);background:light-dark(#fff3c9,#3b321d);font-size:12px;white-space:nowrap;border:1px solid light-dark(#f0d783,#66542a);border-radius:30px;padding:5px 11px}
+#ielts-library-demo main{padding:34px 36px 18px;position:relative}
+#ielts-library-demo .lu-eyebrow{font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--lu-green)}
+#ielts-library-demo h1{font-size:32px;line-height:1.2;letter-spacing:-1px;margin:9px 0 10px;font-weight:650}
+#ielts-library-demo h1::after{content:"";display:block;width:52px;height:5px;border-radius:3px;background:light-dark(#efc64c,#e1be53);margin-top:15px}
+#ielts-library-demo .lu-intro{margin:0;color:var(--lu-sub);font-size:14px}
+#ielts-library-demo .lu-controls{display:flex;gap:24px;align-items:flex-end;margin:28px 0 32px;padding:20px;background:var(--lu-surface);border:1px solid var(--lu-line);border-radius:14px}
+#ielts-library-demo .lu-book{display:flex;flex-direction:column;gap:7px;flex:1;font-size:12px;font-weight:600;color:var(--lu-sub)}
+#ielts-library-demo select{width:100%;padding:9px 32px 9px 13px;border:1px solid var(--lu-line);border-radius:8px;color:var(--lu-ink);background:var(--lu-surface);font-weight:600}
+#ielts-library-demo .lu-skill{flex:1.15;min-width:0}
+#ielts-library-demo .lu-skill>span{display:block;margin-bottom:7px;font-size:12px;font-weight:600;color:var(--lu-sub)}
+#ielts-library-demo .lu-tabs{display:flex;gap:4px;padding:3px;border-radius:9px;background:var(--lu-bg)}
+#ielts-library-demo .lu-tabs button{display:flex;align-items:center;justify-content:center;gap:7px;flex:1;padding:6px 10px;border:0;border-radius:7px;color:var(--lu-sub);background:transparent;font-size:13px;font-weight:600}
+#ielts-library-demo .lu-tabs button[aria-pressed=true]{color:var(--lu-on-button);background:var(--lu-button)}
+#ielts-library-demo svg{width:16px;height:16px;flex-shrink:0}
+#ielts-library-demo .lu-section{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:15px}
+#ielts-library-demo h2{margin:4px 0 0;font-size:20px;font-weight:650;letter-spacing:-.4px}
+#ielts-library-demo h2 span{font-weight:400;color:var(--lu-sub)}
+#ielts-library-demo .lu-count{font-size:12px;color:var(--lu-sub);white-space:nowrap}
+#ielts-library-demo .lu-list{display:grid;gap:10px}
+#ielts-library-demo .lu-test{display:flex;align-items:center;gap:14px;padding:17px 18px;background:var(--lu-surface);border:1px solid var(--lu-line);border-radius:12px}
+#ielts-library-demo .lu-number{width:43px;height:43px;border-radius:10px;display:grid;place-items:center;color:light-dark(#785a12,#f5d97f);background:light-dark(#fff2c7,#3b321d);font-size:17px;font-weight:600;flex-shrink:0}
+#ielts-library-demo .lu-title{flex:1;min-width:0}
+#ielts-library-demo .lu-title h3{font-size:16px;margin:0;font-weight:650}
+#ielts-library-demo .lu-title p{font-size:12px;color:var(--lu-sub);margin:2px 0 0}
+#ielts-library-demo .lu-actions{display:flex;gap:8px;align-items:center}
+#ielts-library-demo .lu-actions button,#ielts-library-demo .lu-actions a,#ielts-library-demo .lu-back{display:flex;align-items:center;justify-content:center;gap:7px;border-radius:8px;padding:8px 13px;font-size:12px;font-weight:600;white-space:nowrap}
+#ielts-library-demo .lu-start,#ielts-library-demo .lu-back{border:1px solid var(--lu-button);background:var(--lu-button);color:var(--lu-on-button)}
+#ielts-library-demo .lu-explain{border:1px solid light-dark(#edd893,#66542a);background:light-dark(#fff9e7,#332e20);color:light-dark(#71520b,#f5d97f)}
+#ielts-library-demo .lu-actions .lu-copy{border:0;padding:8px;background:transparent;color:var(--lu-sub);width:36px}
+#ielts-library-demo .lu-unavailable{font-size:11px;color:var(--lu-sub);padding:0 4px}
+#ielts-library-demo .lu-note{display:flex;gap:9px;align-items:flex-start;padding:18px 2px 25px;font-size:12px;color:var(--lu-sub)}
+#ielts-library-demo .lu-note svg{margin-top:2px}
+#ielts-library-demo .lu-note b{font-weight:600;color:var(--lu-ink)}
+#ielts-library-demo footer{border-top:1px solid var(--lu-line);display:flex;gap:12px;justify-content:space-between;padding-top:17px;font-size:10px;color:var(--lu-sub)}
+#ielts-library-demo footer span:first-child{letter-spacing:1.3px;font-weight:600}
+#ielts-library-demo .lu-feedback:empty{display:none}
+#ielts-library-demo .lu-feedback{margin-top:15px;color:var(--lu-green);background:var(--lu-soft);padding:12px;border-radius:8px;font-size:13px}
+#ielts-library-demo .lu-detail{margin-top:18px;position:relative;background:var(--lu-surface);border:1px solid var(--lu-line);border-radius:12px;padding:22px}
+#ielts-library-demo .lu-detail[hidden]{display:none}
+#ielts-library-demo .lu-detail h3{font-size:19px;margin:8px 25px 8px 0}
+#ielts-library-demo .lu-detail p{font-size:13px;color:var(--lu-sub);margin:0 0 18px}
+#ielts-library-demo .lu-close{position:absolute;right:10px;top:8px;background:transparent;border:0;color:var(--lu-sub);font-size:24px;width:44px}
+@media(max-width:620px){#ielts-library-demo .lu-header{padding:18px 20px}#ielts-library-demo main{padding:26px 20px 16px}#ielts-library-demo h1{font-size:27px}#ielts-library-demo .lu-controls{flex-direction:column;align-items:stretch;gap:16px;padding:16px}#ielts-library-demo .lu-test{flex-wrap:wrap;padding:15px;gap:11px}#ielts-library-demo .lu-actions{width:100%;padding-left:54px;flex-wrap:wrap}#ielts-library-demo .lu-actions button{flex:1}#ielts-library-demo .lu-actions .lu-copy{flex:0 0 36px}#ielts-library-demo h2{font-size:18px}#ielts-library-demo footer{flex-direction:column;gap:5px}#ielts-library-demo .lu-brand{font-size:11px;letter-spacing:.5px}}
+@media(max-width:370px){#ielts-library-demo .lu-actions{padding-left:0}#ielts-library-demo .lu-preview{font-size:10px;padding:4px 7px}#ielts-library-demo main{padding-left:14px;padding-right:14px}#ielts-library-demo h2 span{display:block}#ielts-library-demo .lu-eyebrow{letter-spacing:1px}}
+
+:root{color-scheme:light dark}
+body{margin:0;background:light-dark(#f5f8f6,#15211c)}
+#ielts-library-demo{max-width:900px;margin:0 auto;border-radius:0;min-height:100vh}
+#ielts-library-demo [hidden]{display:none!important}
+#ielts-library-demo a{color:inherit}
+#ielts-library-demo .lu-actions a{text-decoration:none;min-height:44px;display:flex;align-items:center}
+#ielts-library-demo .lu-actions .lu-start{color:var(--lu-on-button)}
+#ielts-library-demo .lu-actions .lu-explain{color:light-dark(#71520b,#f5d97f)}
+#ielts-library-demo .lu-actions .lu-copy{width:44px;min-width:44px}
+#ielts-library-demo .lu-fallback-title{margin:25px 0 14px}
+#ielts-library-demo.enhanced .lu-fallback-title{display:none}
+#ielts-library-demo .lu-feedback{margin:0 0 18px}
+#ielts-library-demo select{font-size:16px}
+#ielts-library-demo :is(a,button,select):focus-visible{outline:3px solid light-dark(#b38400,#f0ca59);outline-offset:3px}
+#ielts-library-demo :is(.lu-start,.lu-explain,.lu-copy):hover{filter:brightness(.94)}
+#ielts-library-demo .lu-tabs button[aria-pressed=false]:hover{background:var(--lu-soft);color:var(--lu-green)}
+#copy-dialog{max-width:min(500px,calc(100% - 32px));border:1px solid light-dark(#dce6df,#374a3e);border-radius:14px;padding:25px;background:light-dark(#fff,#1c2c24);color:light-dark(#20362b,#ecf5ef);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+#copy-dialog::backdrop{background:#0006}
+#copy-dialog h2{margin:0;font-size:20px}
+#copy-dialog label{display:block;margin-top:18px}
+#copy-dialog input{box-sizing:border-box;width:100%;padding:12px;margin:6px 0 18px;font:inherit;border:1px solid light-dark(#dce6df,#374a3e);border-radius:8px;background:light-dark(#f5f8f6,#15211c);color:inherit}
+#copy-dialog button{font:inherit;padding:10px 20px;border:0;border-radius:8px;background:light-dark(#087744,#78dca5);color:light-dark(#fff,#13301e)}
+@media(max-width:620px){#ielts-library-demo .lu-actions a{flex:1}#ielts-library-demo .lu-actions .lu-copy{flex:0 0 44px}#ielts-library-demo .lu-unavailable{flex:1;white-space:normal;min-width:100px}#ielts-library-demo .lu-actions{padding-left:0}#ielts-library-demo .lu-title{min-width:150px}}
+
 </style>
 </head>
 <body>
-<div class="wrap">
-  <h1>Level Up IELTS — Danh sách bài test</h1>
-  <p class="sub">Bấm vào bài cần gửi học viên, copy link ở thanh địa chỉ trình duyệt rồi gửi.</p>
+<div id="ielts-library-demo">
+  <header class="lu-header"><a class="lu-brand" href="./" aria-label="Level Up IELTS"><span class="lu-mark">LU<span>↗</span></span><span>LEVEL UP <b>IELTS</b></span></a></header>
+  <main>
+    <div class="lu-eyebrow">HỌC CÓ ĐỊNH HƯỚNG · TIẾN BỘ MỖI NGÀY</div>
+    <h1>Thư viện bài test IELTS</h1>
+    <p class="lu-intro">Chọn bộ đề, luyện kỹ năng và tìm giải thích ngay cạnh bài học.</p>
+    <div class="lu-controls" hidden>
+      <label class="lu-book">Bộ đề Cambridge<select aria-label="Chọn bộ Cambridge"><option value="15">Cambridge 15</option><option value="16">Cambridge 16</option><option value="19">Cambridge 19</option><option value="20">Cambridge 20</option></select></label>
+      <div class="lu-skill"><span>Kỹ năng</span><div class="lu-tabs" role="group" aria-label="Chọn kỹ năng"><button type="button" data-skill="Listening" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 14v-3a9 9 0 0 1 18 0v3"/><rect x="3" y="12" width="4" height="9" rx="2"/><rect x="17" y="12" width="4" height="9" rx="2"/></svg>Listening</button><button type="button" data-skill="Reading" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 5v16M12 5C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 1Z"/></svg>Reading</button></div></div>
+    </div>
+<section class="lu-summary" hidden aria-labelledby="selection-title"><div class="lu-section"><div><span class="lu-eyebrow">BỘ ĐỀ ĐANG CHỌN</span><h2 id="selection-title"></h2></div><span class="lu-count">4 bài test</span></div></section><section class="lu-group" data-book="15" data-skill="Reading" aria-label="Cambridge 15 Reading"><h2 class="lu-fallback-title">Cambridge 15 · Reading</h2><div class="lu-list"><article class="lu-test"><div class="lu-number" aria-hidden="true">01</div><div class="lu-title"><h3>Test 1</h3><p>3 passages · 40 câu hỏi</p></div><div class="lu-actions"><a class="lu-start" href="C15/C15 Reading Test 1/" aria-label="Làm bài Cambridge 15 Reading Test 1">Làm bài <span aria-hidden="true">↗</span></a><a class="lu-explain" href="C15/C15 Reading Test 1/explanation/" aria-label="Giải thích Cambridge 15 Reading Test 1">Giải thích</a><button class="lu-copy" type="button" data-href="C15/C15 Reading Test 1/" data-title="Cambridge 15 Reading Test 1" aria-label="Sao chép link Cambridge 15 Reading Test 1" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m10 13 4-4m-6 7-1 1a4.2 4.2 0 0 1-6-6l4-4a4.2 4.2 0 0 1 6 0m2 1 1-1a4.2 4.2 0 0 1 6 6l-4 4a4.2 4.2 0 0 1-6 0" transform="translate(1 1)"/></svg></button></div></article><article class="lu-test"><div class="lu-number" aria-hidden="true">02</div><div class="lu-title"><h3>Test 2</h3><p>3 passages · 40 câu hỏi</p></div><div class="lu-actions"><a class="lu-start" href="C15/C15 Reading Test 2/" aria-label="Làm bài Cambridge 15 Reading Test 2">Làm bài <span aria-hidden="true">↗</span></a><a class="lu-explain" href="C15/C15 Reading Test 2/explanation/" aria-label="Giải thích Cambridge 15 Reading Test 2">Giải thích</a><button class="lu-copy" type="button" data-href="C15/C15 Reading Test 2/" data-title="Cambridge 15 Reading Test 2" aria-label="Sao chép link Cambridge 15 Reading Test 2" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m10 13 4-4m-6 7-1 1a4.2 4.2 0 0 1-6-6l4-4a4.2 4.2 0 0 1 6 0m2 1 1-1a4.2 4.2 0 0 1 6 6l-4 4a4.2 4.2 0 0 1-6 0" transform="translate(1 1)"/></svg></button></div></article><article class="lu-test"><div class="lu-number" aria-hidden="true">03</div><div class="lu-title"><h3>Test 3</h3><p>3 passages · 40 câu hỏi</p></div><div class="lu-actions"><a class="lu-start" href="C15/C15 Reading Test 3/" aria-label="Làm bài Cambridge 15 Reading Test 3">Làm bài <span aria-hidden="true">↗</span></a><a class="lu-explain" href="C15/C15 Reading Test 3/explanation/" aria-label="Giải thích Cambridge 15 Reading Test 3">Giải thích</a><button class="lu-copy" type="button" data-href="C15/C15 Reading Test 3/" data-title="Cambridge 15 Reading Test 3" aria-label="Sao chép link Cambridge 15 Reading Test 3" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m10 13 4-4m-6 7-1 1a4.2 4.2 0 0 1-6-6l4-4a4.2 4.2 0 0 1 6 0m2 1 1-1a4.2 4.2 0 0 1 6 6l-4 4a4.2 4.2 0 0 1-6 0" transform="translate(1 1)"/></svg></button></div></article><article class="lu-test"><div class="lu-number" aria-hidden="true">04</div><div class="lu-title"><h3>Test 4</h3><p>3 passages · 40 câu hỏi</p></div><div class="lu-actions"><a class="lu-start" href="C15/C15 Reading Test 4/" aria-label="Làm bài Cambridge 15 Reading Test 4">Làm bài <span aria-hidden="true">↗</span></a><a class="lu-explain" href="C15/C15 Reading Test 4/explanation/" aria-label="Giải thích Cambridge 15 Reading Test 4">Giải thích</a><button class="lu-copy" type="button" data-href="C15/C15 Reading Test 4/" data-title="Cambridge 15 Reading Test 4" aria-label="Sao chép link Cambridge 15 Reading Test 4" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m10 13 4-4m-6 7-1 1a4.2 4.2 0 0 1-6-6l4-4a4.2 4.2 0 0 1 6 0m2 1 1-1a4.2 4.2 0 0 1 6 6l-4 4a4.2 4.2 0 0 1-6 0" transform="translate(1 1)"/></svg></button></div></article></div></section><section class="lu-group" data-book="15" data-skill="Listening" aria-label="Cambridge 15 Listening"><h2 class="lu-fallback-title">Cambridge 15 · Listening</h2><div class="lu-list"><article class="lu-test"><div class="lu-number" aria-hidden="true">01</div><div class="lu-title"><h3>Test 1</h3><p>4 parts · 40 câu hỏi</p></div><div class="lu-actions"><a class="lu-start" href="C15/C15 L T1/" aria-label="Làm bài Cambridge 15 Listening Test 1">Làm bài <span aria-hidden="true">↗</span></a><span class="lu-unavailable">Chưa có giải thích riêng</span><button class="lu-copy" type="button" data-href="C15/C15 L T1/" data-title="Cambridge 15 Listening Test 1" aria-label="Sao chép link Cambridge 15 Listening Test 1" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m10 13 4-4m-6 7-1 1a4.2 4.2 0 0 1-6-6l4-4a4.2 4.2 0 0 1 6 0m2 1 1-1a4.2 4.2 0 0 1 6 6l-4 4a4.2 4.2 0 0 1-6 0" transform="translate(1 1)"/></svg></button></div></article><article class="lu-test"><div class="lu-number" aria-hidden="true">02</div><div class="lu-title"><h3>Test 2</h3><p>4 parts · 40 câu hỏi</p></div><div class="lu-actions"><a class="lu-start" href="C15/C15 L T2/" aria-label="Làm bài Cambridge 15 Listening Test 2">Làm bài <span aria-hidden="true">↗</span></a><span class="lu-unavailable">Chưa có giải thích riêng</span><button class="lu-copy" type="button" data-href="C15/C15 L T2/" data-title="Cambridge 15 Listening Test 2" aria-label="Sao chép link Cambridge 15 Listening Test 2" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m10 13 4-4m-6 7-1 1a4.2 4.2 0 0 1-6-6l4-4a4.2 4.2 0 0 1 6 0m2 1 1-1a4.2 4.2 0 0 1 6 6l-4 4a4.2 4.2 0 0 1-6 0" transform="translate(1 1)"/></svg></button></div></article><article class="lu-test"><div class="lu-number" aria-hidden="true">03</div><div class="lu-title"><h3>Test 3</h3><p>4 parts · 40 câu hỏi</p></div><div class="lu-actions"><a class="lu-start" href="C15/C15 L T3/" aria-label="Làm bài Cambridge 15 Listening Test 3">Làm bài <span aria-hidden="true">↗</span></a><span class="lu-unavailable">Chưa có giải thích riêng</span><button class="lu-copy" type="button" data-href="C15/C15 L T3/" data-title="Cambridge 15 Listening Test 3" aria-label="Sao chép link Cambridge 15 Listening Test 3" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m10 13 4-4m-6 7-1 1a4.2 4.2 0 0 1-6-6l4-4a4.2 4.2 0 0 1 6 0m2 1 1-1a4.2 4.2 0 0 1 6 6l-4 4a4.2 4.2 0 0 1-6 0" transform="translate(1 1)"/></svg></button></div></article><article class="lu-test"><div class="lu-number" aria-hidden="true">04</div><div class="lu-title"><h3>Test 4</h3><p>4 parts · 40 câu hỏi</p></div><div class="lu-actions"><a class="lu-start" href="C15/C15 L T4/" aria-label="Làm bài Cambridge 15 Listening Test 4">Làm bài <span aria-hidden="true">↗</span></a><span class="lu-unavailable">Chưa có giải thích riêng</span><button class="lu-copy" type="button" data-href="C15/C15 L T4/" data-title="Cambridge 15 Listening Test 4" aria-label="Sao chép link Cambridge 15 Listening Test 4" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m10 13 4-4m-6 7-1 1a4.2 4.2 0 0 1-6-6l4-4a4.2 4.2 0 0 1 6 0m2 1 1-1a4.2 4.2 0 0 1 6 6l-4 4a4.2 4.2 0 0 1-6 0" transform="translate(1 1)"/></svg></button></div></article></div></section><section class="lu-group" data-book="16" data-skill="Reading" aria-label="Cambridge 16 Reading"><h2 class="lu-fallback-title">Cambridge 16 · Reading</h2><div class="lu-list"><article class="lu-test"><div class="lu-number" aria-hidden="true">01</div><div class="lu-title"><h3>Test 1</h3><p>3 passages · 40 câu hỏi</p></div><div class="lu-actions"><a class="lu-start" href="C16/C16 R T1/" aria-label="Làm bài Cambridge 16 Reading Test 1">Làm bài <span aria-hidden="true">↗</span></a><a class="lu-explain" href="C16/C16 R T1/explanation/" aria-label="Giải thích Cambridge 16 Reading Test 1">Giải thích</a><button class="lu-copy" type="button" data-href="C16/C16 R T1/" data-title="Cambridge 16 Reading Test 1" aria-label="Sao chép link Cambridge 16 Reading Test 1" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m10 13 4-4m-6 7-1 1a4.2 4.2 0 0 1-6-6l4-4a4.2 4.2 0 0 1 6 0m2 1 1-1a4.2 4.2 0 0 1 6 6l-4 4a4.2 4.2 0 0 1-6 0" transform="translate(1 1)"/></svg></button></div></article><article class="lu-test"><div class="lu-number" aria-hidden="true">02</div><div class="lu-title"><h3>Test 2</h3><p>3 passages · 40 câu hỏi</p></div><div class="lu-actions"><a class="lu-start" href="C16/C16 R T2/" aria-label="Làm bài Cambridge 16 Reading Test 2">Làm bài <span aria-hidden="true">↗</span></a><a class="lu-explain" href="C16/C16 R T2/explanation/" aria-label="Giải thích Cambridge 16 Reading Test 2">Giải thích</a><button class="lu-copy" type="button" data-href="C16/C16 R T2/" data-title="Cambridge 16 Reading Test 2" aria-label="Sao chép link Cambridge 16 Reading Test 2" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m10 13 4-4m-6 7-1 1a4.2 4.2 0 0 1-6-6l4-4a4.2 4.2 0 0 1 6 0m2 1 1-1a4.2 4.2 0 0 1 6 6l-4 4a4.2 4.2 0 0 1-6 0" transform="translate(1 1)"/></svg></button></div></article><article class="lu-test"><div class="lu-number" aria-hidden="true">03</div><div class="lu-title"><h3>Test 3</h3><p>3 passages · 40 câu hỏi</p></div><div class="lu-actions"><a class="lu-start" href="C16/C16 R T3/" aria-label="Làm bài Cambridge 16 Reading Test 3">Làm bài <span aria-hidden="true">↗</span></a><a class="lu-explain" href="C16/C16 R T3/explanation/" aria-label="Giải thích Cambridge 16 Reading Test 3">Giải thích</a><button class="lu-copy" type="button" data-href="C16/C16 R T3/" data-title="Cambridge 16 Reading Test 3" aria-label="Sao chép link Cambridge 16 Reading Test 3" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m10 13 4-4m-6 7-1 1a4.2 4.2 0 0 1-6-6l4-4a4.2 4.2 0 0 1 6 0m2 1 1-1a4.2 4.2 0 0 1 6 6l-4 4a4.2 4.2 0 0 1-6 0" transform="translate(1 1)"/></svg></button></div></article><article class="lu-test"><div class="lu-number" aria-hidden="true">04</div><div class="lu-title"><h3>Test 4</h3><p>3 passages · 40 câu hỏi</p></div><div class="lu-actions"><a class="lu-start" href="C16/C16 R T4/" aria-label="Làm bài Cambridge 16 Reading Test 4">Làm bài <span aria-hidden="true">↗</span></a><a class="lu-explain" href="C16/C16 R T4/explanation/" aria-label="Giải thích Cambridge 16 Reading Test 4">Giải thích</a><button class="lu-copy" type="button" data-href="C16/C16 R T4/" data-title="Cambridge 16 Reading Test 4" aria-label="Sao chép link Cambridge 16 Reading Test 4" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m10 13 4-4m-6 7-1 1a4.2 4.2 0 0 1-6-6l4-4a4.2 4.2 0 0 1 6 0m2 1 1-1a4.2 4.2 0 0 1 6 6l-4 4a4.2 4.2 0 0 1-6 0" transform="translate(1 1)"/></svg></button></div></article></div></section><section class="lu-group" data-book="16" data-skill="Listening" aria-label="Cambridge 16 Listening"><h2 class="lu-fallback-title">Cambridge 16 · Listening</h2><div class="lu-list"><article class="lu-test"><div class="lu-number" aria-hidden="true">01</div><div class="lu-title"><h3>Test 1</h3><p>4 parts · 40 câu hỏi</p></div><div class="lu-actions"><a class="lu-start" href="C16/C16 L T1/" aria-label="Làm bài Cambridge 16 Listening Test 1">Làm bài <span aria-hidden="true">↗</span></a><span class="lu-unavailable">Chưa có giải thích riêng</span><button class="lu-copy" type="button" data-href="C16/C16 L T1/" data-title="Cambridge 16 Listening Test 1" aria-label="Sao chép link Cambridge 16 Listening Test 1" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m10 13 4-4m-6 7-1 1a4.2 4.2 0 0 1-6-6l4-4a4.2 4.2 0 0 1 6 0m2 1 1-1a4.2 4.2 0 0 1 6 6l-4 4a4.2 4.2 0 0 1-6 0" transform="translate(1 1)"/></svg></button></div></article><article class="lu-test"><div class="lu-number" aria-hidden="true">02</div><div class="lu-title"><h3>Test 2</h3><p>4 parts · 40 câu hỏi</p></div><div class="lu-actions"><a class="lu-start" href="C16/C16 L T2/" aria-label="Làm bài Cambridge 16 Listening Test 2">Làm bài <span aria-hidden="true">↗</span></a><span class="lu-unavailable">Chưa có giải thích riêng</span><button class="lu-copy" type="button" data-href="C16/C16 L T2/" data-title="Cambridge 16 Listening Test 2" aria-label="Sao chép link Cambridge 16 Listening Test 2" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m10 13 4-4m-6 7-1 1a4.2 4.2 0 0 1-6-6l4-4a4.2 4.2 0 0 1 6 0m2 1 1-1a4.2 4.2 0 0 1 6 6l-4 4a4.2 4.2 0 0 1-6 0" transform="translate(1 1)"/></svg></button></div></article><article class="lu-test"><div class="lu-number" aria-hidden="true">03</div><div class="lu-title"><h3>Test 3</h3><p>4 parts · 40 câu hỏi</p></div><div class="lu-actions"><a class="lu-start" href="C16/C16 L T3/" aria-label="Làm bài Cambridge 16 Listening Test 3">Làm bài <span aria-hidden="true">↗</span></a><span class="lu-unavailable">Chưa có giải thích riêng</span><button class="lu-copy" type="button" data-href="C16/C16 L T3/" data-title="Cambridge 16 Listening Test 3" aria-label="Sao chép link Cambridge 16 Listening Test 3" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m10 13 4-4m-6 7-1 1a4.2 4.2 0 0 1-6-6l4-4a4.2 4.2 0 0 1 6 0m2 1 1-1a4.2 4.2 0 0 1 6 6l-4 4a4.2 4.2 0 0 1-6 0" transform="translate(1 1)"/></svg></button></div></article><article class="lu-test"><div class="lu-number" aria-hidden="true">04</div><div class="lu-title"><h3>Test 4</h3><p>4 parts · 40 câu hỏi</p></div><div class="lu-actions"><a class="lu-start" href="C16/C16 L T4/" aria-label="Làm bài Cambridge 16 Listening Test 4">Làm bài <span aria-hidden="true">↗</span></a><span class="lu-unavailable">Chưa có giải thích riêng</span><button class="lu-copy" type="button" data-href="C16/C16 L T4/" data-title="Cambridge 16 Listening Test 4" aria-label="Sao chép link Cambridge 16 Listening Test 4" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m10 13 4-4m-6 7-1 1a4.2 4.2 0 0 1-6-6l4-4a4.2 4.2 0 0 1 6 0m2 1 1-1a4.2 4.2 0 0 1 6 6l-4 4a4.2 4.2 0 0 1-6 0" transform="translate(1 1)"/></svg></button></div></article></div></section><section class="lu-group" data-book="19" data-skill="Reading" aria-label="Cambridge 19 Reading"><h2 class="lu-fallback-title">Cambridge 19 · Reading</h2><div class="lu-list"><article class="lu-test"><div class="lu-number" aria-hidden="true">01</div><div class="lu-title"><h3>Test 1</h3><p>3 passages · 40 câu hỏi</p></div><div class="lu-actions"><a class="lu-start" href="C19/C19 R T1/" aria-label="Làm bài Cambridge 19 Reading Test 1">Làm bài <span aria-hidden="true">↗</span></a><span class="lu-unavailable">Chưa có giải thích riêng</span><button class="lu-copy" type="button" data-href="C19/C19 R T1/" data-title="Cambridge 19 Reading Test 1" aria-label="Sao chép link Cambridge 19 Reading Test 1" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m10 13 4-4m-6 7-1 1a4.2 4.2 0 0 1-6-6l4-4a4.2 4.2 0 0 1 6 0m2 1 1-1a4.2 4.2 0 0 1 6 6l-4 4a4.2 4.2 0 0 1-6 0" transform="translate(1 1)"/></svg></button></div></article><article class="lu-test"><div class="lu-number" aria-hidden="true">02</div><div class="lu-title"><h3>Test 2</h3><p>3 passages · 40 câu hỏi</p></div><div class="lu-actions"><a class="lu-start" href="C19/C19 R T2/" aria-label="Làm bài Cambridge 19 Reading Test 2">Làm bài <span aria-hidden="true">↗</span></a><span class="lu-unavailable">Chưa có giải thích riêng</span><button class="lu-copy" type="button" data-href="C19/C19 R T2/" data-title="Cambridge 19 Reading Test 2" aria-label="Sao chép link Cambridge 19 Reading Test 2" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m10 13 4-4m-6 7-1 1a4.2 4.2 0 0 1-6-6l4-4a4.2 4.2 0 0 1 6 0m2 1 1-1a4.2 4.2 0 0 1 6 6l-4 4a4.2 4.2 0 0 1-6 0" transform="translate(1 1)"/></svg></button></div></article><article class="lu-test"><div class="lu-number" aria-hidden="true">03</div><div class="lu-title"><h3>Test 3</h3><p>3 passages · 40 câu hỏi</p></div><div class="lu-actions"><a class="lu-start" href="C19/C19 R T3/" aria-label="Làm bài Cambridge 19 Reading Test 3">Làm bài <span aria-hidden="true">↗</span></a><span class="lu-unavailable">Chưa có giải thích riêng</span><button class="lu-copy" type="button" data-href="C19/C19 R T3/" data-title="Cambridge 19 Reading Test 3" aria-label="Sao chép link Cambridge 19 Reading Test 3" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m10 13 4-4m-6 7-1 1a4.2 4.2 0 0 1-6-6l4-4a4.2 4.2 0 0 1 6 0m2 1 1-1a4.2 4.2 0 0 1 6 6l-4 4a4.2 4.2 0 0 1-6 0" transform="translate(1 1)"/></svg></button></div></article><article class="lu-test"><div class="lu-number" aria-hidden="true">04</div><div class="lu-title"><h3>Test 4</h3><p>3 passages · 40 câu hỏi</p></div><div class="lu-actions"><a class="lu-start" href="C19/C19 R T4/" aria-label="Làm bài Cambridge 19 Reading Test 4">Làm bài <span aria-hidden="true">↗</span></a><span class="lu-unavailable">Chưa có giải thích riêng</span><button class="lu-copy" type="button" data-href="C19/C19 R T4/" data-title="Cambridge 19 Reading Test 4" aria-label="Sao chép link Cambridge 19 Reading Test 4" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m10 13 4-4m-6 7-1 1a4.2 4.2 0 0 1-6-6l4-4a4.2 4.2 0 0 1 6 0m2 1 1-1a4.2 4.2 0 0 1 6 6l-4 4a4.2 4.2 0 0 1-6 0" transform="translate(1 1)"/></svg></button></div></article></div></section><section class="lu-group" data-book="19" data-skill="Listening" aria-label="Cambridge 19 Listening"><h2 class="lu-fallback-title">Cambridge 19 · Listening</h2><div class="lu-list"><article class="lu-test"><div class="lu-number" aria-hidden="true">01</div><div class="lu-title"><h3>Test 1</h3><p>4 parts · 40 câu hỏi</p></div><div class="lu-actions"><a class="lu-start" href="C19/C19 L T1/" aria-label="Làm bài Cambridge 19 Listening Test 1">Làm bài <span aria-hidden="true">↗</span></a><span class="lu-unavailable">Chưa có giải thích riêng</span><button class="lu-copy" type="button" data-href="C19/C19 L T1/" data-title="Cambridge 19 Listening Test 1" aria-label="Sao chép link Cambridge 19 Listening Test 1" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m10 13 4-4m-6 7-1 1a4.2 4.2 0 0 1-6-6l4-4a4.2 4.2 0 0 1 6 0m2 1 1-1a4.2 4.2 0 0 1 6 6l-4 4a4.2 4.2 0 0 1-6 0" transform="translate(1 1)"/></svg></button></div></article><article class="lu-test"><div class="lu-number" aria-hidden="true">02</div><div class="lu-title"><h3>Test 2</h3><p>4 parts · 40 câu hỏi</p></div><div class="lu-actions"><a class="lu-start" href="C19/C19 L T2/" aria-label="Làm bài Cambridge 19 Listening Test 2">Làm bài <span aria-hidden="true">↗</span></a><span class="lu-unavailable">Chưa có giải thích riêng</span><button class="lu-copy" type="button" data-href="C19/C19 L T2/" data-title="Cambridge 19 Listening Test 2" aria-label="Sao chép link Cambridge 19 Listening Test 2" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m10 13 4-4m-6 7-1 1a4.2 4.2 0 0 1-6-6l4-4a4.2 4.2 0 0 1 6 0m2 1 1-1a4.2 4.2 0 0 1 6 6l-4 4a4.2 4.2 0 0 1-6 0" transform="translate(1 1)"/></svg></button></div></article><article class="lu-test"><div class="lu-number" aria-hidden="true">03</div><div class="lu-title"><h3>Test 3</h3><p>4 parts · 40 câu hỏi</p></div><div class="lu-actions"><a class="lu-start" href="C19/C19 L T3/" aria-label="Làm bài Cambridge 19 Listening Test 3">Làm bài <span aria-hidden="true">↗</span></a><span class="lu-unavailable">Chưa có giải thích riêng</span><button class="lu-copy" type="button" data-href="C19/C19 L T3/" data-title="Cambridge 19 Listening Test 3" aria-label="Sao chép link Cambridge 19 Listening Test 3" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m10 13 4-4m-6 7-1 1a4.2 4.2 0 0 1-6-6l4-4a4.2 4.2 0 0 1 6 0m2 1 1-1a4.2 4.2 0 0 1 6 6l-4 4a4.2 4.2 0 0 1-6 0" transform="translate(1 1)"/></svg></button></div></article><article class="lu-test"><div class="lu-number" aria-hidden="true">04</div><div class="lu-title"><h3>Test 4</h3><p>4 parts · 40 câu hỏi</p></div><div class="lu-actions"><a class="lu-start" href="C19/C19 L T4/" aria-label="Làm bài Cambridge 19 Listening Test 4">Làm bài <span aria-hidden="true">↗</span></a><span class="lu-unavailable">Chưa có giải thích riêng</span><button class="lu-copy" type="button" data-href="C19/C19 L T4/" data-title="Cambridge 19 Listening Test 4" aria-label="Sao chép link Cambridge 19 Listening Test 4" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m10 13 4-4m-6 7-1 1a4.2 4.2 0 0 1-6-6l4-4a4.2 4.2 0 0 1 6 0m2 1 1-1a4.2 4.2 0 0 1 6 6l-4 4a4.2 4.2 0 0 1-6 0" transform="translate(1 1)"/></svg></button></div></article></div></section><section class="lu-group" data-book="20" data-skill="Reading" aria-label="Cambridge 20 Reading"><h2 class="lu-fallback-title">Cambridge 20 · Reading</h2><div class="lu-list"><article class="lu-test"><div class="lu-number" aria-hidden="true">01</div><div class="lu-title"><h3>Test 1</h3><p>3 passages · 40 câu hỏi</p></div><div class="lu-actions"><a class="lu-start" href="C20/C20 R T1/" aria-label="Làm bài Cambridge 20 Reading Test 1">Làm bài <span aria-hidden="true">↗</span></a><span class="lu-unavailable">Chưa có giải thích riêng</span><button class="lu-copy" type="button" data-href="C20/C20 R T1/" data-title="Cambridge 20 Reading Test 1" aria-label="Sao chép link Cambridge 20 Reading Test 1" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m10 13 4-4m-6 7-1 1a4.2 4.2 0 0 1-6-6l4-4a4.2 4.2 0 0 1 6 0m2 1 1-1a4.2 4.2 0 0 1 6 6l-4 4a4.2 4.2 0 0 1-6 0" transform="translate(1 1)"/></svg></button></div></article><article class="lu-test"><div class="lu-number" aria-hidden="true">02</div><div class="lu-title"><h3>Test 2</h3><p>3 passages · 40 câu hỏi</p></div><div class="lu-actions"><a class="lu-start" href="C20/C20 R T2/" aria-label="Làm bài Cambridge 20 Reading Test 2">Làm bài <span aria-hidden="true">↗</span></a><span class="lu-unavailable">Chưa có giải thích riêng</span><button class="lu-copy" type="button" data-href="C20/C20 R T2/" data-title="Cambridge 20 Reading Test 2" aria-label="Sao chép link Cambridge 20 Reading Test 2" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m10 13 4-4m-6 7-1 1a4.2 4.2 0 0 1-6-6l4-4a4.2 4.2 0 0 1 6 0m2 1 1-1a4.2 4.2 0 0 1 6 6l-4 4a4.2 4.2 0 0 1-6 0" transform="translate(1 1)"/></svg></button></div></article><article class="lu-test"><div class="lu-number" aria-hidden="true">03</div><div class="lu-title"><h3>Test 3</h3><p>3 passages · 40 câu hỏi</p></div><div class="lu-actions"><a class="lu-start" href="C20/C20 R T3/" aria-label="Làm bài Cambridge 20 Reading Test 3">Làm bài <span aria-hidden="true">↗</span></a><span class="lu-unavailable">Chưa có giải thích riêng</span><button class="lu-copy" type="button" data-href="C20/C20 R T3/" data-title="Cambridge 20 Reading Test 3" aria-label="Sao chép link Cambridge 20 Reading Test 3" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m10 13 4-4m-6 7-1 1a4.2 4.2 0 0 1-6-6l4-4a4.2 4.2 0 0 1 6 0m2 1 1-1a4.2 4.2 0 0 1 6 6l-4 4a4.2 4.2 0 0 1-6 0" transform="translate(1 1)"/></svg></button></div></article><article class="lu-test"><div class="lu-number" aria-hidden="true">04</div><div class="lu-title"><h3>Test 4</h3><p>3 passages · 40 câu hỏi</p></div><div class="lu-actions"><a class="lu-start" href="C20/C20 R T4/" aria-label="Làm bài Cambridge 20 Reading Test 4">Làm bài <span aria-hidden="true">↗</span></a><span class="lu-unavailable">Chưa có giải thích riêng</span><button class="lu-copy" type="button" data-href="C20/C20 R T4/" data-title="Cambridge 20 Reading Test 4" aria-label="Sao chép link Cambridge 20 Reading Test 4" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m10 13 4-4m-6 7-1 1a4.2 4.2 0 0 1-6-6l4-4a4.2 4.2 0 0 1 6 0m2 1 1-1a4.2 4.2 0 0 1 6 6l-4 4a4.2 4.2 0 0 1-6 0" transform="translate(1 1)"/></svg></button></div></article></div></section><section class="lu-group" data-book="20" data-skill="Listening" aria-label="Cambridge 20 Listening"><h2 class="lu-fallback-title">Cambridge 20 · Listening</h2><div class="lu-list"><article class="lu-test"><div class="lu-number" aria-hidden="true">01</div><div class="lu-title"><h3>Test 1</h3><p>4 parts · 40 câu hỏi</p></div><div class="lu-actions"><a class="lu-start" href="C20/C20 L T1/" aria-label="Làm bài Cambridge 20 Listening Test 1">Làm bài <span aria-hidden="true">↗</span></a><span class="lu-unavailable">Chưa có giải thích riêng</span><button class="lu-copy" type="button" data-href="C20/C20 L T1/" data-title="Cambridge 20 Listening Test 1" aria-label="Sao chép link Cambridge 20 Listening Test 1" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m10 13 4-4m-6 7-1 1a4.2 4.2 0 0 1-6-6l4-4a4.2 4.2 0 0 1 6 0m2 1 1-1a4.2 4.2 0 0 1 6 6l-4 4a4.2 4.2 0 0 1-6 0" transform="translate(1 1)"/></svg></button></div></article><article class="lu-test"><div class="lu-number" aria-hidden="true">02</div><div class="lu-title"><h3>Test 2</h3><p>4 parts · 40 câu hỏi</p></div><div class="lu-actions"><a class="lu-start" href="C20/C20 L T2/" aria-label="Làm bài Cambridge 20 Listening Test 2">Làm bài <span aria-hidden="true">↗</span></a><span class="lu-unavailable">Chưa có giải thích riêng</span><button class="lu-copy" type="button" data-href="C20/C20 L T2/" data-title="Cambridge 20 Listening Test 2" aria-label="Sao chép link Cambridge 20 Listening Test 2" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m10 13 4-4m-6 7-1 1a4.2 4.2 0 0 1-6-6l4-4a4.2 4.2 0 0 1 6 0m2 1 1-1a4.2 4.2 0 0 1 6 6l-4 4a4.2 4.2 0 0 1-6 0" transform="translate(1 1)"/></svg></button></div></article><article class="lu-test"><div class="lu-number" aria-hidden="true">03</div><div class="lu-title"><h3>Test 3</h3><p>4 parts · 40 câu hỏi</p></div><div class="lu-actions"><a class="lu-start" href="C20/C20 L T3/" aria-label="Làm bài Cambridge 20 Listening Test 3">Làm bài <span aria-hidden="true">↗</span></a><span class="lu-unavailable">Chưa có giải thích riêng</span><button class="lu-copy" type="button" data-href="C20/C20 L T3/" data-title="Cambridge 20 Listening Test 3" aria-label="Sao chép link Cambridge 20 Listening Test 3" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m10 13 4-4m-6 7-1 1a4.2 4.2 0 0 1-6-6l4-4a4.2 4.2 0 0 1 6 0m2 1 1-1a4.2 4.2 0 0 1 6 6l-4 4a4.2 4.2 0 0 1-6 0" transform="translate(1 1)"/></svg></button></div></article><article class="lu-test"><div class="lu-number" aria-hidden="true">04</div><div class="lu-title"><h3>Test 4</h3><p>4 parts · 40 câu hỏi</p></div><div class="lu-actions"><a class="lu-start" href="C20/C20 L T4/" aria-label="Làm bài Cambridge 20 Listening Test 4">Làm bài <span aria-hidden="true">↗</span></a><span class="lu-unavailable">Chưa có giải thích riêng</span><button class="lu-copy" type="button" data-href="C20/C20 L T4/" data-title="Cambridge 20 Listening Test 4" aria-label="Sao chép link Cambridge 20 Listening Test 4" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m10 13 4-4m-6 7-1 1a4.2 4.2 0 0 1-6-6l4-4a4.2 4.2 0 0 1 6 0m2 1 1-1a4.2 4.2 0 0 1 6 6l-4 4a4.2 4.2 0 0 1-6 0" transform="translate(1 1)"/></svg></button></div></article></div></section><div class="lu-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/></svg><span><b>Làm bài rồi đối chiếu.</b> Mở giải thích tương ứng ngay trong thẻ của từng test.</span></div><div class="lu-feedback" role="status" aria-live="polite" aria-atomic="true"></div><footer><span>LEVEL UP ENGLISH</span><span>Luyện tập hôm nay. Tự tin ngày mai.</span></footer></main></div><dialog id="copy-dialog" aria-labelledby="copy-title"><form method="dialog"><h2 id="copy-title">Sao chép link bài test</h2><p>Chọn đường dẫn bên dưới và sao chép để gửi học viên.</p><label for="copy-url">Đường dẫn bài test</label><input id="copy-url" type="url" readonly><button type="submit">Đóng</button></form></dialog>
+<script>
 
-  <div class="book">
-    <h2>Cambridge 15</h2>
-    <div class="row">
-      <a class="testlink" href="C15/C15 L T1/">Listening Test 1<span>Nghe</span></a>
-      <a class="testlink" href="C15/C15 L T2/">Listening Test 2<span>Nghe</span></a>
-    </div>
-    <div class="row">
-      <a class="testlink" href="C15/C15 L T3/">Listening Test 3<span>Nghe</span></a>
-      <a class="testlink" href="C15/C15 L T4/">Listening Test 4<span>Nghe</span></a>
-    </div>
-    <div class="row">
-      <a class="testlink" href="C15/C15 Reading Test 1/">Reading Test 1<span>Đọc</span></a>
-      <a class="correctionlink" href="C15/C15 Reading Test 1/explanation/">Giải thích đáp án T1</a>
-    </div>
-    <div class="row">
-      <a class="testlink" href="C15/C15 Reading Test 2/">Reading Test 2<span>Đọc</span></a>
-      <a class="correctionlink" href="C15/C15 Reading Test 2/explanation/">Giải thích đáp án T2</a>
-    </div>
-    <div class="row">
-      <a class="testlink" href="C15/C15 Reading Test 3/">Reading Test 3<span>Đọc</span></a>
-      <a class="correctionlink" href="C15/C15 Reading Test 3/explanation/">Giải thích đáp án T3</a>
-    </div>
-    <div class="row">
-      <a class="testlink" href="C15/C15 Reading Test 4/">Reading Test 4<span>Đọc</span></a>
-      <a class="correctionlink" href="C15/C15 Reading Test 4/explanation/">Giải thích đáp án T4</a>
-    </div>
-  </div>
+(()=>{
+  const root=document.getElementById('ielts-library-demo');
+  const groups=[...root.querySelectorAll('.lu-group')];
+  const select=root.querySelector('select');
+  const buttons=[...root.querySelectorAll('[data-skill]')];
+  const feedback=root.querySelector('.lu-feedback');
+  const note=root.querySelector('.lu-note span');
+  const storageKey='levelup-ielts-catalog-v1';
+  let book='15',skill='Reading';
+  try{const saved=JSON.parse(localStorage.getItem(storageKey));if(groups.some(g=>g.dataset.book===saved?.book&&g.dataset.skill===saved?.skill)){book=saved.book;skill=saved.skill}}catch{}
+  function render(){
+    select.value=book;
+    buttons.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.skill===skill)));
+    groups.forEach(g=>{g.hidden=g.dataset.book!==book||g.dataset.skill!==skill});
+    const active=groups.find(g=>!g.hidden);
+    const title=document.getElementById('selection-title');
+    title.replaceChildren(document.createTextNode('Cambridge '+book));
+    const subtitle=document.createElement('span');subtitle.textContent=' / '+skill;title.append(subtitle);
+    root.querySelector('.lu-count').textContent=active.querySelectorAll('.lu-test').length+' bài test';
+    note.innerHTML=active.querySelector('.lu-explain')?'<b>Làm bài rồi đối chiếu.</b> Mở giải thích tương ứng ngay trong thẻ của từng test.':'<b>Chọn đúng bài để bắt đầu.</b> Mục giải thích riêng chỉ hiển thị khi có nội dung tương ứng.';
+    feedback.textContent='';
+  }
+  function save(){try{localStorage.setItem(storageKey,JSON.stringify({book,skill}))}catch{}}
+  select.addEventListener('change',()=>{book=select.value;render();save()});
+  buttons.forEach(b=>b.addEventListener('click',()=>{skill=b.dataset.skill;render();save()}));
+  root.addEventListener('click',async e=>{
+    const button=e.target.closest('.lu-copy');if(!button)return;
+    const url=new URL(button.dataset.href,document.baseURI).href;
+    try{
+      if(!navigator.clipboard?.writeText)throw new Error('Clipboard unavailable');
+      await navigator.clipboard.writeText(url);
+      feedback.textContent='Đã sao chép link '+button.dataset.title+'.';
+    }catch{
+      const dialog=document.getElementById('copy-dialog');
+      const input=document.getElementById('copy-url');input.value=url;
+      document.getElementById('copy-title').textContent='Sao chép link '+button.dataset.title;
+      dialog.showModal();input.focus();input.select();
+    }
+  });
+  render();root.classList.add('enhanced');
+  root.querySelector('.lu-controls').hidden=false;
+  root.querySelector('.lu-summary').hidden=false;
+  root.querySelectorAll('.lu-copy').forEach(b=>b.hidden=false);
+})();
 
-  <div class="book">
-    <h2>Cambridge 16</h2>
-    <div class="row">
-      <a class="testlink" href="C16/C16 L T1/">Listening Test 1<span>Nghe</span></a>
-    </div>
-    <div class="row">
-      <a class="testlink" href="C16/C16 L T2/">Listening Test 2<span>Nghe</span></a>
-    </div>
-    <div class="row">
-      <a class="testlink" href="C16/C16 L T3/">Listening Test 3<span>Nghe</span></a>
-    </div>
-    <div class="row">
-      <a class="testlink" href="C16/C16 L T4/">Listening Test 4<span>Nghe</span></a>
-    </div>
-    <div class="row">
-      <a class="testlink" href="C16/C16 R T1/">Reading Test 1<span>Đọc</span></a>
-      <a class="correctionlink" href="C16/C16 R T1/explanation/">Giải thích đáp án T1</a>
-    </div>
-    <div class="row">
-      <a class="testlink" href="C16/C16 R T2/">Reading Test 2<span>Đọc</span></a>
-      <a class="correctionlink" href="C16/C16 R T2/explanation/">Giải thích đáp án T2</a>
-    </div>
-    <div class="row">
-      <a class="testlink" href="C16/C16 R T3/">Reading Test 3<span>Đọc</span></a>
-      <a class="correctionlink" href="C16/C16 R T3/explanation/">Giải thích đáp án T3</a>
-    </div>
-    <div class="row">
-      <a class="testlink" href="C16/C16 R T4/">Reading Test 4<span>Đọc</span></a>
-      <a class="correctionlink" href="C16/C16 R T4/explanation/">Giải thích đáp án T4</a>
-    </div>
-  </div>
-
-  <div class="book">
-    <h2>Cambridge 19</h2>
-    <div class="row">
-      <a class="testlink" href="C19/C19 L T1/">Listening Test 1<span>Nghe</span></a>
-    </div>
-    <div class="row">
-      <a class="testlink" href="C19/C19 L T2/">Listening Test 2<span>Nghe</span></a>
-    </div>
-    <div class="row">
-      <a class="testlink" href="C19/C19 L T3/">Listening Test 3<span>Nghe</span></a>
-    </div>
-    <div class="row">
-      <a class="testlink" href="C19/C19 L T4/">Listening Test 4<span>Nghe</span></a>
-    </div>
-    <div class="row">
-      <a class="testlink" href="C19/C19 R T1/">Reading Test 1<span>Đọc</span></a>
-    </div>
-    <div class="row">
-      <a class="testlink" href="C19/C19 R T2/">Reading Test 2<span>Đọc</span></a>
-    </div>
-    <div class="row">
-      <a class="testlink" href="C19/C19 R T3/">Reading Test 3<span>Đọc</span></a>
-    </div>
-    <div class="row">
-      <a class="testlink" href="C19/C19 R T4/">Reading Test 4<span>Đọc</span></a>
-    </div>
-  </div>
-
-  <div class="book">
-    <h2>Cambridge 20</h2>
-    <div class="row">
-      <a class="testlink" href="C20/C20 L T1/">Listening Test 1<span>Nghe</span></a>
-      <a class="testlink" href="C20/C20 L T2/">Listening Test 2<span>Nghe</span></a>
-    </div>
-    <div class="row">
-      <a class="testlink" href="C20/C20 L T3/">Listening Test 3<span>Nghe</span></a>
-      <a class="testlink" href="C20/C20 L T4/">Listening Test 4<span>Nghe</span></a>
-    </div>
-    <div class="row">
-      <a class="testlink" href="C20/C20 R T1/">Reading Test 1<span>Đọc</span></a>
-      <a class="testlink" href="C20/C20 R T2/">Reading Test 2<span>Đọc</span></a>
-    </div>
-    <div class="row">
-      <a class="testlink" href="C20/C20 R T3/">Reading Test 3<span>Đọc</span></a>
-      <a class="testlink" href="C20/C20 R T4/">Reading Test 4<span>Đọc</span></a>
-    </div>
-  </div>
-</div>
+</script>
 </body>
 </html>
