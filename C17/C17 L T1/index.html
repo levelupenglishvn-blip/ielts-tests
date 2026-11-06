@@ -1,0 +1,2113 @@
+<!DOCTYPE html>
+<html lang="en" data-visual-pilot="listening">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IELTS Listening Full Test — Cambridge Test 17, Test 1</title>
+
+<style>
+  /* NOTE: the 6 @font-face blocks that used to sit here (Plus Jakarta Sans
+     x4 weights, Inter x2 weights) were removed on 2026-09-24: fontTools
+     confirmed every one of those embedded woff2 subsets was missing every
+     Vietnamese-specific glyph (đ, ơ, ư, and all double-diacritic vowels),
+     which caused Vietnamese text to visibly mix two different fonts
+     mid-word. --font/--font-transcript below still name the same families
+     first (harmless if unavailable) and now fall straight through to the
+     system UI font stack, which has full, consistent Vietnamese coverage
+     — the same approach the Reading engine (C15) already uses. */
+  :root{
+    --primary:#15934E;
+    --primary-dark:#119446;
+    --secondary:#A9F279;
+    --accent:#FFE76E;
+    --ink:#1D1E1E;
+    --ink-soft:#7C7C7C;
+    --ink-faint:#A9AAAA;
+    --border:#E5E5E5;
+    --table-border:#B9B9B9;
+    --surface:#FFFFFF;
+    --bg:#F7FBF9;
+    --primary-tint:#ECF6F1;
+    --primary-tint-strong:#B9DFCA;
+    --secondary-tint:#F1FDEA;
+    --secondary-tint-strong:#E2FBD1;
+    --accent-tint:#FFF8D6;
+    --accent-tint-strong:#FFF2AF;
+    --radius-sm:8px;
+    --radius-md:14px;
+    --radius-lg:20px;
+    --shadow-card:0 1px 2px rgba(29,30,30,.05), 0 10px 26px -16px rgba(29,30,30,.22);
+    --shadow-sticky:0 6px 18px -12px rgba(29,30,30,.22);
+    --font:'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-transcript:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --danger:#C0392B;
+    --danger-bg:#FDECEA;
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#F2F3F5;
+      --ink-soft:#B5BBC4;
+      --ink-faint:#7A8088;
+      --border:#41464F;
+      --table-border:#41464F;
+      --surface:#202328;
+      --bg:#17191C;
+      --primary-tint:#15241D;
+      --primary-tint-strong:#1F4433;
+      --secondary-tint:#15241D;
+      --secondary-tint-strong:#1F4433;
+      --accent-tint:#332D19;
+      --accent-tint-strong:#3D331C;
+      --danger:#ef5350;
+      --danger-bg:#3a1f20;
+      --shadow-card:0 1px 2px rgba(0,0,0,.35), 0 10px 26px -16px rgba(0,0,0,.5);
+      --shadow-sticky:0 6px 18px -12px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#F2F3F5;
+    --ink-soft:#B5BBC4;
+    --ink-faint:#7A8088;
+    --border:#41464F;
+    --table-border:#41464F;
+    --surface:#202328;
+    --bg:#17191C;
+    --primary-tint:#15241D;
+    --primary-tint-strong:#1F4433;
+    --secondary-tint:#15241D;
+    --secondary-tint-strong:#1F4433;
+    --accent-tint:#332D19;
+    --accent-tint-strong:#3D331C;
+    --danger:#ef5350;
+    --danger-bg:#3a1f20;
+    --shadow-card:0 1px 2px rgba(0,0,0,.35), 0 10px 26px -16px rgba(0,0,0,.5);
+    --shadow-sticky:0 6px 18px -12px rgba(0,0,0,.5);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font);
+    font-weight:400;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  img,svg{display:block;}
+  button{font-family:inherit;}
+  :focus-visible{outline:2.5px solid var(--primary-dark); outline-offset:2px; border-radius:6px;}
+
+  .wrap{max-width:840px; margin:0 auto; padding:0 clamp(16px, 2.2vw, 32px);}
+  .wrap-wide{max-width:min(1880px, 97vw);}
+
+  /* ---------- Header ---------- */
+  .page-header{
+    padding:30px 24px 30px;
+    border-bottom:1px solid var(--border);
+    background:
+      radial-gradient(560px 220px at 88% -40%, var(--secondary-tint) 0%, rgba(241,253,234,0) 70%),
+      var(--bg);
+  }
+  .page-header .wrap{max-width:min(1880px, 97vw);}
+  .brand-row{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    margin-bottom:22px;
+  }
+  .brand-logo{width:26px; height:26px;}
+  .brand-word{
+    font-family:var(--font);
+    font-weight:700;
+    font-size:16px;
+    letter-spacing:-0.01em;
+    color:var(--ink);
+    text-transform:lowercase;
+  }
+  h1.page-title{
+    font-family:var(--font);
+    font-weight:700;
+    font-size:clamp(28px, 4vw, 38px);
+    letter-spacing:-0.015em;
+    margin:0 0 10px;
+    color:var(--ink);
+  }
+  .header-meta{
+    font-family:var(--font);
+    font-size:16px;
+    font-weight:600;
+    color:var(--ink-soft);
+    margin:0 0 4px;
+  }
+  .header-meta strong{color:var(--ink); font-weight:600;}
+  .header-scope{
+    font-size:15px;
+    font-weight:500;
+    color:var(--ink-soft);
+    margin:0 0 20px;
+  }
+  .tagline{
+    font-size:16.5px;
+    font-weight:400;
+    color:var(--ink);
+    margin:0;
+    max-width:56ch;
+    padding-top:16px;
+    border-top:1px solid var(--border);
+  }
+
+  /* ---------- Sticky control stack ---------- */
+  .control-stack{position:sticky; top:0; z-index:40; background:var(--bg);}
+
+  .player-bar{
+    border-bottom:1px solid var(--border);
+    background:var(--surface);
+    box-shadow:var(--shadow-sticky);
+  }
+  .player-inner{
+    max-width:min(1880px, 97vw);
+    margin:0 auto;
+    padding:14px 24px;
+    display:flex;
+    align-items:center;
+    gap:16px;
+  }
+  .player-label{
+    display:flex; align-items:center; gap:8px;
+    font-weight:600; font-size:14px; color:var(--ink);
+    white-space:nowrap;
+  }
+  .play-btn{
+    flex:0 0 auto; width:40px; height:40px; border-radius:50%;
+    border:none; background:var(--primary); color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; transition:background .15s ease, transform .1s ease;
+  }
+  .play-btn:hover{background:var(--primary-dark);}
+  .play-btn:active{transform:scale(0.94);}
+  .play-btn svg{width:16px; height:16px;}
+
+  .progress-wrap{flex:1 1 auto; min-width:0;}
+  .progress-track{
+    position:relative; height:8px; border-radius:999px;
+    background:var(--primary-tint-strong); cursor:pointer; overflow:hidden;
+  }
+  .progress-fill{position:absolute; left:0; top:0; bottom:0; width:0%; background:var(--primary); border-radius:999px;}
+  .progress-track:hover .progress-fill{background:var(--primary-dark);}
+  .time-display{flex:0 0 auto; font-variant-numeric:tabular-nums; font-size:13px; font-weight:500; color:var(--ink-soft); white-space:nowrap;}
+
+  .audio-banner{display:none; max-width:min(1880px, 97vw); margin:0 auto; padding:0 24px 12px; font-size:13px; line-height:1.5; color:#7A4A00; font-weight:500;}
+  .audio-banner.show{display:block;}
+  .audio-banner .banner-box{background:var(--accent-tint); border:1px solid var(--accent-tint-strong); border-radius:10px; padding:10px 14px;}
+  .audio-banner strong{color:#5B3800;}
+
+  .qnav{border-bottom:1px solid var(--border); background:var(--surface);}
+  .qnav-inner{max-width:min(1880px, 97vw); margin:0 auto; padding:10px 24px; display:flex; gap:8px; overflow-x:auto; scrollbar-width:none;}
+  .qnav-inner::-webkit-scrollbar{display:none;}
+  .qnav-pill{
+    flex:0 0 auto; font-weight:600; font-size:13px; color:var(--ink-soft);
+    background:var(--bg); border:1px solid var(--border); padding:7px 13px;
+    border-radius:999px; cursor:pointer; transition:all .15s ease;
+  }
+  .qnav-pill:hover{border-color:var(--primary); color:var(--primary-dark);}
+  .qnav-pill.active{background:var(--primary); border-color:var(--primary); color:#fff;}
+  .qnav-pill.playing::after{
+    content:''; display:inline-block; width:6px; height:6px; border-radius:50%;
+    background:currentColor; margin-left:6px; vertical-align:middle;
+    animation:pulse 1.1s ease-in-out infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:1;} 50%{opacity:.25;}}
+
+  /* ---------- Content / split layout ---------- */
+  main.content{padding:34px 0 110px;}
+
+  .split-layout{
+    display:grid;
+    grid-template-columns:1.55fr 1fr;
+    gap:24px;
+    align-items:start;
+  }
+  .left-pane, .right-pane{min-width:0;}
+
+  .section-heading{
+    font-family:var(--font);
+    font-weight:600;
+    font-size:25px;
+    margin:0 0 6px;
+    color:var(--ink);
+  }
+  .pane-sub{font-size:16px; font-weight:400; color:var(--ink-soft); margin:0 0 18px;}
+
+  /* ---------- Left pane: reference sheet ---------- */
+  .left-pane{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius-lg);
+    box-shadow:var(--shadow-card);
+    padding:32px 34px 30px;
+  }
+
+  .table-scroll{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    margin-bottom:28px;
+    border-radius:10px;
+  }
+  table.qtable{
+    width:100%;
+    border-collapse:collapse;
+    font-size:18px;
+    font-weight:400;
+    border:1.5px solid var(--table-border);
+  }
+  table.qtable th{
+    text-align:left;
+    font-weight:600;
+    font-size:15px;
+    color:var(--ink);
+    padding:12px 14px;
+    background:var(--primary-tint);
+    border:1.5px solid var(--table-border);
+  }
+  table.qtable td{
+    vertical-align:top;
+    padding:14px;
+    border:1.5px solid var(--table-border);
+    color:var(--ink);
+    font-weight:400;
+    line-height:1.55;
+  }
+
+  .notes-title{font-family:var(--font); font-weight:600; font-size:17px; margin:0 0 6px;}
+  ul.notes{list-style:none; margin:0 0 4px; padding:0; border:1.5px solid var(--table-border); border-radius:10px; overflow:hidden;}
+  ul.notes li{
+    position:relative; padding:14px 16px 14px 34px;
+    border-bottom:1.5px solid var(--table-border);
+    font-size:18px; font-weight:400; line-height:1.5;
+  }
+  ul.notes li:last-child{border-bottom:none;}
+  ul.notes li::before{content:'•'; position:absolute; left:14px; top:14px; color:var(--ink-faint);}
+
+  /* qchip: play icon + number/answer, inline in the question text */
+  .qchip{
+    display:inline-flex; align-items:center; gap:0;
+    vertical-align:middle; margin:0 2px;
+    border-radius:999px; overflow:hidden;
+    border:1.5px solid var(--primary-tint-strong);
+    cursor:pointer;
+    transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  .qchip:hover{border-color:var(--primary);}
+  .qchip.is-selected{border-color:var(--primary); box-shadow:0 0 0 3px var(--primary-tint);}
+  .qchip.is-answered{border-color:var(--primary);}
+  .qchip-play{
+    width:28px; height:28px; flex:0 0 auto;
+    background:var(--primary); color:#fff;
+    border:none; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    cursor:pointer; padding:0;
+  }
+  .qchip-play:hover{background:var(--primary-dark);}
+  .qchip-play svg{width:11px; height:11px;}
+  .qchip-play.is-playing svg{width:10px; height:10px;}
+  .qchip-num{
+    min-width:28px; padding:0 12px; height:28px;
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font); font-weight:700; font-size:15.5px;
+    color:var(--primary-dark); background:var(--primary-tint);
+  }
+  .qchip.is-answered .qchip-num{
+    color:var(--ink); background:var(--accent-tint);
+    font-weight:700; text-transform:uppercase; letter-spacing:.02em;
+    padding:0 13px;
+  }
+
+  /* ---------- Options legend (shared A-C / A-E / A-H boxes) ---------- */
+  .options-legend{
+    border:1.5px solid var(--table-border); border-radius:10px;
+    padding:16px 18px; margin-bottom:20px;
+    background:var(--primary-tint);
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:9px 22px;
+  }
+  .options-legend-item{display:flex; gap:9px; font-size:16px; font-weight:400; color:var(--ink);}
+  .options-legend-letter{
+    flex:0 0 auto; font-family:var(--font); font-weight:700; font-size:15px;
+    color:var(--primary-dark);
+  }
+
+  /* ---------- Multiple choice / choose-two blocks ---------- */
+  .mc-block{
+    border:1.5px solid var(--table-border); border-radius:12px;
+    padding:18px 20px; margin-bottom:16px; cursor:pointer;
+    transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  .mc-block:hover{border-color:var(--primary);}
+  .mc-block.is-selected{border-color:var(--primary); box-shadow:0 0 0 3px var(--primary-tint);}
+  .mc-head{display:flex; align-items:flex-start; gap:12px; margin-bottom:13px;}
+  .mc-num{
+    flex:0 0 auto; font-family:var(--font); font-weight:700; font-size:14px;
+    color:#fff; background:var(--ink); min-width:26px; height:26px; border-radius:7px;
+    padding:0 7px; white-space:nowrap;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .mc-stem{flex:1 1 auto; font-weight:500; font-size:18px; color:var(--ink); padding-top:2px; line-height:1.45;}
+  .mc-options{display:flex; flex-direction:column; gap:8px; margin-left:38px;}
+  .mc-option{
+    display:flex; align-items:center; gap:10px;
+    padding:10px 13px; border-radius:8px; border:1.5px solid var(--table-border);
+    font-size:16.5px; font-weight:400; color:var(--ink);
+  }
+  .mc-option-letter{
+    flex:0 0 auto; width:23px; height:23px; border-radius:50%;
+    border:1.5px solid var(--ink-faint); color:var(--ink-soft);
+    font-family:var(--font); font-weight:700; font-size:13px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .mc-option.is-correct{border-color:var(--primary); background:var(--accent-tint);}
+  .mc-option.is-correct .mc-option-letter{border-color:var(--primary); background:var(--primary); color:#fff;}
+  .mc-block.is-playing .mc-num,
+  .mc-block.is-playing{border-color:var(--primary);}
+
+  .data-issue-tag{
+    display:inline-block; font-family:var(--font); font-weight:600; font-size:12.5px;
+    color:#7A4A00; background:var(--accent-tint); border:1px solid var(--accent-tint-strong);
+    padding:3px 9px; border-radius:999px; margin-left:8px; text-transform:none; letter-spacing:0;
+  }
+  .data-issue-note{
+    background:var(--accent-tint); border:1px solid var(--accent-tint-strong);
+    border-radius:10px; padding:14px 16px; font-size:16px; font-weight:400;
+    color:#5B3800; line-height:1.55;
+  }
+
+  /* ---------- Right pane: detail (script / answer) ---------- */
+  .right-pane{position:sticky; top:118px;}
+
+  .right-legend{margin-bottom:16px;}
+  .right-legend .notes-title{font-size:14.5px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.03em; font-weight:600;}
+  .right-legend ul.notes li{font-size:16.5px; padding:11px 14px 11px 30px;}
+  .right-legend ul.notes li::before{left:12px; top:11.5px;}
+  .right-legend ul.notes{background:var(--surface); box-shadow:var(--shadow-card);}
+
+  .script-panel{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius-lg);
+    box-shadow:var(--shadow-card);
+    overflow:hidden;
+  }
+  .script-panel + .script-panel{margin-top:16px;}
+  .script-panel-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 22px; cursor:pointer; user-select:none;
+    transition:background .15s ease;
+  }
+  .script-panel-head:hover{background:var(--primary-tint);}
+  .script-panel[data-role="script"].is-open .script-panel-head{border-bottom:1px solid var(--border);}
+  .box-label{font-family:var(--font); font-weight:600; font-size:17px; color:var(--ink);}
+  .script-chevron{width:18px; height:18px; color:var(--ink-faint); transition:transform .2s ease;}
+  .script-panel.is-open .script-chevron{transform:rotate(180deg); color:var(--primary-dark);}
+  .answer-check{width:21px; height:21px; color:var(--ink-faint); transition:color .15s ease;}
+  .script-panel[data-role="answer"].is-open .script-panel-head{background:var(--accent-tint);}
+  .script-panel[data-role="answer"].is-open .box-label{color:var(--primary-dark);}
+  .script-panel[data-role="answer"].is-open .answer-check{color:var(--primary);}
+
+  .box-body{padding:18px 22px 20px; font-size:17px; font-weight:400; color:var(--ink); display:none;}
+  .box-body.open{display:block;}
+  .script-body.open{max-height:60vh; overflow-y:auto;}
+  .box-body-empty{color:var(--ink-faint); font-size:15px;}
+
+  .t-line{font-family:var(--font-transcript); display:flex; gap:12px; font-size:17px; font-weight:400; padding:6px 7px; border-radius:8px; margin:0; line-height:1.5;}
+  .t-line + .t-line{margin-top:3px;}
+  .t-time{flex:0 0 auto; font-variant-numeric:tabular-nums; font-size:13.5px; font-weight:500; color:var(--ink-faint); padding-top:3px; width:44px;}
+  .t-text{flex:1 1 auto;}
+  mark.evidence-mark{font-family:var(--font-transcript);}
+  .t-line.is-evidence{background:var(--accent-tint);}
+  mark.evidence-mark{background:var(--accent); color:var(--ink); padding:1px 4px; border-radius:4px; font-weight:600; text-decoration:none;}
+
+  .answer-value{font-family:var(--font); font-weight:700; font-size:27px; color:var(--primary-dark); letter-spacing:.01em; margin:0;}
+
+  footer.site-footer{max-width:min(1880px, 97vw); margin:0 auto; padding:0 24px 110px; font-size:13px; font-weight:400; color:var(--ink-faint); text-align:center;}
+  .footer-brand{display:flex; align-items:center; justify-content:center; gap:7px; margin-bottom:12px;}
+  .footer-logo{width:19px; height:19px;}
+  .footer-word{font-family:var(--font); font-weight:700; font-size:14.5px; letter-spacing:-0.01em; color:var(--ink); text-transform:lowercase;}
+
+  /* ---------- Part 2-4 placeholders ---------- */
+  .part-placeholder{padding:60px 0 40px; min-height:58vh; display:flex; align-items:center;}
+  .part-placeholder[hidden]{display:none;}
+  .part-placeholder .wrap-wide{width:100%;}
+  .placeholder-card{
+    max-width:560px; margin:0 auto; text-align:center;
+    background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-lg);
+    box-shadow:var(--shadow-card); padding:44px 36px;
+  }
+  .placeholder-eyebrow{font-weight:600; font-size:13px; color:var(--primary-dark); margin:0 0 10px; text-transform:uppercase; letter-spacing:.04em;}
+  .placeholder-title{font-weight:700; font-size:24px; color:var(--ink); margin:0 0 14px;}
+  .placeholder-text{font-weight:400; font-size:14.5px; color:var(--ink-soft); margin:0; line-height:1.6;}
+
+  /* ---------- Bottom part navigation ---------- */
+  .part-nav{
+    position:fixed; left:50%; bottom:20px; transform:translateX(-50%);
+    z-index:50;
+    display:flex; gap:2px;
+    background:var(--ink); border-radius:999px; padding:5px;
+    box-shadow:0 10px 30px -8px rgba(29,30,30,.45);
+    width:min(92vw, 520px);
+  }
+  .part-nav-btn{
+    flex:1 1 0; border:none; background:transparent; color:#C9C9C7;
+    font-family:var(--font); font-weight:600; font-size:13.5px;
+    padding:11px 10px; border-radius:999px; cursor:pointer;
+    transition:background .15s ease, color .15s ease;
+    text-align:center;
+  }
+  .part-nav-btn:hover{color:#fff;}
+  .part-nav-btn.active{background:var(--primary); color:#fff;}
+
+  /* ---------- Map diagram (Part 2, Q15-20) ---------- */
+  .map-card{
+    border:1.5px solid var(--table-border); border-radius:var(--radius-md);
+    background:var(--surface); padding:18px 18px 14px; margin-bottom:20px;
+    box-shadow:var(--shadow-card);
+  }
+  .map-card svg{width:100%; height:auto; display:block;}
+  .map-note{font-size:13.5px; color:var(--ink-soft); margin:10px 2px 0; line-height:1.5;}
+
+  /* ---------- Flow chart (Part 3, Q27-30) — compact, single row ---------- */
+  .flowchart{display:flex; flex-direction:row; align-items:stretch; gap:0; margin:6px 0 4px; max-width:640px;}
+  .flow-step{
+    flex:1 1 0; min-width:0;
+    border:1.5px solid var(--table-border); border-radius:var(--radius-sm);
+    background:var(--surface); box-shadow:var(--shadow-card);
+    padding:10px 8px 11px; display:flex; flex-direction:column; align-items:center; text-align:center; gap:6px;
+    transition:border-color .15s ease;
+  }
+  .flow-step.is-selected{border-color:var(--primary); box-shadow:0 0 0 3px var(--primary-tint);}
+  .flow-step-label{font-family:var(--font); font-weight:700; font-size:10.5px; line-height:1.25; letter-spacing:.02em; text-transform:uppercase; color:var(--primary-dark); min-height:26px; display:flex; align-items:center; justify-content:center;}
+  .flow-step-body{display:flex; align-items:center; justify-content:center; gap:10px; font-size:17px; color:var(--ink);}
+  .flow-arrow{display:flex; align-items:center; justify-content:center; flex:0 0 auto; padding:0 3px; color:var(--ink-faint);}
+  .flow-arrow svg{width:16px; height:16px; transform:rotate(-90deg);}
+
+  @media (max-width:760px){
+    .flowchart{flex-direction:column; max-width:320px;}
+    .flow-step{align-items:flex-start; text-align:left; padding:14px 16px;}
+    .flow-step-label{min-height:0; justify-content:flex-start;}
+    .flow-arrow{padding:2px 0;}
+    .flow-arrow svg{transform:none;}
+  }
+
+  @media (max-width:600px){
+    .part-nav{bottom:14px; padding:4px;}
+    .part-nav-btn{font-size:12.5px; padding:10px 6px;}
+    .placeholder-card{padding:32px 22px; margin:0 18px;}
+    footer.site-footer{padding:0 18px 100px;}
+  }
+
+  @media (max-width: 980px){
+    .split-layout{grid-template-columns:1fr;}
+    .right-pane{position:static; top:auto;}
+  }
+
+  @media (max-width: 600px){
+    .page-header{padding:26px 18px 22px;}
+    .wrap, .wrap-wide{padding:0 18px;}
+    .player-inner{padding:12px 16px; gap:12px;}
+    .player-label span{display:none;}
+    .qnav-inner{padding:9px 16px;}
+    main.content{padding:24px 0 100px;}
+    .left-pane{padding:18px 16px 18px;}
+    .script-panel-head{padding:14px 16px;}
+    .box-body{padding:14px 16px 16px;}
+    table.qtable{font-size:16px; min-width:720px;}
+    .table-scroll{box-shadow:inset -14px 0 12px -14px rgba(29,30,30,.18);}
+    footer.site-footer{padding:0 18px 50px;}
+  }
+</style>
+<style>[hidden]{display:none!important}
+.split-layout{display:block;max-width:1200px;margin:auto}.left-pane{width:100%}
+.page-header{padding:24px 16px}.tagline{max-width:none}.page-header .wrap{max-width:1240px}
+.content{padding-bottom:90px}.wrap-wide{max-width:1240px}
+.exam-card{max-width:740px;margin:28px auto;padding:28px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-card)}
+.exam-card h2{margin-top:0}.exam-card label{display:block;font-weight:600;margin:18px 0 6px}
+.exam-card input,.exam-card select{font:inherit;width:100%;padding:12px;border:1px solid var(--table-border);border-radius:8px;background:white;color:var(--ink)}
+.field-hint{font-size:13px;color:#565e59;margin:6px 0 0;line-height:1.5}
+.field-hint strong{color:var(--ink)}
+.field-hint-list{font-size:13px;color:#565e59;margin:6px 0 0;padding-left:18px;line-height:1.6}
+.field-hint-list li{margin:0 0 2px}
+.field-hint-list strong{color:var(--ink)}
+.rules-block{margin-top:18px}
+.rules-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px}
+.rules-col{background:var(--primary-tint);border:1px solid var(--table-border);border-radius:10px;padding:14px 16px}
+.rules-subtitle{font-weight:700;font-size:13px;letter-spacing:.04em;color:var(--primary-dark);margin:0 0 8px;text-transform:uppercase}
+.rules-col ul.notes{background:var(--surface);box-shadow:none}
+.rules-col ul.notes li{font-size:14px;padding:9px 12px 9px 26px}
+.rules-col ul.notes li::before{left:10px;top:9px}
+mark.user-hl{background:var(--accent-tint);color:inherit;padding:0 1px;border-radius:2px;cursor:pointer;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+mark.user-hl:hover{background:var(--accent-tint-strong)}
+.teacher-panel{position:fixed;right:16px;bottom:16px;z-index:200;width:220px;display:flex;flex-direction:column;gap:8px;background:var(--surface);border:1.5px solid var(--table-border);border-radius:var(--radius-md);box-shadow:0 10px 30px -8px rgba(29,30,30,.45);padding:14px 16px}
+.teacher-panel-head{margin:0;font-family:var(--font);font-weight:700;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--primary-dark)}
+.teacher-panel .exam-button{padding:9px 12px;font-size:13.5px;min-height:36px}
+.teacher-status{margin:2px 0 0;font-size:12px;color:var(--ink-soft);min-height:14px}
+.exam-button{border:0;border-radius:10px;background:var(--primary);color:white;padding:12px 20px;font:600 15px var(--font);cursor:pointer;min-height:44px}.exam-button:disabled{opacity:.5;cursor:wait}
+.exam-button.secondary{background:var(--primary-tint);color:var(--ink)}
+#startForm button{margin-top:22px}#startError,#saveStatus,#audioStatus{overflow-wrap:anywhere}
+.exam-status{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;max-width:1200px;margin:auto;padding:12px 20px}
+#phaseLabel{font-weight:700;color:var(--primary-dark)}#timer{font-variant-numeric:tabular-nums;font-size:22px;font-weight:700}#audioStatus{font-size:13px;margin:0}#answered{font-size:13px;color:var(--ink-soft)}
+.qchip{display:inline-flex;gap:5px;vertical-align:middle;cursor:default;background:transparent;border:0;max-width:100%}.qchip-num{font-size:12px;min-width:24px;color:var(--primary-dark)}
+.answer-input{width:140px;max-width:100%;font:500 15px var(--font);padding:7px 9px;border:1px solid var(--table-border);border-radius:7px;background:white;color:var(--ink)}
+.mc-option{cursor:pointer;position:relative;min-height:44px}.mc-option:has(input:checked){background:var(--primary-tint-strong);border-color:var(--primary)}.mc-option input{width:18px;height:18px;flex-shrink:0;accent-color:var(--primary)}
+.mc-options{display:grid}.qnav-pill.answered{background:var(--primary-tint-strong);border-color:var(--primary)}
+.qnav-inner{flex-wrap:wrap}.qnav-pill{min-height:38px}.mc-block,.qchip{scroll-margin-top:190px}
+#result .score-row{display:flex;gap:24px;flex-wrap:wrap;margin:20px 0}.metric strong{display:block;font-size:30px;color:var(--primary-dark)}
+.part-score-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.part-score-grid p{background:var(--primary-tint);padding:12px;border-radius:10px;margin:0}.part-score-grid strong{display:block;font-size:22px}
+.help{font-size:13px;color:#565e59}.alert{color:#9b341b;font-weight:600}.site-footer{padding-bottom:100px}
+@media(max-width:650px){.exam-card{margin:16px;padding:20px}.page-header{padding:18px 4px}.part-score-grid{grid-template-columns:1fr 1fr}.qtable{min-width:740px}.exam-status{padding:10px 16px}.mc-option{font-size:14px}.answer-input{width:125px}.qnav-pill{padding:6px 9px}.page-title{font-size:28px!important}.rules-grid{grid-template-columns:1fr}}
+.entry-step[hidden]{display:none!important}
+.instructions{color:var(--ink-soft);margin:0 0 14px;font-size:14px}
+.entry-section-title{font-weight:700;color:var(--ink);margin:20px 0 8px;font-size:15px}
+.entry-section-title:first-child{margin-top:0}
+.browser-notice{background:var(--accent-tint);border:1px solid var(--accent-tint-strong);border-radius:var(--radius-md);padding:12px 14px;margin:14px 0;font-size:14px;color:var(--ink)}
+.confirm-name-box{background:var(--primary-tint);border:1px solid var(--primary-tint-strong);border-radius:var(--radius-md);padding:14px 16px;margin:14px 0;font-size:15px;color:var(--ink)}
+.confirm-name-box strong{display:block;font-size:18px;color:var(--primary-dark);margin-bottom:4px}
+.checkbox-row{display:flex;align-items:flex-start;gap:8px;margin:14px 0;font-size:14px;color:var(--ink)}
+.checkbox-row input{margin-top:3px}
+
+/* ===== Sau khi nộp: trang KẾT QUẢ + HƯỚNG DẪN (1 màn hình) -> trang CHỮA BÀI (chỉ đổi hiển thị) ===== */
+body.rv-result #exam,body.rv-result #partNav,body.rv-result #reviewPlayerBar{display:none!important}
+body.rv-review #result{display:none!important}
+body.rv-result .page-header .tagline,body.rv-result #headerScope,body.rv-result .page-header .header-meta{display:none}
+body.rv-result .page-header{padding:14px 16px 6px}
+body.rv-result h1.page-title{font-size:26px;margin:0}
+#rvBackBtn{display:none}
+body.rv-review #rvBackBtn{display:inline-block;margin:10px 0 0;padding:7px 14px;border:1px solid var(--primary);border-radius:999px;background:var(--primary-tint);color:var(--primary-dark);font:600 13.5px var(--font);cursor:pointer}
+#result{max-width:860px;margin:14px auto;padding:18px 24px}
+#result h2{margin:0 0 2px;font-size:19px;letter-spacing:.03em}
+#resultName{margin:0 0 6px;font-weight:600;color:#444;font-size:14.5px}
+#result .score-row{gap:22px;margin:6px 0 8px}
+#result .metric{padding:0 4px 0 0;font-size:13px}
+#result .metric strong{font-size:24px;line-height:1.2}
+#result .part-score-grid{gap:8px;margin:0}
+#result .part-score-grid p{margin:0;padding:6px 12px;font-size:13px}
+#result .part-score-grid strong{font-size:19px}
+#result #attemptNote,#result .review-audio-box,#result #downloadResult,#result .help{display:none!important}
+#result #saveStatus{margin:6px 0 0;font-size:12px;color:#666}
+#result #retrySave{padding:6px 12px;min-height:32px;font-size:13px;margin-top:6px}
+.guide-wrap{margin-top:14px;padding-top:14px;border-top:1px solid var(--border)}
+.guide-wrap .guide-title{margin:0 0 2px;text-align:center;font-size:17px;letter-spacing:.03em;color:var(--ink)}
+.guide-wrap .guide-sub{margin:0 0 10px;text-align:center;color:#555;font-size:13.5px}
+.guide-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.guide-card{border:1px solid var(--border);border-top:5px solid var(--gc);border-radius:var(--radius-md);padding:10px 13px 8px;background:var(--surface)}
+.guide-card .g-tag{font-weight:800;font-size:15px;color:var(--gc);letter-spacing:.03em}
+.guide-card .g-head{font-weight:700;font-size:14px;color:var(--ink);margin:1px 0 5px}
+.guide-card ul{margin:0;padding-left:18px;font-size:14px;line-height:1.55;color:var(--ink)}
+.guide-card.g-green{--gc:#15934E}.guide-card.g-blue{--gc:#2563EB}.guide-card.g-purple{--gc:#7C3AED}
+.option-box{margin-top:12px;padding:10px 14px;background:rgba(220,38,38,.08);border:2px solid #DC2626;border-radius:var(--radius-md);color:#111;font-weight:700;font-size:14px;line-height:1.55}
+.option-box .option-row{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.option-box .option-row+.option-row{margin-top:8px;padding-top:8px;border-top:1px solid rgba(220,38,38,.35)}
+.option-box .option-text{flex:1 1 280px;font-size:14px}
+.option-box .exam-button{flex:0 0 auto;margin:0;white-space:normal;padding:9px 16px;min-height:38px;font-size:14px}
+.pane-sub.pane-sub-strong{color:#000;font-weight:700}
+@media(max-width:650px){#result{margin:10px;padding:14px}.guide-grid{grid-template-columns:1fr}.guide-card{padding:8px 12px 6px}.guide-card .g-head{margin-bottom:3px}.guide-card ul{line-height:1.45}.option-box .exam-button{width:100%}#result .score-row{gap:14px}#result .metric strong{font-size:21px}}
+.entry-actions-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;align-items:center}
+.entry-actions-row .exam-button{margin-top:0}
+.entry-status-message{background:var(--primary-tint);border:1px solid var(--primary-tint-strong);border-radius:var(--radius-md);padding:10px 14px;margin:14px 0;font-size:14px;color:var(--ink)}
+.field-error{color:#9b341b;font-size:13px;margin:6px 0 0;font-weight:600;min-height:16px}
+.btn-text{background:none;border:none;color:var(--ink-soft);font-size:14px;text-decoration:underline;cursor:pointer;padding:6px 0;margin-top:10px}
+.notice-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:14px 18px;margin:10px 0 18px}
+.notice-box ul{margin:0;padding-left:20px;font-size:14px;color:var(--ink);line-height:1.6}
+.notice-box ul li{margin:0 0 6px}
+.notice-box ul li:last-child{margin-bottom:0}
+.notice-box.warning{background:#fdeeec;border:1px solid #f0b8ab;color:#8a2f1c;font-weight:600;padding:12px 14px;margin:14px 0}
+.review-audio-box{background:var(--primary-tint);border:1px solid var(--primary-tint-strong);border-radius:var(--radius-md);padding:14px 16px;margin:16px 0}
+.review-callout{background:var(--primary-tint);border:1px solid var(--primary-tint-strong);border-left:4px solid var(--primary);border-radius:var(--radius-md);padding:12px 16px;margin:14px 0}
+.review-callout-title{font-weight:700;color:var(--primary-dark);margin:0 0 6px;font-size:14px}
+.review-callout-body{margin:0;font-size:14px;color:var(--ink);line-height:1.6}
+.review-player-bar{position:fixed;left:0;right:0;bottom:0;z-index:150;background:var(--surface);border-top:1px solid var(--border);box-shadow:0 -6px 18px -12px rgba(29,30,30,.35)}
+.review-player-inner{max-width:min(1880px,97vw);margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:12px}
+.review-player-label{flex:0 0 auto;font-weight:600;font-size:13px;color:var(--ink);white-space:nowrap}
+.review-skip-btn{flex:0 0 auto;height:36px;padding:0 12px;border-radius:999px;border:1px solid var(--border);background:var(--surface);color:var(--ink);font-size:12px;font-weight:700;cursor:pointer;transition:background .15s ease}
+.review-skip-btn:hover{background:var(--primary-tint)}
+@media(max-width:650px){.review-player-label{display:none}.review-player-inner{padding:8px 12px;gap:8px}}
+/* ===== Listening Review: correctness annotations (only added once #result shows) ===== */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+.qchip.is-correct{border-color:var(--primary);}
+.qchip.is-wrong{border-color:var(--danger);background:var(--danger-bg);}
+.qchip.is-wrong .answer-input{color:var(--danger);text-decoration:line-through;background:transparent;}
+.qchip-feedback-icon{flex:0 0 auto;width:20px;height:20px;margin-left:2px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;}
+.qchip.is-correct .qchip-feedback-icon{background:var(--primary);}
+.qchip.is-wrong .qchip-feedback-icon{background:var(--danger);}
+.qchip-correct-answer{display:inline-block;margin-left:5px;font-size:12.5px;font-weight:700;color:var(--primary-dark);}
+.mc-block.is-review-correct{border-left:4px solid var(--primary);}
+.mc-block.is-review-wrong{border-left:4px solid var(--danger);}
+.review-status-badge{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;margin-left:10px;vertical-align:middle;white-space:nowrap;}
+.review-status-badge.is-correct{background:var(--primary-tint);color:var(--primary-dark);}
+.review-status-badge.is-wrong{background:var(--danger-bg);color:var(--danger);}
+.review-status-badge.is-unanswered{background:var(--bg);color:var(--ink-soft);border:1px solid var(--border);}
+.mc-option.opt-correct,.mc-option:has(input:checked).opt-correct{border-color:var(--primary);background:var(--primary-tint);}
+.mc-option.opt-correct .mc-option-letter{border-color:var(--primary);background:var(--primary);color:#fff;}
+.mc-option.opt-correct>span:last-child{color:var(--primary-dark);font-weight:700;}
+.mc-option.opt-wrong,.mc-option:has(input:checked).opt-wrong{border-color:var(--danger);background:var(--danger-bg);}
+.mc-option.opt-wrong .mc-option-letter{border-color:var(--danger);background:var(--danger);color:#fff;}
+.mc-option.opt-wrong>span:last-child{color:var(--danger);font-weight:700;text-decoration:line-through;}
+.qnav-pill.is-review-correct{background:var(--primary);border-color:var(--primary);color:#fff;}
+.qnav-pill.is-review-wrong{background:var(--danger);border-color:var(--danger);color:#fff;}
+/* ===== Listening Review: 2-panel Questions | Script layout (desktop-first) ===== */
+.right-pane.script-pane{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-card);display:flex;flex-direction:column;overflow:hidden;max-height:calc(100vh - 210px);position:sticky;top:118px;}
+.script-pane-head{flex:0 0 auto;padding:16px 22px;border-bottom:1px solid var(--border);background:var(--primary-tint);}
+.script-pane-title{font-family:var(--font);font-weight:700;font-size:15.5px;color:var(--primary-dark);}
+.script-pane-body{flex:1 1 auto;overflow-y:auto;padding:20px 22px;font-family:var(--font-transcript);font-size:16.5px;line-height:1.7;color:var(--ink);}
+.script-pane-body p{margin:0 0 14px;}
+.script-pane-body p:last-child{margin-bottom:0;}
+.script-pane-placeholder{color:var(--ink-soft);font-style:italic;}
+body.is-review-listening .part-view .wrap-wide{max-width:min(1900px,98vw);}
+body.is-review-listening .split-layout{display:grid;grid-template-columns:1fr 1.4fr;max-width:min(1900px,98vw);margin:0 auto;gap:24px;}
+body.is-review-listening .left-pane{width:auto;}
+@media (max-width:980px){
+ body.is-review-listening .split-layout{grid-template-columns:1fr;max-width:1200px;}
+ body.is-review-listening .right-pane.script-pane{position:static;top:auto;max-height:60vh;margin-top:20px;}
+}
+
+/* ---- Map (Q15-20): map left, A-I grid right | Matching (Q25-30): novels left, topics right ---- */
+.map-layout{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:22px;align-items:start;margin:6px 0 10px}
+.map-figure{margin:0;border:1.5px solid var(--table-border);border-radius:12px;padding:10px;background:#fff;position:sticky;top:200px}
+.map-figure img{display:block;width:100%;height:auto}
+.map-table-wrap{overflow-x:auto}
+table.map-grid{width:100%;border-collapse:collapse;font-size:15px;border-top:1.5px solid var(--ink)}
+table.map-grid th{text-align:center;font-weight:700;font-size:14px;padding:8px 2px;border-bottom:2px solid var(--ink);border-left:1px solid var(--ink)}
+table.map-grid th:first-child{border-left:none;border-bottom:none}
+table.map-grid th:nth-child(2){border-left:2px solid var(--ink)}
+table.map-grid td.mg-question{padding:10px 8px 10px 2px;border-top:1px solid var(--ink);line-height:1.35;vertical-align:middle;min-width:150px}
+table.map-grid td.mg-question .mc-num{display:inline-flex;vertical-align:middle;margin-right:8px}
+table.map-grid td.mg-question .mc-stem{display:inline;font-size:15.5px;padding:0}
+table.map-grid td.mg-cell.mc-option{display:table-cell;position:static;padding:0;height:52px;min-height:0;min-width:30px;text-align:center;vertical-align:middle;border:0;border-radius:0;border-top:1px solid var(--ink);border-left:1px solid var(--ink);background:transparent}
+table.map-grid td.mg-cell.mc-option:nth-child(2){border-left:2px solid var(--ink)}
+table.map-grid td.mg-cell label{display:flex;align-items:center;justify-content:center;width:100%;height:100%;min-height:52px;margin:0;cursor:pointer}
+table.map-grid tbody tr:last-child td{border-bottom:1px solid var(--ink)}
+table.map-grid td.mg-cell.mc-option:has(input:checked){background:var(--primary-tint-strong)}
+table.map-grid td.mg-cell.mc-option.opt-correct{background:var(--primary-tint);border-top-color:var(--ink);border-left-color:var(--ink)}
+table.map-grid td.mg-cell.mc-option.opt-wrong{background:var(--danger-bg);border-top-color:var(--ink);border-left-color:var(--ink)}
+tr.mc-block.map-row,tr.mc-block.map-row.is-review-correct,tr.mc-block.map-row.is-review-wrong{border:0;padding:0;margin:0;border-radius:0;box-shadow:none;cursor:default}
+tr.map-row.is-review-correct td.mg-question{background:var(--primary-tint)}
+tr.map-row.is-review-wrong td.mg-question{background:var(--danger-bg)}
+
+.match-layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:20px;align-items:start;margin:6px 0 10px}
+.match-rows .mc-block{margin-bottom:12px;padding:14px 16px;cursor:default}
+.match-rows .mc-head{align-items:center;margin-bottom:10px}
+.match-rows .mc-stem{font-size:17px}
+.match-radios{display:none!important}
+.match-slot{margin-left:38px;min-height:48px;border:1.5px dashed var(--ink-faint);border-radius:9px;background:var(--bg);display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 10px;color:var(--ink-faint);font-size:14.5px;transition:border-color .12s,background .12s}
+.match-slot.is-over{border-color:var(--primary);background:var(--primary-tint);box-shadow:0 0 0 3px var(--primary-tint-strong)}
+.match-layout.has-picked .match-slot:not(.is-filled){border-color:var(--primary);cursor:pointer}
+.match-slot.is-filled{border-style:solid;border-color:var(--primary);background:var(--primary-tint-strong);color:var(--ink)}
+.match-chip-in{display:inline-flex;align-items:center;gap:10px;font-size:16px;font-weight:600;cursor:grab;touch-action:none;user-select:none}
+.match-chip-in b,.topic-chip b{width:23px;height:23px;flex:0 0 auto;border-radius:50%;border:1.5px solid var(--primary);color:var(--primary-dark);display:flex;align-items:center;justify-content:center;font-size:13px}
+.match-clear{border:0;background:transparent;font-size:22px;line-height:1;color:var(--ink-soft);cursor:pointer;padding:0 6px}
+.topic-bank{border:1.5px solid var(--table-border);border-radius:12px;padding:14px 16px 8px;background:var(--primary-tint);position:sticky;top:200px}
+.match-layout[data-group="g2"] .topic-chip,.match-layout[data-group="g2"] .match-chip-in{font-size:15px}
+.match-chip-in>span{line-height:1.3}
+.topic-chip>span{line-height:1.3}
+.topic-bank .notes-title{margin-bottom:10px}
+.topic-hint{font-weight:400;font-size:13px;color:var(--ink-soft)}
+.topic-chip{display:flex;align-items:center;gap:10px;padding:10px 12px;margin:0 0 8px;border:1.5px solid var(--table-border);border-radius:9px;background:var(--surface);font-size:16px;cursor:grab;touch-action:none;user-select:none;min-height:44px}
+.topic-chip.is-used{opacity:.4;border-style:dashed;cursor:not-allowed}
+.topic-chip.is-picked{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-tint-strong)}
+.topic-chip.is-dragging,.match-chip-in.is-dragging{opacity:.35}
+.match-ghost{position:fixed;left:0;top:0;pointer-events:none;z-index:9999;background:var(--surface);border:1.5px solid var(--primary);border-radius:9px;padding:8px 14px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.18);white-space:pre}
+body.is-match-dragging{cursor:grabbing;user-select:none}
+.match-row.is-review-correct .match-slot{border-color:var(--primary);background:var(--primary-tint)}
+.match-row.is-review-wrong .match-slot{border-color:var(--danger);background:var(--danger-bg)}
+.match-correct-hint{margin:8px 0 0 38px;font-size:13.5px;font-weight:700;color:var(--primary-dark)}
+body.is-review-listening .match-slot,body.is-review-listening .topic-chip{pointer-events:none}
+body.is-review-listening .topic-chip{opacity:.7}
+body.is-review-listening .map-layout,body.is-review-listening .match-layout{grid-template-columns:1fr}
+body.is-review-listening .map-figure,body.is-review-listening .topic-bank{position:static}
+#saveGate{position:fixed;inset:0;z-index:100000;background:rgba(255,255,255,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:flex;align-items:center;justify-content:center;padding:20px}
+#saveGate[hidden],#saveBanner[hidden]{display:none}
+#saveGate .sg-card{max-width:520px;width:100%;background:#fff;border:2px solid var(--primary);border-radius:18px;padding:28px 26px;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.14)}
+#saveGate h3{margin:14px 0 8px;font-size:21px;line-height:1.3}
+#saveGate p{margin:0 0 6px;font-size:15.5px;line-height:1.5;overflow-wrap:anywhere}
+#saveGate .sg-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+#sgSpin{width:44px;height:44px;margin:0 auto;border:5px solid var(--primary-tint-strong);border-top-color:var(--primary);border-radius:50%;animation:sgspin 1s linear infinite}
+#sgSpin[hidden]{display:none}
+@keyframes sgspin{to{transform:rotate(360deg)}}
+#saveBanner{position:fixed;top:8px;left:50%;transform:translateX(-50%);z-index:99999;background:#b91c1c;color:#fff;font:700 14px var(--font);padding:8px 16px;border-radius:999px;box-shadow:0 4px 16px rgba(0,0,0,.25);max-width:94vw;text-align:center}
+body.save-pending #result .score-row{filter:none}
+
+@media(max-width:900px){.map-layout,.match-layout{grid-template-columns:1fr}.map-figure,.topic-bank{position:static}.topic-bank{order:-1}}
+.match-rows .match-row{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:6px 12px;align-items:center;padding:10px 14px;margin-bottom:10px}
+.match-rows .match-row .mc-head{margin-bottom:0}
+.match-rows .match-row .match-slot{margin-left:0}
+.match-rows .match-row .match-correct-hint{grid-column:1/-1;margin:2px 0 0 0}
+@media(max-width:560px){.match-rows .match-row{grid-template-columns:1fr}}
+</style>
+<!-- ===== Level Up shared theme (visual only; harmonization rules live in theme.css) ===== -->
+<style>
+.table-scroll{position:relative}
+/* review: a choose-two answer with only one correct letter is partly right (1/2), not wrong */
+.mc-block.is-review-partial{border-left:4px solid #D9A400}
+.review-status-badge.is-partial{background:#FFF4CC;color:#7A5A00}
+:root[data-visual-pilot][data-theme="dark"] .review-status-badge.is-partial{background:var(--pilot-gold-bg);color:var(--pilot-yellow)}
+:root[data-visual-pilot]:not([data-theme="light"]) .review-status-badge.is-partial{background:var(--pilot-gold-bg);color:var(--pilot-yellow)}
+</style>
+<link rel="stylesheet" href="../../assets/theme.css">
+<link rel="stylesheet" href="../../assets/dark-mode-pilot.css">
+<script defer src="../../assets/exam-controls.js"></script></head>
+<body>
+<button class="lu-theme-toggle" id="lu-theme-toggle" type="button" aria-label="Đổi chế độ sáng tối" aria-pressed="false">◐ Dark mode</button>
+
+<header class="page-header">
+  <div class="wrap wrap-wide">
+    
+    <div class="lu-eyebrow lu-eyebrow-inline">LEVEL UP<span class="lu-divider">|</span><span class="lu-studio">LISTENING STUDIO</span></div>
+    <h1 class="page-title">IELTS Listening Full Test</h1>
+    <p class="header-meta"><strong>Cambridge IELTS 17 – Test 1</strong></p>
+    <p class="header-scope" id="headerScope">Part 1 | Questions 1–10</p>
+    <button type="button" id="rvBackBtn">← Xem kết quả &amp; hướng dẫn</button>
+    <p class="tagline">40 questions · One continuous recording · 2 minutes to review</p>
+  </div>
+</header>
+
+<section id="startScreen" class="exam-card">
+<div id="entry-step-info">
+<h2>Sẵn sàng bắt đầu?</h2>
+<p class="instructions">Bài Nghe gồm 4 phần (Part 1–4) với 40 câu hỏi. Hãy đeo tai nghe và kiểm tra âm lượng thiết bị trước khi bắt đầu — audio chỉ được phát duy nhất 1 lần trong lúc làm bài.</p>
+<div class="entry-section-title">Lưu ý trước khi làm bài</div>
+<div class="notice-box"><ul><li>Audio chỉ được phát 1 lần duy nhất trong lúc làm bài — không thể dừng, tua hoặc nghe lại.</li><li>Sau khi audio kết thúc, bạn có 2 phút để kiểm tra và chỉnh sửa đáp án trước khi bài tự động nộp.</li><li>Mỗi bài chỉ được làm và nộp một lần.</li><li>Hãy đeo tai nghe, kiểm tra âm lượng và đảm bảo kết nối mạng ổn định trước khi bắt đầu.</li><li>Hãy kiểm tra kỹ họ tên và dấu tiếng Việt trước khi bắt đầu.</li></ul></div>
+<div class="review-callout"><p class="review-callout-title">🔁 Đã làm bài này trước đó?</p><p class="review-callout-body">Hãy nhập đúng họ tên đã dùng khi làm bài, sau đó chọn <strong>"Xem lại bài đã làm"</strong> ở bước cuối. Phần xem lại có đầy đủ audio để bạn tự tua và nghe lại không giới hạn số lần, giúp đối chiếu đáp án.</p></div>
+<div class="entry-section-title">Lưu ý về trình duyệt</div>
+<div class="notice-box"><ul><li>Vui lòng sử dụng một trình duyệt duy nhất trong suốt quá trình làm bài và xem lại bài: Chrome, Safari hoặc Cốc Cốc.</li><li>Nếu muốn xem lại bài sau khi đóng tab, hãy mở lại bằng đúng trình duyệt và đúng thiết bị đã sử dụng khi làm bài.</li><li>Không sử dụng tab ẩn danh hoặc chế độ duyệt web riêng tư.</li><li>Không xóa dữ liệu trình duyệt trước khi xem lại bài.</li></ul></div>
+<div class="notice-box warning">⚠️ Để có thể xem lại bài sau này, hãy sử dụng đúng một trình duyệt và không sử dụng chế độ ẩn danh.</div>
+<p class="help">Giữ nguyên trang này trong suốt quá trình làm bài. Nếu tải lại trang, hãy nhập đúng họ tên đã dùng trước đó: đồng hồ vẫn tiếp tục chạy và phần audio đã bỏ lỡ sẽ không được phát lại.</p>
+<div class="entry-section-title">Thông tin học viên</div>
+<label for="studentName">Họ và tên</label><input id="studentName" maxlength="120" autocomplete="name" placeholder="Nhập đầy đủ họ và tên có dấu tiếng Việt"><ul class="field-hint-list"><li>Nhập đầy đủ họ và tên có dấu tiếng Việt</li><li>Không viết tắt, không bỏ dấu</li><li>Ví dụ: <strong>Phạm Thị Hương</strong></li></ul>
+<input type="hidden" id="cycleId" value="C17-T1">
+<div class="field-error" id="infoError"></div>
+<div class="entry-actions-row"><button type="button" class="exam-button" id="infoContinueBtn">Tiếp tục</button></div>
+</div>
+<div id="entry-step-confirm" hidden>
+<p class="instructions">Bạn chắc chắn đã điền đúng họ tên và Chu kỳ ôn thi chưa?</p>
+<div class="confirm-name-box" id="confirmInfoBox"></div>
+<label class="checkbox-row"><input type="checkbox" id="confirmCheckbox"><span>Tôi đã kiểm tra và xác nhận thông tin của mình.</span></label>
+<div class="entry-actions-row"><button type="button" class="exam-button secondary" id="confirmBackBtn">Quay lại</button><button type="button" class="exam-button" id="confirmContinueBtn" disabled>Tiếp tục</button></div>
+</div>
+<form id="startForm">
+<div id="entry-step-actions" hidden>
+<div class="entry-status-message" id="entryStatusMessage" hidden></div>
+<p id="audioReady" class="help">Đang tải audio…</p>
+<p id="startError" class="alert" role="alert"></p>
+<div class="entry-actions-row"><button id="startButton" class="exam-button" disabled>Bắt đầu làm bài Nghe</button><button type="button" class="exam-button secondary" id="reviewButton" hidden>Xem lại bài đã làm</button></div>
+<p class="field-hint" id="reviewHint" hidden>Phần xem lại có đầy đủ audio để bạn tự tua và nghe lại không giới hạn số lần.</p>
+<button type="button" class="btn-text" id="actionsBackBtn">Quay lại</button>
+</div>
+</form>
+</section>
+<div id="saveGate" role="alertdialog" aria-live="assertive" hidden><div class="sg-card"><div id="sgSpin"></div><h3 id="sgTitle"></h3><p id="sgMsg"></p><div id="sgActions" class="sg-actions" hidden><button id="sgRetry" class="exam-button" type="button">Thử lưu lại</button><button id="sgDownload" class="exam-button secondary" type="button">Tải kết quả (.json)</button><button id="sgShow" class="exam-button secondary" type="button">Xem điểm (chưa lưu)</button></div></div></div><div id="saveBanner" role="status" hidden></div>
+<section id="result" class="exam-card" hidden aria-live="polite"><h2>KẾT QUẢ BÀI LÀM</h2><p id="resultName"></p><div class="score-row"><div class="metric">Raw score<strong id="rawScore"></strong></div><div class="metric">Estimated IELTS band<strong id="bandScore"></strong></div><div class="metric">Time used<strong id="timeUsed"></strong></div></div><div class="part-score-grid" id="partScores"></div><p id="attemptNote"></p><p id="saveStatus" role="status"></p><button id="retrySave" class="exam-button">Retry saving result</button> <button id="downloadResult" class="exam-button secondary">Download result</button>
+<div class="guide-wrap">
+<h3 class="guide-title">HƯỚNG DẪN &amp; LỰA CHỌN CHỮA BÀI</h3>
+<p class="guide-sub">Làm theo 3 bước để cải thiện kỹ năng nghe.</p>
+<div class="guide-grid">
+<div class="guide-card g-green"><div class="g-tag">ĐỌC HIỂU</div><div class="g-head">Hiểu nội dung</div><ul><li>Đọc và dịch script.</li><li>Tra từ mới.</li><li>Tìm nguyên nhân sai.</li></ul></div>
+<div class="guide-card g-blue"><div class="g-tag">NHẬN DIỆN</div><div class="g-head">Luyện nghe âm</div><ul><li>Vừa nghe vừa đọc script.</li><li>Chú ý từ khó nghe.</li><li>Nghe lại không nhìn script.</li></ul></div>
+<div class="guide-card g-purple"><div class="g-tag">NGHE HIỂU</div><div class="g-head">Nghe trực tiếp</div><ul><li>Nghe toàn bộ bài.</li><li>Tập trung vào ý nghĩa.</li><li>Nghe liền mạch, không dừng.</li></ul></div>
+</div>
+<div class="option-box">
+<div class="option-row"><div class="option-text">OPTION 1 — Chữa bài ngay: Nhấn nút “Ấn vào đây để chữa bài” để chuyển sang trang chữa bài.</div><button type="button" class="exam-button" id="startReviewBtn">Ấn vào đây để chữa bài</button></div>
+<div class="option-row"><div class="option-text">OPTION 2 — Chữa bài sau: Nếu chưa chữa được ngay và đã đóng tab, hãy đăng nhập lại bằng đúng họ tên của bạn và chọn “Xem lại bài”.</div></div>
+</div>
+</div></section><div id="exam" hidden>
+<div class="control-stack" id="controlStack">
+  <section class="player-bar">
+    <div class="exam-status"><div><div id="candidate"></div><div id="phaseLabel">Ready</div><p id="audioStatus">Audio plays once. Playback controls are disabled.</p><button id="resumeAudio" class="exam-button secondary" hidden>Continue at current position</button></div><div><div class="lu-timer-row"><span class="lu-clock-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 3"></path></svg></span><div id="timer" role="timer">00:00</div></div><div id="answered">0 / 40 answered</div></div></div><audio id="audio" preload="metadata" controlslist="nodownload noplaybackrate" disableRemotePlayback src="audio.mp3"></audio>
+  </section>
+
+  <nav class="qnav">
+    <div class="qnav-inner" id="qnavInner"></div>
+  </nav>
+</div>
+
+<main class="content">
+  <div class="part-view" id="part1View">
+  <div class="wrap wrap-wide">
+    <div class="split-layout">
+
+      <section class="left-pane">
+        <h2 class="section-heading">Buckworth Conservation Group</h2>
+        <p class="pane-sub pane-sub-strong">Questions 1&ndash;10 &middot; Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.</p>
+
+        <p class="notes-title" style="margin-top:16px;">Regular activities – Beach</p>
+        <ul class="notes">
+          <li>making sure the beach does not have <span class="qchip" data-q="1"><span class="qchip-num" data-q="1">1</span><input class="answer-input" data-q="1" aria-label="Answer 1" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span> on it</li>
+          <li>no <span class="qchip" data-q="2"><span class="qchip-num" data-q="2">2</span><input class="answer-input" data-q="2" aria-label="Answer 2" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span></li>
+        </ul>
+
+        <p class="notes-title" style="margin-top:16px;">Regular activities – Nature reserve</p>
+        <ul class="notes">
+          <li>maintaining paths</li>
+          <li>nesting boxes for birds installed</li>
+          <li>next task is taking action to attract <span class="qchip" data-q="3"><span class="qchip-num" data-q="3">3</span><input class="answer-input" data-q="3" aria-label="Answer 3" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span> to the place</li>
+          <li>identifying types of <span class="qchip" data-q="4"><span class="qchip-num" data-q="4">4</span><input class="answer-input" data-q="4" aria-label="Answer 4" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span></li>
+          <li>building a new <span class="qchip" data-q="5"><span class="qchip-num" data-q="5">5</span><input class="answer-input" data-q="5" aria-label="Answer 5" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span></li>
+        </ul>
+
+        <p class="notes-title" style="margin-top:16px;">Forthcoming events – Saturday</p>
+        <ul class="notes">
+          <li>meet at Dunsmore Beach car park</li>
+          <li>walk across the sands and reach the <span class="qchip" data-q="6"><span class="qchip-num" data-q="6">6</span><input class="answer-input" data-q="6" aria-label="Answer 6" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span></li>
+          <li>take a picnic</li>
+          <li>wear appropriate <span class="qchip" data-q="7"><span class="qchip-num" data-q="7">7</span><input class="answer-input" data-q="7" aria-label="Answer 7" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span></li>
+        </ul>
+
+        <p class="notes-title" style="margin-top:16px;">Forthcoming events – Woodwork session</p>
+        <ul class="notes">
+          <li>suitable for <span class="qchip" data-q="8"><span class="qchip-num" data-q="8">8</span><input class="answer-input" data-q="8" aria-label="Answer 8" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span> to participate in</li>
+          <li>making <span class="qchip" data-q="9"><span class="qchip-num" data-q="9">9</span><input class="answer-input" data-q="9" aria-label="Answer 9" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span> out of wood</li>
+          <li>17th, from 10 a.m. to 3 p.m.</li>
+          <li>cost of session (no camping): £<span class="qchip" data-q="10"><span class="qchip-num" data-q="10">10</span><input class="answer-input" data-q="10" aria-label="Answer 10" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span></li>
+        </ul>
+      </section>
+
+      <aside class="right-pane script-pane" id="scriptPanePart1" hidden aria-label="Script Part 1">
+  <div class="script-pane-head"><span class="script-pane-title">🎧 Script &mdash; Part 1</span></div>
+  <div class="script-pane-body" id="scriptBodyPart1"><p class="script-pane-placeholder">Script cho Part 1 se duoc cap nhat sau.</p></div>
+</aside>
+
+    </div>
+  </div>
+  </div>
+
+  <div class="part-view" id="part2View" hidden>
+  <div class="wrap wrap-wide">
+    <div class="split-layout">
+
+      <section class="left-pane">
+        <h2 class="section-heading">Boat trip round Tasmania</h2>
+        <p class="pane-sub pane-sub-strong">Questions 11&ndash;14 &middot; Choose the correct letter, A, B or C.</p>
+          <div class="mc-block" data-q="11">
+            <div class="mc-head">
+              <p class="mc-num">11</p>
+              <p class="mc-stem">What is the maximum number of people who can stand on each side of the boat?</p>
+            </div>
+            <div class="mc-options">
+              <label class="mc-option" data-letter="A"><input type="radio" name="q11" value="A" aria-label="Question 11, option A"><span class="mc-option-letter">A</span><span>9</span></label><label class="mc-option" data-letter="B"><input type="radio" name="q11" value="B" aria-label="Question 11, option B"><span class="mc-option-letter">B</span><span>15</span></label><label class="mc-option" data-letter="C"><input type="radio" name="q11" value="C" aria-label="Question 11, option C"><span class="mc-option-letter">C</span><span>18</span></label>
+            </div>
+          </div>
+          <div class="mc-block" data-q="12">
+            <div class="mc-head">
+              <p class="mc-num">12</p>
+              <p class="mc-stem">What colour are the tour boats?</p>
+            </div>
+            <div class="mc-options">
+              <label class="mc-option" data-letter="A"><input type="radio" name="q12" value="A" aria-label="Question 12, option A"><span class="mc-option-letter">A</span><span>dark red</span></label><label class="mc-option" data-letter="B"><input type="radio" name="q12" value="B" aria-label="Question 12, option B"><span class="mc-option-letter">B</span><span>jet black</span></label><label class="mc-option" data-letter="C"><input type="radio" name="q12" value="C" aria-label="Question 12, option C"><span class="mc-option-letter">C</span><span>light green</span></label>
+            </div>
+          </div>
+          <div class="mc-block" data-q="13">
+            <div class="mc-head">
+              <p class="mc-num">13</p>
+              <p class="mc-stem">Which lunchbox is suitable for someone who doesn’t eat meat or fish?</p>
+            </div>
+            <div class="mc-options">
+              <label class="mc-option" data-letter="A"><input type="radio" name="q13" value="A" aria-label="Question 13, option A"><span class="mc-option-letter">A</span><span>Lunchbox 1</span></label><label class="mc-option" data-letter="B"><input type="radio" name="q13" value="B" aria-label="Question 13, option B"><span class="mc-option-letter">B</span><span>Lunchbox 2</span></label><label class="mc-option" data-letter="C"><input type="radio" name="q13" value="C" aria-label="Question 13, option C"><span class="mc-option-letter">C</span><span>Lunchbox 3</span></label>
+            </div>
+          </div>
+          <div class="mc-block" data-q="14">
+            <div class="mc-head">
+              <p class="mc-num">14</p>
+              <p class="mc-stem">What should people do with their litter?</p>
+            </div>
+            <div class="mc-options">
+              <label class="mc-option" data-letter="A"><input type="radio" name="q14" value="A" aria-label="Question 14, option A"><span class="mc-option-letter">A</span><span>take it home</span></label><label class="mc-option" data-letter="B"><input type="radio" name="q14" value="B" aria-label="Question 14, option B"><span class="mc-option-letter">B</span><span>hand it to a member of staff</span></label><label class="mc-option" data-letter="C"><input type="radio" name="q14" value="C" aria-label="Question 14, option C"><span class="mc-option-letter">C</span><span>put it in the bins provided on the boat</span></label>
+            </div>
+          </div>
+        <p class="pane-sub pane-sub-strong" style="margin-top:22px;">Questions 15 and 16 &middot; Choose TWO letters, A&ndash;E.</p>
+          <div class="mc-block" data-q="15-16">
+            <div class="mc-head">
+              <p class="mc-num">15-16</p>
+              <p class="mc-stem">Which TWO features of the lighthouse does Lou mention?</p>
+            </div>
+            <div class="mc-options">
+              <label class="mc-option" data-letter="A"><input type="checkbox" name="q15-16" value="A" aria-label="Question 15-16, option A"><span class="mc-option-letter">A</span><span>why it was built</span></label><label class="mc-option" data-letter="B"><input type="checkbox" name="q15-16" value="B" aria-label="Question 15-16, option B"><span class="mc-option-letter">B</span><span>who built it</span></label><label class="mc-option" data-letter="C"><input type="checkbox" name="q15-16" value="C" aria-label="Question 15-16, option C"><span class="mc-option-letter">C</span><span>how long it took to build</span></label><label class="mc-option" data-letter="D"><input type="checkbox" name="q15-16" value="D" aria-label="Question 15-16, option D"><span class="mc-option-letter">D</span><span>who staffed it</span></label><label class="mc-option" data-letter="E"><input type="checkbox" name="q15-16" value="E" aria-label="Question 15-16, option E"><span class="mc-option-letter">E</span><span>what it was built with</span></label>
+            </div>
+          </div>
+        <p class="pane-sub pane-sub-strong" style="margin-top:22px;">Questions 17 and 18 &middot; Choose TWO letters, A&ndash;E.</p>
+          <div class="mc-block" data-q="17-18">
+            <div class="mc-head">
+              <p class="mc-num">17-18</p>
+              <p class="mc-stem">Which TWO types of creature might come close to the boat?</p>
+            </div>
+            <div class="mc-options">
+              <label class="mc-option" data-letter="A"><input type="checkbox" name="q17-18" value="A" aria-label="Question 17-18, option A"><span class="mc-option-letter">A</span><span>sea eagles</span></label><label class="mc-option" data-letter="B"><input type="checkbox" name="q17-18" value="B" aria-label="Question 17-18, option B"><span class="mc-option-letter">B</span><span>fur seals</span></label><label class="mc-option" data-letter="C"><input type="checkbox" name="q17-18" value="C" aria-label="Question 17-18, option C"><span class="mc-option-letter">C</span><span>dolphins</span></label><label class="mc-option" data-letter="D"><input type="checkbox" name="q17-18" value="D" aria-label="Question 17-18, option D"><span class="mc-option-letter">D</span><span>whales</span></label><label class="mc-option" data-letter="E"><input type="checkbox" name="q17-18" value="E" aria-label="Question 17-18, option E"><span class="mc-option-letter">E</span><span>penguins</span></label>
+            </div>
+          </div>
+        <p class="pane-sub pane-sub-strong" style="margin-top:22px;">Questions 19 and 20 &middot; Choose TWO letters, A&ndash;E.</p>
+          <div class="mc-block" data-q="19-20">
+            <div class="mc-head">
+              <p class="mc-num">19-20</p>
+              <p class="mc-stem">Which TWO points does Lou make about the caves?</p>
+            </div>
+            <div class="mc-options">
+              <label class="mc-option" data-letter="A"><input type="checkbox" name="q19-20" value="A" aria-label="Question 19-20, option A"><span class="mc-option-letter">A</span><span>Only large tourist boats can visit them.</span></label><label class="mc-option" data-letter="B"><input type="checkbox" name="q19-20" value="B" aria-label="Question 19-20, option B"><span class="mc-option-letter">B</span><span>The entrances to them are often blocked.</span></label><label class="mc-option" data-letter="C"><input type="checkbox" name="q19-20" value="C" aria-label="Question 19-20, option C"><span class="mc-option-letter">C</span><span>It is too dangerous for individuals to go near them.</span></label><label class="mc-option" data-letter="D"><input type="checkbox" name="q19-20" value="D" aria-label="Question 19-20, option D"><span class="mc-option-letter">D</span><span>Someone will explain what is inside them.</span></label><label class="mc-option" data-letter="E"><input type="checkbox" name="q19-20" value="E" aria-label="Question 19-20, option E"><span class="mc-option-letter">E</span><span>They cannot be reached on foot.</span></label>
+            </div>
+          </div>
+      </section>
+
+      <aside class="right-pane script-pane" id="scriptPanePart2" hidden aria-label="Script Part 2">
+  <div class="script-pane-head"><span class="script-pane-title">🎧 Script &mdash; Part 2</span></div>
+  <div class="script-pane-body" id="scriptBodyPart2"><p class="script-pane-placeholder">Script cho Part 2 se duoc cap nhat sau.</p></div>
+</aside>
+
+    </div>
+  </div>
+  </div>
+
+  <div class="part-view" id="part3View" hidden>
+  <div class="wrap wrap-wide">
+    <div class="split-layout">
+
+      <section class="left-pane">
+        <h2 class="section-heading">Work experience for veterinary science students</h2>
+        <p class="pane-sub pane-sub-strong">Questions 21&ndash;26 &middot; Choose the correct letter, A, B or C.</p>
+          <div class="mc-block" data-q="21">
+            <div class="mc-head">
+              <p class="mc-num">21</p>
+              <p class="mc-stem">What problem did both Diana and Tim have when arranging their work experience?</p>
+            </div>
+            <div class="mc-options">
+              <label class="mc-option" data-letter="A"><input type="radio" name="q21" value="A" aria-label="Question 21, option A"><span class="mc-option-letter">A</span><span>making initial contact with suitable farms</span></label><label class="mc-option" data-letter="B"><input type="radio" name="q21" value="B" aria-label="Question 21, option B"><span class="mc-option-letter">B</span><span>organising transport to and from the farm</span></label><label class="mc-option" data-letter="C"><input type="radio" name="q21" value="C" aria-label="Question 21, option C"><span class="mc-option-letter">C</span><span>finding a placement for the required length of time</span></label>
+            </div>
+          </div>
+          <div class="mc-block" data-q="22">
+            <div class="mc-head">
+              <p class="mc-num">22</p>
+              <p class="mc-stem">Tim was pleased to be able to help</p>
+            </div>
+            <div class="mc-options">
+              <label class="mc-option" data-letter="A"><input type="radio" name="q22" value="A" aria-label="Question 22, option A"><span class="mc-option-letter">A</span><span>a lamb that had a broken leg.</span></label><label class="mc-option" data-letter="B"><input type="radio" name="q22" value="B" aria-label="Question 22, option B"><span class="mc-option-letter">B</span><span>a sheep that was having difficulty giving birth.</span></label><label class="mc-option" data-letter="C"><input type="radio" name="q22" value="C" aria-label="Question 22, option C"><span class="mc-option-letter">C</span><span>a newly born lamb that was having trouble feeding.</span></label>
+            </div>
+          </div>
+          <div class="mc-block" data-q="23">
+            <div class="mc-head">
+              <p class="mc-num">23</p>
+              <p class="mc-stem">Diana says the sheep on her farm</p>
+            </div>
+            <div class="mc-options">
+              <label class="mc-option" data-letter="A"><input type="radio" name="q23" value="A" aria-label="Question 23, option A"><span class="mc-option-letter">A</span><span>were of various different varieties.</span></label><label class="mc-option" data-letter="B"><input type="radio" name="q23" value="B" aria-label="Question 23, option B"><span class="mc-option-letter">B</span><span>were mainly reared for their meat.</span></label><label class="mc-option" data-letter="C"><input type="radio" name="q23" value="C" aria-label="Question 23, option C"><span class="mc-option-letter">C</span><span>had better quality wool than sheep on the hills.</span></label>
+            </div>
+          </div>
+          <div class="mc-block" data-q="24">
+            <div class="mc-head">
+              <p class="mc-num">24</p>
+              <p class="mc-stem">What did the students learn about adding supplements to chicken feed?</p>
+            </div>
+            <div class="mc-options">
+              <label class="mc-option" data-letter="A"><input type="radio" name="q24" value="A" aria-label="Question 24, option A"><span class="mc-option-letter">A</span><span>These should only be given if specially needed.</span></label><label class="mc-option" data-letter="B"><input type="radio" name="q24" value="B" aria-label="Question 24, option B"><span class="mc-option-letter">B</span><span>It is worth paying extra for the most effective ones.</span></label><label class="mc-option" data-letter="C"><input type="radio" name="q24" value="C" aria-label="Question 24, option C"><span class="mc-option-letter">C</span><span>The amount given at one time should be limited.</span></label>
+            </div>
+          </div>
+          <div class="mc-block" data-q="25">
+            <div class="mc-head">
+              <p class="mc-num">25</p>
+              <p class="mc-stem">What happened when Diana was working with dairy cows?</p>
+            </div>
+            <div class="mc-options">
+              <label class="mc-option" data-letter="A"><input type="radio" name="q25" value="A" aria-label="Question 25, option A"><span class="mc-option-letter">A</span><span>She identified some cows incorrectly.</span></label><label class="mc-option" data-letter="B"><input type="radio" name="q25" value="B" aria-label="Question 25, option B"><span class="mc-option-letter">B</span><span>She accidentally threw some milk away.</span></label><label class="mc-option" data-letter="C"><input type="radio" name="q25" value="C" aria-label="Question 25, option C"><span class="mc-option-letter">C</span><span>She made a mistake when storing milk.</span></label>
+            </div>
+          </div>
+          <div class="mc-block" data-q="26">
+            <div class="mc-head">
+              <p class="mc-num">26</p>
+              <p class="mc-stem">What did both farmers mention about vets and farming?</p>
+            </div>
+            <div class="mc-options">
+              <label class="mc-option" data-letter="A"><input type="radio" name="q26" value="A" aria-label="Question 26, option A"><span class="mc-option-letter">A</span><span>Vets are failing to cope with some aspects of animal health.</span></label><label class="mc-option" data-letter="B"><input type="radio" name="q26" value="B" aria-label="Question 26, option B"><span class="mc-option-letter">B</span><span>There needs to be a fundamental change in the training of vets.</span></label><label class="mc-option" data-letter="C"><input type="radio" name="q26" value="C" aria-label="Question 26, option C"><span class="mc-option-letter">C</span><span>Some jobs could be done by the farmer rather than by a vet.</span></label>
+            </div>
+          </div>
+        <p class="pane-sub pane-sub-strong" style="margin-top:22px;">Questions 27&ndash;30 &middot; What opinion do the students give about each of the following modules on their veterinary science course? Choose FOUR answers from the box and write the correct letter, A&ndash;F, next to Questions 27&ndash;30. Drag an option from the right into the box next to the module.</p>
+        <div class="match-layout" data-group="g3">
+          <div class="match-rows">
+            <p class="notes-title">Modules on Veterinary Science course</p>
+          <div class="mc-block match-row" data-q="27" data-group="g3">
+            <div class="mc-head"><p class="mc-num">27</p><p class="mc-stem">Medical terminology</p></div>
+            <div class="match-slot" tabindex="0" aria-label="Answer slot for question 27"><span class="match-ph">Kéo đáp án vào đây</span></div>
+            <div class="mc-options match-radios"><label class="mc-option" data-letter="A"><input type="radio" name="q27" value="A" aria-label="Question 27, option A"><span class="mc-option-letter">A</span><span>Tim found this easier than expected.</span></label><label class="mc-option" data-letter="B"><input type="radio" name="q27" value="B" aria-label="Question 27, option B"><span class="mc-option-letter">B</span><span>Tim thought this was not very clearly organised.</span></label><label class="mc-option" data-letter="C"><input type="radio" name="q27" value="C" aria-label="Question 27, option C"><span class="mc-option-letter">C</span><span>Diana may do some further study on this.</span></label><label class="mc-option" data-letter="D"><input type="radio" name="q27" value="D" aria-label="Question 27, option D"><span class="mc-option-letter">D</span><span>They both found the reading required for this was difficult.</span></label><label class="mc-option" data-letter="E"><input type="radio" name="q27" value="E" aria-label="Question 27, option E"><span class="mc-option-letter">E</span><span>Tim was shocked at something he learned on this module.</span></label><label class="mc-option" data-letter="F"><input type="radio" name="q27" value="F" aria-label="Question 27, option F"><span class="mc-option-letter">F</span><span>They were both surprised how little is known about some aspects of this.</span></label></div>
+          </div>
+          <div class="mc-block match-row" data-q="28" data-group="g3">
+            <div class="mc-head"><p class="mc-num">28</p><p class="mc-stem">Diet and nutrition</p></div>
+            <div class="match-slot" tabindex="0" aria-label="Answer slot for question 28"><span class="match-ph">Kéo đáp án vào đây</span></div>
+            <div class="mc-options match-radios"><label class="mc-option" data-letter="A"><input type="radio" name="q28" value="A" aria-label="Question 28, option A"><span class="mc-option-letter">A</span><span>Tim found this easier than expected.</span></label><label class="mc-option" data-letter="B"><input type="radio" name="q28" value="B" aria-label="Question 28, option B"><span class="mc-option-letter">B</span><span>Tim thought this was not very clearly organised.</span></label><label class="mc-option" data-letter="C"><input type="radio" name="q28" value="C" aria-label="Question 28, option C"><span class="mc-option-letter">C</span><span>Diana may do some further study on this.</span></label><label class="mc-option" data-letter="D"><input type="radio" name="q28" value="D" aria-label="Question 28, option D"><span class="mc-option-letter">D</span><span>They both found the reading required for this was difficult.</span></label><label class="mc-option" data-letter="E"><input type="radio" name="q28" value="E" aria-label="Question 28, option E"><span class="mc-option-letter">E</span><span>Tim was shocked at something he learned on this module.</span></label><label class="mc-option" data-letter="F"><input type="radio" name="q28" value="F" aria-label="Question 28, option F"><span class="mc-option-letter">F</span><span>They were both surprised how little is known about some aspects of this.</span></label></div>
+          </div>
+          <div class="mc-block match-row" data-q="29" data-group="g3">
+            <div class="mc-head"><p class="mc-num">29</p><p class="mc-stem">Animal disease</p></div>
+            <div class="match-slot" tabindex="0" aria-label="Answer slot for question 29"><span class="match-ph">Kéo đáp án vào đây</span></div>
+            <div class="mc-options match-radios"><label class="mc-option" data-letter="A"><input type="radio" name="q29" value="A" aria-label="Question 29, option A"><span class="mc-option-letter">A</span><span>Tim found this easier than expected.</span></label><label class="mc-option" data-letter="B"><input type="radio" name="q29" value="B" aria-label="Question 29, option B"><span class="mc-option-letter">B</span><span>Tim thought this was not very clearly organised.</span></label><label class="mc-option" data-letter="C"><input type="radio" name="q29" value="C" aria-label="Question 29, option C"><span class="mc-option-letter">C</span><span>Diana may do some further study on this.</span></label><label class="mc-option" data-letter="D"><input type="radio" name="q29" value="D" aria-label="Question 29, option D"><span class="mc-option-letter">D</span><span>They both found the reading required for this was difficult.</span></label><label class="mc-option" data-letter="E"><input type="radio" name="q29" value="E" aria-label="Question 29, option E"><span class="mc-option-letter">E</span><span>Tim was shocked at something he learned on this module.</span></label><label class="mc-option" data-letter="F"><input type="radio" name="q29" value="F" aria-label="Question 29, option F"><span class="mc-option-letter">F</span><span>They were both surprised how little is known about some aspects of this.</span></label></div>
+          </div>
+          <div class="mc-block match-row" data-q="30" data-group="g3">
+            <div class="mc-head"><p class="mc-num">30</p><p class="mc-stem">Wildlife medication</p></div>
+            <div class="match-slot" tabindex="0" aria-label="Answer slot for question 30"><span class="match-ph">Kéo đáp án vào đây</span></div>
+            <div class="mc-options match-radios"><label class="mc-option" data-letter="A"><input type="radio" name="q30" value="A" aria-label="Question 30, option A"><span class="mc-option-letter">A</span><span>Tim found this easier than expected.</span></label><label class="mc-option" data-letter="B"><input type="radio" name="q30" value="B" aria-label="Question 30, option B"><span class="mc-option-letter">B</span><span>Tim thought this was not very clearly organised.</span></label><label class="mc-option" data-letter="C"><input type="radio" name="q30" value="C" aria-label="Question 30, option C"><span class="mc-option-letter">C</span><span>Diana may do some further study on this.</span></label><label class="mc-option" data-letter="D"><input type="radio" name="q30" value="D" aria-label="Question 30, option D"><span class="mc-option-letter">D</span><span>They both found the reading required for this was difficult.</span></label><label class="mc-option" data-letter="E"><input type="radio" name="q30" value="E" aria-label="Question 30, option E"><span class="mc-option-letter">E</span><span>Tim was shocked at something he learned on this module.</span></label><label class="mc-option" data-letter="F"><input type="radio" name="q30" value="F" aria-label="Question 30, option F"><span class="mc-option-letter">F</span><span>They were both surprised how little is known about some aspects of this.</span></label></div>
+          </div>
+          </div>
+          <aside class="topic-bank" data-group="g3" aria-label="Opinions">
+            <p class="notes-title">Opinions <span class="topic-hint">(kéo sang trái)</span></p>
+            <div class="topic-chip" data-group="g3" data-letter="A" role="button" tabindex="0"><b>A</b><span>Tim found this easier than expected.</span></div>
+            <div class="topic-chip" data-group="g3" data-letter="B" role="button" tabindex="0"><b>B</b><span>Tim thought this was not very clearly organised.</span></div>
+            <div class="topic-chip" data-group="g3" data-letter="C" role="button" tabindex="0"><b>C</b><span>Diana may do some further study on this.</span></div>
+            <div class="topic-chip" data-group="g3" data-letter="D" role="button" tabindex="0"><b>D</b><span>They both found the reading required for this was difficult.</span></div>
+            <div class="topic-chip" data-group="g3" data-letter="E" role="button" tabindex="0"><b>E</b><span>Tim was shocked at something he learned on this module.</span></div>
+            <div class="topic-chip" data-group="g3" data-letter="F" role="button" tabindex="0"><b>F</b><span>They were both surprised how little is known about some aspects of this.</span></div>
+          </aside>
+        </div>
+      </section>
+
+      <aside class="right-pane script-pane" id="scriptPanePart3" hidden aria-label="Script Part 3">
+  <div class="script-pane-head"><span class="script-pane-title">🎧 Script &mdash; Part 3</span></div>
+  <div class="script-pane-body" id="scriptBodyPart3"><p class="script-pane-placeholder">Script cho Part 3 se duoc cap nhat sau.</p></div>
+</aside>
+
+    </div>
+  </div>
+  </div>
+
+  <div class="part-view" id="part4View" hidden>
+  <div class="wrap wrap-wide">
+    <div class="split-layout">
+
+      <section class="left-pane">
+        <h2 class="section-heading">Labyrinths</h2>
+        <p class="pane-sub pane-sub-strong">Questions 31&ndash;40 &middot; Complete the notes below. Write ONE WORD ONLY for each answer.</p>
+
+        <p class="notes-title" style="margin-top:16px;">Definition</p>
+        <ul class="notes">
+          <li>a winding spiral path leading to a central area</li>
+        </ul>
+
+        <p class="notes-title" style="margin-top:16px;">Labyrinths compared with mazes</p>
+        <ul class="notes">
+          <li>Mazes are a type of <span class="qchip" data-q="31"><span class="qchip-num" data-q="31">31</span><input class="answer-input" data-q="31" aria-label="Answer 31" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span>
+            <span style="display:block;padding-left:18px;margin-top:8px;">&ndash; <span class="qchip" data-q="32"><span class="qchip-num" data-q="32">32</span><input class="answer-input" data-q="32" aria-label="Answer 32" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span> is needed to navigate through a maze</span>
+            <span style="display:block;padding-left:18px;margin-top:8px;">&ndash; the word ‘maze’ is derived from a word meaning a feeling of <span class="qchip" data-q="33"><span class="qchip-num" data-q="33">33</span><input class="answer-input" data-q="33" aria-label="Answer 33" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span></span>
+          </li>
+          <li>Labyrinths represent a journey through life
+            <span style="display:block;padding-left:18px;margin-top:8px;">&ndash; they have frequently been used in <span class="qchip" data-q="34"><span class="qchip-num" data-q="34">34</span><input class="answer-input" data-q="34" aria-label="Answer 34" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span> and prayer</span>
+          </li>
+        </ul>
+
+        <p class="notes-title" style="margin-top:16px;">Early examples of the labyrinth spiral</p>
+        <ul class="notes">
+          <li>Ancient carvings on <span class="qchip" data-q="35"><span class="qchip-num" data-q="35">35</span><input class="answer-input" data-q="35" aria-label="Answer 35" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span> have been found across many cultures</li>
+          <li>The Pima, a Native American tribe, wove the symbol on baskets</li>
+          <li>Ancient Greeks used the symbol on <span class="qchip" data-q="36"><span class="qchip-num" data-q="36">36</span><input class="answer-input" data-q="36" aria-label="Answer 36" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span></li>
+        </ul>
+
+        <p class="notes-title" style="margin-top:16px;">Walking labyrinths</p>
+        <ul class="notes">
+          <li>The largest surviving example of a turf labyrinth once had a big <span class="qchip" data-q="37"><span class="qchip-num" data-q="37">37</span><input class="answer-input" data-q="37" aria-label="Answer 37" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span> at its centre</li>
+        </ul>
+
+        <p class="notes-title" style="margin-top:16px;">Labyrinths nowadays</p>
+        <ul class="notes">
+          <li>Believed to have a beneficial impact on mental and physical health, e.g., walking a maze can reduce a person’s <span class="qchip" data-q="38"><span class="qchip-num" data-q="38">38</span><input class="answer-input" data-q="38" aria-label="Answer 38" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span> rate</li>
+          <li>Used in medical and health and fitness settings and also prisons</li>
+          <li>Popular with patients, visitors and staff in hospitals
+            <span style="display:block;padding-left:18px;margin-top:8px;">&ndash; patients who can’t walk can use ‘finger labyrinths’ made from <span class="qchip" data-q="39"><span class="qchip-num" data-q="39">39</span><input class="answer-input" data-q="39" aria-label="Answer 39" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span></span>
+            <span style="display:block;padding-left:18px;margin-top:8px;">&ndash; research has shown that Alzheimer’s sufferers experience less <span class="qchip" data-q="40"><span class="qchip-num" data-q="40">40</span><input class="answer-input" data-q="40" aria-label="Answer 40" type="text" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" placeholder=" "></span></span>
+          </li>
+        </ul>
+      </section>
+
+      <aside class="right-pane script-pane" id="scriptPanePart4" hidden aria-label="Script Part 4">
+  <div class="script-pane-head"><span class="script-pane-title">🎧 Script &mdash; Part 4</span></div>
+  <div class="script-pane-body" id="scriptBodyPart4"><p class="script-pane-placeholder">Script cho Part 4 se duoc cap nhat sau.</p></div>
+</aside>
+
+    </div>
+  </div>
+  </div>
+</main>
+
+<footer class="site-footer">Cambridge IELTS 17 · Test 1 · Listening · 40 questions</footer>
+
+
+</div><nav class="part-nav" id="partNav" hidden>
+  <button class="part-nav-btn active" data-part="1">Part 1</button>
+  <button class="part-nav-btn" data-part="2">Part 2</button>
+  <button class="part-nav-btn" data-part="3">Part 3</button>
+  <button class="part-nav-btn" data-part="4">Part 4</button>
+</nav>
+
+<div id="teacherPanel" class="teacher-panel" hidden>
+  <p class="teacher-panel-head">Teacher Test Mode</p>
+  <button id="teacherSkip" type="button" class="exam-button secondary">Skip to Review</button>
+  <button id="teacherSubmit" type="button" class="exam-button">Submit Now</button>
+  <button id="teacherExit" type="button" class="exam-button secondary">Exit Teacher Mode</button>
+  <p id="teacherStatus" class="teacher-status" role="status"></p>
+</div>
+
+<div class="review-player-bar" id="reviewPlayerBar" hidden>
+<div class="review-player-inner">
+<span class="review-player-label">🎧 Nghe lại</span>
+<button type="button" class="review-skip-btn" id="reviewSkipBack" aria-label="Tua lùi 10 giây" title="Lùi 10 giây">&minus;10s</button>
+<button type="button" class="play-btn" id="reviewPlayBtn" aria-label="Phát hoặc tạm dừng"><svg id="reviewPlayIcon" viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M8 5v14l11-7z"/></svg></button>
+<button type="button" class="review-skip-btn" id="reviewSkipFwd" aria-label="Tua tới 10 giây" title="Tới 10 giây">+10s</button>
+<div class="progress-wrap"><div class="progress-track" id="reviewProgressTrack"><div class="progress-fill" id="reviewProgressFill"></div></div></div>
+<div class="time-display" id="reviewTimeDisplay">00:00 / 00:00</div>
+</div>
+<audio id="reviewAudio" preload="none"></audio>
+</div>
+
+<script>const TEST_CONFIG={"testId": "C17-L-T1", "book": "Cam 17", "test": "Test 1", "endpoint": "https://script.google.com/macros/s/AKfycbx0D3k0wJQ9fHtR0kVWDZw0qsvSbrj7WA6AqIJh8F4t5_ZvPs-Mx5X3QVXueko68fKS/exec"};
+const TEST_QUESTIONS=[{"id": "1", "part": 1, "type": "blank", "answer": "LITTER"}, {"id": "2", "part": 1, "type": "blank", "answer": "DOGS"}, {"id": "3", "part": 1, "type": "blank", "answer": "INSECTS"}, {"id": "4", "part": 1, "type": "blank", "answer": "BUTTERFLIES"}, {"id": "5", "part": 1, "type": "blank", "answer": "WALL"}, {"id": "6", "part": 1, "type": "blank", "answer": "ISLAND"}, {"id": "7", "part": 1, "type": "blank", "answer": "BOOTS"}, {"id": "8", "part": 1, "type": "blank", "answer": "BEGINNERS"}, {"id": "9", "part": 1, "type": "blank", "answer": "SPOONS"}, {"id": "10", "part": 1, "type": "blank", "answer": "35", "alts": ["thirty five", "thirty-five"]}, {"id": "11", "part": 2, "type": "mc", "answer": "A", "options": [{"letter": "A", "text": "9"}, {"letter": "B", "text": "15"}, {"letter": "C", "text": "18"}]}, {"id": "12", "part": 2, "type": "mc", "answer": "C", "options": [{"letter": "A", "text": "dark red"}, {"letter": "B", "text": "jet black"}, {"letter": "C", "text": "light green"}]}, {"id": "13", "part": 2, "type": "mc", "answer": "B", "options": [{"letter": "A", "text": "Lunchbox 1"}, {"letter": "B", "text": "Lunchbox 2"}, {"letter": "C", "text": "Lunchbox 3"}]}, {"id": "14", "part": 2, "type": "mc", "answer": "B", "options": [{"letter": "A", "text": "take it home"}, {"letter": "B", "text": "hand it to a member of staff"}, {"letter": "C", "text": "put it in the bins provided on the boat"}]}, {"id": "15-16", "part": 2, "type": "choose-two", "answer": ["A", "D"], "options": [{"letter": "A", "text": "why it was built"}, {"letter": "B", "text": "who built it"}, {"letter": "C", "text": "how long it took to build"}, {"letter": "D", "text": "who staffed it"}, {"letter": "E", "text": "what it was built with"}]}, {"id": "17-18", "part": 2, "type": "choose-two", "answer": ["B", "C"], "options": [{"letter": "A", "text": "sea eagles"}, {"letter": "B", "text": "fur seals"}, {"letter": "C", "text": "dolphins"}, {"letter": "D", "text": "whales"}, {"letter": "E", "text": "penguins"}]}, {"id": "19-20", "part": 2, "type": "choose-two", "answer": ["D", "E"], "options": [{"letter": "A", "text": "Only large tourist boats can visit them."}, {"letter": "B", "text": "The entrances to them are often blocked."}, {"letter": "C", "text": "It is too dangerous for individuals to go near them."}, {"letter": "D", "text": "Someone will explain what is inside them."}, {"letter": "E", "text": "They cannot be reached on foot."}]}, {"id": "21", "part": 3, "type": "mc", "answer": "A", "options": [{"letter": "A", "text": "making initial contact with suitable farms"}, {"letter": "B", "text": "organising transport to and from the farm"}, {"letter": "C", "text": "finding a placement for the required length of time"}]}, {"id": "22", "part": 3, "type": "mc", "answer": "B", "options": [{"letter": "A", "text": "a lamb that had a broken leg."}, {"letter": "B", "text": "a sheep that was having difficulty giving birth."}, {"letter": "C", "text": "a newly born lamb that was having trouble feeding."}]}, {"id": "23", "part": 3, "type": "mc", "answer": "B", "options": [{"letter": "A", "text": "were of various different varieties."}, {"letter": "B", "text": "were mainly reared for their meat."}, {"letter": "C", "text": "had better quality wool than sheep on the hills."}]}, {"id": "24", "part": 3, "type": "mc", "answer": "A", "options": [{"letter": "A", "text": "These should only be given if specially needed."}, {"letter": "B", "text": "It is worth paying extra for the most effective ones."}, {"letter": "C", "text": "The amount given at one time should be limited."}]}, {"id": "25", "part": 3, "type": "mc", "answer": "C", "options": [{"letter": "A", "text": "She identified some cows incorrectly."}, {"letter": "B", "text": "She accidentally threw some milk away."}, {"letter": "C", "text": "She made a mistake when storing milk."}]}, {"id": "26", "part": 3, "type": "mc", "answer": "C", "options": [{"letter": "A", "text": "Vets are failing to cope with some aspects of animal health."}, {"letter": "B", "text": "There needs to be a fundamental change in the training of vets."}, {"letter": "C", "text": "Some jobs could be done by the farmer rather than by a vet."}]}, {"id": "27", "part": 3, "type": "mc", "answer": "A", "options": [{"letter": "A", "text": "Tim found this easier than expected."}, {"letter": "B", "text": "Tim thought this was not very clearly organised."}, {"letter": "C", "text": "Diana may do some further study on this."}, {"letter": "D", "text": "They both found the reading required for this was difficult."}, {"letter": "E", "text": "Tim was shocked at something he learned on this module."}, {"letter": "F", "text": "They were both surprised how little is known about some aspects of this."}]}, {"id": "28", "part": 3, "type": "mc", "answer": "E", "options": [{"letter": "A", "text": "Tim found this easier than expected."}, {"letter": "B", "text": "Tim thought this was not very clearly organised."}, {"letter": "C", "text": "Diana may do some further study on this."}, {"letter": "D", "text": "They both found the reading required for this was difficult."}, {"letter": "E", "text": "Tim was shocked at something he learned on this module."}, {"letter": "F", "text": "They were both surprised how little is known about some aspects of this."}]}, {"id": "29", "part": 3, "type": "mc", "answer": "F", "options": [{"letter": "A", "text": "Tim found this easier than expected."}, {"letter": "B", "text": "Tim thought this was not very clearly organised."}, {"letter": "C", "text": "Diana may do some further study on this."}, {"letter": "D", "text": "They both found the reading required for this was difficult."}, {"letter": "E", "text": "Tim was shocked at something he learned on this module."}, {"letter": "F", "text": "They were both surprised how little is known about some aspects of this."}]}, {"id": "30", "part": 3, "type": "mc", "answer": "C", "options": [{"letter": "A", "text": "Tim found this easier than expected."}, {"letter": "B", "text": "Tim thought this was not very clearly organised."}, {"letter": "C", "text": "Diana may do some further study on this."}, {"letter": "D", "text": "They both found the reading required for this was difficult."}, {"letter": "E", "text": "Tim was shocked at something he learned on this module."}, {"letter": "F", "text": "They were both surprised how little is known about some aspects of this."}]}, {"id": "31", "part": 4, "type": "blank", "answer": "PUZZLE"}, {"id": "32", "part": 4, "type": "blank", "answer": "LOGIC"}, {"id": "33", "part": 4, "type": "blank", "answer": "CONFUSION"}, {"id": "34", "part": 4, "type": "blank", "answer": "MEDITATION"}, {"id": "35", "part": 4, "type": "blank", "answer": "STONE"}, {"id": "36", "part": 4, "type": "blank", "answer": "COINS"}, {"id": "37", "part": 4, "type": "blank", "answer": "TREE"}, {"id": "38", "part": 4, "type": "blank", "answer": "BREATHING"}, {"id": "39", "part": 4, "type": "blank", "answer": "PAPER"}, {"id": "40", "part": 4, "type": "blank", "answer": "ANXIETY"}];
+/* Shared, dependency-free scoring and time rules. Also loaded by Apps Script. */
+(function(root){
+'use strict';
+const listeningBands=[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[11,4],[8,3.5],[6,3],[4,2.5],[0,0]];
+// Academic Reading has its own table; never infer it from Listening.
+const readingBands=[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5],[0,0]];
+function band(raw,skill){
+ if(!Number.isInteger(raw)||raw<0||raw>40)throw Error('Raw score must be an integer from 0 to 40.');
+ if(!['Listening','Reading'].includes(skill))throw Error('Unknown skill.');
+ return (skill==='Listening'?listeningBands:readingBands).find(x=>raw>=x[0])[1];
+}
+function normalize(s){return String(s||'').trim().toUpperCase().replace(/\s+/g,' ');}
+function score(questions,answers){
+ const parts=[0,0,0,0],details=[];
+ for(const q of questions){
+  let points=0;
+  if(q.type==='choose-two'){
+   const selected=Array.isArray(answers[q.id])?[...new Set(answers[q.id].map(normalize))]:[];
+   if(selected.length<=2)points=selected.filter(x=>q.answer.includes(x)).length;
+  }else points=Number([q.answer].concat(q.alts||[]).some(a=>normalize(answers[q.id])===normalize(a)));
+  parts[q.part-1]+=points;const total=q.type==='choose-two'?2:1;details.push({id:q.id,points,total,part:q.part,isCorrect:points===total});
+ }
+ const raw=parts.reduce((a,b)=>a+b,0);return {raw,band:band(raw,'Listening'),parts,details};
+}
+function validate(p){
+ if(!p||typeof p.studentName!=='string'||!p.studentName.trim()||p.studentName.length>120)throw Error('Student name is required (up to 120 characters).');
+ if(!/^Cam \d+$/.test(p.book)||!/^Test [1-4]$/.test(p.test)||!['Listening','Reading'].includes(p.skill))throw Error('Invalid test identification.');
+ if(typeof p.cycleId!=='string'||!p.cycleId.trim()||p.cycleId.length>80)throw Error('Cycle ID is required.');
+ if(p.totalQuestions!==40||!Number.isInteger(p.score)||p.score<0||p.score>40||p.band!==band(p.score,p.skill))throw Error('Invalid score or band.');
+ const expectedId='C'+p.book.slice(4)+'-'+(p.skill==='Listening'?'L':'R')+'-T'+p.test.slice(5);
+ if(p.testId!==expectedId)throw Error('Test ID does not match Book, Test and Skill.');
+ const max=p.skill==='Listening'?[10,10,10,10]:(p.testId==='C15-R-T1'?[13,13,14]:[40,40,40]);
+ if(!Array.isArray(p.parts)||p.parts.length!==max.length||p.parts.some((v,i)=>!Number.isInteger(v)||v<0||v>max[i])||p.parts.reduce((a,b)=>a+b,0)!==p.score)throw Error('Part scores must match the raw score.');
+ if(!Number.isFinite(p.timeUsed)||p.timeUsed<0||p.timeUsed>86400)throw Error('Invalid time used.');
+ if(!/^att_[0-9a-z]+_[0-9a-z]+$/i.test(p.attemptId||''))throw Error('Invalid attempt ID.');
+ return p;
+}
+function phase(attempt,now){
+ if(attempt.phase==='submitted')return 'submitted';
+ if(now>=attempt.reviewEndsAt)return 'submitted';
+ if(now>=attempt.audioEndsAt)return 'review';
+ return 'listening';
+}
+const api={band,normalize,score,validate,phase,listeningBands,readingBands};
+if(typeof module!=='undefined')module.exports=api;root.TestCore=api;
+})(typeof globalThis!=='undefined'?globalThis:this);
+
+/* POST carries private result data. Read-only JSONP returns only protocol/receipt status. */
+window.Tracking=(function(){
+ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+ // AbortSignal.timeout is missing on iOS/Safari < 16: use a portable timeout signal.
+ const tsig=ms=>{if(typeof AbortSignal!=='undefined'&&AbortSignal.timeout)return AbortSignal.timeout(ms);const c=new AbortController();setTimeout(()=>c.abort(),ms);return c.signal;};
+ function query(url,params,ms){return new Promise((resolve,reject)=>{
+  const cb='tracking_'+crypto.randomUUID().replace(/-/g,'');
+  const el=document.createElement('script');let done=false;
+  const cleanup=()=>{clearTimeout(timer);el.remove();delete window[cb];};
+  const timer=setTimeout(()=>{if(!done){done=true;cleanup();reject(Error('timeout'));}},ms||20000);
+  window[cb]=data=>{if(!done){done=true;cleanup();resolve(data);}};
+  el.onerror=()=>{if(!done){done=true;cleanup();reject(Error('unreachable'));}};
+  el.src=url+'?'+new URLSearchParams({...params,callback:cb,_:Date.now()});document.head.appendChild(el);
+ });}
+ // A slow / failed receipt lookup is NOT a failed save: it just means "not confirmed yet".
+ // Two independent read-only paths run in parallel (JSONP script tag + plain CORS fetch), so a
+ // network / browser that blocks one of them can still confirm through the other.
+ async function receipt(url,id){
+  const viaJsonp=query(url,{action:'receipt',attemptId:id},20000).catch(()=>null);
+  const viaFetch=fetch(url+'?'+new URLSearchParams({action:'receipt',attemptId:id,_:Date.now()}),{redirect:'follow',signal:tsig(20000)}).then(r=>r.text()).then(t=>JSON.parse(t)).catch(()=>null);
+  const rs=await Promise.all([viaJsonp,viaFetch]);
+  return rs.find(r=>r&&r.ok)||rs.find(r=>r&&r.error)||null;
+ }
+ // Try a CORS-readable POST first: Apps Script answers {status:"ok"} after the row is written, which is
+ // itself the confirmation. If the browser blocks reading the reply, the POST may still have been
+ // delivered, so the caller falls back to receipt polling.
+ async function post(url,payload){
+  try{
+   const res=await fetch(url,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload),redirect:'follow',keepalive:true,signal:tsig(45000)});
+   const t=await res.text();try{return JSON.parse(t);}catch(e){return null;}
+  }catch(e){return null;}
+ }
+ /* No blocking health pre-check any more: a slow health reply used to abort the whole save before
+    the POST was ever sent. For a retry the receipt is checked first, so it never re-sends a saved result. */
+ async function send(url,payload,onProgress,opts){
+  opts=opts||{};
+  if(!/^https:\/\/script.google.com\/macros\/s\/[\w-]+\/exec$/.test(url))throw Error('Chưa cấu hình hệ thống lưu điểm. Hãy tải kết quả và gửi cho giáo viên.');
+  let r=null;
+  // The very first delivery of an attempt goes out IMMEDIATELY: the receipt pre-check used to run first and could
+  // take many seconds, so a student who left right after submitting had sent nothing. Retries / re-opened
+  // attempts still check the receipt first, so a saved result is never sent twice.
+  if(!opts.firstPost){
+   r=await receipt(url,payload.attemptId);
+   if(r&&r.ok)return r;
+   if(r&&r.error)throw Error(r.error);
+  }
+  for(let round=1;round<=3;round++){
+   if(onProgress)onProgress(round);
+   if(opts.onPosting)opts.onPosting(round);
+   const reply=await post(url,payload);
+   if(reply&&reply.status==='ok')return {ok:true};
+   if(reply&&reply.status==='error')throw Error(reply.message||'Hệ thống lưu điểm báo lỗi.');
+   const deadline=Date.now()+30000;
+   while(Date.now()<deadline){
+    await sleep(2500);
+    r=await receipt(url,payload.attemptId);
+    if(r&&r.ok)return r;
+    if(r&&r.error)throw Error(r.error);
+   }
+  }
+  throw Error('Chưa nhận được xác nhận từ hệ thống lưu điểm.');
+ }
+ return {send};
+})();
+
+(function(){
+'use strict';
+const config=TEST_CONFIG, questions=TEST_QUESTIONS, $=id=>document.getElementById(id);
+const audio=$('audio');let attempt=null,key='',timerHandle,busy=false,owned=false,releaseLock,deviceSaved=true;
+// Captured once, at script init, before stopAudio() ever runs (stopAudio() strips
+// #audio's src). Used only to lazily feed the independent #reviewAudio player on
+// the result screen further below — never re-assigned to #audio, never touches
+// any exam-phase audio logic.
+const reviewAudioSrc=audio.src;
+let anchorWall=Date.now(),anchorMono=performance.now(),lastSave=0,allowedSeek=null,lastAudio=0;
+const fmt=s=>{const n=Math.ceil(Math.max(0,s));return `${String(Math.floor(n/60)).padStart(2,'0')}:${String(n%60).padStart(2,'0')}`;};
+// ---------- STUDENT NAME VALIDATION (Vietnamese, with diacritics) ----------
+// Shared standard with the Reading engine: full name required, must contain
+// Vietnamese diacritics (never inferred/added), only case is normalized.
+const VN_DIACRITIC_CHARS="àáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđÀÁẢÃẠĂẰẮẲẴẶÂẦẤẨẪẬÈÉẺẼẸÊỀẾỂỄỆÌÍỈĨỊÒÓỎÕỌÔỒỐỔỖỘƠỜỚỞỠỢÙÚỦŨỤƯỪỨỬỮỰỲÝỶỸỴĐ";
+const VN_DIACRITIC_REGEX=new RegExp("["+VN_DIACRITIC_CHARS+"]");
+const ALLOWED_NAME_CHARS_REGEX=new RegExp("^[A-Za-z"+VN_DIACRITIC_CHARS+"\\s]+$");
+function toVietnameseTitleCase(name){
+ return name.split(" ").filter(Boolean).map(word=>{const lower=word.toLowerCase();return lower.charAt(0).toUpperCase()+lower.slice(1);}).join(" ");
+}
+function validateStudentName(rawName){
+ const trimmed=(rawName||"").toString().replace(/\s+/g," ").trim();
+ if(!trimmed)return{valid:false,error:"Vui lòng nhập họ và tên của bạn."};
+ const words=trimmed.split(" ");
+ if(words.length<2)return{valid:false,error:"Vui lòng nhập đầy đủ họ và tên (ví dụ: Phạm Thị Hương)."};
+ if(!ALLOWED_NAME_CHARS_REGEX.test(trimmed))return{valid:false,error:"Họ tên chỉ được chứa chữ cái và khoảng trắng, không chứa số hoặc ký tự đặc biệt."};
+ if(!VN_DIACRITIC_REGEX.test(trimmed))return{valid:false,error:"Vui lòng nhập họ tên có đầy đủ dấu tiếng Việt (ví dụ: Phạm Thị Hương, không phải Pham Thi Huong)."};
+ return{valid:true,normalized:toVietnameseTitleCase(trimmed)};
+}
+// Reading's existing Attempt ID format, reused as-is so both engines share one scheme.
+function makeAttemptId(){return "att_"+Date.now().toString(36)+"_"+Math.random().toString(36).slice(2,9);}
+function now(){return Math.max(Date.now(),anchorWall+performance.now()-anchorMono,attempt?.lastNow||0);}
+function persist(){if(!attempt)return;attempt.lastNow=now();try{localStorage.setItem(key,JSON.stringify(attempt));deviceSaved=true;}catch(e){deviceSaved=false;$('audioStatus').textContent='Device storage failed. Keep this page open and download your result after submission.';}}
+function editable(){if(!attempt||!owned)return false;tick();return ['listening','review'].includes(attempt.phase);}
+function showPart(part){
+ document.querySelectorAll('.part-view').forEach((el,i)=>el.hidden=i!==part-1);
+ document.querySelectorAll('.part-nav-btn').forEach(el=>el.classList.toggle('active',Number(el.dataset.part)===part));
+ $('headerScope').textContent=`Part ${part} | Questions ${(part-1)*10+1}–${part*10}`;
+ updateProgress();
+}
+
+// ---------- PERSISTENT "current question" marker (req 4) ----------
+// Keeps the active pill synced to focus, not just nav-pill clicks. Every
+// sibling pill sharing the same data-q (a composite/two-part question) is
+// marked together, matching how buildFullQnav() assigns data-q.
+function setCurrentQuestion(qid){
+ document.querySelectorAll('#qnavInner .qnav-pill.active').forEach(p=>p.classList.remove('active'));
+ document.querySelectorAll(`#qnavInner .qnav-pill[data-q="${qid}"]`).forEach(p=>p.classList.add('active'));
+}
+$('exam').addEventListener('focusin',e=>{
+ const el=e.target.closest('[data-q]');
+ if(!el)return;
+ const qid=el.dataset.q||el.getAttribute('data-q');
+ if(qid)setCurrentQuestion(qid);
+});
+// Builds the fixed-bottom navigator ONCE with all 40 questions grouped by
+// Part (instead of showPart() rebuilding just the current part's 10 pills).
+// A pill click switches to the right Part first (showPart), then scrolls/
+// focuses the question — so navigation works the same regardless of which
+// part is currently open.
+function buildFullQnav(){
+ const inner=$('qnavInner');inner.replaceChildren();
+ for(let part=1;part<=4;part++){
+  const label=document.createElement('span');label.className='qnav-part-label';label.textContent=`Part ${part}`;
+  inner.append(label);
+  for(let n=(part-1)*10+1;n<=part*10;n++){
+   const q=questions.find(q=>q.id.split('-').map(Number).includes(n));
+   const button=document.createElement('button');button.className='qnav-pill';button.textContent=n;button.dataset.q=q.id;
+   button.setAttribute('aria-label',`Go to question ${n}`);
+   button.onclick=()=>{
+    showPart(part);
+    const el=document.querySelector(`.qchip[data-q="${q.id}"],.mc-block[data-q="${q.id}"]`);
+    el.scrollIntoView({block:'center',behavior:'smooth'});
+    el.querySelector('input')?.focus({preventScroll:true});
+    setCurrentQuestion(q.id);
+   };
+   inner.append(button);
+  }
+ }
+}
+function updateProgress(){
+ let count=0;
+ questions.forEach(q=>{const a=attempt?.answers[q.id];count+=q.type==='choose-two'?(a||[]).length:(a&&String(a).trim()?1:0);});
+ $('answered').textContent=`${count} / 40 answered`;
+ document.querySelectorAll('.qnav-pill').forEach(el=>{let a=attempt?.answers[el.dataset.q];el.classList.toggle('answered',Array.isArray(a)?a.length>0:!!String(a||'').trim());});
+}
+function restoreAnswers(){
+ document.querySelectorAll('.answer-input').forEach(el=>el.value=attempt.answers[el.dataset.q]||'');
+ document.querySelectorAll('.mc-block').forEach(block=>{
+  const q=questions.find(q=>q.id===block.dataset.q),a=attempt.answers[q.id];
+  block.querySelectorAll('input').forEach(input=>{input.checked=q.type==='choose-two'?(a||[]).includes(input.value):a===input.value;input.disabled=attempt.phase==='submitted'||(q.type==='choose-two'&&(a||[]).length>=2&&!input.checked);});
+ });updateProgress();if(typeof syncMatchingUI==='function')syncMatchingUI();
+}
+function stopAudio(){audio.pause();audio.removeAttribute('src');audio.load();$('resumeAudio').hidden=true;}
+// Wrong-question numbers per Part (1-4), derived strictly from TestCore.score()'s
+// own details[] (no new/duplicate scoring logic; raw score and Band are untouched).
+function computeWrongQuestionsByPart(results){
+ const wrong={1:[],2:[],3:[],4:[]};
+ results.details.forEach(d=>{if(!d.isCorrect)wrong[d.part].push(d.id);});
+ return wrong;
+}
+function payload(){
+ const r=TestCore.score(questions,attempt.answers);
+ const wrongByPart=computeWrongQuestionsByPart(r);
+ return TestCore.validate({protocol:2,attemptId:attempt.id,studentName:attempt.name,cycleId:attempt.cycleId,book:config.book,test:config.test,skill:'Listening',testId:config.testId,score:r.raw,band:r.band,totalQuestions:40,parts:r.parts,part1:r.parts[0],part2:r.parts[1],part3:r.parts[2],part4:r.parts[3],p1Wrong:wrongByPart[1].join(', '),p2Wrong:wrongByPart[2].join(', '),p3Wrong:wrongByPart[3].join(', '),p4Wrong:wrongByPart[4].join(', '),answers:attempt.answers,timeUsed:Math.round((attempt.reviewEndsAt-attempt.startedAt)/1000),timestamp:new Date(attempt.reviewEndsAt).toISOString(),status:attempt.interrupted?'Interrupted':'Completed'});
+}
+// Sau khi nộp (chỉ hiển thị, gọi SAU displayResult() gốc): trang KẾT QUẢ + HƯỚNG DẪN, rồi trang CHỮA BÀI.
+function setReviewView(v){
+ document.body.classList.toggle('rv-result',v==='result');document.body.classList.toggle('rv-review',v==='review');
+ window.scrollTo(0,0);
+ try{if(typeof syncPartNavOffset==='function')syncPartNavOffset();}catch(e){}
+}
+$('startReviewBtn').onclick=()=>{try{history.pushState({rv:1},'');}catch(e){}setReviewView('review');};
+$('rvBackBtn').onclick=()=>setReviewView('result');
+window.addEventListener('popstate',e=>{
+ if(document.body.classList.contains('rv-result')||document.body.classList.contains('rv-review'))setReviewView(e.state&&e.state.rv?'review':'result');
+});
+function displayResult(){
+ // Luôn hiển trang KẾT QUẢ + HƯỚNG DẪN trước (cả khi vừa nộp bài lẫn khi mở lại tab để chữa bài): học viên phải xem lại thẻ hướng dẫn rồi bấm Option 1 mới sang trang chữa bài.
+ displayResultCore();
+ try{setReviewView('result');}catch(e){}
+}
+function displayResultCore(){
+ const p=attempt.payload;$('result').hidden=false;$('resultName').textContent=attempt.name;
+ $('rawScore').textContent=`${p.score} / 40`;$('bandScore').textContent=p.band.toFixed(1);$('timeUsed').textContent=fmt(p.timeUsed);
+ $('partScores').replaceChildren();p.parts.forEach((v,i)=>{const el=document.createElement('p');el.textContent=`Part ${i+1}`;const n=document.createElement('strong');n.textContent=`${v} / 10`;el.append(n);$('partScores').append(el);});
+ $('attemptNote').textContent=attempt.interrupted?'Playback was interrupted or the page was reloaded. This result is flagged for your teacher.':'The test is complete. Answers are locked.';
+ $('saveStatus').textContent=attempt.saved?'Đã lưu kết quả về cho giáo viên ✓ Bạn có thể đóng tab.': (deviceSaved?'Kết quả đã lưu trên thiết bị này. Đang chờ xác nhận từ hệ thống giáo viên — đừng đóng tab.':'Không lưu được trên thiết bị. Hãy tải kết quả xuống trước khi đóng trang.');
+ $('retrySave').hidden=!!attempt.saved;
+ setGate('saving');
+}
+function submit(){
+ if(!attempt||attempt.phase==='submitted')return;
+ attempt.phase='submitted';attempt.payload=payload();persist();stopAudio();
+ document.querySelectorAll('main input').forEach(el=>el.disabled=true);
+ $('phaseLabel').textContent='Test submitted';$('timer').textContent='00:00';
+ displayResult();$('result').scrollIntoView({block:'start',behavior:'smooth'});send();
+}
+let autoRetryTimer=null,gateDismissed=false;
+function setGate(state,msg){
+ const g=$('saveGate'),bn=$('saveBanner');
+ if(!attempt||attempt.phase!=='submitted'||attempt.saved){g.hidden=true;bn.hidden=true;document.body.classList.remove('save-pending');return;}
+ document.body.classList.add('save-pending');
+ const failed=state==='failed';
+ $('sgSpin').hidden=failed;
+ $('sgTitle').textContent=failed?'Chưa lưu được kết quả — đừng đóng tab!':'Đang lưu kết quả về cho giáo viên…';
+ $('sgMsg').textContent=failed?((msg||'')+' Hệ thống sẽ tự thử lại. Giữ nguyên tab này (không đóng, không tải lại) hoặc bấm “Thử lưu lại”.'):'Vui lòng KHÔNG đóng tab hoặc tải lại trang. Điểm sẽ hiện ngay khi lưu xong (thường vài giây).';
+ $('sgActions').hidden=!failed;
+ g.hidden=gateDismissed;
+ bn.hidden=!gateDismissed;
+ bn.textContent=failed?'⚠ Kết quả CHƯA được lưu — đừng đóng tab (đang tự thử lại)':'⏳ Đang lưu kết quả — đừng đóng tab';
+}
+function markSaved(){
+ attempt.saved=true;persist();clearTimeout(autoRetryTimer);
+ $('saveStatus').textContent='Đã lưu kết quả về cho giáo viên ✓ Bạn có thể đóng tab.';$('retrySave').hidden=true;
+ setGate();
+}
+async function send(){
+ if(busy||attempt.saved)return;busy=true;$('retrySave').disabled=true;$('sgRetry').disabled=true;
+ $('saveStatus').textContent='Đang gửi kết quả — chờ xác nhận…';setGate('saving');
+ try{await Tracking.send(config.endpoint,attempt.payload,n=>{if(n>1)$('saveStatus').textContent='Đang gửi lại lần '+n+' — chờ xác nhận…';},{firstPost:!attempt.posted,onPosting:()=>{if(!attempt.posted){attempt.posted=Date.now();persist();}}});markSaved();}
+ catch(e){
+  $('saveStatus').textContent=e.message+' Đang tự thử lại. Bạn cũng có thể tải kết quả xuống.';$('retrySave').hidden=false;setGate('failed',e.message);
+  clearTimeout(autoRetryTimer);autoRetryTimer=setTimeout(()=>{if(attempt&&attempt.phase==='submitted'&&!attempt.saved)send();},8000);
+ }
+ finally{busy=false;$('retrySave').disabled=false;$('sgRetry').disabled=false;}
+}
+function tick(){
+ if(!attempt||!owned||attempt.phase==='submitted')return;
+ const t=now(),p=TestCore.phase(attempt,t);
+ if(p==='submitted'){submit();return;}
+ if(p==='review'&&attempt.phase!=='review'){
+  if(!audio.ended&&audio.currentTime<audio.duration-1)attempt.interrupted=true;
+  attempt.phase='review';stopAudio();persist();$('audioStatus').textContent=attempt.interrupted?'The listening period has ended. Playback was interrupted and is flagged for your teacher. Check your answers now.':'Audio finished. Check your answers; the test submits automatically.';
+ }
+ if(p==='review'){$('phaseLabel').textContent='Review your answers';$('timer').textContent=fmt((attempt.reviewEndsAt-t)/1000);}
+ else{$('phaseLabel').textContent='Listening in progress';$('timer').textContent=fmt((attempt.audioEndsAt-t)/1000);}
+ if(t-lastSave>1000){lastSave=t;persist();}
+}
+function seekInternal(position){allowedSeek=position;audio.currentTime=position;lastAudio=position;}
+async function continueAudio(){
+ tick();if(!attempt||attempt.phase!=='listening')return;
+ const position=Math.min(audio.duration-.05,Math.max(lastAudio,(now()-attempt.startedAt)/1000));
+ if(!Number.isFinite(position))return;
+ seekInternal(position);
+ try{await audio.play();$('resumeAudio').hidden=true;$('audioStatus').textContent='Audio plays once. Playback controls are disabled.';}
+ catch(e){$('resumeAudio').hidden=false;$('audioStatus').textContent='Playback needs your click. Time continues; missed audio will not replay.';}
+}
+async function start(){
+ const rawName=$('studentName').value.trim(),cycle=$('cycleId').value.trim();
+ if(!rawName||!cycle){$('startError').textContent='Vui lòng nhập họ tên và chọn Chu kỳ ôn thi.';return;}
+ const nameCheck=validateStudentName(rawName);
+ if(!nameCheck.valid){$('startError').textContent=nameCheck.error;return;}
+ const name=nameCheck.normalized;
+ if(!Number.isFinite(audio.duration)||audio.duration<1200){$('startError').textContent='Audio chưa tải xong. Vui lòng đợi trong giây lát.';return;}
+ if(!navigator.locks){$('startError').textContent='Vui lòng dùng trình duyệt Chrome, Edge hoặc Safari bản mới nhất, có hỗ trợ lưu trữ trên thiết bị.';return;}
+ key=`ielts:v2:${config.testId}:${TestCore.normalize(name)}:${TestCore.normalize(cycle)}`;
+ try{localStorage.setItem(key+':check','1');localStorage.removeItem(key+':check');}catch(e){$('startError').textContent='Vui lòng bật tính năng lưu trữ trên thiết bị trước khi bắt đầu làm bài.';return;}
+ $('startButton').disabled=true;
+ navigator.locks.request(key,{ifAvailable:true},async lock=>{
+  if(!lock){$('startError').textContent='Bài làm này đang mở ở một tab khác. Hãy tiếp tục ở tab đó hoặc đóng tab đó lại trước.';$('startButton').disabled=false;return;}
+  owned=true;
+  try{
+   const saved=localStorage.getItem(key);attempt=saved?JSON.parse(saved):null;
+   if(attempt&&(!attempt.id||!Number.isFinite(attempt.reviewEndsAt)||!attempt.answers))throw Error('Dữ liệu bài làm đã lưu bị lỗi. Vui lòng liên hệ giáo viên; không tự làm lại.');
+   if(!attempt){
+    const t=now();attempt={id:makeAttemptId(),name,cycleId:cycle,phase:'listening',answers:{},startedAt:t,audioEndsAt:t+audio.duration*1000,reviewEndsAt:t+audio.duration*1000+120000,lastNow:t,interrupted:false};
+   }else if(attempt.phase==='listening')attempt.interrupted=true;
+   anchorWall=Math.max(Date.now(),attempt.lastNow);anchorMono=performance.now();persist();
+   $('startScreen').hidden=true;$('exam').hidden=false;$('partNav').hidden=false;$('candidate').textContent=`${attempt.name} · ${attempt.cycleId}`;
+   buildFullQnav();restoreAnswers();showPart(1);
+   const firstPill=document.querySelector('#qnavInner .qnav-pill');
+   if(firstPill)setCurrentQuestion(firstPill.dataset.q);
+   if(attempt.phase==='submitted'){stopAudio();displayResult();document.querySelectorAll('main input').forEach(el=>el.disabled=true);$('phaseLabel').textContent='Test submitted';if(!attempt.saved)send();}
+   else{tick();if(attempt.phase==='review')stopAudio();if(attempt.phase==='listening')await continueAudio();timerHandle=setInterval(tick,200);}
+   await new Promise(resolve=>releaseLock=resolve);
+  }catch(e){$('startError').textContent=e.message;$('startButton').disabled=false;owned=false;}
+ });
+}
+// Native controls are absent. Guard script/media-key seeking and playback rate too.
+audio.addEventListener('seeking',()=>{
+ if(!attempt||attempt.phase!=='listening'){audio.pause();return;}
+ if(allowedSeek!==null&&Math.abs(audio.currentTime-allowedSeek)<.15){allowedSeek=null;return;}
+ seekInternal(lastAudio);
+});
+audio.addEventListener('timeupdate',()=>{if(!audio.seeking&&attempt?.phase==='listening')lastAudio=Math.max(lastAudio,audio.currentTime);});
+audio.addEventListener('ratechange',()=>{if(audio.playbackRate!==1)audio.playbackRate=1;});
+audio.addEventListener('play',()=>{if(!owned||attempt?.phase!=='listening')audio.pause();});
+audio.addEventListener('pause',()=>{
+ if(attempt?.phase==='listening'&&!audio.ended){attempt.interrupted=true;persist();$('resumeAudio').hidden=false;$('audioStatus').textContent='Audio was interrupted. Continue at the current test position; time has not paused.';}
+});
+audio.addEventListener('ended',()=>{
+ if(attempt?.phase!=='listening')return;
+ if(lastAudio<audio.duration-2){attempt.interrupted=true;return;}
+ // Keep the existing absolute cap; delayed events must never extend review time.
+ attempt.audioEndsAt=Math.min(attempt.audioEndsAt,now());attempt.reviewEndsAt=Math.min(attempt.reviewEndsAt,attempt.audioEndsAt+120000);persist();tick();
+});
+audio.addEventListener('error',()=>{if(attempt?.phase==='listening'){attempt.interrupted=true;persist();$('audioStatus').textContent='Audio could not play. Tell your teacher. The test clock continues and this result will be flagged.';}else if(!attempt){$('startError').textContent='Không tải được audio. Vui lòng mở lại đúng file bài test gốc.';}});
+audio.addEventListener('loadedmetadata',()=>{$('audioReady').textContent=`Audio đã sẵn sàng · ${fmt(audio.duration)} + 02:00 kiểm tra lại`;$('startButton').disabled=false;});
+if(Number.isFinite(audio.duration)){$('audioReady').textContent=`Audio đã sẵn sàng · ${fmt(audio.duration)} + 02:00 kiểm tra lại`;$('startButton').disabled=false;}
+$('startForm').onsubmit=e=>{e.preventDefault();start();};
+$('resumeAudio').onclick=continueAudio;$('retrySave').onclick=send;$('sgRetry').onclick=send;
+$('sgDownload').onclick=()=>$('downloadResult').click();
+$('sgShow').onclick=()=>{gateDismissed=true;setGate($('sgSpin').hidden?'failed':'saving',$('sgSpin').hidden?'':'');};
+window.addEventListener('beforeunload',e=>{if(attempt&&attempt.phase==='submitted'&&!attempt.saved){e.preventDefault();e.returnValue='Kết quả của bạn chưa được lưu về cho giáo viên. Bạn có chắc muốn thoát?';return e.returnValue;}});
+$('downloadResult').onclick=()=>{const blob=new Blob([JSON.stringify(attempt.payload,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`${config.testId}-${attempt.id}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
+document.querySelectorAll('.part-nav-btn').forEach(el=>el.onclick=()=>showPart(Number(el.dataset.part)));
+document.querySelectorAll('.answer-input').forEach(el=>el.addEventListener('input',()=>{if(!editable()){restoreAnswers();return;}attempt.answers[el.dataset.q]=el.value;persist();updateProgress();}));
+document.querySelectorAll('.mc-block input').forEach(el=>el.addEventListener('change',()=>{
+ if(!editable()){restoreAnswers();return;}
+ const block=el.closest('.mc-block'),q=questions.find(q=>q.id===block.dataset.q);
+ const checked=[...block.querySelectorAll('input:checked')];
+ if(q.type==='choose-two'){
+  if(checked.length>2){el.checked=false;return;}
+  attempt.answers[q.id]=checked.map(x=>x.value);
+ }else attempt.answers[q.id]=el.value;
+ persist();restoreAnswers();
+}));
+window.addEventListener('pagehide',persist);window.addEventListener('online',()=>{if(attempt?.phase==='submitted'&&!attempt.saved)send();});
+window.addEventListener('pageshow',()=>{if(attempt?.phase==='submitted'&&!attempt.saved)send();});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&attempt?.phase==='submitted'&&!attempt.saved)send();});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){tick();if(attempt?.phase==='listening'&&audio.paused)$('resumeAudio').hidden=false;}});
+if(navigator.mediaSession){for(const action of ['play','pause','seekbackward','seekforward','seekto','previoustrack','nexttrack'])try{navigator.mediaSession.setActionHandler(action,()=>{});}catch(e){}}
+const params=new URLSearchParams(location.search);if(params.get('cycle'))$('cycleId').value=params.get('cycle');
+/* Teacher Test Mode hook. Exposes read-only phase + the exact existing tick()/submit()
+   functions so a separate script can drive them from a keyboard shortcut. Adds no new
+   audio, scoring, timer or Google Sheets logic — it only calls what already exists. */
+window.__teacherAPI={
+ getPhase(){return attempt?attempt.phase:null;},
+ skipToReview(){
+  if(!attempt||attempt.phase!=='listening')return false;
+  attempt.audioEndsAt=Math.min(attempt.audioEndsAt,now());
+  attempt.reviewEndsAt=Math.min(attempt.reviewEndsAt,attempt.audioEndsAt+120000);
+  persist();tick();
+  return true;
+ },
+ submitNow(){
+  if(!attempt||attempt.phase==='submitted')return false;
+  submit();
+  return true;
+ }
+};
+
+// ---------------------------------------------------------------------------
+// Entry flow (device prep / confirm name / review) — ported UX pattern from
+// the Reading engine (C15), adapted to Listening's existing single-attempt-
+// per-key storage model. Purely additive: does not modify start(), submit(),
+// tick(), persist(), payload(), send(), TestCore, window.Tracking, the audio
+// event listeners, or window.__teacherAPI above. The Start button keeps its
+// original id/classes and is still driven only by the unmodified audio
+// readiness listeners and the unmodified $('startForm').onsubmit wiring.
+function showEntryStep(stepId){
+ $('entry-step-info').hidden=(stepId!=='entry-step-info');
+ $('entry-step-confirm').hidden=(stepId!=='entry-step-confirm');
+ $('entry-step-actions').hidden=(stepId!=='entry-step-actions');
+}
+// Read-only peek at any previously saved attempt for the current name+cycle.
+// Never writes, never touches the live `attempt`/`key` variables used by
+// start()/submit()/tick() above — only used to decide what the actions step
+// shows the student.
+function peekSavedAttempt(){
+ try{
+  const rawName=$('studentName').value.trim(),cycle=$('cycleId').value.trim();
+  if(!rawName||!cycle)return null;
+  const nameCheck=validateStudentName(rawName);
+  if(!nameCheck.valid)return null;
+  const k=`ielts:v2:${config.testId}:${TestCore.normalize(nameCheck.normalized)}:${TestCore.normalize(cycle)}`;
+  const saved=localStorage.getItem(k);
+  if(!saved)return null;
+  const parsed=JSON.parse(saved);
+  return (parsed&&parsed.phase)?parsed:null;
+ }catch(e){return null;}
+}
+function renderActionsStep(){
+ const existing=peekSavedAttempt();
+ const statusEl=$('entryStatusMessage'),reviewBtn=$('reviewButton'),reviewHint=$('reviewHint');
+ if(existing){
+  reviewBtn.hidden=false;reviewHint.hidden=false;
+  if(existing.phase==='submitted'){
+   statusEl.textContent='Bạn đã nộp bài này. Nhấn "Xem lại bài đã làm" để xem kết quả.';
+   reviewBtn.textContent='Xem lại bài đã làm';
+  }else{
+   statusEl.textContent='Bạn có một bài làm đang dở cho họ tên và chu kỳ này. Nhấn "Tiếp tục làm bài" để tiếp tục, hoặc "Bắt đầu làm bài Nghe" cũng sẽ tiếp tục đúng bài đang dở.';
+   reviewBtn.textContent='Tiếp tục làm bài';
+  }
+  statusEl.hidden=false;
+ }else{
+  reviewBtn.hidden=true;reviewHint.hidden=true;
+  statusEl.hidden=true;
+  statusEl.textContent='';
+ }
+}
+$('infoContinueBtn').onclick=()=>{
+ const rawName=$('studentName').value.trim(),cycle=$('cycleId').value.trim();
+ const infoError=$('infoError');
+ infoError.textContent='';
+ if(!rawName||!cycle){infoError.textContent='Vui lòng nhập họ tên và chọn Chu kỳ ôn thi.';return;}
+ const nameCheck=validateStudentName(rawName);
+ if(!nameCheck.valid){infoError.textContent=nameCheck.error;return;}
+ $('confirmInfoBox').innerHTML='';
+ const strong=document.createElement('strong');strong.textContent=nameCheck.normalized;
+ const cycleLine=document.createTextNode('Chu kỳ ôn thi: '+cycle);
+ $('confirmInfoBox').append(strong,cycleLine);
+ $('confirmCheckbox').checked=false;
+ $('confirmContinueBtn').disabled=true;
+ showEntryStep('entry-step-confirm');
+};
+$('studentName').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('infoContinueBtn').click();}});
+$('confirmBackBtn').onclick=()=>showEntryStep('entry-step-info');
+$('confirmCheckbox').addEventListener('change',()=>{$('confirmContinueBtn').disabled=!$('confirmCheckbox').checked;});
+$('confirmContinueBtn').onclick=()=>{
+ if($('confirmContinueBtn').disabled)return;
+ renderActionsStep();
+ showEntryStep('entry-step-actions');
+};
+$('actionsBackBtn').onclick=()=>showEntryStep('entry-step-confirm');
+// Reuses the exact same start() used by the Start button: Listening's own
+// storage model already resumes an in-progress attempt or re-displays a
+// submitted result when one exists, so "review" and "start" are the same
+// call here — only the button the student sees differs.
+$('reviewButton').onclick=e=>{e.preventDefault();start();};
+showEntryStep('entry-step-info');
+// Lazily feeds the read-only #reviewAudio player on the result screen once it
+// becomes visible (phase 'submitted', shown by the untouched submit()/start()).
+// #reviewAudio is a brand-new, independent <audio> element with no listeners of
+// its own — it never reuses #audio or its play/seeking/ended listeners, so the
+// exam's single-play/no-seek audio lock during the live test is completely
+// unaffected. Native controls give free seek/replay, which is the point here.
+function initReviewPlayer(){
+ const rAudio=$('reviewAudio'),playBtn=$('reviewPlayBtn'),playIcon=$('reviewPlayIcon'),track=$('reviewProgressTrack'),fill=$('reviewProgressFill'),timeEl=$('reviewTimeDisplay');
+ const PLAY_ICON='<path d="M8 5v14l11-7z"/>',PAUSE_ICON='<path d="M6 5h4v14H6zM14 5h4v14h-4z"/>';
+ function seekToRatio(ratio){
+  if(!Number.isFinite(rAudio.duration)||!rAudio.duration)return;
+  rAudio.currentTime=Math.min(rAudio.duration,Math.max(0,ratio))*rAudio.duration;
+ }
+ function ratioFromEvent(e){
+  const rect=track.getBoundingClientRect(),x=(e.touches?e.touches[0].clientX:e.clientX)-rect.left;
+  return rect.width?x/rect.width:0;
+ }
+ playBtn.onclick=()=>{if(rAudio.paused)rAudio.play();else rAudio.pause();};
+ rAudio.addEventListener('play',()=>{playIcon.innerHTML=PAUSE_ICON;});
+ rAudio.addEventListener('pause',()=>{playIcon.innerHTML=PLAY_ICON;});
+ rAudio.addEventListener('ended',()=>{playIcon.innerHTML=PLAY_ICON;});
+ rAudio.addEventListener('timeupdate',()=>{
+  if(!Number.isFinite(rAudio.duration)||!rAudio.duration)return;
+  fill.style.width=(rAudio.currentTime/rAudio.duration*100)+'%';
+  timeEl.textContent=fmt(rAudio.currentTime)+' / '+fmt(rAudio.duration);
+ });
+ rAudio.addEventListener('loadedmetadata',()=>{timeEl.textContent=fmt(0)+' / '+fmt(rAudio.duration);});
+ $('reviewSkipBack').onclick=()=>{rAudio.currentTime=Math.max(0,rAudio.currentTime-10);};
+ $('reviewSkipFwd').onclick=()=>{if(Number.isFinite(rAudio.duration))rAudio.currentTime=Math.min(rAudio.duration,rAudio.currentTime+10);};
+ let dragging=false;
+ track.addEventListener('pointerdown',e=>{dragging=true;track.setPointerCapture(e.pointerId);seekToRatio(ratioFromEvent(e));});
+ track.addEventListener('pointermove',e=>{if(dragging)seekToRatio(ratioFromEvent(e));});
+ track.addEventListener('pointerup',e=>{dragging=false;try{track.releasePointerCapture(e.pointerId);}catch(err){}});
+ track.addEventListener('pointercancel',()=>{dragging=false;});
+}
+initReviewPlayer();
+function syncPartNavOffset(){
+ const bar=$('reviewPlayerBar'),nav=document.querySelector('.qnav');
+ if(!nav)return;
+ if(bar.hidden){nav.style.removeProperty('bottom');return;}
+ nav.style.bottom=bar.offsetHeight+'px';
+}
+window.addEventListener('resize',syncPartNavOffset);
+
+// ---------------------------------------------------------------------------
+// Listening Review: per-question correct/wrong annotations + a 2-panel
+// (Questions | Script) layout, added only once #result becomes visible (i.e.
+// only in review, never during the live test). Purely additive: reads
+// attempt.answers/questions/TestCore.score() (all already used elsewhere,
+// e.g. by payload()) and only ever APPENDS new elements / toggles new CSS
+// classes it defines itself \u2014 never edits start()/submit()/tick()/persist()/
+// payload()/send()/TestCore/window.Tracking/window.__teacherAPI or any
+// existing input/answer markup.
+// ---------------------------------------------------------------------------
+function escapeHtml(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+// Populate with the real Cambridge 17 Test 1 Listening script text per Part
+// once supplied; each Part shows a clear placeholder until then instead of a
+// blank/broken panel. A value may be a single string (blank-line-separated
+// paragraphs) or an array of paragraph strings.
+const TRANSCRIPTS={"1": ["Peter: Hello?", "Jan: Oh hello. My name’s Jan. Are you the right person to talk to about the Buckworth Conservation Group?", "Peter: Yes, I’m Peter. I’m the secretary.", "Jan: Good. I’ve just moved to this area, and I’m interested in getting involved. I was in a similar group where I used to live. Could you tell me something about your activities, please?", "Peter: Of course. Well, we have a mixture of regular activities and special events. One of the regular ones is trying to keep the beach free of litter. A few of us spend a couple of hours a month on it, and it’s awful how much there is to clear. I wish people would be more responsible and take it home with them.", "Jan: I totally agree. I’d be happy to help with that. Is it OK to take dogs?", "Peter: I’m afraid not, as they’re banned from the beach itself. You can take them along the cliffs, though. And children are welcome.", "Jan: Right.", "Peter: We also manage a nature reserve, and there’s a lot to do there all year round. For example, because it’s a popular place to visit, we spend a lot of time looking after the paths and making sure they’re in good condition for walking.", "Jan: I could certainly help with that.", "Peter: Good. And we have a programme of creating new habitats there. We’re just finished making and installing nesting boxes for birds to use, and next we’re going to work on encouraging insects – they’re important for the biodiversity of the reserve.", "Jan: They certainly are.", "Peter: Oh, and we’re also running a project to identify the different species of butterflies that visit the reserve. You might be interested in taking part in that.", "Jan: Sure. I was involved in something similar where I used to live, counting all the species of moths. I’d enjoy that.", "Peter: Another job we’re doing at the reserve is replacing the wall on the southern side, between the parking area and our woodshed. It was badly damaged in a storm last month.", "Jan: OK.", "Peter: Then as I said, we have a programme of events as well, both at the weekend, and during the week.", "Jan: Right. I presume you have guided walks? I’d like to get to know the local countryside, as I’m new to the area.", "Peter: Yes, we do. The next walk is to Ruston Island, a week on Saturday. We’ll be meeting in the car park at Dunsmore Beach at low tide – that’s when the sands are dry enough for us to walk to the island without getting wet.", "Jan: Sounds good.", "Peter: The island’s a great place to explore. It’s quite small, and it’s got a range of habitats. It’s also an ideal location for seeing seals just off the coast, or even on the beach.", "Jan: OK. And is there anything we should bring, like a picnic, for instance?", "Peter: Yes, do bring one, as it’s a full-day walk. And of course it’ll be wet walking across and back, so make sure your boots are waterproof.", "Jan: I must buy a new pair – there’s a hole in one of my current ones! Well, I’d definitely like to come on the walk.", "Peter: Great. Then later this month we’re having a one-day woodwork session in Hopton Wood.", "Jan: I’ve never tried that before. Is it OK for beginners to take part?", "Peter: Definitely. There’ll be a couple of experts leading the session, and we keep the number of participants down, so you’ll get as much help as you need.", "Jan: Excellent! I’d love to be able to make chairs.", "Peter: That’s probably too ambitious for one day! You’ll be starting with wooden spoons, and of course learning how to use the tools. And anything you make is yours to take home with you.", "Jan: That sounds like fun. When is it?", "Peter: It’s on the 17th, from 10 a.m. until 3. There’s a charge of £35, including lunch, or £40 if you want to camp in the wood.", "Jan: I should think I’ll come home the same day. Well, I’d certainly like to join the group."], "2": ["So, hello everyone. My name’s Lou Miller and I’m going to be your tour guide today as we take this fantastic boat trip around the Tasmanian coast. Before we set off, I just want to tell you a few things about our journey.", "Our boats aren’t huge as you can see. We already have three staff members on board and on top of that, we can transport a further fifteen people – that’s you – around the coastline. But please note if there are more than nine people on either side of the boat, we’ll move some of you over, otherwise all eighteen of us will end up in the sea!", "We’ve recently upgraded all our boats. They used to be jet black, but our new ones now have these comfortable dark red seats and a light-green exterior in order to stand out from others and help promote our company. This gives our boats a rather unique appearance, don’t you think?", "We offer you a free lunchbox during the trip and we have three types. Lunchbox 1 contains ham and tomato sandwiches. Lunchbox 2 contains a cheddar cheese roll and Lunchbox 3 is salad-based and also contains eggs and tuna. All three lunchboxes also have a packet of crisps and chocolate bar inside. Please let staff know which lunchbox you prefer.", "I’m sure I don’t have to ask you not to throw anything into the sea. We don’t have any bins to put litter in, but Jess, myself or Ray, our other guide, will collect it from you after lunch and put it all in a large plastic sack.", "The engine on the boat makes quite a lot of noise so before we head off, let me tell you a few things about what you’re going to see.", "This area is famous for its ancient lighthouse, which you’ll see from the boat as we turn past the first little island. It was built in 1838 to protect sailors as a number of shipwrecks had led to significant loss of life. The construction itself was complicated as some of the original drawings kept by the local council show. It sits right on top of the cliffs in a very isolated spot. In the nineteenth century there were many jobs there, such as polishing the brass lamps, chopping firewood and cleaning windows, that kept lighthouse keepers busy. These workers were mainly prison convicts until the middle of that century when ordinary families willing to live in such circumstances took over.", "Some of you have asked me what creatures we can expect to see. I know everyone loves the penguins, but they’re very shy and, unfortunately, tend to hide from passing boats, but you might see birds in the distance, such as sea eagles, flying around the cliff edges where they nest. When we get to the rocky area inhabited by fur seals, we’ll stop and watch them swimming around the coast. They’re inquisitive creatures so don’t be surprised if one pops up right in front of you. Their predators, orca whales, hunt along the coastline too, but spotting one of these is rare. Dolphins, on the other hand, can sometimes approach on their own or in groups as they ride the waves beside us.", "Lastly, I want to mention the caves. Tasmania is famous for its caves and the ones we’ll pass by are so amazing that people are lost for words when they see them. They can only be approached by sea, but if you feel that you want to see more than we’re able to show you, then you can take a kayak into the area on another day and one of our staff will give you more information on that. What we’ll do is to go through a narrow channel, past some incredible rock formations and from there we’ll be able to see the openings to the caves, and at that point we’ll talk to you about what lies beyond."], "3": ["Diana: So, Tim, we have to do a short summary of our work experience on a farm.", "Tim: Right. My farm was great, but arranging the work experience was hard. One problem was it was miles away and I don’t drive. And also, I’d really wanted a placement for a month, but I could only get one for two weeks.", "Diana: I was lucky, the farmer let me stay on the farm so I didn’t have to travel. But finding the right sort of farm to apply to wasn’t easy.", "Tim: No, they don’t seem to have websites, do they. I found mine through a friend of my mother’s, but it wasn’t easy.", "Diana: No.", "Tim: My farm was mostly livestock, especially sheep. I really enjoyed helping out with them. I was up most of one night helping a sheep deliver a lamb …", "Diana: On your own?", "Tim: No, the farmer was there, and he told me what to do. It wasn’t a straightforward birth, but I managed. It was a great feeling to see the lamb stagger to its feet and start feeding almost straightaway, and to know that it was OK.", "Diana: Mm.", "Tim: Then another time a lamb had broken its leg, and they got the vet in to set it, and he talked me through what he was doing. That was really useful.", "Diana: Yes, my farm had sheep too. The farm was in a valley and they had a lowland breed called Suffolks, although the farmer said they’d had other breeds in the past.", "Tim: So were they bred for their meat?", "Diana: Mostly, yes. They’re quite big and solid.", "Tim: My farm was up in the hills and they had a different breed of sheep, they were Cheviots.", "Diana: Oh, I heard their wool’s really sought after.", "Tim: Yes. It’s very hardwearing and they use it for carpets.", "Diana: Right.", "Tim: I was interested in the amount of supplements they add to animals’ feed nowadays. Like, even the chickens got extra vitamins and electrolytes in their feed.", "Diana: Yes, I found that too. And they’re not cheap. But my farmer said some are overpriced for what they are. And he didn’t give them as a matter of routine, just at times when the chickens seemed to particularly require them.", "Tim: Yes, mine said the same. He said certain breeds of chickens might need more supplements than the others, but the cheap and expensive ones are all basically the same.", "Diana: Mm.", "Tim: So did your farm have any other livestock, Diana?", "Diana: Yes, dairy cows. I made a really embarrassing mistake when I was working in the milk shed. Some cows had been treated with antibiotics, so their milk wasn’t suitable for human consumption, and it had to be put in a separate container. But I got mixed up, and I poured some milk from the wrong cow in with the milk for humans, so the whole lot had to be thrown away. The farmer wasn’t too happy with me.", "Tim: I asked my farmer how much he depended on the vet to deal with health problems. I’d read reports that the livestock’s health is being affected as farmers are under pressure to increase production. Well, he didn’t agree with that, but he said that actually some of the stuff the vets do, like minor operations, he’d be quite capable of doing himself.", "Diana: Yeah. My farmer said the same. But he reckons vets’ skills are still needed.", "Diana: Now we’ve got to give a bit of feedback about last term’s modules – just short comments, apparently. Shall we do that now?", "Tim: OK. So medical terminology.", "Diana: Well, my heart sank when I saw that, especially right at the beginning of the course. And I did struggle with it.", "Tim: I’d thought it’d be hard, but actually I found it all quite straightforward. What did you think about diet and nutrition?", "Diana: OK, I suppose.", "Tim: Do you remember what they told us about pet food and the fact that there’s such limited checking into whether or not it’s contaminated? I mean in comparison with the checks on food for humans – I thought that was terrible.", "Diana: Mm. I think the module that really impressed me was the animal disease one, when we looked at domesticated animals in different parts of the world, like camels and water buffalo and alpaca. The economies of so many countries depend on these, but scientists don’t know much about the diseases that affect them.", "Tim: Yes, I thought they’d know a lot about ways of controlling and eradicating those diseases, but that’s not the case at all. I loved the wildlife medication unit. Things like helping birds that have been caught in oil spills. That’s something I hadn’t thought about before.", "Diana: Yeah, I thought I might write my dissertation on something connected with that.", "Tim: Right. So …"], "4": ["Labyrinths have existed for well over 4,000 years. Labyrinths and labyrinthine symbols have been found in regions as diverse as modern-day Turkey, Ireland, Greece, and India. There are various designs of labyrinth but what they all have in common is a winding spiral path which leads to a central area. There is one starting point at the entrance and the goal is to reach the central area. Finding your way through a labyrinth involves many twists and turns, but it’s not possible to get lost as there is only one single path.", "In modern times, the word labyrinth has taken on a different meaning and is often used as a synonym for a maze. A maze is quite different as it is a kind of puzzle with an intricate network of paths. Mazes became fashionable in the 15th and 16th centuries in Europe, and can still be found in the gardens of great houses and palaces. The paths are usually surrounded by thick, high hedges so that it’s not possible to see over them. Entering a maze usually involves getting lost a few times before using logic to work out the pattern and find your way to the centre and then out again. There are lots of dead ends and paths which lead you back to where you started. The word ‘maze’ is believed to come from a Scandinavian word for a state of confusion. This is where the word ‘amazing’ comes from.", "Labyrinths, on the other hand, have a very different function. Although people now often refer to things they find complicated as labyrinths, this is not how they were seen in the past. The winding spiral of the labyrinth has been used for centuries as a metaphor for life’s journey. It served as a spiritual reminder that there is purpose and meaning to our lives and helped to give people a sense of direction. Labyrinths are thought to encourage a feeling of calm and have been used as a meditation and prayer tool in many cultures over many centuries.", "The earliest examples of the labyrinth spiral pattern have been found carved into stone, from Sardinia to Scandinavia, from Arizona to India to Africa. In Europe, these spiral carvings date from the late Bronze Age. The Native American Pima tribe wove baskets with a circular labyrinth design that depicted their own cosmology. In Ancient Greece, the labyrinth spiral was used on coins around four thousand years ago. Labyrinths made of mosaics were commonly found in bathhouses, villas and tombs throughout the Roman Empire.", "In Northern Europe, there were actual physical labyrinths designed for walking on. These were cut into the turf or grass, usually in a circular pattern. The origin of these walking labyrinths remains unclear, but they were probably used for fertility rites which may date back thousands of years. Eleven examples of turf labyrinths survive today, including the largest one at Saffron Walden, England, which used to have a large tree in the middle of it.", "More recently labyrinths have experienced something of a revival. Some believe that walking a labyrinth promotes healing and mindfulness, and there are those who believe in its emotional and physical benefits, which include slower breathing and a restored sense of balance and perspective. This idea has become so popular that labyrinths have been laid into the floors of spas, wellness centres and even prisons in recent years.", "A pamphlet at Colorado Children’s Hospital informs patients that ‘walking a labyrinth can often calm people in the midst of a crisis’. And apparently, it’s not only patients who benefit. Many visitors find walking a labyrinth less stressful than sitting in a corridor or waiting room. Some doctors even walk the labyrinth during their breaks. In some hospitals, patients who can’t walk can have a paper ‘finger labyrinth’ brought to their bed. The science behind the theory is a little sketchy, but there are dozens of small-scale studies which support claims about the benefits of labyrinths. For example, one study found that walking a labyrinth provided ‘short-term calming, relaxation, and relief from anxiety’ for Alzheimer’s patients.", "So, what is it about labyrinths that makes their appeal so universal? Well …"]};
+function renderScriptPane(part){
+ const body=$('scriptBodyPart'+part);
+ if(!body)return;
+ const raw=TRANSCRIPTS[part];
+ if(!raw){body.innerHTML='<p class="script-pane-placeholder">Script cho Part '+part+' s\u1ebd \u0111\u01b0\u1ee3c c\u1eadp nh\u1eadt sau.</p>';return;}
+ const paras=Array.isArray(raw)?raw:String(raw).split(/\n{2,}/);
+ body.innerHTML=paras.map(p=>'<p>'+escapeHtml(p).replace(/\n/g,'<br>')+'</p>').join('');
+}
+[1,2,3,4].forEach(renderScriptPane);
+function annotateReviewQuestion(q,info){
+ const studentRaw=attempt.answers[q.id];
+ if(q.type==='blank'){
+  const chip=document.querySelector('.qchip[data-q="'+q.id+'"]');
+  if(!chip)return;
+  chip.classList.add(info.isCorrect?'is-correct':'is-wrong');
+  const icon=document.createElement('span');
+  icon.className='qchip-feedback-icon';icon.setAttribute('aria-hidden','true');
+  icon.textContent=info.isCorrect?'\u2713':'\u2717';
+  chip.appendChild(icon);
+  const sr=document.createElement('span');sr.className='sr-only';
+  sr.textContent=info.isCorrect?'\u0110\u00fang':'Sai';
+  chip.appendChild(sr);
+  if(!info.isCorrect){
+   const empty=!studentRaw||!String(studentRaw).trim();
+   const fb=document.createElement('span');fb.className='qchip-correct-answer';
+   fb.textContent=(empty?'Ch\u01b0a tr\u1ea3 l\u1eddi \u2014 ':'')+'\u0110\u00e1p \u00e1n \u0111\u00fang: '+q.answer+((q.alts&&q.alts.length)?' / '+q.alts.join(' / '):'');
+   chip.insertAdjacentElement('afterend',fb);
+  }
+  return;
+ }
+ const block=document.querySelector('.mc-block[data-q="'+q.id+'"]');
+ if(!block)return;
+ const selected=q.type==='choose-two'?(Array.isArray(studentRaw)?studentRaw:[]):(studentRaw?[studentRaw]:[]);
+ const correctSet=q.type==='choose-two'?q.answer:[q.answer];
+ block.querySelectorAll('.mc-option').forEach(opt=>{
+  const letter=opt.dataset.letter;
+  if(correctSet.includes(letter))opt.classList.add('opt-correct');
+  else if(selected.includes(letter))opt.classList.add('opt-wrong');
+ });
+ const empty=selected.length===0;
+ const partial=!info.isCorrect&&info.points>0&&info.points<info.total;
+ block.classList.add(info.isCorrect?'is-review-correct':(partial?'is-review-partial':'is-review-wrong'));
+ const badge=document.createElement('span');
+ badge.className='review-status-badge '+(empty?'is-unanswered':(info.isCorrect?'is-correct':(partial?'is-partial':'is-wrong')));
+ badge.textContent=empty?'\u25cb Ch\u01b0a tr\u1ea3 l\u1eddi':(info.isCorrect?'\u2713 \u0110\u00fang':(partial?'\u0110\u00fang '+info.points+'/'+info.total:'\u2717 Sai'));
+ const stem=block.querySelector('.mc-stem');
+ if(stem){stem.appendChild(document.createTextNode(' '));stem.appendChild(badge);}
+}
+function annotateReviewPills(){
+ if(!attempt||attempt.phase!=='submitted')return;
+ const results=TestCore.score(questions,attempt.answers);
+ const byId={};results.details.forEach(d=>byId[d.id]=d);
+ document.querySelectorAll('.qnav-pill').forEach(pill=>{
+  const info=byId[pill.dataset.q];if(!info)return;
+  pill.classList.remove('is-review-correct','is-review-wrong');
+  let ok=info.isCorrect;
+  if(!ok&&info.total>1&&info.points>0){const sibs=[...document.querySelectorAll('.qnav-pill[data-q="'+pill.dataset.q+'"]')];ok=sibs.indexOf(pill)<info.points;}
+  pill.classList.add(ok?'is-review-correct':'is-review-wrong');
+ });
+}
+let reviewAnnotated=false;
+function renderReviewAnnotations(){
+ if(reviewAnnotated)return;reviewAnnotated=true;
+ const results=TestCore.score(questions,attempt.answers);
+ const byId={};results.details.forEach(d=>byId[d.id]=d);
+ questions.forEach(q=>{const info=byId[q.id];if(info)annotateReviewQuestion(q,info);});
+ annotateReviewPills();
+ document.body.classList.add('is-review-listening');
+ document.querySelectorAll('.right-pane.script-pane').forEach(p=>p.hidden=false);
+}
+new MutationObserver(annotateReviewPills).observe($('qnavInner'),{childList:true});
+new MutationObserver(()=>{
+ if(!$('result').hidden){
+  $('reviewPlayerBar').hidden=false;
+  if(!$('reviewAudio').src)$('reviewAudio').src=reviewAudioSrc;
+  requestAnimationFrame(syncPartNavOffset);
+  renderReviewAnnotations();
+ }
+}).observe($('result'),{attributes:true,attributeFilter:['hidden']});
+
+// ---------------------------------------------------------------------------
+// Matching (Q15-20 and Q23-27): drag an option from the right panel into the slot next to an item
+// item on the left (or tap a topic, then tap a slot). The hidden radio inputs
+// inside each .mc-block stay the single source of truth, so answers are stored,
+// persisted, scored and submitted through the existing handlers unchanged.
+// ---------------------------------------------------------------------------
+var MATCH_GROUPS={"g3": {"A": "Tim found this easier than expected.", "B": "Tim thought this was not very clearly organised.", "C": "Diana may do some further study on this.", "D": "They both found the reading required for this was difficult.", "E": "Tim was shocked at something he learned on this module.", "F": "They were both surprised how little is known about some aspects of this."}};
+// ---------------------------------------------------------------------------
+// ONE source of truth per group: the option text a student reads in the bank is
+// the exact text rendered in the slot. MATCH_GROUPS above is regenerated from
+// that bank and is only a fallback for a letter the bank does not render, so the
+// two can no longer drift apart (that drift is what showed another test's
+// wording, and left G/H green but empty, in C20 L T4 Q15-20).
+// ---------------------------------------------------------------------------
+var mdrag=null,picked=null,MATCH_TEXT=null,dragClick=null;
+function groupOf(el){return (el&&el.dataset&&el.dataset.group)||'_';}
+function groupEl(sel,g){const all=document.querySelectorAll(sel);for(let i=0;i<all.length;i++){if(groupOf(all[i])===g)return all[i];}return null;}
+function mrow(q){const all=document.querySelectorAll('.match-row');for(let i=0;i<all.length;i++){if(all[i].dataset.q===q)return all[i];}return null;}
+function rowOf(el){return el&&el.closest?el.closest('.match-row'):null;}
+function buildMatchText(){
+ const m={};
+ document.querySelectorAll('.topic-bank').forEach(bank=>{
+  const g=groupOf(bank),map=m[g]||(m[g]={});
+  bank.querySelectorAll('.topic-chip').forEach(ch=>{
+   const s=ch.querySelector('span'),txt=((s?s.textContent:ch.textContent)||'').replace(/\s+/g,' ').trim();
+   if(ch.dataset.letter&&txt)map[ch.dataset.letter]=txt;
+  });
+ });
+ Object.keys(MATCH_GROUPS||{}).forEach(g=>{const map=m[g]||(m[g]={});Object.keys(MATCH_GROUPS[g]).forEach(L=>{if(!map[L])map[L]=MATCH_GROUPS[g][L];});});
+ return m;
+}
+function mtext(g,l){
+ if(!l)return '';
+ if(!MATCH_TEXT)MATCH_TEXT=buildMatchText();
+ const map=MATCH_TEXT[g]||MATCH_TEXT['_']||{};
+ return map[l]||'';
+}
+// Repeat rule per group: data-repeat="1" on the layout/bank, else the file-wide
+// MATCH_ALLOW_REPEAT, else single use.
+function groupRepeats(g){
+ const el=groupEl('.match-layout',g)||groupEl('.topic-bank',g);
+ const v=el&&el.dataset?el.dataset.repeat:null;
+ if(v!==null&&v!==undefined&&v!=='')return v!=='0'&&v!=='false';
+ return typeof MATCH_ALLOW_REPEAT!=='undefined'&&!!MATCH_ALLOW_REPEAT;
+}
+function syncMatchingUI(){
+ const used={};
+ const submitted=(typeof attempt!=='undefined'&&attempt&&attempt.phase==='submitted');
+ document.querySelectorAll('.match-row').forEach(row=>{
+  const g=groupOf(row),q=row.dataset.q,slot=row.querySelector('.match-slot');
+  if(!slot)return;
+  const a=(typeof attempt!=='undefined'&&attempt&&attempt.answers[q])||'';
+  const txt=a?mtext(g,a):'';
+  const ok=!!(a&&txt);
+  // is-filled and the slot content come from the SAME check, so a slot can never
+  // go green while still showing the placeholder.
+  slot.classList.toggle('is-filled',ok);
+  slot.innerHTML=ok
+   ?'<span class="match-chip-in" data-group="'+g+'" data-letter="'+escapeHtml(a)+'"><b>'+escapeHtml(a)+'</b><span>'+escapeHtml(txt)+'</span></span><button type="button" class="match-clear" aria-label="Remove answer for question '+q+'">×</button>'
+   :'<span class="match-ph">'+(submitted?'Chưa trả lời':'Kéo đáp án vào đây')+'</span>';
+  if(ok&&!groupRepeats(g))(used[g]||(used[g]={}))[a]=1;
+ });
+ document.querySelectorAll('.topic-chip').forEach(ch=>{
+  const g=groupOf(ch);
+  ch.classList.toggle('is-used',!!(used[g]&&used[g][ch.dataset.letter]));
+ });
+ if(picked&&!mtext(picked.group,picked.letter))picked=null;
+ markPicked();
+}
+// Validates the target row AND the option before any stored answer is touched,
+// so a bad drop can never wipe an answer it then fails to replace.
+function setMatchAnswer(qid,letter){
+ if(typeof attempt==='undefined'||!attempt||!editable())return false;
+ const row=mrow(qid);if(!row)return false;
+ const g=groupOf(row);
+ if(letter){
+  if(!/^[A-Z]$/.test(letter))return false;
+  if(!row.querySelector('input[value="'+letter+'"]'))return false;
+  if(!mtext(g,letter))return false;
+ }else{
+  if(!attempt.answers[qid])return false;
+  attempt.answers[qid]='';persist();restoreAnswers();return true;
+ }
+ if(!groupRepeats(g)){
+  document.querySelectorAll('.match-row').forEach(r=>{
+   if(groupOf(r)===g&&r.dataset.q!==qid&&attempt.answers[r.dataset.q]===letter)attempt.answers[r.dataset.q]='';
+  });
+ }
+ const input=row.querySelector('input[value="'+letter+'"]');
+ input.checked=true;input.dispatchEvent(new Event('change',{bubbles:true}));
+ return true;
+}
+function markPicked(){
+ document.querySelectorAll('.topic-chip').forEach(c=>c.classList.toggle('is-picked',!!picked&&groupOf(c)===picked.group&&c.dataset.letter===picked.letter));
+ document.querySelectorAll('.match-layout').forEach(l=>l.classList.toggle('has-picked',!!picked&&groupOf(l)===picked.group));
+ document.body.classList.toggle('has-picked-topic',!!picked);
+}
+function slotAt(x,y){const el=document.elementFromPoint(x,y);return el&&el.closest?el.closest('.match-slot'):null;}
+// syncMatchingUI() rewrites every slot, so the dragged node can be replaced
+// mid-drag; re-resolve it instead of holding a stale reference.
+function dragSrcEl(d){
+ if(d.src&&d.src.isConnected)return d.src;
+ if(d.from){const r=mrow(d.from);return r?r.querySelector('.match-chip-in'):null;}
+ const bank=groupEl('.topic-bank',d.group);
+ return bank?bank.querySelector('.topic-chip[data-letter="'+d.letter+'"]'):null;
+}
+function clearDragVisuals(d){
+ if(d&&d.ghost&&d.ghost.remove)d.ghost.remove();
+ document.querySelectorAll('.match-ghost').forEach(g=>g.remove());
+ document.querySelectorAll('.is-dragging').forEach(e=>e.classList.remove('is-dragging'));
+ document.querySelectorAll('.match-slot.is-over').forEach(s=>s.classList.remove('is-over'));
+ document.body.classList.remove('is-match-dragging');
+}
+// A drag is followed by one synthetic click on whatever was under the release
+// point. Ignore only that one, inside this handler, so no other control on the
+// page is ever swallowed. The stale-pick bug it used to mask is fixed at the
+// source: activating a drag clears `picked`.
+function fromDrag(e){
+ // Consume ONLY the one synthetic click a finished drag produces: same spot,
+ // once, and soon after. Every other click - the x button, picking another
+ // option, tapping a slot - works immediately, even right after a drop.
+ if(!dragClick)return false;
+ const d=dragClick;
+ if(performance.now()-d.t>700){dragClick=null;return false;}
+ if(Math.hypot(e.clientX-d.x,e.clientY-d.y)>6)return false;
+ dragClick=null;return true;
+}
+document.addEventListener('pointerdown',e=>{
+ const src=e.target.closest&&e.target.closest('.topic-chip,.match-chip-in');
+ if(!src||!editable()||(e.pointerType==='mouse'&&e.button!==0))return;
+ if(src.classList.contains('topic-chip')&&src.classList.contains('is-used'))return;
+ const row=rowOf(src);
+ mdrag={letter:src.dataset.letter,group:groupOf(src),from:row?row.dataset.q:null,x:e.clientX,y:e.clientY,active:false,ghost:null,id:e.pointerId,src:src};
+});
+document.addEventListener('pointermove',e=>{
+ if(!mdrag||e.pointerId!==mdrag.id)return;
+ if(!mdrag.active){
+  if(Math.hypot(e.clientX-mdrag.x,e.clientY-mdrag.y)<6)return;
+  if(!editable()){mdrag=null;return;}
+  mdrag.active=true;
+  picked=null;markPicked();
+  const g=document.createElement('div');g.className='match-ghost';
+  g.textContent=mdrag.letter+'  '+mtext(mdrag.group,mdrag.letter);
+  document.body.appendChild(g);mdrag.ghost=g;
+  const el=dragSrcEl(mdrag);if(el)el.classList.add('is-dragging');
+  document.body.classList.add('is-match-dragging');
+ }
+ if(mdrag.ghost)mdrag.ghost.style.transform='translate('+(e.clientX+12)+'px,'+(e.clientY+12)+'px)';
+ // Dragging towards the top/bottom edge scrolls the page, so a slot that starts
+ // off-screen (the single-column phone layout stacks the bank above the rows)
+ // can still be reached without letting go.
+ // 'instant': the page sets scroll-behavior:smooth, and an animated scroll
+ // cannot keep up with a finger that is already moving.
+ if(e.clientY<56)window.scrollBy({top:-18,behavior:'instant'});
+ else if(e.clientY>window.innerHeight-56)window.scrollBy({top:18,behavior:'instant'});
+ document.querySelectorAll('.match-slot.is-over').forEach(s=>s.classList.remove('is-over'));
+ const s=slotAt(e.clientX,e.clientY),r=rowOf(s);
+ if(s&&r&&groupOf(r)===mdrag.group)s.classList.add('is-over');
+ e.preventDefault();
+},{passive:false});
+function endMatchDrag(e,cancel){
+ if(!mdrag||e.pointerId!==mdrag.id)return;
+ const d=mdrag;mdrag=null;
+ if(!d.active)return;
+ clearDragVisuals(d);
+ dragClick={x:e.clientX,y:e.clientY,t:performance.now()};
+ if(cancel)return;
+ const s=slotAt(e.clientX,e.clientY),trow=rowOf(s);
+ if(s&&trow&&groupOf(trow)===d.group){
+  const toQ=trow.dataset.q;
+  if(toQ===d.from)return;
+  // Moving a placed option: in a repeat group the old slot must be emptied on
+  // purpose; in a single-use group setMatchAnswer already frees it.
+  if(setMatchAnswer(toQ,d.letter)&&d.from&&groupRepeats(d.group))setMatchAnswer(d.from,'');
+ }else if(d.from){
+  const el=document.elementFromPoint(e.clientX,e.clientY),bank=el&&el.closest?el.closest('.topic-bank'):null;
+  if(bank&&groupOf(bank)===d.group)setMatchAnswer(d.from,'');
+ }
+}
+document.addEventListener('pointerup',e=>endMatchDrag(e,false));
+document.addEventListener('pointercancel',e=>endMatchDrag(e,true));
+// Losing the pointer (tab switch, window blur, context menu) must not leave a
+// ghost stuck to the cursor or a row frozen in is-dragging.
+function abortDrag(){if(!mdrag)return;const d=mdrag;mdrag=null;clearDragVisuals(d);}
+window.addEventListener('blur',abortDrag);
+document.addEventListener('visibilitychange',()=>{if(document.hidden)abortDrag();});
+document.addEventListener('contextmenu',abortDrag);
+document.addEventListener('click',e=>{
+ if(!e.target.closest||fromDrag(e))return;
+ const clear=e.target.closest('.match-clear');
+ if(clear){const r=rowOf(clear);if(r)setMatchAnswer(r.dataset.q,'');return;}
+ const chip=e.target.closest('.topic-chip');
+ if(chip){
+  if(!editable()||chip.classList.contains('is-used'))return;
+  const g=groupOf(chip),L=chip.dataset.letter;
+  picked=(picked&&picked.group===g&&picked.letter===L)?null:{group:g,letter:L};
+  markPicked();return;
+ }
+ const slot=e.target.closest('.match-slot'),srow=rowOf(slot);
+ if(slot&&srow&&picked&&editable()&&groupOf(srow)===picked.group){
+  if(setMatchAnswer(srow.dataset.q,picked.letter)){picked=null;markPicked();}
+ }
+});
+document.addEventListener('keydown',e=>{
+ if((e.key==='Enter'||e.key===' ')&&e.target.classList&&(e.target.classList.contains('match-slot')||e.target.classList.contains('topic-chip'))){e.preventDefault();e.target.click();}
+});
+function decorateMatchReview(row){
+ if(row.querySelector('.match-correct-hint')||!row.classList.contains('is-review-wrong'))return;
+ const opt=row.querySelector('.mc-option.opt-correct');if(!opt)return;
+ const L=opt.dataset.letter,h=document.createElement('div');h.className='match-correct-hint';
+ h.innerHTML='Đáp án đúng: <b>'+escapeHtml(L)+'</b> '+escapeHtml(mtext(groupOf(row),L));row.appendChild(h);
+}
+document.querySelectorAll('.match-row').forEach(row=>new MutationObserver(()=>decorateMatchReview(row)).observe(row,{attributes:true,attributeFilter:['class']}));
+syncMatchingUI();
+})();
+</script>
+<script>
+/* Question-text highlighter. Fully independent of scoring/timer/submission/Sheets.
+   Selecting text inside a question pane wraps it in <mark class="user-hl">;
+   clicking an existing highlight removes it. Never touches attempt state or inputs' values. */
+(function(){
+'use strict';
+const HL='user-hl';
+function inNoHighlightZone(node){
+ if(!node)return true;
+ const el=node.nodeType===1?node:node.parentElement;
+ // .match-layout is excluded: a selection dragged across the option rows used to
+ // be wrapped in <mark>, and wrapping is what split the rows (see applyHighlight).
+ return !!(el&&el.closest('input,button,select,textarea,.qchip-play,.play-btn,.progress-track,.part-nav,.qnav,.exam-status,.match-layout'));
+}
+function clearSelection(){const s=window.getSelection();if(s)s.removeAllRanges();}
+function applyHighlight(range){
+ const mark=document.createElement('mark');
+ mark.className=HL;
+ try{
+  // surroundContents() refuses a range that only partially covers an element.
+  // The old fallback answered that refusal with extractContents(), which SPLITS
+  // every partially selected element and re-clones it WITH its attributes. A
+  // selection dragged across the matching rows therefore turned one
+  // <div class="mc-block match-row" data-q="17"> into two rows carrying the same
+  // data-q: the first kept the question text but lost its slot and radio inputs,
+  // and since lookups take the first match, that question could no longer be
+  // answered at all. Refuse instead of splitting; an ordinary selection inside
+  // one paragraph still highlights exactly as before.
+  range.surroundContents(mark);
+  return true;
+ }catch(e){return false;}
+}
+function removeHighlight(mark){
+ const parent=mark.parentNode;if(!parent)return;
+ while(mark.firstChild)parent.insertBefore(mark.firstChild,mark);
+ parent.removeChild(mark);
+ parent.normalize();
+}
+function handleSelection(pane){
+ const sel=window.getSelection();
+ if(!sel||sel.isCollapsed||sel.rangeCount===0)return;
+ const range=sel.getRangeAt(0);
+ if(range.collapsed)return;
+ if(!pane.contains(range.commonAncestorContainer))return;
+ if(inNoHighlightZone(range.startContainer)||inNoHighlightZone(range.endContainer))return;
+ if(!range.toString().trim())return;
+ try{applyHighlight(range.cloneRange());}catch(e){}
+ clearSelection();
+}
+document.querySelectorAll('.left-pane').forEach(pane=>{
+ pane.addEventListener('mouseup',()=>handleSelection(pane));
+ pane.addEventListener('touchend',()=>{setTimeout(()=>handleSelection(pane),10);});
+ pane.addEventListener('click',e=>{
+  const mark=e.target.closest('mark.'+HL);
+  if(mark&&window.getSelection().isCollapsed)removeHighlight(mark);
+ });
+});
+})();
+</script>
+<script>
+/* Teacher Test Mode panel. Hidden from the normal student UI at all times; only a
+   keyboard shortcut reveals it. Never touches audio/scoring/timer/Sheets logic directly —
+   it only calls the exact existing tick()/submit() functions via window.__teacherAPI. */
+(function(){
+'use strict';
+const panel=document.getElementById('teacherPanel');
+const statusEl=document.getElementById('teacherStatus');
+if(!panel)return;
+function setStatus(msg){if(statusEl)statusEl.textContent=msg;}
+function refreshStatus(){
+ const api=window.__teacherAPI;
+ if(!api){setStatus('Teacher API not ready yet.');return;}
+ const phase=api.getPhase();
+ setStatus(phase?`Current phase: ${phase}`:'No active attempt yet. Start the test first.');
+}
+function togglePanel(){
+ panel.hidden=!panel.hidden;
+ if(!panel.hidden)refreshStatus();
+}
+document.addEventListener('keydown',e=>{
+ const key=(e.key||'').toLowerCase();
+ const isY=key==='y'||e.code==='KeyY';
+ if((e.ctrlKey||e.metaKey)&&e.shiftKey&&isY){
+  e.preventDefault();
+  togglePanel();
+ }
+});
+document.getElementById('teacherSkip').addEventListener('click',()=>{
+ const ok=window.__teacherAPI&&window.__teacherAPI.skipToReview();
+ setStatus(ok?'Skipped to review.':'Cannot skip: no active listening phase.');
+});
+document.getElementById('teacherSubmit').addEventListener('click',()=>{
+ const ok=window.__teacherAPI&&window.__teacherAPI.submitNow();
+ setStatus(ok?'Submitted.':'Cannot submit: already submitted or no attempt.');
+});
+document.getElementById('teacherExit').addEventListener('click',()=>{panel.hidden=true;});
+})();
+</script>
+<script>
+(function(){
+  var KEY='lu-theme';
+  var btn=document.getElementById('lu-theme-toggle');
+  function apply(dark){
+    document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+    if(btn){
+      btn.textContent = dark ? '☀ Light mode' : '◐ Dark mode';
+      btn.setAttribute('aria-pressed', String(dark));
+    }
+  }
+  var saved = null;
+  try{ saved = localStorage.getItem(KEY); }catch(e){}
+  var prefersDark = false;
+  try{ prefersDark = matchMedia('(prefers-color-scheme:dark)').matches; }catch(e){}
+  apply(saved ? saved === 'dark' : prefersDark);
+  if(btn){
+    btn.addEventListener('click', function(){
+      var next = document.documentElement.dataset.theme !== 'dark';
+      apply(next);
+      try{ localStorage.setItem(KEY, next ? 'dark' : 'light'); }catch(e){}
+    });
+  }
+})();
+</script>
+</body>
+</html>
